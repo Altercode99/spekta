@@ -2,4 +2,4 @@
 Kimia Farma Projek Digitalisasi
 ###################
 
-- Projek digitalisasi Kimia Farma v.1.0.0
+- Projek digitalisasi Kimia Farma v.1.0.0 (Spekta ERP)
