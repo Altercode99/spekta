@@ -1,0 +1,14 @@
+<?php
+if ((strpos(strtolower($_SERVER['SCRIPT_NAME']), strtolower(basename(__FILE__)))) !== false) { // NOT FALSE if the script"s file name is found in the URL
+    header('HTTP/1.0 403 Forbidden');
+    die('<h2>Direct access to this page is not allowed.</h2>');
+}
+
+$script = <<< "JS"
+
+function showEmailSend(){var e=legendGrid(),t=mainTab.cells("am_send_email_tab").attachLayout({pattern:"1C",cells:[{id:"a",header:!1}]}),a=mainTab.cells("am_send_email_tab").attachMenu({icon_path:"./public/codebase/icons/",items:[{id:"refresh",text:"Refresh",img:"refresh.png"},{id:"month",text:genSelectMonth("am_email_year","am_email_month")},{id:"message",text:"Lihat Isi Pesan",img:"email.png"},{id:"send",text:"Kirim Ulang <span id='email_loading'></span>",img:"send.png"}]});a.attachEvent("onClick",(function(e){switch(e){case"send":if(!s.getSelectedRowId())return eAlert("Pilih email terlebih dahulu!");a.setItemDisabled("send"),$("#email_loading").html(", Mengirim..."),reqJson(AppMaster2("emailSend"),"POST",{id:s.getSelectedRowId()},((e,t)=>{"success"===t.status?(sAlert(t.message),r()):eAlert(t.message),$("#email_loading").html(""),a.setItemEnabled("send")}));break;case"refresh":r();break;case"message":if(!s.getSelectedRowId())return eAlert("Pilih email terlebih dahulu!");let e=s.cells(s.getSelectedRowId(),2).getValue();var t=createWindow("email_msg_win",e,900,600);myWins.window("email_msg_win").skipMyCloseEvent=!0,reqJson(AppMaster2("emailMessage"),"POST",{id:s.getSelectedRowId()},((e,a)=>{"success"===a.status?t.attachHTMLString("<div style='width:100%;height:100%;overflow:auto;overflow-y:scroll;padding:10px;'>"+a.template+"</div>"):(eAlert("Terjadi Kesalahan"),closeWindow("email_msg_win"))}))}})),$("#am_email_year").on("change",(function(){r()})),$("#am_email_month").on("change",(function(){r()}));var i=t.cells("a").attachStatusBar();function l(){let t=s.getRowsNum();i.setText("Total baris: "+t+" ( "+e.email_send+" )")}var s=t.cells("a").attachGrid();function r(){let e=$("#am_email_month").val(),t=$("#am_email_year").val();s.clearAndLoad(AppMaster2("getEmailGrid",{month:e,year:t}),l)}s.setHeader("No,Tipe Email,Subjek,Nama Subjek,Penerima,CC Penerima,Dibuat,Status,Dikirim"),s.attachHeader("#rspan,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter"),s.setColSorting("str,str,str,str,str,str,str,str,str"),s.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt"),s.setColAlign("center,left,left,left,left,left,left,left,left"),s.setInitWidthsP("5,25,35,35,30,20,25,20,25"),s.enableSmartRendering(!0),s.attachEvent("onXLE",(function(){t.cells("a").progressOff()})),s.init(),r()}
+
+JS;
+
+header('Content-Type: application/javascript');
+echo $script;

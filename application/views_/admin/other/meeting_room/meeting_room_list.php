@@ -1,0 +1,14 @@
+<?php 
+if ((strpos(strtolower($_SERVER['SCRIPT_NAME']), strtolower(basename(__FILE__)))) !== false) { // NOT FALSE if the script"s file name is found in the URL
+    header('HTTP/1.0 403 Forbidden');
+    die('<h2>Direct access to this page is not allowed.</h2>');
+}
+
+$script = <<< "JS"
+	function showRoomList(){var e=mainTab.cells("meeting_room_list").attachLayout({pattern:"2U",cells:[{id:"a",text:"Ruang Meeting"},{id:"b",header:null}]}),t=e.cells("b").attachLayout({pattern:"2E",cells:[{id:"a",header:!1},{id:"b",text:"Detail Reservasi"}]}),a=t.cells("a").attachLayout({pattern:"2U",cells:[{id:"a",text:"Pilih Tanggal",width:285},{id:"b",text:"Total Reservasi"}]}),n=reqJsonResponse(RoomRev("getRoomsView"),"GET",null);roomView=e.cells("a").attachDataView({container:"room_container",type:{template:n.template,height:160},autowidth:1}),n.data.length>0&&n.data.map((e=>roomView.add(e))),roomView.attachEvent("onAfterSelect",(function(e){n.data.length>0&&n.data.map((n=>e===n.id&&function(e){t.cells("b").setText("Detail Reservasi"),t.cells("b").attachHTMLString("<div></div>"),a.cells("b").attachHTMLString("<div style='width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items: center;'><p style='font-size:128px;font-family:sans-serif'>0</p></div>"),e;var n=a.cells("a").attachForm([{type:"container",name:"calendar",id:"calendar-info"}]),i=new dhtmlXCalendarObject(n.getContainer("calendar"));function l(){let t=i.getDate();reqJson(RoomRev("getEventCalendar"),"POST",{table:"meeting_rooms_reservation",column:"room_id",id:e,date:t.toISOString()},((a,n)=>{a?eAlert("Get Event Calendar gagal!"):"success"===n.status&&""!==n.dates&&(i.setHolidays(n.dates),s(e,t))}))}function s(e,n){t.cells("b").setText("Detail Reservasi: "+indoDate(n)),reqJson(RoomRev("getEventDate"),"POST",{roomId:e,date:n.toISOString()},((e,n)=>{e?eAlert("Get Event Calendar gagal!"):"success"===n.status&&(t.cells("b").attachHTMLString(n.template),a.cells("b").attachHTMLString("<div style='width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items: center;'><p style='font-size:128px;font-family:sans-serif'>"+n.total+"</p></div>"))}))}i.hideTime(),i.show(),i.setPosition(15,5),l(),i.attachEvent("onClick",(function(a){t.cells("b").setText("Detail Reservasi: "+indoDate(a)),s(e,a)}))}(e)))}))}function detailEventDate(e){var t=createWindow("event-detail","Detail Meeting",800,500);myWins.window("event-detail").skipMyCloseEvent=!0,t.progressOn(),eventGrid=t.attachGrid(),eventGrid.setHeader("Detail Meeting,#cspan"),eventGrid.setColSorting("str,str"),eventGrid.setColAlign("left,left"),eventGrid.setColTypes("rotxt,rotxt"),eventGrid.setInitWidthsP("25,75"),eventGrid.enableSmartRendering(!0),eventGrid.attachEvent("onXLE",(function(){t.progressOff()})),eventGrid.init(),eventGrid.clearAndLoad(RoomRev("getEventDetail",{eventId:e}))}
+
+JS;
+
+header('Content-Type: application/javascript');
+echo $script;
+    

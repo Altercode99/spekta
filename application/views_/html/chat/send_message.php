@@ -1,0 +1,2 @@
+<div style="<?= $style['container'] ?>"><div style="<?= $style['title'] ?>"><p>PT. Kimia Farma Tbk. Plant Jakarta</p><hr style="<?= $style['hr'] ?>" /></div><div style="<?= $style['body'] ?>"><div style="<?= $style['field'] ?>"><p><?= $data['title'] ?></p><br /><?php foreach ($data['p'] as $key => $value) {$expVal = explode("|", $value);$val = $expVal[0];$pos = $expVal[1] ?><p style="text-align:<?= $pos ?>"><?= $val ?></p><?php } ?></div></div>
+</div>

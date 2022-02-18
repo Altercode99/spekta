@@ -1,0 +1,434 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    background-color: #f5f5f5;
+    /*background: url(bg.jpg) top left repeat;*/
+    /*background: rgba(0, 0, 0, 0) linear-gradient(60deg, #525252 10%, #3d72b4 100%) repeat scroll 0 0; */
+}
+
+body {
+    -moz-transform: scale(0.85, 0.85);
+    zoom: 0.85;
+    zoom: 85%;
+}
+
+.hc_graph {
+    -moz-transform: scale(1.15, 1.15);
+    zoom: 120;
+    zoom: 120%;
+}
+
+.dhx_scheduler_month {
+    -moz-transform: scale(1.15, 1.15);
+    zoom: 115;
+    zoom: 115%;
+}
+
+.dhxcp_g_area {
+    -moz-transform: scale(1.15, 1.15);
+    zoom: 115;
+    zoom: 115%;
+}
+
+.pm_gantt {
+    -moz-transform: scale(1.15, 1.15);
+    zoom: 115;
+    zoom: 115%;
+}
+
+.gantt_cal_light {
+    top: 35vh !important;
+}
+
+.dhtmlx_modal_box {
+    z-index: 99999;
+    min-width: 300px;
+}
+
+.dhtmlx_message_area {
+    z-index: 99999;
+}
+
+#mainCanvas {
+    width: 100%;
+    height: 100%;
+}
+
+#Container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 380px;
+    height: 480px;
+    transform: translate(-50%, -50%);
+    background-color: #fefefe;
+    box-shadow: -5px 7px 5px rgba(0, 0, 0, 0.8);
+    border: 1px solid #808080;
+}
+
+/*image for button*/
+div.dhxform_item_label_left.button_ok div.dhxform_btn_txt {
+    background-image: url(../codebase/icons/ok.png);
+    background-repeat: no-repeat;
+    background-position: 0px 3px;
+    padding-left: 22px;
+    margin: 0px 15px 0px 12px;
+}
+
+div.dhxform_item_label_left.button_no div.dhxform_btn_txt {
+    background-image: url(../codebase/icons/cancel.png);
+    background-repeat: no-repeat;
+    background-position: 0px 3px;
+    padding-left: 22px;
+    margin: 0px 15px 0px 12px;
+}
+
+div.dhxform_item_label_left.button_add div.dhxform_btn_txt {
+    background-image: url(../codebase/icons/add.png);
+    background-repeat: no-repeat;
+    background-position: 0px 3px;
+    padding-left: 22px;
+    margin: 0px 15px 0px 12px;
+}
+
+div.dhxform_item_label_left.button_ok div.dhxform_btn_txt {
+    background-image: url(../codebase/icons/ok.png);
+    background-repeat: no-repeat;
+    background-position: 0px 3px;
+    padding-left: 22px;
+    margin: 0px 15px 0px 12px;
+}
+
+div.dhxform_item_label_left.button_delete div.dhxform_btn_txt {
+    background-image: url(../codebase/icons/delete.png);
+    background-repeat: no-repeat;
+    background-position: 0px 3px;
+    padding-left: 22px;
+    margin: 0px 15px 0px 12px;
+}
+
+div.dhxform_item_label_left.button_update div.dhxform_btn_txt {
+    background-image: url(../codebase/icons/update.png);
+    background-repeat: no-repeat;
+    background-position: 0px 3px;
+    padding-left: 22px;
+    margin: 0px 15px 0px 12px;
+}
+
+div.dhxform_item_label_left.button_clear div.dhxform_btn_txt {
+    background-image: url(../codebase/icons/clear.png);
+    background-repeat: no-repeat;
+    background-position: 0px 3px;
+    padding-left: 22px;
+    margin: 0px 15px 0px 12px;
+}
+
+div.dhxform_item_label_left.button_refresh div.dhxform_btn_txt {
+    background-image: url(../codebase/icons/refresh.png);
+    background-repeat: no-repeat;
+    background-position: 0px 3px;
+    padding-left: 22px;
+    margin: 0px 15px 0px 12px;
+}
+
+/*end image for button*/
+
+.dhxtoolbar_input {
+    top: -1px;
+}
+
+.dhx_dataview_item {
+    cursor: pointer;
+}
+
+
+.dhtmlx-info,
+.dhtmlx_modal_box {
+    box-shadow: -5px 7px 5px rgba(0, 0, 0, 0.8);
+    left: calc(50% - 150px) !important;
+}
+
+.dhxwins_vp_dhx_skyblue div.dhxwin_active {
+    box-shadow: -5px 7px 5px rgba(0, 0, 0, 0.8);
+}
+
+.info-container {
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding: 5px;
+    width: 100%;
+    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 5px 10px #888888;
+}
+
+.info-text {
+    text-align: left;
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: left;
+}
+
+.info-version {
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 5px 10px #888888;
+}
+
+.dhx_cal_light {
+    width: 590px !important;
+}
+
+.dhx_cal_lsection {
+    width: 125px !important;
+}
+
+.dhx_section_time {
+    margin-left: 30px !important;
+}
+
+.fwu_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+}
+
+.preview_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+}
+
+.fwd_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+}
+
+.fw_button {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+}
+
+.fwd_desc_2 {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    font-size: 12px;
+    font-family: system-ui;
+}
+
+.fw_img {
+    width: 50%;
+    height: 50%;
+    padding: 10px;
+    text-align: center;
+}
+
+.fw_desc {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    font-size: 12px;
+    font-family: system-ui;
+}
+
+.dhtmlx_popup_controls,
+.dhtmlx_popup_button {
+    text-align: center !important;
+}
+
+.dhtmlx_popup_button {
+    border: 1px solid #ccc !important;
+    padding: 1px !important;
+}
+
+.dhtmlx-alert-error .dhtmlx_popup_button:first-child,
+.dhtmlx-confirm-error .dhtmlx_popup_button:first-child {
+    background: transparent !important;
+}
+
+.dhtmlx-alert-error .dhtmlx_popup_title,
+.dhtmlx-confirm-error .dhtmlx_popup_title {
+    background: red !important;
+}
+
+.dhtmlx_popup_button:first-child {
+    background: transparent !important;
+}
+
+.dhx_cell_closed .dhx_cell_hdr .dhx_cell_hdr_text {
+    color: white !important;
+}
+
+.dhx_cell_hdr_arrow {
+    color: white !important;
+}
+
+/* CUSTOMS ICONS */
+.icon_timeline {
+    background-image: url(../codebase/icons/timeline.png) !important;
+    background-size: 16px 16px;
+}
+
+.icon_dashboard {
+    background-image: url(../codebase/icons/dashboard.png) !important;
+    background-size: 16px 16px;
+}
+
+.icon_tools {
+    background-image: url(../codebase/icons/tools.png) !important;
+    background-size: 16px 16px;
+}
+
+.icon_building {
+    background-image: url(../codebase/icons/building.png) !important;
+    background-size: 16px 16px;
+}
+
+.icon_production {
+    background-image: url(../codebase/icons/production.png) !important;
+    background-size: 16px 16px;
+}
+
+.icon_warehouse {
+    background-image: url(../codebase/icons/warehouse.png) !important;
+    background-size: 16px 16px;
+}
+
+.icon_others {
+    background-image: url(../codebase/icons/others.png) !important;
+    background-size: 16px 16px;
+}
+
+.icon_list {
+    background-image: url(../codebase/icons/list.png) !important;
+    background-size: 16px 16px;
+}
+
+.icon_key {
+    background-image: url(../codebase/icons/key.png) !important;
+    background-size: 16px 16px;
+}
+
+.icon_hrd {
+    background-image: url(../codebase/icons/hrd.png) !important;
+    background-size: 16px 16px;
+}
+
+.icon_doc {
+    background-image: url(../codebase/icons/document_48.png) !important;
+    background-size: 16px 16px;
+}
+
+.icon_rank {
+    background-image: url(../codebase/icons/medal.png) !important;
+    background-size: 16px 16px;
+}
+
+.icon_department {
+    background-image: url(../codebase/icons/puzzle_16.png) !important;
+    background-size: 16px 16px;
+}
+
+.menu_icon {
+    background-image: url(../codebase/icons/menu_icon.png) !important;
+    background-size: 16px 16px;
+}
+
+.arrow_right {
+    background-image: url(../codebase/icons/arrow_right.png) !important;
+    background-size: 16px 16px;
+}
+
+.arrow_down {
+    background-image: url(../codebase/icons/arrow_down.png) !important;
+    background-size: 16px 16px;
+}
+
+.icon_pdf {
+    background-image: url(../codebase/icons/pdf.png) !important;
+    background-size: 16px 16px;
+}
+
+.icon_word {
+    background-image: url(../codebase/icons/word.png) !important;
+    background-size: 16px 16px;
+}
+
+.icon_file {
+    background-image: url(../codebase/icons/app22.png) !important;
+    background-size: 16px 16px;
+}
+
+.icon_folder {
+    background-image: url(../codebase/icons/document_48.png) !important;
+    background-size: 16px 16px;
+}
+
+.icon_folder_closed {
+    background-image: url(../codebase/icons/folder_closed.png) !important;
+    background-size: 16px 16px;
+}
+
+.icon_opened {
+    background-image: url(../codebase/icons/folder_open.png) !important;
+    background-size: 16px 16px;
+}
+
+.icon_closed {
+    background-image: url(../codebase/icons/folder_closed.png) !important;
+    background-size: 16px 16px;
+}
+
+.simple_button {
+    background: #cc9633;
+    border-radius: 5px;
+    border: none;
+    padding: 3px;
+    padding-left: 6px;
+    padding-right: 6px;
+    width: auto;
+    height: 19px;
+    color: white;
+    cursor: pointer;
+}
+
+ul.highcharts-menu li:nth-child(2){
+    display: none !important;
+}
+
+ul.highcharts-menu li:nth-child(1){
+    display: none !important;
+}
