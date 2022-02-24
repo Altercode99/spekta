@@ -9,8 +9,6 @@ class AuthController extends Erp_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Main');
-        $this->Main->myConstruct('main');
         $this->jwt = new CreatorJWT();
     }
 

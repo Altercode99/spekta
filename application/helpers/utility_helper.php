@@ -142,6 +142,32 @@ function toIndoDateTime3($date)
     return $date . " " . $time;
 }
 
+function toIndoDateTime4($date)
+{
+    $datetime = explode(" ", $date);
+    $date = toIndoDateDay($datetime[0]);
+
+    if ($date == '' || $date == '0000-00-00') {
+        return '-';
+    }
+
+    $time = explode(':', $datetime[1]);
+    return "$date $time[0]:$time[1]";
+}
+
+function toIndoDateTime5($date)
+{
+    $datetime = explode(" ", $date);
+    $date = toIndoDate($datetime[0]);
+
+    if ($date == '' || $date == '0000-00-00') {
+        return '-';
+    }
+
+    $time = explode(':', $datetime[1]);
+    return "$date, $time[0]:$time[1]";
+}
+
 function toIndoSlash($date)
 {
     $newDate = explode('-', $date);

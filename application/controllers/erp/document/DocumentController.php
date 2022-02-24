@@ -112,6 +112,7 @@ class DocumentController extends Erp_Controller
                     'size' => setFileSize($main->size),
                     'filename' => $main->filename,
                     'revision' => $main->revision,
+                    'edition' => $main->edition,
                     'effective_date' => $main->effective_date,
                     'created_by' => $main->emp1,
                     'updated_by' => $main->emp2,
@@ -161,6 +162,7 @@ class DocumentController extends Erp_Controller
                     'size' => setFileSize($sub->size),
                     'filename' => $sub->filename,
                     'revision' => $sub->revision,
+                    'edition' => $sub->edition,
                     'effective_date' => $sub->effective_date,
                     'created_by' => $sub->emp1,
                     'updated_by' => $sub->emp2,
@@ -367,6 +369,7 @@ class DocumentController extends Erp_Controller
             'filename' => $file->filename,
             'effective_date' => $post['effective_date'],
             'revision' => $post['revision'],
+            'edition' => $post['edition'],
             'created_by' => empId(),
             'updated_by' => empId(),
             'updated_at' => date('Y-m-d H:i:s'),
@@ -381,6 +384,7 @@ class DocumentController extends Erp_Controller
             'sub_id' => $subId,
             'name' => $post['name'],
             'revision' => $post['revision'],
+            'edition' => $post['edition'],
             'revised_by' => empId(),
             'type' => $file->type,
             'size' => $file->size,
@@ -438,6 +442,7 @@ class DocumentController extends Erp_Controller
             'filename' => $post['filename'],
             'effective_date' => $post['effective_date'],
             'revision' => $post['revision'],
+            'edition' => $post['edition'],
             'updated_by' => empId(),
             'updated_at' => date('Y-m-d H:i:s'),
         ];
@@ -447,6 +452,7 @@ class DocumentController extends Erp_Controller
             'sub_id' => $subId,
             'name' => $post['name'],
             'revision' => $post['revision'],
+            'edition' => $post['edition'],
             'revised_by' => empId(),
             'type' => $file->type,
             'size' => $file->size,
@@ -478,6 +484,7 @@ class DocumentController extends Erp_Controller
             $xml .= "<cell>". cleanSC(setFileSize($rev->size)) ."</cell>";
             $xml .= "<cell>". cleanSC($rev->remark) ."</cell>";
             $xml .= "<cell>". cleanSC($rev->revision) ."</cell>";
+            $xml .= "<cell>". cleanSC($rev->edition) ."</cell>";
             $xml .= "<cell>". cleanSC($rev->revision_by) ."</cell>";
             $xml .= "<cell>". cleanSC(toIndoDate($rev->revision_date)) ."</cell>";
             $xml .= "</row>";

@@ -40,4 +40,20 @@ class CreatorJWT
             ], 400);
         }
     }
+
+    public function me($token)
+    {
+        if(array_key_exists('authorization', $token)) {
+            $jwtData = $this->DecodeToken(str_replace('Bearer ', '', $token['authorization']));
+            if(count($jwtData) > 0) return $jwtData;
+        } else if(array_key_exists('Authorization', $token)) {
+            $jwtData = $this->DecodeToken(str_replace('Bearer ', '', $token['Authorization']));
+            if(count($jwtData) > 0) return $jwtData;
+        } else {
+            response([
+                'status' => false,
+                'error' => 'Token bermasalah',
+            ], 400);
+        }
+    }
 }

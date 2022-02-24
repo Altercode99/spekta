@@ -9,6 +9,22 @@ class BasicModel extends CI_Model
         $this->db = $this->load->database($db_name, TRUE);
     }
 
+    public function getWhereOr($table, $whereOr = null)
+    {
+        $data = 1;
+        if($whereOr && count($whereOr) > 0) {
+            foreach ($whereOr as $key => $value) {
+                if($data == 1) {
+                    $this->db->where($key, $value);
+                } else {
+                    $this->db->or_where($key, $value);
+                }
+                $data++;
+            }
+        }
+        return $this->db->get($table);
+    }
+
     public function countWhere($table, $where)
     {
         $this->db->select('id');
@@ -25,7 +41,7 @@ class BasicModel extends CI_Model
         return $this->db->get_where($table, array('id' => $id))->row();
     }
 
-    public function getOne($table, $where, $select = '*', $whereIn = [], $whereNotIn = [])
+    public function getOne($table, $where, $select = '*', $whereIn = [], $whereNotIn = [], $orderBy = [])
     {
         $select !== '*' && $this->db->select($select);
         if($whereIn && count($whereIn) > 0) {
@@ -36,6 +52,11 @@ class BasicModel extends CI_Model
         if($whereNotIn && count($whereNotIn) > 0) {
             foreach ($whereNotIn as $key => $value) {
                 $this->db->where_not_in($key, $value);
+            }
+        }
+        if($orderBy && count($orderBy) > 0) {
+            foreach ($orderBy as $key => $value) {
+                $this->db->order_by($key, $value);
             }
         }
         $this->db->limit(1, 0);

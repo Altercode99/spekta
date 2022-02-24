@@ -76,9 +76,10 @@ $script = <<< "JS"
                     year_overtime_date: year, 
                     equal_status: "CLOSED"
                 }), "POST", {year, month}, (err, res) => {
-                if(res.grid.length > 0) {
+                if(res.grid.rows && res.grid.rows.length > 0) {
                     subOvtMachineHourGrid.parse(res.grid, subGridCount, "json");
                 } else {
+                    console.log("No Grid");
                     summaryLayout.cells("b").progressOff();
                 }
                 summaryLayout.cells("a").progressOff();

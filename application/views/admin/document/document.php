@@ -330,6 +330,7 @@ $script = <<< "JS"
                 {type: "input", name: "name", label: "Nama Dokumen", labelWidth: 130, inputWidth:250, required: true},
                 {type: "calendar", name: "effective_date", label: "Tanggal Efektif", labelWidth: 130, inputWidth:250, required: true},
                 {type: "input", name: "revision", label: "Revisi", labelWidth: 130, inputWidth:250, required: true, validate:"ValidNumeric"},
+                {type: "input", name: "edition", label: "Edisi", labelWidth: 130, inputWidth:250, required: true, validate:"ValidNumeric"},
                 {type: "upload", name: "file_uploader", inputWidth: 420,
                     url: Document("fileUpload"), 
                     swfPath: "./public/codebase/ext/uploader.swf", 
@@ -466,13 +467,13 @@ $script = <<< "JS"
             if(type === "file") {
                 if(!detail) {
                     disableMenu();
-                    treeLayout.cells("b").attachHTMLString("<div class='fwm_container'><div class='fwu_container'><div class='fw_img'><img width='70' height='70' src='./public/img/no-doc.png' /></div><div class='fw_desc'><table><tr><td>Nama</td><td>:</td><td>-</td></tr><tr><td>Tipe</td><td>:</td><td>-</td></tr><tr><td>Ukuran</td><td>:</td><td>-</td></tr><tr><td>Revisi</td><td>:</td><td>-</td></tr><tr><td>Efektif</td><td>:</td><td>-</td></tr><tr><td>Created By</td><td>:</td><td>-</td></tr><tr><td>Updated By</td><td>:</td><td>-</td></tr></table></div></div><div class='fwd_container'><div class='fwd_desc_2'><table><tr><td>Dibuat Tanggal</td><td>:</td><td>-</td></tr><tr><td>Diupdate Tanggal</td><td>:</td><td>-</td></tr></table></div></div></div>");
+                    treeLayout.cells("b").attachHTMLString("<div class='fwm_container'><div class='fwu_container'><div class='fw_img'><img width='70' height='70' src='./public/img/no-doc.png' /></div><div class='fw_desc'><table><tr><td>Nama</td><td>:</td><td>-</td></tr><tr><td>Tipe</td><td>:</td><td>-</td></tr><tr><td>Ukuran</td><td>:</td><td>-</td></tr><tr><td>Revisi</td><td>:</td><td>-</td></tr><tr><td>Edisi</td><td>:</td><td>-</td></tr><tr><td>Efektif</td><td>:</td><td>-</td></tr><tr><td>Created By</td><td>:</td><td>-</td></tr><tr><td>Updated By</td><td>:</td><td>-</td></tr></table></div></div><div class='fwd_container'><div class='fwd_desc_2'><table><tr><td>Dibuat Tanggal</td><td>:</td><td>-</td></tr><tr><td>Diupdate Tanggal</td><td>:</td><td>-</td></tr></table></div></div></div>");
                 } else {
                     enableMenu();
                     selectedFilename = detail.filename;
                     selectedDocId = detail.id;
                     let icon = detail.type === "pdf" ? "pdf.png" : "word.png";
-                    treeLayout.cells("b").attachHTMLString("<div class='fwm_container'><div class='fwu_container'><div class='fw_img'><img width='70' height='70' src='./public/img/"+icon+"' /></div><div class='fw_desc'><table><tr><td>Nama</td><td>:</td><td>"+detail.name+"</td></tr><tr><td>Tipe</td><td>:</td><td>"+detail.type+"</td></tr><tr><td>Ukuran</td><td>:</td><td>"+detail.size+"</td></tr><tr><td>Revisi</td><td>:</td><td>"+detail.revision+"</td></tr><tr><td>Efektif</td><td>:</td><td>"+detail.effective_date+"</td></tr><tr><td>Created By</td><td>:</td><td>"+detail.created_by+"</td></tr><tr><td>Updated By</td><td>:</td><td>"+detail.updated_by+"</td></tr></table></div></div><div class='fwd_container'><div class='fwd_desc_2'><table><tr><td>Dibuat Tanggal</td><td>:</td><td>"+detail.created_at+"</td></tr><tr><td>Diupdate Tanggal</td><td>:</td><td>"+detail.updated_at+"</td></tr></table></div></div></div>");
+                    treeLayout.cells("b").attachHTMLString("<div class='fwm_container'><div class='fwu_container'><div class='fw_img'><img width='70' height='70' src='./public/img/"+icon+"' /></div><div class='fw_desc'><table><tr><td>Nama</td><td>:</td><td>"+detail.name+"</td></tr><tr><td>Tipe</td><td>:</td><td>"+detail.type+"</td></tr><tr><td>Ukuran</td><td>:</td><td>"+detail.size+"</td></tr><tr><td>Revisi</td><td>:</td><td>"+detail.revision+"</td></tr><tr><td>Edisi</td><td>:</td><td>"+detail.edition+"</td></tr><tr><td>Efektif</td><td>:</td><td>"+detail.effective_date+"</td></tr><tr><td>Created By</td><td>:</td><td>"+detail.created_by+"</td></tr><tr><td>Updated By</td><td>:</td><td>"+detail.updated_by+"</td></tr></table></div></div><div class='fwd_container'><div class='fwd_desc_2'><table><tr><td>Dibuat Tanggal</td><td>:</td><td>"+detail.created_at+"</td></tr><tr><td>Diupdate Tanggal</td><td>:</td><td>"+detail.updated_at+"</td></tr></table></div></div></div>");
                 }
             } else {
                 selectedFilename = null;
@@ -510,7 +511,7 @@ $script = <<< "JS"
                     if(myWins.isWindow("revision") === false) {
                         let openedWins = checkMaxOpenWins();
                         if(openedWins < 5) {
-                            let revisionWins = createWindow("revision", "Revisi Dokumen");
+                            let revisionWins = createWindow("revision", "Revisi Dokumen", 850, 550);
                             let revisionTabbar = revisionWins.attachTabbar({
                                 tabs: [
                                     {id: "a", text: tabsStyle("edit.png", "Upload Dokumen Revisi"), active: true},
@@ -574,11 +575,11 @@ $script = <<< "JS"
                                 
                                 revisionTabbar.cells("b").progressOn();
                                 fileGrid = revisionTabbar.cells("b").attachGrid();
-                                fileGrid.setHeader("No,Nama Dokumen,Nama File,Tipe,Size,Remark,Revisi,DiRevisi Oleh,Tanggal Rrevisi");
-                                fileGrid.setColSorting("int,str,str,str,str,str,str,str,str");
-                                fileGrid.setColAlign("center,left,left,left,left,left,left,left,left");
-                                fileGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-                                fileGrid.setInitWidthsP("5,25,25,10,15,35,15,15,15");
+                                fileGrid.setHeader("No,Nama Dokumen,Nama File,Tipe,Size,Remark,Revisi,Edisi,DiRevisi Oleh,Tanggal Rrevisi");
+                                fileGrid.setColSorting("int,str,str,str,str,str,str,str,str,str");
+                                fileGrid.setColAlign("center,left,left,left,left,left,left,left,left,left");
+                                fileGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
+                                fileGrid.setInitWidthsP("5,25,25,10,15,35,15,15,15,15");
                                 fileGrid.enableMultiselect(true);
                                 fileGrid.enableSmartRendering(true);
                                 fileGrid.attachEvent("onXLE", function() {
@@ -599,6 +600,7 @@ $script = <<< "JS"
                                     {type: "input", name: "name", label: "Nama Dokumen", labelWidth: 130, inputWidth:250, required: true, value: currentFile.name},
                                     {type: "calendar", name: "effective_date", label: "Tanggal Efektif", labelWidth: 130, inputWidth:250, required: true, value: globalDate},
                                     {type: "input", name: "revision", label: "Revisi", labelWidth: 130, inputWidth:250, required: true, readonly: true, validate:"ValidNumeric", value: parseInt(currentFile.revision) + 1},
+                                    {type: "input", name: "edition", label: "Edisi", labelWidth: 130, inputWidth:250, required: true, readonly: true, validate:"ValidNumeric", value: parseInt(currentFile.edition) + 1},
                                     {type: "input", name: "remark", label: "Remark", labelWidth: 130, inputWidth:250, required: true, rows: 3},
                                     {type: "upload", name: "file_uploader", inputWidth: 420,
                                         url: Document("fileUpload"), 

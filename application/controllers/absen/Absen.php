@@ -51,7 +51,7 @@ class Absen extends CI_Controller
                     ->setForegroundColor(new Color(0, 0, 0))
                     ->setBackgroundColor(new Color(255, 255, 255));
                 $logo = Logo::create('./public/img/spekta.png')
-                    ->setResizeToWidth(75);
+                    ->setResizeToWidth(0);
                 $label = Label::create($gate->gate_name)
                     ->setTextColor(new Color(255, 0, 0));
                 $result = $writer->write($qrCode, $logo, $label);
