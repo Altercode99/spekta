@@ -10,7 +10,7 @@ function loginFormUI() {
     {
       type: "label",
       label:
-        "<div style='width:100%;text-align:center'><marquee>SISTEM PELAYANAN ELEKTRONIK KIMIA FARMA PLANT JAKARTA</marquee></div>",
+        "<div style='width:100%;text-align:center'><marquee>SISTEM PELAYANAN ELEKTRONIK PT. KIMIA FARMA Tbk. PLANT JAKARTA</marquee></div>",
     },
     {
       type: "block",
@@ -73,7 +73,7 @@ function loginFormUI() {
     },
     {
       type: "label",
-      label: `<div style='width:100%;display:flex;flex-direction:column;justify-content:space-between;align-items:center;border-top: 1px solid #ccc'><span style='font-family:sans-serif;margin-bottom:10px;margin-top:10px'>PT. KIMIA FARMA PLANT JAKARTA</span><span style='font-family:sans-serif'>Developed By Hardware & Network</span><span style='margin-top:10px;font-family:sans-serif'>©Copyright ${date.getFullYear()}</span></div>`,
+      label: `<div style='width:100%;display:flex;flex-direction:column;justify-content:space-between;align-items:center;border-top: 1px solid #ccc'><span style='font-family:sans-serif;margin-bottom:10px;margin-top:10px'>PT. Kimia Farma Tbk. Plant Jakarta</span><span style='font-family:sans-serif'>Developed By Hardware & Network</span><span style='margin-top:10px;font-family:sans-serif'>©Copyright ${date.getFullYear()}</span></div>`,
     },
   ];
 

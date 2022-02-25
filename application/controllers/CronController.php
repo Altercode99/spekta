@@ -11,15 +11,18 @@ class CronController extends Erp_Controller
     //@URL: http://localhost/spekta/index.php?c=AppController&m=sendEmail
     public function sendEmail()
     {
-        $emails = $this->Main->getWhere('email', ['status' => 0, 'DATE(created_at)' => date('Y-m-d')])->result();
-        foreach ($emails as $email) {
-            $send = $this->sendmail->sendEmail($email->subject, $email->message, $email->email_to, $email->email_cc, $email->subject_name);
-            if ($send) {
-                $data = [
-                    'status' => 1,
-                    'send_date' => date('Y-m-d H:i:s'),
-                ];
-                $this->Main->updateById('email', $data, $email->id);
+        $status = $this->Main->getDataById('email_send', 1)->status;
+        if($status == 'enable') {
+            $emails = $this->Main->getWhere('email', ['status' => 0, 'DATE(created_at)' => date('Y-m-d')])->result();
+            foreach ($emails as $email) {
+                $send = $this->sendmail->sendEmail($email->subject, $email->message, $email->email_to, $email->email_cc, $email->subject_name);
+                if ($send) {
+                    $data = [
+                        'status' => 1,
+                        'send_date' => date('Y-m-d H:i:s'),
+                    ];
+                    $this->Main->updateById('email', $data, $email->id);
+                }
             }
         }
     }

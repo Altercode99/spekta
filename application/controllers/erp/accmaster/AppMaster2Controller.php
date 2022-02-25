@@ -75,6 +75,34 @@ class AppMaster2Controller extends Erp_Controller
         }
     }
 
+    public function emailDelete()
+    {
+        $post = fileGetContent();
+        $mError = '';
+        $mSuccess = '';
+        $datas = $post->datas;
+        foreach ($datas as $id => $data) {
+            $mSuccess .= "- $data->field berhasil dihapus <br>";
+            $this->Main->delete('email', ['id' => $data->id]);
+        }
+
+        response(['status' => 'success', 'mError' => $mError, 'mSuccess' => $mSuccess]);
+    }
+
+    public function enableEmail()
+    {
+        $post = fileGetContent();
+        $this->Main->updateById('email_send', ['status' => $post->status], 1);
+        $status = strtoupper($post->status);
+        response(['status' => 'success', 'message' => "Pengiriman email $status"]);
+    }
+
+    public function setEmailStatus()
+    {
+        $status = $this->Main->getDataById('email_send', 1)->status;
+        response(['status' => $status]);
+    }
+
     /* ========================= OVERTIME FUNCTIONS  =========================*/
     public function reqOvertimeGrid()
     {

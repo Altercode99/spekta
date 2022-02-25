@@ -6,7 +6,7 @@ if ((strpos(strtolower($_SERVER['SCRIPT_NAME']), strtolower(basename(__FILE__)))
 
 $script = <<< "JS"
 
-	function showEmailSend() {
+function showEmailSend() {
         var legend = legendGrid();
 
         var emailLayout = mainTab.cells("am_send_email_tab").attachLayout({
@@ -20,10 +20,26 @@ $script = <<< "JS"
             icon_path: "./public/codebase/icons/",
             items: [
                 {id: "refresh", text: "Refresh", img: "refresh.png"},
+                {id: "email_send", text: "<span>Kirim Email: <select id='email_send' style='height:22px;margin-top:3px'><option value='enable'>Enable</option><option value='disable'>Disable</option></select></span>"},
                 {id: "month", text: genSelectMonth("am_email_year", "am_email_month")},
                 {id: "message", text: "Lihat Isi Pesan", img: "email.png"},
                 {id: "send", text: "Kirim Ulang <span id='email_loading'></span>", img: "send.png"},
+                {id: "delete", text: "Hapus", img: "delete.png"},
             ]
+        });
+
+        reqJson(AppMaster2('setEmailStatus'), "GET", null, (err, res) => {
+            $("#email_send").val(res.status);
+        });
+
+        $("#email_send").on("change", function() {
+            reqJson(AppMaster2('enableEmail'), "POST", {status: $("#email_send").val()}, (err, res) => {
+                if(res.status === "success") {
+                    sAlert(res.message);
+                } else {
+                    eAlert(res.message);
+                }
+            });
         });
 
         emailMenu.attachEvent("onClick", function(id) {
@@ -65,6 +81,13 @@ $script = <<< "JS"
                         }
                     });
                     break;
+                case "delete":
+                    reqAction(emailGrid, AppMaster2("emailDelete"), 2, (err, res) => {
+                        rEmailGrid();
+                        res.mSuccess && sAlert("Sukses Menghapus Record <br>" + res.mSuccess);
+                        res.mError && eAlert("Gagal Menghapus Record <br>" + res.mError);
+                    });
+                    break;
             }
         });
 
@@ -90,6 +113,7 @@ $script = <<< "JS"
         emailGrid.setColAlign("center,left,left,left,left,left,left,left,left");
         emailGrid.setInitWidthsP("5,25,35,35,30,20,25,20,25");
         emailGrid.enableSmartRendering(true);
+        emailGrid.enableMultiselect(true);
         emailGrid.attachEvent("onXLE", function() {
             emailLayout.cells("a").progressOff();
         });
