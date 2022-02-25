@@ -239,13 +239,15 @@ class ProjectController extends Erp_Controller
         $xml = "";
         $no = 1;
         foreach ($emps as $emp) {
-            $xml .= "<row id='$emp->email'>";
-            $xml .= "<cell>". cleanSC($no) ."</cell>";
-            $xml .= "<cell>0</cell>";
-            $xml .= "<cell>". cleanSC($emp->employee_name) ."</cell>";
-            $xml .= "<cell>". cleanSC($emp->email) ."</cell>";
-            $xml .= "</row>";
-            $no++;
+            if($emp->email) {
+                $xml .= "<row id='$emp->email'>";
+                $xml .= "<cell>". cleanSC($no) ."</cell>";
+                $xml .= "<cell>0</cell>";
+                $xml .= "<cell>". cleanSC($emp->employee_name) ."</cell>";
+                $xml .= "<cell>". cleanSC($emp->email) ."</cell>";
+                $xml .= "</row>";
+                $no++;
+            }
         }
         gridXmlHeader($xml);
     }
