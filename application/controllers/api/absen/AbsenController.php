@@ -24,19 +24,52 @@ class AbsenController extends Erp_Controller
         $jwtData = $this->jwt->me($this->input->request_headers('authorization'));
         $checkQr = $this->Hr->getWhereOr('gates', ['token' => $post->qrScanned, 'before_token' => $post->qrScanned])->row();
         if ($checkQr) {
-            $isAbsen = $this->Hr->getOne("absen_$postfix", ['emp_id' => $jwtData['empId'], 'DATE(action_date)' => $date, 'action' => $post->action]);
-            if (!$isAbsen) {
-                $emp = $this->Hr->getOne('employees', ['id' => $jwtData['empId']]);
-                $data = [
-                    'location' => $emp->location,
-                    'emp_id' => $emp->id,
-                    'gate' => $checkQr->gate_name,
+            $emp = $this->Hr->getOne('employees', ['id' => $jwtData['empId']]);
+            $data = [
+                'location' => $emp->location,
+                'emp_id' => $emp->id,
+                'gate' => $checkQr->gate_name,
+                'action' => $post->action,
+                'action_date' => $today,
+                'qr_code' => $post->qrScanned,
+                'updated_by' => $emp->id,
+                'updated_at' => $today,
+            ];
+            
+            if($post->action == 'IN') {
+                $isAbsen = $this->Hr->getOne("absen_$postfix", [
+                    'emp_id' => $jwtData['empId'], 
+                    'DATE(action_date)' => $date, 
                     'action' => $post->action,
-                    'action_date' => $today,
-                    'qr_code' => $post->qrScanned,
-                    'updated_by' => $emp->id,
-                    'updated_at' => $today,
+                    'qr_code_couple' => ''
+                ]);
+
+                if (!$isAbsen) {
+                    $this->Hr->create("absen_$postfix", $data);
+                    $absen = [
+                        'empId' => $emp->id,
+                        'sapId' => $emp->sap_id,
+                        'empName' => $emp->employee_name,
+                        'gate' => $checkQr->gate_name,
+                        'action' => $post->action,
+                        'actionDate' => toIndoDateTime4($today),
+                        'qrScanned' => $post->qrScanned,
+                        'new' => false,
+                    ];
+                    response(['qrScanned' => $post->qrScanned, 'absen' => $absen, 'action' => $post->action]);
+                } else {
+                    response(['error' => 'Anda sudah absen masuk pada tanggal ' . toIndoDateTime4($isAbsen->action_date) .' silahkan absen keluar terlebih dahulu'], 400);
+                }
+            } else {
+                $lastIn = $this->Absen->getLastIn($jwtData['empId'], $postfix);
+                $data['qr_code_couple'] = $lastIn->qr_code;
+                $data['couple_date'] = $lastIn->date;
+                $inData = [
+                    'qr_code_couple' => $post->qrScanned,
+                    'couple_date' => $date
                 ];
+                $this->Hr->updateById("absen_$postfix", $inData, $lastIn->id);
+                
                 $this->Hr->create("absen_$postfix", $data);
                 $absen = [
                     'empId' => $emp->id,
@@ -46,11 +79,9 @@ class AbsenController extends Erp_Controller
                     'action' => $post->action,
                     'actionDate' => toIndoDateTime4($today),
                     'qrScanned' => $post->qrScanned,
-                    'new' => $post->action == 'OUT' ? true : false,
+                    'new' => true,
                 ];
                 response(['qrScanned' => $post->qrScanned, 'absen' => $absen, 'action' => $post->action]);
-            } else {
-                response(['error' => 'Anda sudah absen pada tanggal ' . toIndoDateTime4($isAbsen->action_date)], 400);
             }
         } else {
             response(['error' => 'QR Code kadaluarsa, silahkan SCAN kembali QR Code yang baru!'], 404);
@@ -62,7 +93,7 @@ class AbsenController extends Erp_Controller
         $postfix = date('Ym');
         $date = date('Y-m-d');
         $jwtData = $this->jwt->me($this->input->request_headers('authorization'));
-        $isAbsen = $this->Hr->getOne("absen_$postfix", ['emp_id' => $jwtData['empId'], 'DATE(action_date)' => $date], '*', null, null, ['action_date' => 'DESC']);
+        $isAbsen = $this->Hr->getOne("absen_$postfix", ['emp_id' => $jwtData['empId']], '*', null, null, ['action_date' => 'DESC']);
         if ($isAbsen) {
             $emp = $this->Hr->getOne('employees', ['id' => $jwtData['empId']]);
             $actionDate = date('Y-m-d', strtotime($isAbsen->action_date));
@@ -90,24 +121,18 @@ class AbsenController extends Erp_Controller
         $absens = $this->Absen->getAbsens($params, $jwtData['empId'], $postfix)->result();
         $fixAbsen = [];
         foreach ($absens as $absen) {
-            $date = date('Y-m-d', strtotime($absen->action_date));
-            $time = date('H:i', strtotime($absen->action_date));
-            $time = str_replace(':', ".", $time);
-            $time = floatval($time);
-
-            if($absen->action == 'OUT' && $time <= 8.00) {
-                $date = explode(' ', backDayToDate($date, 1))[0];
-                $fixAbsen[$date]['gateOut'] = $absen->gate;
-            } else if($absen->action == 'OUT'){
-                $fixAbsen[$date]['gateOut'] = $absen->gate;
+            if($absen->action == 'OUT'){
+                $key = $absen->qr_code_couple;
+                $fixAbsen[$absen->qr_code_couple]['gateOut'] = $absen->gate;
             }
 
             if($absen->action == 'IN') {
-                $fixAbsen[$date]['date'] = toIndoDateDay($date);
-                $fixAbsen[$date]['gateIn'] = $absen->gate;
+                $key = $absen->qr_code;
+                $fixAbsen[$absen->qr_code]['date'] = toIndoDateDay($absen->date);
+                $fixAbsen[$absen->qr_code]['gateIn'] = $absen->gate;
             }
 
-            $fixAbsen[$date][$absen->action] = toIndoDateTime5($absen->action_date);
+            $fixAbsen[$key][$absen->action] = toIndoDateTime5($absen->action_date);
         }
 
         $keys = array_column($fixAbsen, 'date');

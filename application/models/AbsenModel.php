@@ -18,8 +18,30 @@ class AbsenModel extends CI_Model
 
     public function getAbsens($params, $empId, $postfix)
     {
-        $where = advanceSearch($params);
-        $sql = "SELECT * FROM absen_$postfix a WHERE a.emp_id = $empId $where ORDER BY a.action_date DESC";
-        return $this->db->query($sql);
+        $isExist = $this->checkTableExist("absen_$postfix");
+        if($isExist->num_rows() > 0) {
+            $where = advanceSearch($params);
+            $sql = "SELECT *,DATE(action_date) AS date FROM absen_$postfix a WHERE a.emp_id = $empId $where ORDER BY a.action_date DESC";
+            return $this->db->query($sql);
+        } else {
+            return $isExist;
+        }
+    }
+
+    public function checkTableExist($table)
+    {
+        return $this->db->query("SHOW TABLES LIKE '%$table%'");
+    }
+
+    public function getLastIn($empId, $postfix)
+    {
+       return $this->db->select('*, DATE(action_date) AS date')
+                 ->from("absen_$postfix")
+                 ->where('emp_id', $empId)
+                 ->where('action', 'IN')
+                 ->order_by('action_date', 'DESC')
+                 ->limit(1)
+                 ->get()
+                 ->row();
     }
 }

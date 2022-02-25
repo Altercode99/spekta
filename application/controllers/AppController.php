@@ -155,6 +155,8 @@ class AppController extends Erp_Controller
                                 if ($this->auth->role !== "admin") {
                                     if ($view['filename'] == 'document.php') {
                                         $listview['files'][] = 'admin/' . $view['folder'];
+                                    } else if ($view['filename'] == 'project_management.php') {
+                                        $listview['files'][] = 'admin/' . $view['folder'];
                                     } else {
                                         if (array_key_exists($view['filename'], $treeFiles)) {
                                             $listview['files'][] = 'admin/' . $view['folder'];
