@@ -25,6 +25,8 @@ $script = <<< "JS"
                 {id: "reject", text: "Reject Lembur", type: "button", img: "messagebox_critical.png"},
                 {id: "revision", text: "Revisi Lembur (Back To Admin)", type: "button", img: "refresh.png"},
                 {id: "hour_revision", text: "Revisi Waktu Lembur", type: "button", img: "clock.png"},
+                {id: "print_overtime", text: "Cetak Lemburan", type: "button", img: "printer.png"},
+                {id: "send_wsap", text: "Kirim WhatsApp", type: "button", img: "wa.png"},
             ]
         });
 
@@ -271,6 +273,25 @@ $script = <<< "JS"
                         }
                     });
                     break;
+                case "print_overtime":
+                    reqJson(Pc("createLink", {action: 'web'}), "POST", {
+                        waTaskId: ovtGrid.cells(ovtGrid.getSelectedRowId(), 1).getValue(),
+                    }, (err, res) => {
+                        window.open(res.url, '_blank');
+                    });
+                    
+                    break;
+                case "send_wsap":
+                    reqJson(Pc("createLink", {action: 'wa'}), "POST", {
+                        waOvtDate: ovtGrid.cells(ovtGrid.getSelectedRowId(), 7).getValue(),
+                        waTaskId: ovtGrid.cells(ovtGrid.getSelectedRowId(), 1).getValue(),
+                        waStartDate: ovtGrid.cells(ovtGrid.getSelectedRowId(), 8).getValue(),
+                        waEndDate: ovtGrid.cells(ovtGrid.getSelectedRowId(), 9).getValue(),
+                        waTotalPersonel: ovtGrid.cells(ovtGrid.getSelectedRowId(), 5).getValue()
+                    }, (err, res) => {
+                        window.open(res.message);
+                    });
+                    break;
             }
         });
 
@@ -284,7 +305,7 @@ $script = <<< "JS"
         var ovtGrid = appvTabs.cells("a").attachGrid();
         ovtGrid.setImagePath("./public/codebase/imgs/");
         ovtGrid.setHeader("No,Task ID,Sub Unit,Bagian,Disivi,Kebutuhan Orang,Status Hari,Tanggal Overtime,Waktu Mulai, Waktu Selesai,Catatan,Makan,Steam,AHU,Compressor,PW,Jemputan,Dust Collector,Mekanik,Listrik,H&N,Status Overtime,SPV Approval,ASMAN Approval,MANAGER Approval,HEAD Approval,Revisi Jam Lembur,Rejection User Approval,Created By,Updated By,Created At,NIPSPV,NIPASMAN,NIPMGR");
-        ovtGrid.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
+        ovtGrid.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
         ovtGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
         ovtGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
         ovtGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");

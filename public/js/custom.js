@@ -337,6 +337,10 @@ function App(method, params) {
   return mainController("AppController", method, params);
 }
 
+function Pc(method, params) {
+  return mainController("pc", method, params);
+}
+
 function AppMaster(method, params) {
   return erpController("accmaster", "AppMaster1Controller", method, params);
 }

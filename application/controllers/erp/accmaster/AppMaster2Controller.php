@@ -17,7 +17,7 @@ class AppMaster2Controller extends Erp_Controller
     public function getEmailGrid()
     {
         $params = getParam();
-        $emails = $this->Main->getWhere('email', ['MONTH(created_at)' => $params['month'], 'YEAR(created_at)' => $params['year']])->result();
+        $emails = $this->Main->getWhere('email', ['MONTH(created_at)' => $params['month'], 'YEAR(created_at)' => $params['year']], '*', null, ['created_at' => 'DESC'])->result();
         $xml = "";
         $no = 1;
         foreach ($emails as $email) {

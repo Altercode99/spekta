@@ -149,6 +149,15 @@ $script = <<< "JS"
 								validate: "NotEmpty", 
 								required: true
 							},
+							{type: "combo", name: "access", label: "Level Akses", readonly: true, required: true, labelWidth: 130, inputWidth: 250,
+								validate: "NotEmpty", 
+								options:[
+									{value: "", text: ""},
+									{value: "BOTH", text: "Web & Mobile"},
+									{value: "WEB", text: "Web"},
+									{value: "MOBILE", text: "Mobile"},
+								]
+							},
 						]},
 						{type: "block", offsetLeft: 30, offsetTop: 10, list: [
 							{type: "button", name: "add", className: "button_add", offsetLeft: 15, value: "Tambah"},
@@ -250,6 +259,15 @@ $script = <<< "JS"
 									readonly: true,
 									validate: "NotEmpty", 
 									required: true
+								},
+								{type: "combo", name: "access", label: "Level Akses", readonly: true, required: true, labelWidth: 130, inputWidth: 250,
+									validate: "NotEmpty", 
+									options:[
+										{value: "", text: ""},
+										{value: "BOTH", text: "Web & Mobile"},
+										{value: "WEB", text: "Web"},
+										{value: "MOBILE", text: "Mobile"},
+									]
 								},
 								{type: "combo", name: "status", label: "Status User", readonly: true, required: true, labelWidth: 130, inputWidth: 250,
 									validate: "NotEmpty", 

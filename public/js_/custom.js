@@ -50,13 +50,13 @@ function mainController(e, t, r = null) {
   return `index.php?c=${e}&m=${t}`;
 }
 function fetchFormData(e, t, r = null, n = null, o = null) {
-  reqJson(e, "GET", null, (e, a) => {
-    if (r && r.length > 0) var l = [];
-    a.field.map((e) => {
-      t.setItemValue(e, a.data[e]),
-        r && r.length > 0 && r.map((t) => t == e && l.push(a.data[e]));
+  reqJson(e, "GET", null, (e, l) => {
+    if (r && r.length > 0) var a = [];
+    l.field.map((e) => {
+      t.setItemValue(e, l.data[e]),
+        r && r.length > 0 && r.map((t) => t == e && a.push(l.data[e]));
     }),
-      r && l.length > 0 && n && n(l),
+      r && a.length > 0 && n && n(a),
       o && o();
   });
 }
@@ -115,8 +115,8 @@ function reqAction(e, t, r, n) {
       expire: 1e4,
       text: "<img src='./public/codebase/icons/messagebox_warning.png'> Hati-hati menghapus lebih dari satu",
     });
-  var a = [];
-  o.split(",").map((t) => a.push({ id: t, field: e.cells(t, r).getValue() })),
+  var l = [];
+  o.split(",").map((t) => l.push({ id: t, field: e.cells(t, r).getValue() })),
     dhtmlx.modalbox({
       type: "alert-error",
       title: "Konfirmasi",
@@ -124,7 +124,7 @@ function reqAction(e, t, r, n) {
       buttons: ["Ya", "Tidak"],
       callback: function (e) {
         if (0 == e) {
-          reqJson(t, "DELETE", { datas: a }, (e, t) => {
+          reqJson(t, "DELETE", { datas: l }, (e, t) => {
             e ? n(e, null) : "success" === t.status && n(null, t);
           });
         }
@@ -143,8 +143,8 @@ function reqConfirm(e, t, r, n) {
       expire: 1e4,
       text: "<img src='./public/codebase/icons/messagebox_warning.png'> Hati-hati memproses lebih dari satu",
     });
-  var a = [];
-  o.split(",").map((t) => a.push({ id: t, field: e.cells(t, r).getValue() })),
+  var l = [];
+  o.split(",").map((t) => l.push({ id: t, field: e.cells(t, r).getValue() })),
     dhtmlx.modalbox({
       type: "alert-warning",
       title: "Konfirmasi",
@@ -152,7 +152,7 @@ function reqConfirm(e, t, r, n) {
       buttons: ["Ya", "Tidak"],
       callback: function (e) {
         if (0 == e) {
-          reqJson(t, "DELETE", { datas: a }, (e, t) => {
+          reqJson(t, "DELETE", { datas: l }, (e, t) => {
             e ? n(e, null) : "success" === t.status && n(null, t);
           });
         }
@@ -208,6 +208,9 @@ function isHaveTrees(e) {
 }
 function App(e, t) {
   return mainController("AppController", e, t);
+}
+function Pc(e, t) {
+  return mainController("pc", e, t);
 }
 function AppMaster(e, t) {
   return erpController("accmaster", "AppMaster1Controller", e, t);
@@ -356,23 +359,23 @@ function isGridNumeric(e, t) {
 }
 function checkTime(e, t, r, n) {
   let o = parseFloat(e.getSelectedValue().split(":").join(".")),
-    a = parseFloat(t.getSelectedValue().split(":").join("."));
+    l = parseFloat(t.getSelectedValue().split(":").join("."));
   return (
     setEnable(r, n),
-    a < o
+    l < o
       ? (eaWarning(
           "Warning Waktu Lembur",
           "Waktu akhir lebih kecil dari waktu mulai, waktu akhir akan dihitung ke hari berikutnya!"
         ),
         !0)
-      : a - o <= 1
+      : l - o <= 1
       ? (eaAlert(
           "Kesalahan Waktu Lembur",
           "Waktu lembur minimal adalah 1 jam! <br/><b>TOMBOL DISABLED</>"
         ),
         setDisable(r, n),
         !1)
-      : a === o
+      : l === o
       ? (eaAlert(
           "Kesalahan Waktu Lembur",
           "Waktu selesai harus lebih besar dari waktu mulai! <br/><b>TOMBOL DISABLED</>"
@@ -388,8 +391,8 @@ function timeDiffCalc(e, t) {
   r -= 86400 * n;
   const o = Math.floor(r / 3600) % 24;
   r -= 3600 * o;
-  const a = Math.floor(r / 60) % 60;
-  return (r -= 60 * a), { days: n, hours: o, minutes: a };
+  const l = Math.floor(r / 60) % 60;
+  return (r -= 60 * l), { days: n, hours: o, minutes: l };
 }
 function daysInMonth(e, t) {
   return new Date(t, e, 0).getDate();
@@ -427,24 +430,24 @@ function numberFormat(e) {
   return e > 0 ? t.format(e).replace("$", "") : t.format(0).replace("$", "");
 }
 function sumGridToElement(e, t, r, n = null, o = "money") {
-  var a = document.getElementById(r);
-  if (n) var l = document.getElementById(n);
+  var l = document.getElementById(r);
+  if (n) var a = document.getElementById(n);
   let i = 0;
   if ("money" == o) {
     for (let r = 0; r < e.getRowsNum(); r++) {
       var u = e.cells2(r, t).getValue().replaceAll(".", "");
       i += parseFloat(u.replaceAll(",", "."));
     }
-    (a.innerHTML = numberFormat(i)),
-      n && (l.innerHTML = "Rp. " + numberFormat(i));
+    (l.innerHTML = numberFormat(i)),
+      n && (a.innerHTML = "Rp. " + numberFormat(i));
   } else {
     for (let r = 0; r < e.getRowsNum(); r++) {
       let n = e.cells2(r, t).getValue();
       i += "float" == o ? parseFloat(n) : "int" == o ? parseInt(n) : n;
     }
     "int" == o
-      ? ((a.innerHTML = i), n && (l.innerHTML = i))
-      : ((a.innerHTML = numberFormat(i)), n && (l.innerHTML = numberFormat(i)));
+      ? ((l.innerHTML = i), n && (a.innerHTML = i))
+      : ((l.innerHTML = numberFormat(i)), n && (a.innerHTML = numberFormat(i)));
   }
   return i;
 }
@@ -467,7 +470,7 @@ function genSelectMonth(e, t) {
   let r = new Date(),
     n = r.getMonth() + 1,
     o = r.getFullYear(),
-    a = {
+    l = {
       1: "Januari",
       2: "Februari",
       3: "Maret",
@@ -481,16 +484,16 @@ function genSelectMonth(e, t) {
       11: "November",
       12: "Desember",
     },
-    l =
+    a =
       "<span style='width:100%'> Bulan: <select id='" +
       t +
       "' style='height:22px;margin-top:3px'>";
   for (let e = 1; e <= 12; e++)
-    l +=
+    a +=
       n === e
-        ? `<option selected value='${e}'>${a[e]}</option>`
-        : `<option value='${e}'>${a[e]}</option>`;
-  l += "</select></span>";
+        ? `<option selected value='${e}'>${l[e]}</option>`
+        : `<option value='${e}'>${l[e]}</option>`;
+  a += "</select></span>";
   let i =
     "<span style='width:100%;margin-left: 10px'> Tahun: <select id='" +
     e +
@@ -500,13 +503,13 @@ function genSelectMonth(e, t) {
       o === e
         ? `<option selected value='${e}'>${e}</option>`
         : `<option value='${e}'>${e}</option>`;
-  return (i += "</select></span>"), l + "" + i;
+  return (i += "</select></span>"), a + "" + i;
 }
 function genWorkTime(e, t, r) {
   var n = [],
     o = [],
-    a = [],
-    l = [];
+    l = [],
+    a = [];
   return (
     r < t
       ? e.map((e, i) => {
@@ -518,13 +521,13 @@ function genWorkTime(e, t, r) {
             "00:30" !== e.value &&
             "04:30" !== e.value &&
             "05:00" !== e.value &&
-            (n.push({ text: e.text, value: e.value }), a.push(e.value)),
+            (n.push({ text: e.text, value: e.value }), l.push(e.value)),
             i <= r &&
               "12:30" !== e.value &&
               "18:30" !== e.value &&
               "00:30" !== e.value &&
               "05:00" !== e.value &&
-              (o.push({ text: e.text, value: e.value }), l.push(e.value));
+              (o.push({ text: e.text, value: e.value }), a.push(e.value));
         })
       : e.map((e, i) => {
           i >= t &&
@@ -537,14 +540,14 @@ function genWorkTime(e, t, r) {
               "00:30" !== e.value &&
               "04:30" !== e.value &&
               "05:00" !== e.value &&
-              (n.push({ text: e.text, value: e.value }), a.push(e.value)),
+              (n.push({ text: e.text, value: e.value }), l.push(e.value)),
             "12:30" !== e.value &&
               "18:30" !== e.value &&
               "00:30" !== e.value &&
               "05:00" !== e.value &&
-              (o.push({ text: e.text, value: e.value }), l.push(e.value)));
+              (o.push({ text: e.text, value: e.value }), a.push(e.value)));
         }),
-    { newStartTime: n, newEndTime: o, filterStart: a, filterEnd: l }
+    { newStartTime: n, newEndTime: o, filterStart: l, filterEnd: a }
   );
 }
 function createTime(e = "overtime") {
@@ -552,8 +555,8 @@ function createTime(e = "overtime") {
     r = [],
     n = [],
     o = [],
-    a = [],
     l = [],
+    a = [],
     i = ["00", "30"];
   for (let u = 0; u <= 23; u++)
     i.map((i) => {
@@ -578,35 +581,35 @@ function createTime(e = "overtime") {
           r.push(s),
           n.push({ value: s, text: s }),
           o.push(s)),
-        a.push({ value: s, text: s }),
-        l.push(s);
+        l.push({ value: s, text: s }),
+        a.push(s);
     });
   return {
     startTimes: t,
     filterStartTime: r,
     endTimes: n,
     filterEndTime: o,
-    times: a,
-    filterTime: l,
+    times: l,
+    filterTime: a,
   };
 }
 function getCurrentTime(e, t, r) {
   let n = e.cells(e.getSelectedRowId(), t).getValue().split(" "),
     o = e.cells(e.getSelectedRowId(), r).getValue().split(" "),
-    a = n[3].split(":"),
-    l = o[3].split(":");
+    l = n[3].split(":"),
+    a = o[3].split(":");
   return {
-    start: a[0] + ":" + a[1],
-    end: l[0] + ":" + l[1],
+    start: l[0] + ":" + l[1],
+    end: a[0] + ":" + a[1],
     labelStart: n[0] + " " + n[1] + " " + n[2],
     labelEnd: o[0] + " " + o[1] + " " + o[2],
   };
 }
 function checkRevisionTime(e, t, r, n, o) {
-  let a = e.indexOf(t),
-    l = e.indexOf(r);
-  if ((setEnable(n, o), l > a)) {
-    l - a < 2 &&
+  let l = e.indexOf(t),
+    a = e.indexOf(r);
+  if ((setEnable(n, o), a > l)) {
+    a - l < 2 &&
       (eaAlert(
         "Kesalahan Waktu Lembur",
         "Waktu lembur minimal adalah 1 jam! <br/><b>TOMBOL DISABLED</>"

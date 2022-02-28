@@ -98,6 +98,13 @@ function loginFormUI() {
 }
 function submitCallback(e, t) {
   switch (e) {
+    case "no_access":
+      dhtmlx.message({
+        text: "Akun tersebut tidak memiliki akses Aplikasi S.P.E.K.T.A, silahkan kontak Administrator!<br>",
+        type: "error",
+        expire: 6e3,
+      });
+      break;
     case "failed":
       loginForm.lock(),
         this.attempts ? this.attempts++ : (this.attempts = 1),

@@ -138,11 +138,11 @@
             </tr>
             <tr>
                 <td style="<?= $style['td'] ?>;" width="30%">Tugas</td>
-                <td style="<?= $style['td'] ?>;" width="70%"><?= $overtime->notes ?></td>
+                <td style="<?= $style['td'] ?>;" width="70%"><?= $personil->notes ?></td>
             </tr>
             <tr>
                 <td style="<?= $style['td'] ?>;" width="30%">Status Lembur</td>
-                <td style="<?= $style['td'] ?>;<?= $overtime->status == 'REJECTED' ? 'color:red;' : null?>" width="70%"><?= $overtime->status ?></td>
+                <td style="<?= $style['td'] ?>;<?= $personil->status == 'REJECTED' ? 'color:red;' : null?>" width="70%"><?= $personil->status ?></td>
             </tr>
             <?php $no++; } ?>
         </table>

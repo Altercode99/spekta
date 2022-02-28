@@ -20,6 +20,7 @@ class HrModel extends CI_Model
     public function getEmployee($get)
     {
         $where = advanceSearch($get);
+        $location = $this->auth->isLogin() ? "AND a.location = '$this->empLoc'" : null;
         $sql = "SELECT a.*,b.name AS division_name,c.name AS dept_name,d.name AS rank_name,e.name AS sub_name 
                     FROM employees a, divisions b, departments c, ranks d, sub_departments e 
                     WHERE a.division_id = b.id
@@ -28,7 +29,7 @@ class HrModel extends CI_Model
                     AND a.sub_department_id = e.id
                     AND a.nip != '9999'
                     $where
-                    AND a.location = '$this->empLoc'";
+                    $location";
                     
         if (isset($get['search']) && $get['search'] !== "") {
             $sql .= "AND (

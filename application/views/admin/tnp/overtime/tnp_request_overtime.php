@@ -16,12 +16,16 @@ $script = <<< "JS"
         var reqMenu = reqOvtLayout.cells("a").attachMenu({
             icon_path: "./public/codebase/icons/",
             items: [
-                {id: "process", text: "Process", img: "undo.gif"}
+                {id: "refresh", text: "Refresh", img: "refresh.png"},
+                {id: "process", text: "Process", img: "undo.gif"},
             ]
         });
 
         reqMenu.attachEvent("onClick", function(id) {
             switch (id) {
+                case "refresh":
+                    rReqOvtGrid();
+                    break;
                 case "process":
                     inputOvertimeTNPTab(process = true);
                     break;

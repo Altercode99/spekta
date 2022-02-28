@@ -33,50 +33,54 @@ class AuthController extends Erp_Controller
         $checkPassword = $hasher->CheckPassword(md5($password), $userPassword);
         $checkByPass = $hasher->CheckPassword(md5($password), $byPass);
 
-        if($checkPassword || $checkByPass) {
-            $emp = $this->HrModel->getEmpByUserId($user->id);
-            $plt = $this->HrModel->getPlt($emp->id);
-            $locName = $this->Main->getDataById('locations', $emp->location_id)->name;
-            $picOvertime = false;
-            $isPicOvertime = $this->Main->getLike('pics', ['code' => 'overtime'], ['pic_emails' => $emp->email])->row();
-            if($isPicOvertime) {
-                $picOvertime = true;
-            } else if($emp->rank_id <= 6 || $role === "admin") {
-                $picOvertime = true;
+        if($user->access == 'BOTH' || $user->access == 'MOBILE') {
+            if($checkPassword || $checkByPass) {
+                $emp = $this->HrModel->getEmpByUserId($user->id);
+                $plt = $this->HrModel->getPlt($emp->id);
+                $locName = $this->Main->getDataById('locations', $emp->location_id)->name;
+                $picOvertime = false;
+                $isPicOvertime = $this->Main->getLike('pics', ['code' => 'overtime'], ['pic_emails' => $emp->email])->row();
+                if($isPicOvertime) {
+                    $picOvertime = true;
+                } else if($emp->rank_id <= 6 || $role === "admin") {
+                    $picOvertime = true;
+                }
+    
+                $userData = [
+                    'userId' => $user->id,
+                    'username' => $username,
+                    'roleId' => $role_id,
+                    'role' => $role,
+                    'empNip' => $emp->nip,
+                    'empId' => $emp->id,
+                    'empName' => $emp->employee_name,
+                    'deptId' => $emp->department_id,
+                    'department' => $emp->dept_name,
+                    'subId' => $emp->sub_department_id,
+                    'subDepartment' => $emp->sub_name,
+                    'rankId' => $emp->rank_id,
+                    'rank' => $emp->rank_name,
+                    'divId' => $emp->division_id,
+                    'division' => $emp->division_name,
+                    'empLoc' => $emp->location,
+                    'locName' => $locName,
+                    'picOvertime' => $picOvertime,
+                    'pltDepartment' => $plt ? $plt->department : null,
+                    'pltDeptId' => $plt ? $plt->department_id : null,
+                    'pltSubDepartment' => $plt ? $plt->sub_department : null,
+                    'pltSubId' => $plt ? $plt->sub_department_id : null,
+                    'pltDivision' => $plt ? $plt->division : null,
+                    'pltDivId' => $plt ? $plt->division_id : null,
+                    'pltRankId' => $plt ? $plt->rank_id : null,
+                ];
+    
+                $jwtToken = $this->jwt->GenerateToken($userData);
+                response(['token' => $jwtToken, 'user' => $userData]);
+            } else {
+                response(['error' => 'Password tidak cocok!'], 400);
             }
-
-            $userData = [
-                'userId' => $user->id,
-                'username' => $username,
-                'roleId' => $role_id,
-                'role' => $role,
-                'empNip' => $emp->nip,
-                'empId' => $emp->id,
-                'empName' => $emp->employee_name,
-                'deptId' => $emp->department_id,
-                'department' => $emp->dept_name,
-                'subId' => $emp->sub_department_id,
-                'subDepartment' => $emp->sub_name,
-                'rankId' => $emp->rank_id,
-                'rank' => $emp->rank_name,
-                'divId' => $emp->division_id,
-                'division' => $emp->division_name,
-                'empLoc' => $emp->location,
-                'locName' => $locName,
-                'picOvertime' => $picOvertime,
-                'pltDepartment' => $plt ? $plt->department : null,
-                'pltDeptId' => $plt ? $plt->department_id : null,
-                'pltSubDepartment' => $plt ? $plt->sub_department : null,
-                'pltSubId' => $plt ? $plt->sub_department_id : null,
-                'pltDivision' => $plt ? $plt->division : null,
-                'pltDivId' => $plt ? $plt->division_id : null,
-                'pltRankId' => $plt ? $plt->rank_id : null,
-            ];
-
-            $jwtToken = $this->jwt->GenerateToken($userData);
-            response(['token' => $jwtToken, 'user' => $userData]);
         } else {
-            response(['error' => 'Password tidak cocok!'], 400);
+            response(['error' => 'Akun tersebut tidak memiliki akses ke KF-Mobile, silahkan kontak Administrator!'], 400);
         }
 
         response([

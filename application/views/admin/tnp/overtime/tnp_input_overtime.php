@@ -387,15 +387,22 @@ $script = <<< "JS"
         processlayoutTnp.cells("a").progressOn();
         formOvtGridTnp = processlayoutTnp.cells("a").attachGrid();
         formOvtGridTnp.setImagePath("./public/codebase/imgs/");
-        formOvtGridTnp.setHeader("No,Task ID,Sub Unit,Bagian,Disivi,Kebutuhan Orang,Status Hari,Tanggal Overtime,Waktu Mulai, Waktu Selesai,Catatan,Makan,Steam,AHU,Compressor,PW,Jemputan,Dust Collector,Mekanik,Listrik,H&N,Status Overtime, Revisi Jam Lembur,Revisi User Approval,Rejection User Approval,Created By,Updated By,Created At");
-        formOvtGridTnp.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
-        formOvtGridTnp.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
-        formOvtGridTnp.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
-        formOvtGridTnp.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        formOvtGridTnp.setInitWidthsP("5,20,20,20,20,15,15,15,20,20,20,7,7,7,7,7,7,7,7,7,7,10,30,30,30,15,15,25");
+        formOvtGridTnp.setHeader("No,Task ID,Sub Unit,Bagian,Disivi,Kebutuhan Orang,Status Hari,Tanggal Overtime,Waktu Mulai, Waktu Selesai,Catatan,Makan,Steam,AHU,Compressor,PW,Jemputan,Dust Collector,Mekanik,Listrik,H&N,Status Overtime, Revisi Jam Lembur,Revisi User Approval,Rejection User Approval,Created By,Updated By,Created At,Ref");
+        formOvtGridTnp.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter");
+        formOvtGridTnp.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
+        formOvtGridTnp.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
+        formOvtGridTnp.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
+        formOvtGridTnp.setInitWidthsP("5,20,20,20,20,15,15,15,20,20,20,7,7,7,7,7,7,7,7,7,7,10,30,30,30,15,15,25,0");
         formOvtGridTnp.enableSmartRendering(true);
         formOvtGridTnp.attachEvent("onXLE", function() {
             processlayoutTnp.cells("a").progressOff();
+        });
+        formOvtGridTnp.attachEvent("onRowSelect", function(rId, cIdn) {
+            if(formOvtGridTnp.cells(rId, 28).getValue() != "" && formOvtGridTnp.cells(rId, 28).getValue() != "-") {
+                procToolbar.enableItem("production_detail");
+            } else {
+                procToolbar.disableItem("production_detail");
+            }
         });
         formOvtGridTnp.attachEvent("onRowDblClicked", function(rId,cInd){
             rProcPersonGrid(rId);
@@ -406,7 +413,7 @@ $script = <<< "JS"
         
         function rProcGrid() {
             processlayoutTnp.cells("a").progressOn();
-            let params = {in_status: "CREATED", notequal_ref: ""};
+            let params = {in_status: "CREATED", notequal_ref: "", position: "tnp"};
             formOvtGridTnp.clearAndLoad(Overtime("getOvertimeGrid", params), procGridCount);
         }
 

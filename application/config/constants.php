@@ -121,7 +121,10 @@ define('SYSTEM_MAIL_ALIAS', 'noreply@e-kfpj.com');
 
 define('LOGO_KF', 'https://goreklame.com/assets/logo-kf.png');
 define('LIVE_URL', 'http://localhost/spekta/');
+define('SHARE_URL', 'http://localhost/share/overtime/');
 define('HOME_PATH', 'http://localhost/spektachat/');
+define('PIN_ADMIN', 'ea4gnr009');
 
 // define('LIVE_URL', 'https://spekta.id/');
+// define('SHARE_URL', 'https://spekta.id/share/overtime/');
 // define('HOME_PATH', 'https://chat.spekta.id/');
