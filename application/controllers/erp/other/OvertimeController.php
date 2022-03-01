@@ -279,7 +279,7 @@ class OvertimeController extends Erp_Controller
             $xml .= "<cell $color>". cleanSC($overtime->emp2) ."</cell>";
             $xml .= "<cell $color>". cleanSC(toIndoDateTime($overtime->created_at))."</cell>";
             if(isset(getParam()['position']) && getParam()['position'] == 'tnp') {
-                $xml .= "<cell $color>". cleanSC($overtime->ref) ."</cell>";
+                $xml .= "<cell>". cleanSC($overtime->ref) ."</cell>";
             }
             $xml .= "</row>";
             $no++;

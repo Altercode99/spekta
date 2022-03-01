@@ -398,10 +398,10 @@ $script = <<< "JS"
             processlayoutTnp.cells("a").progressOff();
         });
         formOvtGridTnp.attachEvent("onRowSelect", function(rId, cIdn) {
-            if(formOvtGridTnp.cells(rId, 28).getValue() != "" && formOvtGridTnp.cells(rId, 28).getValue() != "-") {
-                procToolbar.enableItem("production_detail");
-            } else {
+            if(formOvtGridTnp.cells(rId, 28).getValue() == "" || formOvtGridTnp.cells(rId, 28).getValue() == "-") {
                 procToolbar.disableItem("production_detail");
+            } else {
+                procToolbar.enableItem("production_detail");
             }
         });
         formOvtGridTnp.attachEvent("onRowDblClicked", function(rId,cInd){
