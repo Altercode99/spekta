@@ -274,6 +274,9 @@ $script = <<< "JS"
                     });
                     break;
                 case "print_overtime":
+                    if(!ovtGrid.getSelectedRowId()) {
+                        return eAlert("Pilih baris yang akan di print!");
+                    }
                     reqJson(Pc("createLink", {action: 'web'}), "POST", {
                         waTaskId: ovtGrid.cells(ovtGrid.getSelectedRowId(), 1).getValue(),
                     }, (err, res) => {
@@ -282,6 +285,9 @@ $script = <<< "JS"
                     
                     break;
                 case "send_wsap":
+                    if(!ovtGrid.getSelectedRowId()) {
+                        return eAlert("Pilih baris yang akan di bagikan ke WhatsApp!");
+                    }
                     reqJson(Pc("createLink", {action: 'wa'}), "POST", {
                         waOvtDate: ovtGrid.cells(ovtGrid.getSelectedRowId(), 7).getValue(),
                         waTaskId: ovtGrid.cells(ovtGrid.getSelectedRowId(), 1).getValue(),
