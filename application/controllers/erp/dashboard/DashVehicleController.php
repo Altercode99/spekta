@@ -26,12 +26,20 @@ class DashVehicleController extends Erp_Controller
         array_multisort($keys, SORT_DESC, $revs);
         $color= [];
         $no = 1;
+        if($params['column'] == 'total_rev') {
+            $ext = 'x';
+        } else if($params['column'] == 'total_hour') {
+            $ext = 'Jam';
+        } else if($params['column'] == 'total_km') {
+            $ext = 'KM';
+        }
+
         foreach ($revs as $key => $value) {
             if($no == 1) {
                 if($value[$params['column']]) {
                     $color[] = $value['color'];
                     $data[] = [
-                        'name' => $value['vehicle_name'] . ' ( '. $value[$params['column']] .' KM)',
+                        'name' => $value['vehicle_name'] . ' ( '. $value[$params['column']] ." $ext)",
                         'y' => $value[$params['column']] > 0 ? ($value[$params['column']] / $total) * 100 : 0,
                         'sliced' => true,
                         'selected' => true
@@ -41,7 +49,7 @@ class DashVehicleController extends Erp_Controller
                 if($value[$params['column']] > 0) {
                     $color[] = $value['color'];
                     $data[] = [
-                        'name' => $value['vehicle_name'] . ' ( '. $value[$params['column']] .' KM )',
+                        'name' => $value['vehicle_name'] . ' ( '. $value[$params['column']] ." $ext)",
                         'y' => $value[$params['column']] > 0 ? ($value[$params['column']] / $total) * 100 : 0
                     ];
                 }

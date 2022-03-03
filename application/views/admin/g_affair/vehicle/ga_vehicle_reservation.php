@@ -272,7 +272,7 @@ $script = <<< "JS"
             items: [
                 {id: "update", text: "Update Jumlah Penumpang & Kilomter", type: "button", img: "update.png"},
                 {id: "change_hour", text: "Ubah Waktu Reservasi", type: "button", img: "clock.png"},
-                {id: "closed", text: "Tutup Meeting", type: "button", img: "ok.png"},
+                {id: "closed", text: "Tutup Perjalanan", type: "button", img: "ok.png"},
             ]
         });
 

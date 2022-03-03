@@ -15,7 +15,7 @@ $script = <<< "JS"
         var reportDashVhcTabs =  mainTab.cells(tabs).attachTabbar({
             tabs: [
                 {id: "a", text: "Report Global", active: true},
-                {id: "b", text: "Report Ruangan"},
+                {id: "b", text: "Report Kendaraan"},
             ]
         });
 
@@ -29,7 +29,7 @@ $script = <<< "JS"
         reportDashToolbar.attachEvent("onClick", function(id) {
             switch (id) {
                 case "export":
-                    reportGrid.toExcel("./public/codebase/grid-to-excel-php/generate.php");
+                    reportDashVhcGrid.toExcel("./public/codebase/grid-to-excel-php/generate.php");
                     sAlert("Export Data Dimulai");
                     break;
             }
