@@ -42,6 +42,7 @@ $script = <<< "JS"
             switch (id) {
                 case "refresh":
                     rReportGrid();
+                    rReportGroupGrid();
                     break;
                 case "export":
                     reportMRoomGrid.toExcel("./public/codebase/grid-to-excel-php/generate.php");

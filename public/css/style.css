@@ -18,8 +18,8 @@ body {
 
 .hc_graph {
     -moz-transform: scale(1.15, 1.15);
-    zoom: 120;
-    zoom: 120%;
+    zoom: 115;
+    zoom: 115%;
 }
 
 .dhx_scheduler_month {
@@ -192,6 +192,19 @@ div.dhxform_item_label_left.button_refresh div.dhxform_btn_txt {
     box-shadow: 5px 10px #888888;
 }
 
+.tutorial-video {
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    box-shadow: 5px 10px #888888;
+}
+
 .dhx_cal_light {
     width: 590px !important;
 }
@@ -297,6 +310,11 @@ div.dhxform_item_label_left.button_refresh div.dhxform_btn_txt {
 }
 
 /* CUSTOMS ICONS */
+.icon_tutorial {
+    background-image: url(../codebase/icons/play.png) !important;
+    background-size: 16px 16px;
+}
+
 .icon_timeline {
     background-image: url(../codebase/icons/timeline.png) !important;
     background-size: 16px 16px;

@@ -59,4 +59,8 @@ if ($this->auth->isLogin()) {
         require_once APPPATH . 'views/layouts/admin/accordions/ProjectAccordions.php';
     }
 
+    if(array_key_exists(11, $this->auth->appMenu)) {
+        require_once APPPATH . 'views/layouts/admin/accordions/TutorialAccordions.php';
+    }
+
 }

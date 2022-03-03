@@ -313,9 +313,13 @@ class VehicleRevController extends Erp_Controller
                 }
             }
         }
-
+        $tokenAppv = LIVE_URL . "index.php?c=PublicController&m=updateVehicleRevStatus&token=" . simpleEncrypt("$id:approve");
+        $tokenReject = LIVE_URL . "index.php?c=PublicController&m=updateVehicleRevStatus&token=" . simpleEncrypt("$id:reject");
+        $linkRevApprove = LIVE_URL . "index.php?c=PublicController&m=pinVerification&action=positive&token=" . simpleEncrypt($tokenAppv);
+        $linkRevReject = LIVE_URL . "index.php?c=PublicController&m=pinVerification&action=negative&token=" . simpleEncrypt($tokenReject);
         $messagePic = $this->load->view('html/vehicles/email/pic_notification', [
             'data' => $trip, 'driver' => $driver, 'passenger' => $passengers,
+            'linkApprove' => $linkRevApprove, 'linkReject' => $linkRevReject
         ], true);
         $dataPic = [
             'alert_name' => 'TRIP_REQUEST_NOTIFICATION',

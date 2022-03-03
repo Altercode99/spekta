@@ -22,14 +22,14 @@ class AppMaster2Controller extends Erp_Controller
         $no = 1;
         foreach ($emails as $email) {
             $color = "bgColor='#ccc'";
-            if($email->status == 1) {
+            if ($email->status == 1) {
                 $status = 'Terkirim';
                 $color = "bgColor='#8bc38f'";
             } else {
                 $status = 'Belum Terkirim';
             }
 
-            if($email->send_date !== '0000-00-00 00:00:00') {
+            if ($email->send_date !== '0000-00-00 00:00:00') {
                 $send = toIndoDateTime($email->send_date);
             } else {
                 $send = '-';
@@ -322,4 +322,91 @@ class AppMaster2Controller extends Erp_Controller
 
         response(['status' => 'success', 'mError' => $mError, 'mSuccess' => $mSuccess]);
     }
+
+    /* ========================= VIDEO CATEGORI FUNCTIONS  =========================*/
+    public function getVideoCatGrid()
+    {
+        $categories = $this->AppMaster->getVideoCat(getParam());
+        $xml = "";
+        $no = 1;
+        foreach ($categories as $cat) {
+            $xml .= "<row id='$cat->id'>";
+            $xml .= "<cell>" . cleanSC($no) . "</cell>";
+            $xml .= "<cell>" . cleanSC($cat->name) . "</cell>";
+            $xml .= "<cell>" . cleanSC($cat->emp1) . "</cell>";
+            $xml .= "<cell>" . cleanSC($cat->emp2) . "</cell>";
+            $xml .= "<cell>" . cleanSC(toIndoDateTime($cat->created_at)) . "</cell>";
+            $xml .= "</row>";
+            $no++;
+        }
+
+        gridXmlHeader($xml);
+    }
+
+    public function videoCatDelete()
+    {
+        $post = fileGetContent();
+        $mError = '';
+        $mSuccess = '';
+        $datas = $post->datas;
+        foreach ($datas as $id => $data) {
+            $isHasSub = $this->Main->getOne('video_subcategories', ['cat_id' => $data->id]);
+            if(!$isHasSub) {
+                $mSuccess .= "- $data->field berhasil dihapus <br>";
+                $this->Main->delete('video_categories', ['id' => $data->id]);
+            } else {
+                $mSuccess .= "- $data->field sudah digunakan! <br>";
+            }
+        }
+
+        response(['status' => 'success', 'mError' => $mError, 'mSuccess' => $mSuccess]);
+    }
+
+    public function catForm()
+    {
+        $params = getParam();
+        if (isset($params['id'])) {
+            $category = $this->Main->getDataById('video_categories', $params['id'], 'id,name');
+            fetchFormData($category);
+        } else {
+            $post = prettyText(getPost(), ['name']);
+            if (!isset($post['id'])) {
+                $this->createCategory($post);
+            } else {
+                $this->updateCategory($post);
+            }
+        }
+    }
+
+    public function createCategory($post)
+    {
+        $category = $this->Main->getOne('video_categories', ['name' => $post['name']]);
+        isExist(["Kategori video $post[name]" => $category]);
+
+        $post['location'] = empLoc();
+        $post['created_by'] = empId();
+        $post['updated_by'] = empId();
+        $post['updated_at'] = date('Y-m-d H:i:s');
+        $insertId = $this->Main->create('video_categories', $post);
+        xmlResponse('inserted', $post['name']);
+    }
+
+    public function updateCategory($post)
+    {
+        $category = $this->Main->getDataById('video_categories', $post['id']);
+        isDelete(["Kategori video $post[name]" => $category]);
+
+        if ($category->name !== $post['name']) {
+            $checkCategory = $this->Main->getOne('video_categories', ['name' => $post['name']]);
+            isExist(["Kategori video $post[name]" => $checkCategory]);
+        }
+
+        $post['updated_by'] = empId();
+        $post['updated_at'] = date('Y-m-d H:i:s');
+
+        $this->Main->updateById('video_categories', $post, $post['id']);
+        xmlResponse('updated', $post['name']);
+    }
+
+
 }

@@ -8,6 +8,23 @@
         'table' => 'font-family:sans-serif;border-collapse: collapse;width:100%;',
         'th' => 'border: 1px solid #ddd;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #116171;color: white;',
         'td' => 'border: 1px solid #ddd;padding: 8px;',
+        'button_container' => 'padding:10px;text-align:center;margin-top:20px;',
+        'button' => 'border: 2px solid #422800;
+                border-radius: 30px;
+                box-shadow: #422800 4px 4px 0 0;
+                color: #ddd;
+                cursor: pointer;
+                display: inline-block;
+                font-weight: 600;
+                font-size: 12px;
+                padding: 0 12px;
+                line-height: 40px;
+                text-align: center;
+                text-decoration: none;
+                user-select: none;
+                -webkit-user-select: none;
+                touch-action: manipulation;
+                width: 250px;'
     ];
 
     $date = toIndoDateDay(explode(" ", $data->start_date)[0]);
@@ -77,6 +94,11 @@
                 <td style="<?= $style['td'] ?>"><?= $data->description ?></td>
             </tr>
         </table>
+    </div>
+
+    <div style="<?= $style['button_container'] ?>">
+        <a href="<?= $linkApprove ?>" style="<?= $style['button'] ?> background-color: #3399cc;">Approve Perjalanan Dinas: <?= $data->id ?></a><br/><br/>
+        <a href="<?= $linkReject ?>" style="<?= $style['button'] ?> background-color: #db8a10;">Reject Perjalanan Dinas: <?= $data->id ?></a>
     </div>
 
     <p style='color:red'>Mohon agar segeral dilakukan konfirmasi dari pihak <b>Umum</b> & <b>Driver</b> terkait ketersedian kendaraan.</p>

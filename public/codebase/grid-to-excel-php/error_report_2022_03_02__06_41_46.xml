@@ -1,0 +1,2646 @@
+<rows profile='color'><head><columns><column  rowspan="2"  width='59' align='center' type='rotxt' sort='int' color=''><![CDATA[No]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Task ID]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[No. Memo Lembur]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Karyawan]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Penyelenggara]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Penyelenggara]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #1]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #2]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Pelayanan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Tanggal Overtime]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Mulai]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Selesai]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Hari]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Efektif]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Istirahat]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Ril]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Lembur]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Premi]]></column><column  width='178' align='left' type='rotxt' sort='str' color=''><![CDATA[Nominal Overtime]]></column><column  width='60' align='left' type='rotxt' sort='str' color=''><![CDATA[Makan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Biaya Makan]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Overtime]]></column><column  width='357' align='left' type='rotxt' sort='str' color=''><![CDATA[Ulasan Pencapaian Lembur]]></column><column  width='299' align='left' type='rotxt' sort='str' color=''><![CDATA[Created At]]></column></columns></head>
+<foot>
+<columns>
+<column><![CDATA[ ]]></column>
+<column colspan='14' ><![CDATA[Total Summary]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[24]]></column>
+<column><![CDATA[4]]></column>
+<column><![CDATA[20]]></column>
+<column><![CDATA[35]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[1,451,300.50]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[80,000.00]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Lembur]]></column>
+<column><![CDATA[Rp. 1,451,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Makan]]></column>
+<column><![CDATA[Rp. 80,000.00]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Grand Total]]></column>
+<column><![CDATA[Rp. 1,531,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+</foot><row><cell><![CDATA[1]]></cell><cell><![CDATA[001/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[AHMAD SARMALI]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Oscilating Granulator Yen Chen]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[70.000,00]]></cell><cell><![CDATA[700.000,00]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:34]]></cell></row>
+<row><cell><![CDATA[2]]></cell><cell><![CDATA[002/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[ERUS RUSMANA]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Intensive Mixer Diosna]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[25.00]]></cell><cell><![CDATA[30.052,02]]></cell><cell><![CDATA[751.300,50]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:51]]></cell></row></rows><rows profile='color'><head><columns><column  rowspan="2"  width='59' align='center' type='rotxt' sort='int' color=''><![CDATA[No]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Task ID]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[No. Memo Lembur]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Karyawan]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Penyelenggara]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Penyelenggara]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #1]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #2]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Pelayanan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Tanggal Overtime]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Mulai]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Selesai]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Hari]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Efektif]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Istirahat]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Ril]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Lembur]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Premi]]></column><column  width='178' align='left' type='rotxt' sort='str' color=''><![CDATA[Nominal Overtime]]></column><column  width='60' align='left' type='rotxt' sort='str' color=''><![CDATA[Makan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Biaya Makan]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Overtime]]></column><column  width='357' align='left' type='rotxt' sort='str' color=''><![CDATA[Ulasan Pencapaian Lembur]]></column><column  width='299' align='left' type='rotxt' sort='str' color=''><![CDATA[Created At]]></column></columns></head>
+<foot>
+<columns>
+<column><![CDATA[ ]]></column>
+<column colspan='14' ><![CDATA[Total Summary]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[24]]></column>
+<column><![CDATA[4]]></column>
+<column><![CDATA[20]]></column>
+<column><![CDATA[35]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[1,451,300.50]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[80,000.00]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Lembur]]></column>
+<column><![CDATA[Rp. 1,451,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Makan]]></column>
+<column><![CDATA[Rp. 80,000.00]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Grand Total]]></column>
+<column><![CDATA[Rp. 1,531,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+</foot><row><cell><![CDATA[1]]></cell><cell><![CDATA[001/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[AHMAD SARMALI]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Oscilating Granulator Yen Chen]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[70.000,00]]></cell><cell><![CDATA[700.000,00]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:34]]></cell></row>
+<row><cell><![CDATA[2]]></cell><cell><![CDATA[002/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[ERUS RUSMANA]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Intensive Mixer Diosna]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[25.00]]></cell><cell><![CDATA[30.052,02]]></cell><cell><![CDATA[751.300,50]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:51]]></cell></row></rows><rows profile='color'><head><columns><column  rowspan="2"  width='59' align='center' type='rotxt' sort='int' color=''><![CDATA[No]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Task ID]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[No. Memo Lembur]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Karyawan]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Penyelenggara]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Penyelenggara]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #1]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #2]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Pelayanan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Tanggal Overtime]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Mulai]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Selesai]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Hari]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Efektif]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Istirahat]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Ril]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Lembur]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Premi]]></column><column  width='178' align='left' type='rotxt' sort='str' color=''><![CDATA[Nominal Overtime]]></column><column  width='60' align='left' type='rotxt' sort='str' color=''><![CDATA[Makan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Biaya Makan]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Overtime]]></column><column  width='357' align='left' type='rotxt' sort='str' color=''><![CDATA[Ulasan Pencapaian Lembur]]></column><column  width='299' align='left' type='rotxt' sort='str' color=''><![CDATA[Created At]]></column></columns></head>
+<foot>
+<columns>
+<column><![CDATA[ ]]></column>
+<column colspan='14' ><![CDATA[Total Summary]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[24]]></column>
+<column><![CDATA[4]]></column>
+<column><![CDATA[20]]></column>
+<column><![CDATA[35]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[1,451,300.50]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[80,000.00]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Lembur]]></column>
+<column><![CDATA[Rp. 1,451,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Makan]]></column>
+<column><![CDATA[Rp. 80,000.00]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Grand Total]]></column>
+<column><![CDATA[Rp. 1,531,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+</foot><row><cell><![CDATA[1]]></cell><cell><![CDATA[001/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[AHMAD SARMALI]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Oscilating Granulator Yen Chen]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[70.000,00]]></cell><cell><![CDATA[700.000,00]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:34]]></cell></row>
+<row><cell><![CDATA[2]]></cell><cell><![CDATA[002/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[ERUS RUSMANA]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Intensive Mixer Diosna]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[25.00]]></cell><cell><![CDATA[30.052,02]]></cell><cell><![CDATA[751.300,50]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:51]]></cell></row></rows><rows profile='color'><head><columns><column  rowspan="2"  width='59' align='center' type='rotxt' sort='int' color=''><![CDATA[No]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Task ID]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[No. Memo Lembur]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Karyawan]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Penyelenggara]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Penyelenggara]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #1]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #2]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Pelayanan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Tanggal Overtime]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Mulai]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Selesai]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Hari]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Efektif]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Istirahat]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Ril]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Lembur]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Premi]]></column><column  width='178' align='left' type='rotxt' sort='str' color=''><![CDATA[Nominal Overtime]]></column><column  width='60' align='left' type='rotxt' sort='str' color=''><![CDATA[Makan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Biaya Makan]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Overtime]]></column><column  width='357' align='left' type='rotxt' sort='str' color=''><![CDATA[Ulasan Pencapaian Lembur]]></column><column  width='299' align='left' type='rotxt' sort='str' color=''><![CDATA[Created At]]></column></columns></head>
+<foot>
+<columns>
+<column><![CDATA[ ]]></column>
+<column colspan='14' ><![CDATA[Total Summary]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[24]]></column>
+<column><![CDATA[4]]></column>
+<column><![CDATA[20]]></column>
+<column><![CDATA[35]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[1,451,300.50]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[80,000.00]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Lembur]]></column>
+<column><![CDATA[Rp. 1,451,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Makan]]></column>
+<column><![CDATA[Rp. 80,000.00]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Grand Total]]></column>
+<column><![CDATA[Rp. 1,531,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+</foot><row><cell><![CDATA[1]]></cell><cell><![CDATA[001/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[AHMAD SARMALI]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Oscilating Granulator Yen Chen]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[70.000,00]]></cell><cell><![CDATA[700.000,00]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:34]]></cell></row>
+<row><cell><![CDATA[2]]></cell><cell><![CDATA[002/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[ERUS RUSMANA]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Intensive Mixer Diosna]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[25.00]]></cell><cell><![CDATA[30.052,02]]></cell><cell><![CDATA[751.300,50]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:51]]></cell></row></rows><rows profile='color'><head><columns><column  rowspan="2"  width='59' align='center' type='rotxt' sort='int' color=''><![CDATA[No]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Task ID]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[No. Memo Lembur]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Karyawan]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Penyelenggara]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Penyelenggara]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #1]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #2]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Pelayanan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Tanggal Overtime]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Mulai]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Selesai]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Hari]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Efektif]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Istirahat]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Ril]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Lembur]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Premi]]></column><column  width='178' align='left' type='rotxt' sort='str' color=''><![CDATA[Nominal Overtime]]></column><column  width='60' align='left' type='rotxt' sort='str' color=''><![CDATA[Makan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Biaya Makan]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Overtime]]></column><column  width='357' align='left' type='rotxt' sort='str' color=''><![CDATA[Ulasan Pencapaian Lembur]]></column><column  width='299' align='left' type='rotxt' sort='str' color=''><![CDATA[Created At]]></column></columns></head>
+<foot>
+<columns>
+<column><![CDATA[ ]]></column>
+<column colspan='14' ><![CDATA[Total Summary]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[24]]></column>
+<column><![CDATA[4]]></column>
+<column><![CDATA[20]]></column>
+<column><![CDATA[35]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[1,451,300.50]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[80,000.00]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Lembur]]></column>
+<column><![CDATA[Rp. 1,451,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Makan]]></column>
+<column><![CDATA[Rp. 80,000.00]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Grand Total]]></column>
+<column><![CDATA[Rp. 1,531,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+</foot><row><cell><![CDATA[1]]></cell><cell><![CDATA[001/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[AHMAD SARMALI]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Oscilating Granulator Yen Chen]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[70.000,00]]></cell><cell><![CDATA[700.000,00]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:34]]></cell></row>
+<row><cell><![CDATA[2]]></cell><cell><![CDATA[002/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[ERUS RUSMANA]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Intensive Mixer Diosna]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[25.00]]></cell><cell><![CDATA[30.052,02]]></cell><cell><![CDATA[751.300,50]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:51]]></cell></row></rows><rows profile='color'><head><columns><column  rowspan="2"  width='59' align='center' type='rotxt' sort='int' color=''><![CDATA[No]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Task ID]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[No. Memo Lembur]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Karyawan]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Penyelenggara]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Penyelenggara]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #1]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #2]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Pelayanan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Tanggal Overtime]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Mulai]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Selesai]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Hari]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Efektif]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Istirahat]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Ril]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Lembur]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Premi]]></column><column  width='178' align='left' type='rotxt' sort='str' color=''><![CDATA[Nominal Overtime]]></column><column  width='60' align='left' type='rotxt' sort='str' color=''><![CDATA[Makan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Biaya Makan]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Overtime]]></column><column  width='357' align='left' type='rotxt' sort='str' color=''><![CDATA[Ulasan Pencapaian Lembur]]></column><column  width='299' align='left' type='rotxt' sort='str' color=''><![CDATA[Created At]]></column></columns></head>
+<foot>
+<columns>
+<column><![CDATA[ ]]></column>
+<column colspan='14' ><![CDATA[Total Summary]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[24]]></column>
+<column><![CDATA[4]]></column>
+<column><![CDATA[20]]></column>
+<column><![CDATA[35]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[1,451,300.50]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[80,000.00]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Lembur]]></column>
+<column><![CDATA[Rp. 1,451,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Makan]]></column>
+<column><![CDATA[Rp. 80,000.00]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Grand Total]]></column>
+<column><![CDATA[Rp. 1,531,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+</foot><row><cell><![CDATA[1]]></cell><cell><![CDATA[001/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[AHMAD SARMALI]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Oscilating Granulator Yen Chen]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[70.000,00]]></cell><cell><![CDATA[700.000,00]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:34]]></cell></row>
+<row><cell><![CDATA[2]]></cell><cell><![CDATA[002/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[ERUS RUSMANA]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Intensive Mixer Diosna]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[25.00]]></cell><cell><![CDATA[30.052,02]]></cell><cell><![CDATA[751.300,50]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:51]]></cell></row></rows><rows profile='color'><head><columns><column  rowspan="2"  width='59' align='center' type='rotxt' sort='int' color=''><![CDATA[No]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Task ID]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[No. Memo Lembur]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Karyawan]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Penyelenggara]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Penyelenggara]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #1]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #2]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Pelayanan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Tanggal Overtime]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Mulai]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Selesai]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Hari]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Efektif]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Istirahat]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Ril]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Lembur]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Premi]]></column><column  width='178' align='left' type='rotxt' sort='str' color=''><![CDATA[Nominal Overtime]]></column><column  width='60' align='left' type='rotxt' sort='str' color=''><![CDATA[Makan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Biaya Makan]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Overtime]]></column><column  width='357' align='left' type='rotxt' sort='str' color=''><![CDATA[Ulasan Pencapaian Lembur]]></column><column  width='299' align='left' type='rotxt' sort='str' color=''><![CDATA[Created At]]></column></columns></head>
+<foot>
+<columns>
+<column><![CDATA[ ]]></column>
+<column colspan='14' ><![CDATA[Total Summary]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[24]]></column>
+<column><![CDATA[4]]></column>
+<column><![CDATA[20]]></column>
+<column><![CDATA[35]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[1,451,300.50]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[80,000.00]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Lembur]]></column>
+<column><![CDATA[Rp. 1,451,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Makan]]></column>
+<column><![CDATA[Rp. 80,000.00]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Grand Total]]></column>
+<column><![CDATA[Rp. 1,531,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+</foot><row><cell><![CDATA[1]]></cell><cell><![CDATA[001/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[AHMAD SARMALI]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Oscilating Granulator Yen Chen]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[70.000,00]]></cell><cell><![CDATA[700.000,00]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:34]]></cell></row>
+<row><cell><![CDATA[2]]></cell><cell><![CDATA[002/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[ERUS RUSMANA]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Intensive Mixer Diosna]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[25.00]]></cell><cell><![CDATA[30.052,02]]></cell><cell><![CDATA[751.300,50]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:51]]></cell></row></rows><rows profile='color'><head><columns><column  rowspan="2"  width='59' align='center' type='rotxt' sort='int' color=''><![CDATA[No]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Task ID]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[No. Memo Lembur]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Karyawan]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Penyelenggara]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Penyelenggara]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #1]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #2]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Pelayanan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Tanggal Overtime]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Mulai]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Selesai]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Hari]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Efektif]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Istirahat]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Ril]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Lembur]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Premi]]></column><column  width='178' align='left' type='rotxt' sort='str' color=''><![CDATA[Nominal Overtime]]></column><column  width='60' align='left' type='rotxt' sort='str' color=''><![CDATA[Makan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Biaya Makan]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Overtime]]></column><column  width='357' align='left' type='rotxt' sort='str' color=''><![CDATA[Ulasan Pencapaian Lembur]]></column><column  width='299' align='left' type='rotxt' sort='str' color=''><![CDATA[Created At]]></column></columns></head>
+<foot>
+<columns>
+<column><![CDATA[ ]]></column>
+<column colspan='14' ><![CDATA[Total Summary]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[24]]></column>
+<column><![CDATA[4]]></column>
+<column><![CDATA[20]]></column>
+<column><![CDATA[35]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[1,451,300.50]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[80,000.00]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Lembur]]></column>
+<column><![CDATA[Rp. 1,451,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Makan]]></column>
+<column><![CDATA[Rp. 80,000.00]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Grand Total]]></column>
+<column><![CDATA[Rp. 1,531,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+</foot><row><cell><![CDATA[1]]></cell><cell><![CDATA[001/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[AHMAD SARMALI]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Oscilating Granulator Yen Chen]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[70.000,00]]></cell><cell><![CDATA[700.000,00]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:34]]></cell></row>
+<row><cell><![CDATA[2]]></cell><cell><![CDATA[002/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[ERUS RUSMANA]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Intensive Mixer Diosna]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[25.00]]></cell><cell><![CDATA[30.052,02]]></cell><cell><![CDATA[751.300,50]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:51]]></cell></row></rows><rows profile='color'><head><columns><column  rowspan="2"  width='59' align='center' type='rotxt' sort='int' color=''><![CDATA[No]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Task ID]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[No. Memo Lembur]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Karyawan]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Penyelenggara]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Penyelenggara]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #1]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #2]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Pelayanan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Tanggal Overtime]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Mulai]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Selesai]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Hari]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Efektif]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Istirahat]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Ril]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Lembur]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Premi]]></column><column  width='178' align='left' type='rotxt' sort='str' color=''><![CDATA[Nominal Overtime]]></column><column  width='60' align='left' type='rotxt' sort='str' color=''><![CDATA[Makan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Biaya Makan]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Overtime]]></column><column  width='357' align='left' type='rotxt' sort='str' color=''><![CDATA[Ulasan Pencapaian Lembur]]></column><column  width='299' align='left' type='rotxt' sort='str' color=''><![CDATA[Created At]]></column></columns></head>
+<foot>
+<columns>
+<column><![CDATA[ ]]></column>
+<column colspan='14' ><![CDATA[Total Summary]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[24]]></column>
+<column><![CDATA[4]]></column>
+<column><![CDATA[20]]></column>
+<column><![CDATA[35]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[1,451,300.50]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[80,000.00]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Lembur]]></column>
+<column><![CDATA[Rp. 1,451,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Makan]]></column>
+<column><![CDATA[Rp. 80,000.00]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Grand Total]]></column>
+<column><![CDATA[Rp. 1,531,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+</foot><row><cell><![CDATA[1]]></cell><cell><![CDATA[001/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[AHMAD SARMALI]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Oscilating Granulator Yen Chen]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[70.000,00]]></cell><cell><![CDATA[700.000,00]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:34]]></cell></row>
+<row><cell><![CDATA[2]]></cell><cell><![CDATA[002/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[ERUS RUSMANA]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Intensive Mixer Diosna]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[25.00]]></cell><cell><![CDATA[30.052,02]]></cell><cell><![CDATA[751.300,50]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:51]]></cell></row></rows><rows profile='color'><head><columns><column  rowspan="2"  width='59' align='center' type='rotxt' sort='int' color=''><![CDATA[No]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Task ID]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[No. Memo Lembur]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Karyawan]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Penyelenggara]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Penyelenggara]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #1]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #2]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Pelayanan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Tanggal Overtime]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Mulai]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Selesai]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Hari]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Efektif]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Istirahat]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Ril]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Lembur]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Premi]]></column><column  width='178' align='left' type='rotxt' sort='str' color=''><![CDATA[Nominal Overtime]]></column><column  width='60' align='left' type='rotxt' sort='str' color=''><![CDATA[Makan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Biaya Makan]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Overtime]]></column><column  width='357' align='left' type='rotxt' sort='str' color=''><![CDATA[Ulasan Pencapaian Lembur]]></column><column  width='299' align='left' type='rotxt' sort='str' color=''><![CDATA[Created At]]></column></columns></head>
+<foot>
+<columns>
+<column><![CDATA[ ]]></column>
+<column colspan='14' ><![CDATA[Total Summary]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[24]]></column>
+<column><![CDATA[4]]></column>
+<column><![CDATA[20]]></column>
+<column><![CDATA[35]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[1,451,300.50]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[80,000.00]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Lembur]]></column>
+<column><![CDATA[Rp. 1,451,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Makan]]></column>
+<column><![CDATA[Rp. 80,000.00]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Grand Total]]></column>
+<column><![CDATA[Rp. 1,531,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+</foot><row><cell><![CDATA[1]]></cell><cell><![CDATA[001/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[AHMAD SARMALI]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Oscilating Granulator Yen Chen]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[70.000,00]]></cell><cell><![CDATA[700.000,00]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:34]]></cell></row>
+<row><cell><![CDATA[2]]></cell><cell><![CDATA[002/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[ERUS RUSMANA]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Intensive Mixer Diosna]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[25.00]]></cell><cell><![CDATA[30.052,02]]></cell><cell><![CDATA[751.300,50]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:51]]></cell></row></rows><rows profile='color'><head><columns><column  rowspan="2"  width='59' align='center' type='rotxt' sort='int' color=''><![CDATA[No]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Task ID]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[No. Memo Lembur]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Karyawan]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Penyelenggara]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Penyelenggara]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #1]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #2]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Pelayanan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Tanggal Overtime]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Mulai]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Selesai]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Hari]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Efektif]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Istirahat]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Ril]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Lembur]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Premi]]></column><column  width='178' align='left' type='rotxt' sort='str' color=''><![CDATA[Nominal Overtime]]></column><column  width='60' align='left' type='rotxt' sort='str' color=''><![CDATA[Makan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Biaya Makan]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Overtime]]></column><column  width='357' align='left' type='rotxt' sort='str' color=''><![CDATA[Ulasan Pencapaian Lembur]]></column><column  width='299' align='left' type='rotxt' sort='str' color=''><![CDATA[Created At]]></column></columns></head>
+<foot>
+<columns>
+<column><![CDATA[ ]]></column>
+<column colspan='14' ><![CDATA[Total Summary]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[24]]></column>
+<column><![CDATA[4]]></column>
+<column><![CDATA[20]]></column>
+<column><![CDATA[35]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[1,451,300.50]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[80,000.00]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Lembur]]></column>
+<column><![CDATA[Rp. 1,451,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Makan]]></column>
+<column><![CDATA[Rp. 80,000.00]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Grand Total]]></column>
+<column><![CDATA[Rp. 1,531,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+</foot><row><cell><![CDATA[1]]></cell><cell><![CDATA[001/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[AHMAD SARMALI]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Oscilating Granulator Yen Chen]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[70.000,00]]></cell><cell><![CDATA[700.000,00]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:34]]></cell></row>
+<row><cell><![CDATA[2]]></cell><cell><![CDATA[002/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[ERUS RUSMANA]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Intensive Mixer Diosna]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[25.00]]></cell><cell><![CDATA[30.052,02]]></cell><cell><![CDATA[751.300,50]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:51]]></cell></row></rows><rows profile='color'><head><columns><column  rowspan="2"  width='59' align='center' type='rotxt' sort='int' color=''><![CDATA[No]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Task ID]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[No. Memo Lembur]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Karyawan]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Penyelenggara]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Penyelenggara]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #1]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #2]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Pelayanan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Tanggal Overtime]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Mulai]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Selesai]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Hari]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Efektif]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Istirahat]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Ril]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Lembur]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Premi]]></column><column  width='178' align='left' type='rotxt' sort='str' color=''><![CDATA[Nominal Overtime]]></column><column  width='60' align='left' type='rotxt' sort='str' color=''><![CDATA[Makan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Biaya Makan]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Overtime]]></column><column  width='357' align='left' type='rotxt' sort='str' color=''><![CDATA[Ulasan Pencapaian Lembur]]></column><column  width='299' align='left' type='rotxt' sort='str' color=''><![CDATA[Created At]]></column></columns></head>
+<foot>
+<columns>
+<column><![CDATA[ ]]></column>
+<column colspan='14' ><![CDATA[Total Summary]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[24]]></column>
+<column><![CDATA[4]]></column>
+<column><![CDATA[20]]></column>
+<column><![CDATA[35]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[1,451,300.50]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[80,000.00]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Lembur]]></column>
+<column><![CDATA[Rp. 1,451,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Makan]]></column>
+<column><![CDATA[Rp. 80,000.00]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Grand Total]]></column>
+<column><![CDATA[Rp. 1,531,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+</foot><row><cell><![CDATA[1]]></cell><cell><![CDATA[001/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[AHMAD SARMALI]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Oscilating Granulator Yen Chen]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[70.000,00]]></cell><cell><![CDATA[700.000,00]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:34]]></cell></row>
+<row><cell><![CDATA[2]]></cell><cell><![CDATA[002/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[ERUS RUSMANA]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Intensive Mixer Diosna]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[25.00]]></cell><cell><![CDATA[30.052,02]]></cell><cell><![CDATA[751.300,50]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:51]]></cell></row></rows><rows profile='color'><head><columns><column  rowspan="2"  width='59' align='center' type='rotxt' sort='int' color=''><![CDATA[No]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Task ID]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[No. Memo Lembur]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Karyawan]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Penyelenggara]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Penyelenggara]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #1]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #2]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Pelayanan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Tanggal Overtime]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Mulai]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Selesai]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Hari]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Efektif]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Istirahat]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Ril]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Lembur]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Premi]]></column><column  width='178' align='left' type='rotxt' sort='str' color=''><![CDATA[Nominal Overtime]]></column><column  width='60' align='left' type='rotxt' sort='str' color=''><![CDATA[Makan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Biaya Makan]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Overtime]]></column><column  width='357' align='left' type='rotxt' sort='str' color=''><![CDATA[Ulasan Pencapaian Lembur]]></column><column  width='299' align='left' type='rotxt' sort='str' color=''><![CDATA[Created At]]></column></columns></head>
+<foot>
+<columns>
+<column><![CDATA[ ]]></column>
+<column colspan='14' ><![CDATA[Total Summary]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[24]]></column>
+<column><![CDATA[4]]></column>
+<column><![CDATA[20]]></column>
+<column><![CDATA[35]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[1,451,300.50]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[80,000.00]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Lembur]]></column>
+<column><![CDATA[Rp. 1,451,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Makan]]></column>
+<column><![CDATA[Rp. 80,000.00]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Grand Total]]></column>
+<column><![CDATA[Rp. 1,531,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+</foot><row><cell><![CDATA[1]]></cell><cell><![CDATA[001/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[AHMAD SARMALI]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Oscilating Granulator Yen Chen]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[70.000,00]]></cell><cell><![CDATA[700.000,00]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:34]]></cell></row>
+<row><cell><![CDATA[2]]></cell><cell><![CDATA[002/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[ERUS RUSMANA]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Intensive Mixer Diosna]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[25.00]]></cell><cell><![CDATA[30.052,02]]></cell><cell><![CDATA[751.300,50]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:51]]></cell></row></rows><rows profile='color'><head><columns><column  rowspan="2"  width='59' align='center' type='rotxt' sort='int' color=''><![CDATA[No]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Task ID]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[No. Memo Lembur]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Karyawan]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Penyelenggara]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Penyelenggara]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #1]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #2]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Pelayanan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Tanggal Overtime]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Mulai]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Selesai]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Hari]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Efektif]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Istirahat]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Ril]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Lembur]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Premi]]></column><column  width='178' align='left' type='rotxt' sort='str' color=''><![CDATA[Nominal Overtime]]></column><column  width='60' align='left' type='rotxt' sort='str' color=''><![CDATA[Makan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Biaya Makan]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Overtime]]></column><column  width='357' align='left' type='rotxt' sort='str' color=''><![CDATA[Ulasan Pencapaian Lembur]]></column><column  width='299' align='left' type='rotxt' sort='str' color=''><![CDATA[Created At]]></column></columns></head>
+<foot>
+<columns>
+<column><![CDATA[ ]]></column>
+<column colspan='14' ><![CDATA[Total Summary]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[24]]></column>
+<column><![CDATA[4]]></column>
+<column><![CDATA[20]]></column>
+<column><![CDATA[35]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[1,451,300.50]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[80,000.00]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Lembur]]></column>
+<column><![CDATA[Rp. 1,451,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Makan]]></column>
+<column><![CDATA[Rp. 80,000.00]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Grand Total]]></column>
+<column><![CDATA[Rp. 1,531,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+</foot><row><cell><![CDATA[1]]></cell><cell><![CDATA[001/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[AHMAD SARMALI]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Oscilating Granulator Yen Chen]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[70.000,00]]></cell><cell><![CDATA[700.000,00]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:34]]></cell></row>
+<row><cell><![CDATA[2]]></cell><cell><![CDATA[002/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[ERUS RUSMANA]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Intensive Mixer Diosna]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[25.00]]></cell><cell><![CDATA[30.052,02]]></cell><cell><![CDATA[751.300,50]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:51]]></cell></row></rows><rows profile='color'><head><columns><column  rowspan="2"  width='59' align='center' type='rotxt' sort='int' color=''><![CDATA[No]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Task ID]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[No. Memo Lembur]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Karyawan]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Penyelenggara]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Penyelenggara]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #1]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #2]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Pelayanan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Tanggal Overtime]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Mulai]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Selesai]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Hari]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Efektif]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Istirahat]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Ril]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Lembur]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Premi]]></column><column  width='178' align='left' type='rotxt' sort='str' color=''><![CDATA[Nominal Overtime]]></column><column  width='60' align='left' type='rotxt' sort='str' color=''><![CDATA[Makan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Biaya Makan]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Overtime]]></column><column  width='357' align='left' type='rotxt' sort='str' color=''><![CDATA[Ulasan Pencapaian Lembur]]></column><column  width='299' align='left' type='rotxt' sort='str' color=''><![CDATA[Created At]]></column></columns></head>
+<foot>
+<columns>
+<column><![CDATA[ ]]></column>
+<column colspan='14' ><![CDATA[Total Summary]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[24]]></column>
+<column><![CDATA[4]]></column>
+<column><![CDATA[20]]></column>
+<column><![CDATA[35]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[1,451,300.50]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[80,000.00]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Lembur]]></column>
+<column><![CDATA[Rp. 1,451,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Makan]]></column>
+<column><![CDATA[Rp. 80,000.00]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Grand Total]]></column>
+<column><![CDATA[Rp. 1,531,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+</foot><row><cell><![CDATA[1]]></cell><cell><![CDATA[001/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[AHMAD SARMALI]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Oscilating Granulator Yen Chen]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[70.000,00]]></cell><cell><![CDATA[700.000,00]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:34]]></cell></row>
+<row><cell><![CDATA[2]]></cell><cell><![CDATA[002/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[ERUS RUSMANA]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Intensive Mixer Diosna]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[25.00]]></cell><cell><![CDATA[30.052,02]]></cell><cell><![CDATA[751.300,50]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:51]]></cell></row></rows><rows profile='color'><head><columns><column  rowspan="2"  width='59' align='center' type='rotxt' sort='int' color=''><![CDATA[No]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Task ID]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[No. Memo Lembur]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Karyawan]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Penyelenggara]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Penyelenggara]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #1]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #2]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Pelayanan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Tanggal Overtime]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Mulai]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Selesai]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Hari]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Efektif]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Istirahat]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Ril]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Lembur]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Premi]]></column><column  width='178' align='left' type='rotxt' sort='str' color=''><![CDATA[Nominal Overtime]]></column><column  width='60' align='left' type='rotxt' sort='str' color=''><![CDATA[Makan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Biaya Makan]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Overtime]]></column><column  width='357' align='left' type='rotxt' sort='str' color=''><![CDATA[Ulasan Pencapaian Lembur]]></column><column  width='299' align='left' type='rotxt' sort='str' color=''><![CDATA[Created At]]></column></columns></head>
+<foot>
+<columns>
+<column><![CDATA[ ]]></column>
+<column colspan='14' ><![CDATA[Total Summary]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[24]]></column>
+<column><![CDATA[4]]></column>
+<column><![CDATA[20]]></column>
+<column><![CDATA[35]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[1,451,300.50]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[80,000.00]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Lembur]]></column>
+<column><![CDATA[Rp. 1,451,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Makan]]></column>
+<column><![CDATA[Rp. 80,000.00]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Grand Total]]></column>
+<column><![CDATA[Rp. 1,531,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+</foot><row><cell><![CDATA[1]]></cell><cell><![CDATA[001/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[AHMAD SARMALI]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Oscilating Granulator Yen Chen]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[70.000,00]]></cell><cell><![CDATA[700.000,00]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:34]]></cell></row>
+<row><cell><![CDATA[2]]></cell><cell><![CDATA[002/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[ERUS RUSMANA]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Intensive Mixer Diosna]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[25.00]]></cell><cell><![CDATA[30.052,02]]></cell><cell><![CDATA[751.300,50]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:51]]></cell></row></rows><rows profile='color'><head><columns><column  rowspan="2"  width='59' align='center' type='rotxt' sort='int' color=''><![CDATA[No]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Task ID]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[No. Memo Lembur]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Karyawan]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Penyelenggara]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Penyelenggara]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #1]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #2]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Pelayanan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Tanggal Overtime]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Mulai]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Selesai]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Hari]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Efektif]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Istirahat]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Ril]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Lembur]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Premi]]></column><column  width='178' align='left' type='rotxt' sort='str' color=''><![CDATA[Nominal Overtime]]></column><column  width='60' align='left' type='rotxt' sort='str' color=''><![CDATA[Makan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Biaya Makan]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Overtime]]></column><column  width='357' align='left' type='rotxt' sort='str' color=''><![CDATA[Ulasan Pencapaian Lembur]]></column><column  width='299' align='left' type='rotxt' sort='str' color=''><![CDATA[Created At]]></column></columns></head>
+<foot>
+<columns>
+<column><![CDATA[ ]]></column>
+<column colspan='14' ><![CDATA[Total Summary]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[24]]></column>
+<column><![CDATA[4]]></column>
+<column><![CDATA[20]]></column>
+<column><![CDATA[35]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[1,451,300.50]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[80,000.00]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Lembur]]></column>
+<column><![CDATA[Rp. 1,451,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Makan]]></column>
+<column><![CDATA[Rp. 80,000.00]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Grand Total]]></column>
+<column><![CDATA[Rp. 1,531,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+</foot><row><cell><![CDATA[1]]></cell><cell><![CDATA[001/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[AHMAD SARMALI]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Oscilating Granulator Yen Chen]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[70.000,00]]></cell><cell><![CDATA[700.000,00]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:34]]></cell></row>
+<row><cell><![CDATA[2]]></cell><cell><![CDATA[002/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[ERUS RUSMANA]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Intensive Mixer Diosna]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[25.00]]></cell><cell><![CDATA[30.052,02]]></cell><cell><![CDATA[751.300,50]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:51]]></cell></row></rows><rows profile='color'><head><columns><column  rowspan="2"  width='59' align='center' type='rotxt' sort='int' color=''><![CDATA[No]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Task ID]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[No. Memo Lembur]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Karyawan]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Penyelenggara]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Penyelenggara]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #1]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #2]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Pelayanan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Tanggal Overtime]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Mulai]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Selesai]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Hari]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Efektif]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Istirahat]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Ril]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Lembur]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Premi]]></column><column  width='178' align='left' type='rotxt' sort='str' color=''><![CDATA[Nominal Overtime]]></column><column  width='60' align='left' type='rotxt' sort='str' color=''><![CDATA[Makan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Biaya Makan]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Overtime]]></column><column  width='357' align='left' type='rotxt' sort='str' color=''><![CDATA[Ulasan Pencapaian Lembur]]></column><column  width='299' align='left' type='rotxt' sort='str' color=''><![CDATA[Created At]]></column></columns></head>
+<foot>
+<columns>
+<column><![CDATA[ ]]></column>
+<column colspan='14' ><![CDATA[Total Summary]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[24]]></column>
+<column><![CDATA[4]]></column>
+<column><![CDATA[20]]></column>
+<column><![CDATA[35]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[1,451,300.50]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[80,000.00]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Lembur]]></column>
+<column><![CDATA[Rp. 1,451,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Makan]]></column>
+<column><![CDATA[Rp. 80,000.00]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Grand Total]]></column>
+<column><![CDATA[Rp. 1,531,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+</foot><row><cell><![CDATA[1]]></cell><cell><![CDATA[001/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[AHMAD SARMALI]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Oscilating Granulator Yen Chen]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[70.000,00]]></cell><cell><![CDATA[700.000,00]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:34]]></cell></row>
+<row><cell><![CDATA[2]]></cell><cell><![CDATA[002/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[ERUS RUSMANA]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Intensive Mixer Diosna]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[25.00]]></cell><cell><![CDATA[30.052,02]]></cell><cell><![CDATA[751.300,50]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:51]]></cell></row></rows><rows profile='color'><head><columns><column  rowspan="2"  width='59' align='center' type='rotxt' sort='int' color=''><![CDATA[No]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Task ID]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[No. Memo Lembur]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Karyawan]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Penyelenggara]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Penyelenggara]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #1]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #2]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Pelayanan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Tanggal Overtime]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Mulai]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Selesai]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Hari]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Efektif]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Istirahat]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Ril]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Lembur]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Premi]]></column><column  width='178' align='left' type='rotxt' sort='str' color=''><![CDATA[Nominal Overtime]]></column><column  width='60' align='left' type='rotxt' sort='str' color=''><![CDATA[Makan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Biaya Makan]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Overtime]]></column><column  width='357' align='left' type='rotxt' sort='str' color=''><![CDATA[Ulasan Pencapaian Lembur]]></column><column  width='299' align='left' type='rotxt' sort='str' color=''><![CDATA[Created At]]></column></columns></head>
+<foot>
+<columns>
+<column><![CDATA[ ]]></column>
+<column colspan='14' ><![CDATA[Total Summary]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[24]]></column>
+<column><![CDATA[4]]></column>
+<column><![CDATA[20]]></column>
+<column><![CDATA[35]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[1,451,300.50]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[80,000.00]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Lembur]]></column>
+<column><![CDATA[Rp. 1,451,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Makan]]></column>
+<column><![CDATA[Rp. 80,000.00]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Grand Total]]></column>
+<column><![CDATA[Rp. 1,531,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+</foot><row><cell><![CDATA[1]]></cell><cell><![CDATA[001/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[AHMAD SARMALI]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Oscilating Granulator Yen Chen]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[70.000,00]]></cell><cell><![CDATA[700.000,00]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:34]]></cell></row>
+<row><cell><![CDATA[2]]></cell><cell><![CDATA[002/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[ERUS RUSMANA]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Intensive Mixer Diosna]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[25.00]]></cell><cell><![CDATA[30.052,02]]></cell><cell><![CDATA[751.300,50]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:51]]></cell></row></rows><rows profile='color'><head><columns><column  rowspan="2"  width='59' align='center' type='rotxt' sort='int' color=''><![CDATA[No]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Task ID]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[No. Memo Lembur]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Karyawan]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Penyelenggara]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Penyelenggara]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #1]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #2]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Pelayanan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Tanggal Overtime]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Mulai]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Selesai]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Hari]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Efektif]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Istirahat]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Ril]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Lembur]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Premi]]></column><column  width='178' align='left' type='rotxt' sort='str' color=''><![CDATA[Nominal Overtime]]></column><column  width='60' align='left' type='rotxt' sort='str' color=''><![CDATA[Makan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Biaya Makan]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Overtime]]></column><column  width='357' align='left' type='rotxt' sort='str' color=''><![CDATA[Ulasan Pencapaian Lembur]]></column><column  width='299' align='left' type='rotxt' sort='str' color=''><![CDATA[Created At]]></column></columns></head>
+<foot>
+<columns>
+<column><![CDATA[ ]]></column>
+<column colspan='14' ><![CDATA[Total Summary]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[24]]></column>
+<column><![CDATA[4]]></column>
+<column><![CDATA[20]]></column>
+<column><![CDATA[35]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[1,451,300.50]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[80,000.00]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Lembur]]></column>
+<column><![CDATA[Rp. 1,451,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Makan]]></column>
+<column><![CDATA[Rp. 80,000.00]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Grand Total]]></column>
+<column><![CDATA[Rp. 1,531,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+</foot><row><cell><![CDATA[1]]></cell><cell><![CDATA[001/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[AHMAD SARMALI]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Oscilating Granulator Yen Chen]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[70.000,00]]></cell><cell><![CDATA[700.000,00]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:34]]></cell></row>
+<row><cell><![CDATA[2]]></cell><cell><![CDATA[002/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[ERUS RUSMANA]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Intensive Mixer Diosna]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[25.00]]></cell><cell><![CDATA[30.052,02]]></cell><cell><![CDATA[751.300,50]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:51]]></cell></row></rows><rows profile='color'><head><columns><column  rowspan="2"  width='59' align='center' type='rotxt' sort='int' color=''><![CDATA[No]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Task ID]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[No. Memo Lembur]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Karyawan]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Penyelenggara]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Penyelenggara]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #1]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #2]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Pelayanan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Tanggal Overtime]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Mulai]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Selesai]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Hari]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Efektif]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Istirahat]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Ril]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Lembur]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Premi]]></column><column  width='178' align='left' type='rotxt' sort='str' color=''><![CDATA[Nominal Overtime]]></column><column  width='60' align='left' type='rotxt' sort='str' color=''><![CDATA[Makan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Biaya Makan]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Overtime]]></column><column  width='357' align='left' type='rotxt' sort='str' color=''><![CDATA[Ulasan Pencapaian Lembur]]></column><column  width='299' align='left' type='rotxt' sort='str' color=''><![CDATA[Created At]]></column></columns></head>
+<foot>
+<columns>
+<column><![CDATA[ ]]></column>
+<column colspan='14' ><![CDATA[Total Summary]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[24]]></column>
+<column><![CDATA[4]]></column>
+<column><![CDATA[20]]></column>
+<column><![CDATA[35]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[1,451,300.50]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[80,000.00]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Lembur]]></column>
+<column><![CDATA[Rp. 1,451,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Makan]]></column>
+<column><![CDATA[Rp. 80,000.00]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Grand Total]]></column>
+<column><![CDATA[Rp. 1,531,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+</foot><row><cell><![CDATA[1]]></cell><cell><![CDATA[001/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[AHMAD SARMALI]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Oscilating Granulator Yen Chen]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[70.000,00]]></cell><cell><![CDATA[700.000,00]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:34]]></cell></row>
+<row><cell><![CDATA[2]]></cell><cell><![CDATA[002/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[ERUS RUSMANA]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Intensive Mixer Diosna]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[25.00]]></cell><cell><![CDATA[30.052,02]]></cell><cell><![CDATA[751.300,50]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:51]]></cell></row></rows><rows profile='color'><head><columns><column  rowspan="2"  width='59' align='center' type='rotxt' sort='int' color=''><![CDATA[No]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Task ID]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[No. Memo Lembur]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Karyawan]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Penyelenggara]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Penyelenggara]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #1]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #2]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Pelayanan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Tanggal Overtime]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Mulai]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Selesai]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Hari]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Efektif]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Istirahat]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Ril]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Lembur]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Premi]]></column><column  width='178' align='left' type='rotxt' sort='str' color=''><![CDATA[Nominal Overtime]]></column><column  width='60' align='left' type='rotxt' sort='str' color=''><![CDATA[Makan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Biaya Makan]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Overtime]]></column><column  width='357' align='left' type='rotxt' sort='str' color=''><![CDATA[Ulasan Pencapaian Lembur]]></column><column  width='299' align='left' type='rotxt' sort='str' color=''><![CDATA[Created At]]></column></columns></head>
+<foot>
+<columns>
+<column><![CDATA[ ]]></column>
+<column colspan='14' ><![CDATA[Total Summary]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[24]]></column>
+<column><![CDATA[4]]></column>
+<column><![CDATA[20]]></column>
+<column><![CDATA[35]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[1,451,300.50]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[80,000.00]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Lembur]]></column>
+<column><![CDATA[Rp. 1,451,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Makan]]></column>
+<column><![CDATA[Rp. 80,000.00]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Grand Total]]></column>
+<column><![CDATA[Rp. 1,531,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+</foot><row><cell><![CDATA[1]]></cell><cell><![CDATA[001/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[AHMAD SARMALI]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Oscilating Granulator Yen Chen]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[70.000,00]]></cell><cell><![CDATA[700.000,00]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:34]]></cell></row>
+<row><cell><![CDATA[2]]></cell><cell><![CDATA[002/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[ERUS RUSMANA]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Intensive Mixer Diosna]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[25.00]]></cell><cell><![CDATA[30.052,02]]></cell><cell><![CDATA[751.300,50]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:51]]></cell></row></rows><rows profile='color'><head><columns><column  rowspan="2"  width='59' align='center' type='rotxt' sort='int' color=''><![CDATA[No]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Task ID]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[No. Memo Lembur]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Karyawan]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Personil]]></column><column  width='239' align='left' type='rotxt' sort='str' color=''><![CDATA[Bagian Penyelenggara]]></column><column  width='238' align='left' type='rotxt' sort='str' color=''><![CDATA[Sub Bagian Penyelenggara]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #1]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Nama Mesin #2]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Pelayanan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Tanggal Overtime]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Mulai]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Waktu Selesai]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Hari]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Efektif]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Istirahat]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Ril]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Jam Lembur]]></column><column  width='119' align='left' type='rotxt' sort='str' color=''><![CDATA[Premi]]></column><column  width='178' align='left' type='rotxt' sort='str' color=''><![CDATA[Nominal Overtime]]></column><column  width='60' align='left' type='rotxt' sort='str' color=''><![CDATA[Makan]]></column><column  width='179' align='left' type='rotxt' sort='str' color=''><![CDATA[Biaya Makan]]></column><column  width='120' align='left' type='rotxt' sort='str' color=''><![CDATA[Status Overtime]]></column><column  width='357' align='left' type='rotxt' sort='str' color=''><![CDATA[Ulasan Pencapaian Lembur]]></column><column  width='299' align='left' type='rotxt' sort='str' color=''><![CDATA[Created At]]></column></columns></head>
+<foot>
+<columns>
+<column><![CDATA[ ]]></column>
+<column colspan='14' ><![CDATA[Total Summary]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[24]]></column>
+<column><![CDATA[4]]></column>
+<column><![CDATA[20]]></column>
+<column><![CDATA[35]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[1,451,300.50]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[80,000.00]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[ ]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Lembur]]></column>
+<column><![CDATA[Rp. 1,451,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Total Biaya Makan]]></column>
+<column><![CDATA[Rp. 80,000.00]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+<columns>
+<column><![CDATA[ ]]></column>
+<column><![CDATA[Grand Total]]></column>
+<column><![CDATA[Rp. 1,531,300.50]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+<column><![CDATA[]]></column>
+</columns>
+</foot><row><cell><![CDATA[1]]></cell><cell><![CDATA[001/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[AHMAD SARMALI]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Oscilating Granulator Yen Chen]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[70.000,00]]></cell><cell><![CDATA[700.000,00]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:34]]></cell></row>
+<row><cell><![CDATA[2]]></cell><cell><![CDATA[002/OT-EMP/KF-JKT/III/2022]]></cell><cell><![CDATA[001/OT/KF-JKT/III/2022]]></cell><cell><![CDATA[ERUS RUSMANA]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Produksi I]]></cell><cell><![CDATA[Granulasi Tablet]]></cell><cell><![CDATA[Intensive Mixer Diosna]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[-]]></cell><cell><![CDATA[Sabtu, 26 Maret 2022]]></cell><cell><![CDATA[26 Maret 2022 07:30:00]]></cell><cell><![CDATA[26 Maret 2022 19:30:00]]></cell><cell><![CDATA[Hari Libur]]></cell><cell><![CDATA[12.00]]></cell><cell><![CDATA[2.00]]></cell><cell><![CDATA[10.00]]></cell><cell><![CDATA[25.00]]></cell><cell><![CDATA[30.052,02]]></cell><cell><![CDATA[751.300,50]]></cell><cell><![CDATA[✓ (2 x)]]></cell><cell><![CDATA[40.000,00]]></cell><cell><![CDATA[CLOSED]]></cell><cell><![CDATA[ ]]></cell><cell><![CDATA[Selasa, 01 Maret 2022 07:31:51]]></cell></row></rows>

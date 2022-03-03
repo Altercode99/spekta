@@ -354,6 +354,58 @@ class PublicController extends Erp_Controller
         }
     }
 
+    public function updateVehicleRevStatus()
+    {
+        $params = getParam();
+        $expToken = isset($params['token']) ? explode(':', simpleEncrypt($params['token'], 'd')) : [];
+        
+        if(count($expToken) == 2) {
+            $revId = $expToken[0];
+            $status = $expToken[1] == 'approve' ? 'APPROVED' : 'REJECTED';
+            $nip = $params['nip'];
+            $empId = $params['emp_id'];
+
+            $data = [
+                'status' => $status,
+                'updated_by' => $empId,
+                'updated_at' => date('Y-m-d H:i:s')
+            ];
+            $emp = $this->Hr->getDataById('employees', $empId);
+            $rev = $this->General->getDataById('vehicles_reservation', $revId);
+            if($rev->status == 'CREATED') {
+                if($status == 'APPROVED') {
+                    if($emp->rank_id == 3 || $emp->rank_id == 4 || $emp->rank_id == 5 || $emp->rank_id == 6) {
+                        $this->General->updateById('vehicles_reservation', $data, $revId);
+                        if($emp->rank_id == 5 || $emp->rank_id == 6) {
+                            $this->vehiclelib->approvalNotif('ASMAN', $revId);
+                        } else if($emp->rank_id == 3 || $emp->rank_id == 4){
+                            $this->vehiclelib->approvalNotif('Supervisor', $revId);
+                        }
+                        $this->load->view('html/valid_response', ['message' => "Berhasil <b>$status</b> reservasi kendaraan dinas"]);
+                    } else {
+                        $this->load->view('html/invalid_response', ['message' => "Gagal <b>$status</b> reservasi kendaraan dinas. Jabatan anda tidak sesuai!"]);
+                    }
+                } else if($status == 'REJECTED') {
+                    if($emp->rank_id == 3 || $emp->rank_id == 4 || $emp->rank_id == 5 || $emp->rank_id == 6) {
+                        $this->General->updateById('vehicles_reservation', $data, $revId);
+                        if($emp->rank_id == 5 || $emp->rank_id == 6) {
+                            $this->vehiclelib->rejectionNotif('ASMAN', $revId, $emp->employee_name);
+                        } else if($emp->rank_id == 3 || $emp->rank_id == 4) {
+                            $this->vehiclelib->rejectionNotif('Supervisor', $revId, $emp->employee_name);
+                        }
+                        $this->load->view('html/valid_response', ['message' => "Berhasil <b>$status</b> reservasi kendaraan dinas"]);
+                    } else {
+                        $this->load->view('html/invalid_response', ['message' => "Gagal <b>$status</b> reservasi kendaraan dinas. Jabatan anda tidak sesuai!"]);
+                    }
+                }
+            } else {
+                $this->load->view('html/invalid_response', ['message' => "Sudah di <b>$rev->status</b> sebelumnya!"]);
+            }
+        } else {
+            $this->load->view('html/invalid_response', ['message' => 'Token tidak valid!']);
+        }
+    }
+
     public function updateMeetRevStatus()
     {
         $params = getParam();
@@ -373,18 +425,29 @@ class PublicController extends Erp_Controller
             $emp = $this->Hr->getDataById('employees', $empId);
             $rev = $this->General->getDataById('meeting_rooms_reservation', $meetId);
             if($rev->status == 'CREATED') {
-                $this->General->updateById('meeting_rooms_reservation', $data, $meetId);
-                $this->General->update('meeting_rooms_reservation', $data, ['ref' => $meetId]);
                 if($status == 'APPROVED') {
-                    $this->mroomlib->meetInvitation($emp, $meetId);
+                    if($emp->rank_id == 3 || $emp->rank_id == 4 || $emp->rank_id == 5 || $emp->rank_id == 6) {
+                        $this->General->updateById('meeting_rooms_reservation', $data, $meetId);
+                        $this->General->update('meeting_rooms_reservation', $data, ['ref' => $meetId]);
+                        $this->mroomlib->meetInvitation($emp, $meetId);
+                        $this->load->view('html/valid_response', ['message' => "Berhasil <b>$status</b> reservasi ruang meeting"]);
+                    } else {
+                        $this->load->view('html/invalid_response', ['message' => "Gagal <b>$status</b> reservasi ruang meeting. Jabatan anda tidak sesuai!"]);
+                    }
                 } else if($status == 'REJECTED') {
-                    if($emp->rank_id == 5 || $emp->rank_id == 6) {
-                        $this->mroomlib->rejectionNotif('ASMAN', $meetId, $emp->employee_name);
-                    } else if($emp->rank_id == 2 || $emp->rank_id == 3) {
-                        $this->mroomlib->rejectionNotif('Supervisor', $meetId, $emp->employee_name);
+                    if($emp->rank_id == 3 || $emp->rank_id == 4 || $emp->rank_id == 5 || $emp->rank_id == 6) {
+                        $this->General->updateById('meeting_rooms_reservation', $data, $meetId);
+                        $this->General->update('meeting_rooms_reservation', $data, ['ref' => $meetId]);
+                        if($emp->rank_id == 5 || $emp->rank_id == 6) {
+                            $this->mroomlib->rejectionNotif('ASMAN', $meetId, $emp->employee_name);
+                        } else if($emp->rank_id == 3 || $emp->rank_id == 4) {
+                            $this->mroomlib->rejectionNotif('Supervisor', $meetId, $emp->employee_name);
+                        }
+                        $this->load->view('html/valid_response', ['message' => "Berhasil <b>$status</b> reservasi ruang meeting"]);
+                    } else {
+                        $this->load->view('html/invalid_response', ['message' => "Gagal <b>$status</b> reservasi ruang meeting. Jabatan anda tidak sesuai!"]);
                     }
                 }
-                $this->load->view('html/valid_response', ['message' => "Berhasil <b>$status</b> reservasi ruang meeting"]);
             } else {
                 $this->load->view('html/invalid_response', ['message' => "Sudah di <b>$rev->status</b> sebelumnya!"]);
             }

@@ -38,5 +38,7 @@ if ($this->auth->isLogin()) {
     if(array_key_exists(10, $this->auth->appMenu)) {
         require_once APPPATH . 'views/layouts/admin/tabs/ProjectTabs.php';
     }
-    
+    if(array_key_exists(11, $this->auth->appMenu)) {
+        require_once APPPATH . 'views/layouts/admin/tabs/TutorialTabs.php';
+    }
 }
