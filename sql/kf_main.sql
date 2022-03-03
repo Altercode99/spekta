@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 4.9.10
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Feb 14, 2022 at 03:50 PM
--- Server version: 10.4.22-MariaDB
+-- Host: localhost
+-- Generation Time: Mar 03, 2022 at 10:55 AM
+-- Server version: 8.0.28-0ubuntu0.20.04.3
 -- PHP Version: 7.4.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -28,11 +29,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `accordions` (
-  `id` int(11) NOT NULL,
-  `menu_id` int(11) NOT NULL,
+  `id` int NOT NULL,
+  `menu_id` int NOT NULL,
   `code` varchar(25) NOT NULL,
   `name` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `accordions`
@@ -47,7 +48,8 @@ INSERT INTO `accordions` (`id`, `menu_id`, `code`, `name`) VALUES
 (6, 5, 'ga_other', 'Umum'),
 (7, 4, 'other_lembur', 'Lembur'),
 (8, 9, 'dashboard_performance', 'Performance'),
-(9, 10, 'pm_timeline', 'Timeline');
+(9, 10, 'pm_timeline', 'Timeline'),
+(10, 11, 'tutorial', 'Tutorial');
 
 -- --------------------------------------------------------
 
@@ -56,13 +58,13 @@ INSERT INTO `accordions` (`id`, `menu_id`, `code`, `name`) VALUES
 --
 
 CREATE TABLE `acc_trees` (
-  `id` int(11) NOT NULL,
-  `acc_id` int(11) NOT NULL,
-  `parent` int(11) NOT NULL DEFAULT 0,
+  `id` int NOT NULL,
+  `acc_id` int NOT NULL,
+  `parent` int NOT NULL DEFAULT '0',
   `code` varchar(50) NOT NULL,
   `name` varchar(50) NOT NULL,
   `file` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `acc_trees`
@@ -140,7 +142,9 @@ INSERT INTO `acc_trees` (`id`, `acc_id`, `parent`, `code`, `name`, `file`) VALUE
 (79, 6, 75, 'ga_vehicle_monitoring', 'Monitoring Kendaraan', 'vehicle_list.php'),
 (80, 8, 0, 'dashboard_vehicle', 'Kendaraan Dinas', ''),
 (85, 8, 80, 'dashboard_vehicle_summary', 'Summary By Reservasi', 'vehicle_summary_data.php,vehicle_summary_data.php'),
-(86, 8, 58, 'dashboard_overtime_machine', 'Waktu Penggunaan Mesin', 'overtime_summary_machine.php');
+(86, 8, 58, 'dashboard_overtime_machine', 'Waktu Penggunaan Mesin', 'overtime_summary_machine.php'),
+(87, 11, 0, 'tutorial_video', 'Video Tutorial', ''),
+(88, 11, 87, 'tutorial_video_categories', 'Kategori Video', 'video_categories.php');
 
 -- --------------------------------------------------------
 
@@ -149,7 +153,7 @@ INSERT INTO `acc_trees` (`id`, `acc_id`, `parent`, `code`, `name`, `file`) VALUE
 --
 
 CREATE TABLE `email` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `alert_name` varchar(50) NOT NULL,
   `email_to` varchar(255) NOT NULL,
   `email_cc` varchar(255) NOT NULL,
@@ -157,18 +161,54 @@ CREATE TABLE `email` (
   `subject_name` varchar(255) NOT NULL,
   `message` text NOT NULL,
   `filename` varchar(150) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 0,
+  `status` int NOT NULL DEFAULT '0',
   `send_date` datetime NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `email`
 --
 
 INSERT INTO `email` (`id`, `alert_name`, `email_to`, `email_cc`, `subject`, `subject_name`, `message`, `filename`, `status`, `send_date`, `created_at`) VALUES
-(1, 'OVERTIME_REVISION_REQUEST', 'elmy1335@gmail.com,iskandar@kimiafarma.co.id,mamiekbanu@yahoo.co.id,karuniasastraputra@gmai.com,sdmkf01@gmail.com', '', 'Request Revisi Lembur Produksi (Task ID: 001/OT-REV/KF-JKT/II/2022)', 'Spekta Alert: Request Revisi Lembur Produksi (Task ID: 001/OT-REV/KF-JKT/II/2022)', '\n<div>\n    <div style=\"padding: 5px 0px 0px 10px;text-align:center;\">\n        <img style=\"width: 220px;height: auto;\" src=\"https://goreklame.com/assets/logo-kf.png\" alt=\"kf\">\n        <hr style=\"border: 1px solid #422800\">\n        <p><b>PT Kimia Farma Tbk. Plant Jakarta</b></p>\n    </div>\n\n            <p>Dear Team <b>SDM</b>,</p>\n        <p>Berikut ini adalah <b>Permintaan Revisi Lembur</b> dari Bagian <b>Teknik & Pemeliharaan</b> dengan Nomor: <b>001/OT-REV/KF-JKT/II/2022</b></p>\n        <p>Instruksi Revisi:</p>\n        <br />\n        <p style=\"text-align:center\">002/OT-EMP/KF-JKT/II/2022 Revisi, Kurangi 1 Jam</p>\n        <br />\n        <p>Adapun lemburan yang hendak di revisi adalah sebagai berikut:</p>\n    <table style=\"font-family:sans-serif;border-collapse: collapse;width:100%;\">\n        <tr>\n            <th style=\"border: 1px solid #422800;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #39c;color: #422800;\" colspan=\"2\">Detail Lembur</th>\n        </tr>\n                <tr>\n            <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\" colspan=\"2\">#1</td>\n        </tr>\n        <tr>\n            <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Task ID</td>\n            <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\"><b>002/OT/KF-JKT/II/2022</b></td>\n        </tr>\n        <tr>\n            <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Sub Unit</td>\n            <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Produksi</td>\n        </tr>\n        <tr>\n            <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Bagian</td>\n            <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Teknik & Pemeliharaan</td>\n        </tr>\n        <tr>\n            <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Sub Unit</td>\n            <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Hardware & Network</td>\n        </tr>\n        <tr>\n            <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Waktu Lembur</td>\n            <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">19 Februari 2022 07:30:00 - 19 Februari 2022 19:30:00</td>\n        </tr>\n        <tr>\n            <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Tugas</td>\n            <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Tes</td>\n        </tr>\n            </table>\n</div>', '', 0, '0000-00-00 00:00:00', '2022-02-11 13:38:07'),
-(2, 'OVERTIME_REVISION_CLOSED', 'elmy1335@gmail.com,iskandar@kimiafarma.co.id,mamiekbanu@yahoo.co.id,karuniasastraputra@gmai.com,sdmkf01@gmail.com', '', 'Closed Revisi Lembur Produksi (Task ID: 001/OT-REV/KF-JKT/II/2022)', 'Spekta Alert: Closed Revisi Lembur Produksi (Task ID: 001/OT-REV/KF-JKT/II/2022)', '\n<div>\n    <div style=\"padding: 5px 0px 0px 10px;text-align:center;\">\n        <img style=\"width: 220px;height: auto;\" src=\"https://goreklame.com/assets/logo-kf.png\" alt=\"kf\">\n        <hr style=\"border: 1px solid #422800\">\n        <p><b>PT Kimia Farma Tbk. Plant Jakarta</b></p>\n    </div>\n\n            <p>Dear Team <b>ASMAN Teknik & Pemeliharaan</b>,</p>\n        <p><b>Permintaan Revisi Lembur</b> dengan Nomor: <b>001/OT-REV/KF-JKT/II/2022</b> sudah di proses oleh <b>SDM</b> dengan status:</p>\n        <br />\n        <p style=\"text-align:center\"><b>CLOSED</b></p>\n        <br />\n        <p>Adapun lemburan yang hendak di revisi adalah sebagai berikut:</p>\n    <table style=\"font-family:sans-serif;border-collapse: collapse;width:100%;\">\n        <tr>\n            <th style=\"border: 1px solid #422800;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #39c;color: #422800;\" colspan=\"2\">Detail Lembur</th>\n        </tr>\n                <tr>\n            <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\" colspan=\"2\">#1</td>\n        </tr>\n        <tr>\n            <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Task ID</td>\n            <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\"><b>002/OT/KF-JKT/II/2022</b></td>\n        </tr>\n        <tr>\n            <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Sub Unit</td>\n            <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Produksi</td>\n        </tr>\n        <tr>\n            <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Bagian</td>\n            <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Teknik & Pemeliharaan</td>\n        </tr>\n        <tr>\n            <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Sub Unit</td>\n            <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Hardware & Network</td>\n        </tr>\n        <tr>\n            <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Waktu Lembur</td>\n            <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">19 Februari 2022 07:30:00 - 19 Februari 2022 16:00:00</td>\n        </tr>\n        <tr>\n            <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Tugas</td>\n            <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Tes</td>\n        </tr>\n            </table>\n</div>', '', 0, '0000-00-00 00:00:00', '2022-02-11 13:39:25');
+(3, 'MEETING_NOTIFICATION', 'septian.arman009@gmail.com', '', 'Notifikasi Meeting Di Ruang Calcidol @04 Maret 2022 10:00:00', 'Spekta Alert: Notifikasi Meeting Di Ruang Calcidol @04 Maret 2022 10:00:00', '\n<div>\n    <div style=\"padding: 5px 0px 0px 10px;text-align:center;\">\n        <img style=\"width: 220px;height: auto;\" src=\"https://goreklame.com/assets/logo-kf.png\" alt=\"kf\">\n        <hr>\n        <p>PT Kimia Farma Tbk. Plant Jakarta</p>\n    </div>\n\n    <div style=\"background: white;margin-top: 20px;border-radius: 5px;border: 1px solid #422800;padding: 10px;box-shadow: 5px 10px #ccc;\">\n        <p>Dear Team <b>Umum</b>,</p>\n        <p>Berikut ini adalah <b>Notifikasi Meeting</b> yang akan dilaksanakan pada:</p>\n        <p style=\"text-align:center\"><b>Jumat, 04 Maret 2022 10:00 - 12:00</b></p>\n        <p>Dengan rincian sebagai berikut:</p>\n\n        <table style=\"font-family:sans-serif;border-collapse: collapse;width:100%;\">\n            <tr>\n                <th style=\"border: 1px solid #422800;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #116171;color: #fff;\" colspan=\"2\">Detail Meeting</th>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">No. Tiket</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">1646266705762</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Nama Ruangan</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Calcidol</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Waktu Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Jumat, 04 Maret 2022 10:00 - 12:00</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Durasi</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">2.00 Jam</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Snack</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">✓</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Total Peserta</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">3 Orang</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Topik Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Sosialisasi Spekta</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Jenis Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Meeting Internal</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Catatan</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Sosialisasi Spekta</td>\n            </tr>\n        </table>\n    </div>\n\n    <div style=\"padding:10px;text-align:center;margin-top:20px;\">\n        <a href=\"https://spekta.id/index.php?c=PublicController&m=pinVerification&action=positive&token=Kzd5L1VlSWtpVFhvb1hQQVhZL245ZVZ4YU1RQ2JsWXJoYmJ3Tk83a3hFZGFWVmR4K0l5eEQxZ2ZOWVF3cEI1VXZjOWFFKzk2WlQyK0t4OEF0MUdtUHlqZENHbmgxR2V3NTB2M1N6Y25WNFJTaG8rTGxOWmJTcHJwTGQyTG5WY2R0eWNiWmlkVHJ3SGFGQlFrU0wwMENwYnlrTHA4MWxROWR3TVVON01SV1lmR1ZJVVg4NGJvaEFLeWtvN1lxMThi\" style=\"border: 2px solid #422800;\n                border-radius: 30px;\n                box-shadow: #422800 4px 4px 0 0;\n                color: #ddd;\n                cursor: pointer;\n                display: inline-block;\n                font-weight: 600;\n                font-size: 12px;\n                padding: 0 12px;\n                line-height: 40px;\n                text-align: center;\n                text-decoration: none;\n                user-select: none;\n                -webkit-user-select: none;\n                touch-action: manipulation;\n                width: 250px; background-color: #3399cc;\">Approve Meeting: 1646266705762</a><br/><br/>\n        <a href=\"https://spekta.id/index.php?c=PublicController&m=pinVerification&action=negative&token=Kzd5L1VlSWtpVFhvb1hQQVhZL245ZVZ4YU1RQ2JsWXJoYmJ3Tk83a3hFZGFWVmR4K0l5eEQxZ2ZOWVF3cEI1VXZjOWFFKzk2WlQyK0t4OEF0MUdtUDRaSllWTVpVcytXcmdWcmR0aTNwcFZhMWY3RVNaM216M2V3R1JpTWNpMG03M05mZTRtQkRFcVI4WmpkOEJrektiSitOUG1YM0NxdzBucHR0WmtML2hwSU9nTStiNElTTDFONWQvSVBFaWtK\" style=\"border: 2px solid #422800;\n                border-radius: 30px;\n                box-shadow: #422800 4px 4px 0 0;\n                color: #ddd;\n                cursor: pointer;\n                display: inline-block;\n                font-weight: 600;\n                font-size: 12px;\n                padding: 0 12px;\n                line-height: 40px;\n                text-align: center;\n                text-decoration: none;\n                user-select: none;\n                -webkit-user-select: none;\n                touch-action: manipulation;\n                width: 250px; background-color: #db8a10;\">Reject Meeting: 1646266705762</a>\n    </div>\n\n    <div style=\"margin-top: 10px;\">\n    <p>Notifikasi email ini dikirim secara otomatis oleh sistem dan tidak memerlukan balasan</p>\n    <hr>\n    <p>Kw. Industri Pulo Gadung, Blok N6-11, Jl. Rw. Gelam V No.1, RW.9, Jatinegara, Kec. Cakung, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13920</p>\n    </div>\n</div>', '', 1, '2022-03-03 07:18:28', '2022-03-03 00:16:42'),
+(4, 'MEETING_INVITATION', 'septian.arman009@gmail.com', '', 'Undangan Meeting Dari Administrator (Teknik & Pemeliharaan) Di Ruang Calcidol @04 Maret 2022 10:00:00', 'Spekta Alert: Undangan Meeting Dari Administrator (Teknik & Pemeliharaan) Di Ruang Calcidol @04 Maret 2022 10:00:00', '\n<div>\n    <div style=\"padding: 5px 0px 0px 10px;text-align:center;\">\n        <img style=\"width: 220px;height: auto;\" src=\"https://goreklame.com/assets/logo-kf.png\" alt=\"kf\">\n        <hr style=\"border: 1px solid #422800\">\n        <p><b>PT Kimia Farma Tbk. Plant Jakarta</b></p>\n    </div>\n\n    <div style=\"background: white;margin-top: 20px;border-radius: 5px;border: 1px solid #422800;padding: 10px;box-shadow: 5px 10px #ccc;\">\n        <p>Dear Bapak/Ibu <b>ARMAN SEPTIAN</b>,</p>\n        <p>Berikut ini adalah <b>Undangan Meeting Internal</b> dari <b>Administrator (Teknik & Pemeliharaan)</b> dengan Nomor: <b>1646266705762</b></p>\n        <p>Yang akan dilaksanakan pada:</p>\n        <p style=\"text-align:center\"><b>Jumat, 04 Maret 2022 10:00 - 12:00</b></p>        \n        <p>Adapun detail meeting yang akan di laksanan adalah sebagai berikut:</p>\n        <table style=\"font-family:sans-serif;border-collapse: collapse;width:100%;\">\n            <tr>\n                <th style=\"border: 1px solid #422800;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #116171;color: #fff;\" colspan=\"2\">Detail Meeting</th>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">No. Tiket</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">1646266705762</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Topik</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\"><b>Sosialisasi Spekta</b></td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Jenis Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Meeting Internal</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Deskripsi</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Sosialisasi Spekta</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Ruang Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Calcidol</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Waktu Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Jumat, 04 Maret 2022 10:00 - 12:00</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Durasi</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">2.00 Jam</td>\n            </tr>\n        </table>\n    </div>\n   \n    <p>Silahkan tekan tombol dibawah ini untuk melakukan konfirmasi kehadiran</b>,</p>\n    <p style=\'color:red\'><i><b>Note: Jumlah Snack akan di sesuaikan dengan jumlah peserta yang melakukan konfirmasi kehadiran!</b></i></p>\n\n    <div style=\"padding:10px;text-align:center;margin-top:20px;\">\n        <a href=\"https://spekta.id/index.php?c=PublicController&m=responseMeeting&token=dEkzeDVVMnp5dmlGcVZqU09GNncwcVZNMWtka1dPbXV4Nk1FVHNtbjZua0tDQ1pSQ1I3TTdJN2hWMktqUkc4Qg==\" style=\"border: 2px solid #422800;\n                border-radius: 30px;\n                box-shadow: #422800 4px 4px 0 0;\n                color: #ddd;\n                cursor: pointer;\n                display: inline-block;\n                font-weight: 600;\n                font-size: 12px;\n                padding: 0 12px;\n                line-height: 40px;\n                text-align: center;\n                text-decoration: none;\n                user-select: none;\n                -webkit-user-select: none;\n                touch-action: manipulation;\n                width: 150px; background-color: #116171;\">HADIR</a><br/><br/>\n        <a href=\"https://spekta.id/index.php?c=PublicController&m=responseMeeting&token=dEkzeDVVMnp5dmlGcVZqU09GNncwcVZNMWtka1dPbXV4Nk1FVHNtbjZubk92c0JVSks3R3BUVXd2RzlMcXhlRw==\" style=\"border: 2px solid #422800;\n                border-radius: 30px;\n                box-shadow: #422800 4px 4px 0 0;\n                color: #ddd;\n                cursor: pointer;\n                display: inline-block;\n                font-weight: 600;\n                font-size: 12px;\n                padding: 0 12px;\n                line-height: 40px;\n                text-align: center;\n                text-decoration: none;\n                user-select: none;\n                -webkit-user-select: none;\n                touch-action: manipulation;\n                width: 150px; background-color: #db8a10;\">TIDAK HADIR</a>\n    </div>\n</div>', '', 1, '2022-03-03 07:21:04', '2022-03-03 07:20:04'),
+(5, 'MEETING_INVITATION', 'asep.diki@kimiafarma.co.id', '', 'Undangan Meeting Dari Administrator (Teknik & Pemeliharaan) Di Ruang Calcidol @04 Maret 2022 10:00:00', 'Spekta Alert: Undangan Meeting Dari Administrator (Teknik & Pemeliharaan) Di Ruang Calcidol @04 Maret 2022 10:00:00', '\n<div>\n    <div style=\"padding: 5px 0px 0px 10px;text-align:center;\">\n        <img style=\"width: 220px;height: auto;\" src=\"https://goreklame.com/assets/logo-kf.png\" alt=\"kf\">\n        <hr style=\"border: 1px solid #422800\">\n        <p><b>PT Kimia Farma Tbk. Plant Jakarta</b></p>\n    </div>\n\n    <div style=\"background: white;margin-top: 20px;border-radius: 5px;border: 1px solid #422800;padding: 10px;box-shadow: 5px 10px #ccc;\">\n        <p>Dear Bapak/Ibu <b>ASEP DIKI ARIYANTO</b>,</p>\n        <p>Berikut ini adalah <b>Undangan Meeting Internal</b> dari <b>Administrator (Teknik & Pemeliharaan)</b> dengan Nomor: <b>1646266705762</b></p>\n        <p>Yang akan dilaksanakan pada:</p>\n        <p style=\"text-align:center\"><b>Jumat, 04 Maret 2022 10:00 - 12:00</b></p>        \n        <p>Adapun detail meeting yang akan di laksanan adalah sebagai berikut:</p>\n        <table style=\"font-family:sans-serif;border-collapse: collapse;width:100%;\">\n            <tr>\n                <th style=\"border: 1px solid #422800;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #116171;color: #fff;\" colspan=\"2\">Detail Meeting</th>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">No. Tiket</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">1646266705762</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Topik</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\"><b>Sosialisasi Spekta</b></td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Jenis Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Meeting Internal</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Deskripsi</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Sosialisasi Spekta</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Ruang Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Calcidol</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Waktu Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Jumat, 04 Maret 2022 10:00 - 12:00</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Durasi</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">2.00 Jam</td>\n            </tr>\n        </table>\n    </div>\n   \n    <p>Silahkan tekan tombol dibawah ini untuk melakukan konfirmasi kehadiran</b>,</p>\n    <p style=\'color:red\'><i><b>Note: Jumlah Snack akan di sesuaikan dengan jumlah peserta yang melakukan konfirmasi kehadiran!</b></i></p>\n\n    <div style=\"padding:10px;text-align:center;margin-top:20px;\">\n        <a href=\"https://spekta.id/index.php?c=PublicController&m=responseMeeting&token=cTUrL3BJQWQvVnRYV0laTmpTZE5Fa3RINXZEdDBJcTdydXRlTnpCNVhmRFhLWUZPcTFnUDJVZWlld1Zzalh0Rg==\" style=\"border: 2px solid #422800;\n                border-radius: 30px;\n                box-shadow: #422800 4px 4px 0 0;\n                color: #ddd;\n                cursor: pointer;\n                display: inline-block;\n                font-weight: 600;\n                font-size: 12px;\n                padding: 0 12px;\n                line-height: 40px;\n                text-align: center;\n                text-decoration: none;\n                user-select: none;\n                -webkit-user-select: none;\n                touch-action: manipulation;\n                width: 150px; background-color: #116171;\">HADIR</a><br/><br/>\n        <a href=\"https://spekta.id/index.php?c=PublicController&m=responseMeeting&token=cTUrL3BJQWQvVnRYV0laTmpTZE5Fa3RINXZEdDBJcTdydXRlTnpCNVhmRDFpSjB4NTdjdzRRWGpFaEh0QVVyeQ==\" style=\"border: 2px solid #422800;\n                border-radius: 30px;\n                box-shadow: #422800 4px 4px 0 0;\n                color: #ddd;\n                cursor: pointer;\n                display: inline-block;\n                font-weight: 600;\n                font-size: 12px;\n                padding: 0 12px;\n                line-height: 40px;\n                text-align: center;\n                text-decoration: none;\n                user-select: none;\n                -webkit-user-select: none;\n                touch-action: manipulation;\n                width: 150px; background-color: #db8a10;\">TIDAK HADIR</a>\n    </div>\n</div>', '', 1, '2022-03-03 07:21:07', '2022-03-03 07:20:04'),
+(6, 'TRIP_REQUEST_NOTIFICATION', 'siregar.evendy@kimiafarma.co.id,tafriaji.2595@gmail.com,fikrianto@kimiafarma.co.id,siregar.evendy@kimiafarma.co.id', '', 'Perjalanan Dinas Ke Pt. Kimia Farma Plant Banjanaran Tanggal Kamis, 10 Maret 2022', 'Spekta Alert: Perjalanan Dinas Ke Pt. Kimia Farma Plant Banjanaran Tanggal Kamis, 10 Maret 2022', '\n<div>\n    <div style=\"padding: 5px 0px 0px 10px;text-align:center;\">\n        <img style=\"width: 220px;height: auto;\" src=\"https://goreklame.com/assets/logo-kf.png\" alt=\"kf\">\n        <hr>\n        <p>PT Kimia Farma Tbk. Plant Jakarta</p>\n    </div>\n\n    <div style=\"background: white;margin-top: 20px;border-radius: 5px;border: 1px solid #422800;padding: 10px;box-shadow: 5px 10px #ccc;\">\n        <p>Dear Team,</p>\n        <p>Berikut ini adalah <b>Notifikasi Perjalanan Dinas</b> ke <b>Pt. Kimia Farma Plant Banjanaran</b> yang akan dilaksanakan pada</p>\n        <p style=\"text-align:center\"><b>Kamis, 10 Maret 2022</b> dari jam <b>10:00 - 15:00</b></p>\n        <p>Dengan rincian sebagai berikut:</p>\n\n        <table style=\"font-family:sans-serif;border-collapse: collapse;width:100%;\">\n            <tr>\n                <th style=\"border: 1px solid #ddd;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #116171;color: white;\" colspan=\"2\">Detail Perjalanan</th>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">No. Tiket</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\"><b>1646282677975</b></td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Nama Kendaraan</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Kendaraan Dinas #2</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Nomor Polisi</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">B 2263 TYN</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Tipe Kendaraan</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Toyota Kijang Innova</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Kapasitas Penumpang</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">8 Orang</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Waktu Perjalanan</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Kamis, 10 Maret 2022 10:00 - 15:00</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Durasi</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">5.00 Jam</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Driver</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">NURUL ANWAR</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;;border:1px solid #ccc;vertical-align:text-top;\">Penumpang</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">\n                                            <p>1. ARMAN SEPTIAN (Teknik & Pemeliharaan)</p>\n                                            <p>2. ASEP DIKI ARIYANTO (Teknik & Pemeliharaan)</p>\n                                            <p>3. FAJAR FIRMANSYAH (Teknik & Pemeliharaan)</p>\n                                    </td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Catatan</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Bancmark Digitalisasi</td>\n            </tr>\n        </table>\n    </div>\n\n    <p style=\'color:red\'>Mohon agar segeral dilakukan konfirmasi dari pihak <b>Umum</b> & <b>Driver</b> terkait ketersedian kendaraan.</p>\n\n    <div style=\"margin-top: 10px;\">\n    <p>Notifikasi email ini dikirim secara otomatis oleh sistem dan tidak memerlukan balasan</p>\n        <hr>\n        <p>Kw. Industri Pulo Gadung, Blok N6-11, Jl. Rw. Gelam V No.1, RW.9, Jatinegara, Kec. Cakung, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13920</p>\n    </div>\n</div>', '', 1, '2022-03-03 11:44:05', '2022-03-03 04:43:31'),
+(7, 'TRIP_REQUEST_CONFIRMATION', 'septian.arman009@gmail.com', '', 'Perjalanan Dinas Ke Pt. Kimia Farma Plant Banjanaran Tanggal Kamis, 10 Maret 2022', 'Spekta Alert: Perjalanan Dinas Ke Pt. Kimia Farma Plant Banjanaran Tanggal Kamis, 10 Maret 2022', '\n<div>\n    <div style=\"padding: 5px 0px 0px 10px;text-align:center;\">\n        <img style=\"width: 220px;height: auto;\" src=\"https://goreklame.com/assets/logo-kf.png\" alt=\"kf\">\n        <hr>\n        <p>PT Kimia Farma Tbk. Plant Jakarta</p>\n    </div>\n\n    <div style=\"background: white;margin-top: 20px;border-radius: 5px;border: 1px solid #422800;padding: 10px;box-shadow: 5px 10px #ccc;\">\n        <p>Dear Team,</p>\n        <p>Berikut ini adalah <b>Notifikasi Perjalanan Dinas</b> ke <b>Pt. Kimia Farma Plant Banjanaran</b> yang akan dilaksanakan pada</p>\n        <p style=\"text-align:center\"><b>Kamis, 10 Maret 2022</b> dari jam <b>10:00 - 15:00</b></p>\n        <p>Dengan rincian sebagai berikut:</p>\n\n        <table style=\"font-family:sans-serif;border-collapse: collapse;width:100%;\">\n            <tr>\n                <th style=\"border: 1px solid #ddd;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #116171;color: white;\" colspan=\"2\">Detail Perjalanan</th>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">No. Tiket</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\"><b>1646282677975</b></td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Nama Kendaraan</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Kendaraan Dinas #2</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Nomor Polisi</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">B 2263 TYN</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Tipe Kendaraan</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Toyota Kijang Innova</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Kapasitas Penumpang</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">8 Orang</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Waktu Perjalanan</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Kamis, 10 Maret 2022 10:00 - 15:00</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Durasi</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">5.00 Jam</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Driver</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">NURUL ANWAR</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;;border:1px solid #ccc;vertical-align:text-top;\">Penumpang</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">\n                                            <p>1. ARMAN SEPTIAN (Teknik & Pemeliharaan)</p>\n                                            <p>2. ASEP DIKI ARIYANTO (Teknik & Pemeliharaan)</p>\n                                            <p>3. FAJAR FIRMANSYAH (Teknik & Pemeliharaan)</p>\n                                    </td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Catatan</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Bancmark Digitalisasi</td>\n            </tr>\n        </table>\n    </div>\n\n    <p style=\'color:red\'>Mohon agar segeral dilakukan konfirmasi dari pihak <b>Umum</b> & <b>Driver</b> terkait ketersedian kendaraan.</p>\n    \n    <div style=\"padding:10px;text-align:center;margin-top:20px;\">\n        <a href=\"https://spekta.id/index.php?c=PublicController&m=driverConfirm&token=U05zdm9aQng4ZXFWdFMvRU9aRDlLRmlOeU5xSlJKNEN5LzhHcHV5czlvZ0VhbFAwMWlDcXo1eldlejMrb05TdQ==\" style=\"border: 2px solid #422800;\n                border-radius: 30px;\n                box-shadow: #422800 4px 4px 0 0;\n                color: #ddd;\n                cursor: pointer;\n                display: inline-block;\n                font-weight: 600;\n                font-size: 12px;\n                padding: 0 12px;\n                line-height: 40px;\n                text-align: center;\n                text-decoration: none;\n                user-select: none;\n                -webkit-user-select: none;\n                touch-action: manipulation;\n                width: 150px; background-color: #116171;\">TERIMA REQUEST</a><br/><br/>\n        <a href=\"https://spekta.id/index.php?c=PublicController&m=driverConfirm&token=U05zdm9aQng4ZXFWdFMvRU9aRDlLRmlOeU5xSlJKNEN5LzhHcHV5czlvaktnbnlsQTIrbi9lY3daRmtJZ1l3NQ==\" style=\"border: 2px solid #422800;\n                border-radius: 30px;\n                box-shadow: #422800 4px 4px 0 0;\n                color: #ddd;\n                cursor: pointer;\n                display: inline-block;\n                font-weight: 600;\n                font-size: 12px;\n                padding: 0 12px;\n                line-height: 40px;\n                text-align: center;\n                text-decoration: none;\n                user-select: none;\n                -webkit-user-select: none;\n                touch-action: manipulation;\n                width: 150px; background-color: #db8a10;\">TOLAK REQUEST</a>\n    </div>\n\n    <div style=\"margin-top: 10px;\">\n    <p>Notifikasi email ini dikirim secara otomatis oleh sistem dan tidak memerlukan balasan</p>\n        <hr>\n        <p>Kw. Industri Pulo Gadung, Blok N6-11, Jl. Rw. Gelam V No.1, RW.9, Jatinegara, Kec. Cakung, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13920</p>\n    </div>\n</div>', '', 1, '2022-03-03 12:01:04', '2022-03-03 04:43:31'),
+(8, 'APPROVAL_VEHICLE_REV_NOTIFICATION', 'siregar.evendy@kimiafarma.co.id,tafriaji.2595@gmail.com,siregar.evendy@kimiafarma.co.id', '', 'Notifikasi Approval Reservasi Kendaraan Tujuan Pt. Kimia Farma Plant Banjanaran @10 Maret 2022 10:00:00', 'Spekta Alert: Notifikasi Approval Reservasi Kendaraan Pt. Kimia Farma Plant Banjanaran @10 Maret 2022 10:00:00', '\n<div>\n    <div style=\"padding: 5px 0px 0px 10px;text-align:center;\">\n        <img style=\"width: 220px;height: auto;\" src=\"https://goreklame.com/assets/logo-kf.png\" alt=\"kf\">\n        <hr>\n        <p>PT Kimia Farma Tbk. Plant Jakarta</p>\n    </div>\n\n    <div style=\"background: white;margin-top: 20px;border-radius: 5px;border: 1px solid #422800;padding: 10px;box-shadow: 5px 10px #ccc;\">\n        <p>Dear Team,</p>\n        <p>Berikut ini adalah <b>Notifikasi Perjalanan Dinas</b> yang telah disetujui oleh <b>Administrator</b> yang akan dilaksanakan pada</P>\n        <p style=\"text-align:center\"><b>Kamis, 10 Maret 2022 10:00 - 15:00</b></p>\n        <p>Dengan rincian sebagai berikut:</p>\n\n        <table style=\"font-family:sans-serif;border-collapse: collapse;width:100%;\">\n            <tr>\n                <th style=\"border: 1px solid #ddd;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #116171;color: white;\" colspan=\"2\">Detail Perjalanan</th>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">No. Tiket</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\"><b>1646282677975</b></td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Nama Kendaraan</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Kendaraan Dinas #2</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Nomor Polisi</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">B 2263 TYN</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Tipe Kendaraan</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Toyota Kijang Innova</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Kapasitas Penumpang</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">8 Orang</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Waktu Perjalanan</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Kamis, 10 Maret 2022 10:00 - 15:00</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Durasi</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">5.00 Jam</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Driver</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">NURUL ANWAR</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;;border:1px solid #ccc;vertical-align:text-top;\">Penumpang</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">\n                                            <p>1. ARMAN SEPTIAN (Teknik & Pemeliharaan)</p>\n                                            <p>2. ASEP DIKI ARIYANTO (Teknik & Pemeliharaan)</p>\n                                            <p>3. FAJAR FIRMANSYAH (Teknik & Pemeliharaan)</p>\n                                    </td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Catatan</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Bancmark Digitalisasi</td>\n            </tr>\n        </table>\n    </div>\n\n    <div style=\"margin-top: 10px;\">\n    <p>Notifikasi email ini dikirim secara otomatis oleh sistem dan tidak memerlukan balasan</p>\n    <hr>\n    <p>Kw. Industri Pulo Gadung, Blok N6-11, Jl. Rw. Gelam V No.1, RW.9, Jatinegara, Kec. Cakung, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13920</p>\n    </div>\n</div>', '', 1, '2022-03-03 11:47:04', '2022-03-03 04:47:00'),
+(9, 'TRIP_FORM_FOR_DRIVER', 'septian.arman009@gmail.com', '', 'Form Trip Driver untuk perjalanan ke Pt. Kimia Farma Plant Banjanaran (No. Tiket: 1646282677975)', 'Spekta Alert: Form Trip Driver untuk perjalanan ke Pt. Kimia Farma Plant Banjanaran (No. Tiket: 1646282677975)', '\n<div>\n    <div style=\"padding: 5px 0px 0px 10px;text-align:center;\">\n        <img style=\"width: 220px;height: auto;\" src=\"https://goreklame.com/assets/logo-kf.png\" alt=\"kf\">\n        <hr>\n        <p></p>\n    </div>\n\n    <div style=\"background: white;margin-top: 20px;border-radius: 5px;border: 1px solid #422800;padding: 10px;box-shadow: 5px 10px #ccc;\">\n        <p>Dear <b>NURUL ANWAR</b>,</p>\n        <p>Berikut ini adalah <b>Form Perjalanan Dinas</b> ke <b>Bancmark Digitalisasi</b>:</p>\n        <div style=\"padding:10px;text-align:center;margin-top:20px;\">\n            <a href=\"https://spekta.id/index.php?c=PublicController&m=driverTripForm&token=U05zdm9aQng4ZXFWdFMvRU9aRDlLRmlOeU5xSlJKNEN5LzhHcHV5czlvaUhOTjVUeDhiV0k2MDdFWXRvYmlCcA==\" style=\"border: 2px solid #422800;\n                border-radius: 30px;\n                box-shadow: #422800 4px 4px 0 0;\n                color: #ddd;\n                cursor: pointer;\n                display: inline-block;\n                font-weight: 600;\n                font-size: 12px;\n                padding: 0 12px;\n                line-height: 40px;\n                text-align: center;\n                text-decoration: none;\n                user-select: none;\n                -webkit-user-select: none;\n                touch-action: manipulation;\n                width: 250px; background-color: #116171;\">BUKA FORM PERJALANAN</a><br/><br/>\n        </div>\n        <p>Dengan rincian sebagai berikut:</p>\n\n        <table style=\"font-family:sans-serif;border-collapse: collapse;width:100%;\">\n            <tr>\n                <th style=\"border: 1px solid #ddd;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #116171;color: white;\" colspan=\"2\">Detail Perjalanan</th>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">No. Tiket</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\"><b>1646282677975</b></td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Nama Kendaraan</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Kendaraan Dinas #2</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Nomor Polisi</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">B 2263 TYN</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Tipe Kendaraan</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Toyota Kijang Innova</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Kapasitas Penumpang</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">8 Orang</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Waktu Perjalanan</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Kamis, 10 Maret 2022 10:00 - 15:00</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Durasi</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">5.00 Jam</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Jumlah Penumpang</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">3 Orang</td>\n            </tr>\n        </table>\n    </div>\n\n    <div style=\"margin-top: 10px;\">\n    <p>Notifikasi email ini dikirim secara otomatis oleh sistem dan tidak memerlukan balasan</p>\n    <hr>\n    <p>Kw. Industri Pulo Gadung, Blok N6-11, Jl. Rw. Gelam V No.1, RW.9, Jatinegara, Kec. Cakung, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13920</p>\n    </div>\n</div>', '', 1, '2022-03-03 12:32:40', '2022-03-03 05:02:21'),
+(10, 'MEETING_NOTIFICATION', 'dhnnesaka@gmail.com,siregar.evendy@kimiafarma.co.id,fikrianto@kimiafarma.co.id,siregar.evendy@kimiafarma.co.id', '', 'Notifikasi Meeting Di Ruang Calcidol @04 Maret 2022 12:00:00', 'Spekta Alert: Notifikasi Meeting Di Ruang Calcidol @04 Maret 2022 12:00:00', '\n<div>\n    <div style=\"padding: 5px 0px 0px 10px;text-align:center;\">\n        <img style=\"width: 220px;height: auto;\" src=\"https://goreklame.com/assets/logo-kf.png\" alt=\"kf\">\n        <hr>\n        <p>PT Kimia Farma Tbk. Plant Jakarta</p>\n    </div>\n\n    <div style=\"background: white;margin-top: 20px;border-radius: 5px;border: 1px solid #422800;padding: 10px;box-shadow: 5px 10px #ccc;\">\n        <p>Dear Team <b>Umum</b>,</p>\n        <p>Berikut ini adalah <b>Notifikasi Meeting</b> yang akan dilaksanakan pada:</p>\n        <p style=\"text-align:center\"><b>Jumat, 04 Maret 2022 12:00 - 13:00</b></p>\n        <p>Dengan rincian sebagai berikut:</p>\n\n        <table style=\"font-family:sans-serif;border-collapse: collapse;width:100%;\">\n            <tr>\n                <th style=\"border: 1px solid #422800;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #116171;color: #fff;\" colspan=\"2\">Detail Meeting</th>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">No. Tiket</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">1646300612861</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Nama Ruangan</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Calcidol</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Waktu Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Jumat, 04 Maret 2022 12:00 - 13:00</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Durasi</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">1.00 Jam</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Snack</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">-</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Total Peserta</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">4 Orang</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Topik Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Tes Bro</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Jenis Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Meeting Internal</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Catatan</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Tes Bro</td>\n            </tr>\n        </table>\n    </div>\n\n    <div style=\"padding:10px;text-align:center;margin-top:20px;\">\n        <a href=\"https://spekta.id/index.php?c=PublicController&m=pinVerification&action=positive&token=Kzd5L1VlSWtpVFhvb1hQQVhZL245ZVZ4YU1RQ2JsWXJoYmJ3Tk83a3hFZGFWVmR4K0l5eEQxZ2ZOWVF3cEI1VXZjOWFFKzk2WlQyK0t4OEF0MUdtUDNRVThoRGNBeXppN2ZMcDgwZGhsZ2x4RFBBcllwVHR0ZFlxdThzb2dmcE1WbGIyRG03QWFXMDhvc1R0bzFUTjBsT21SYkRVVWhiZzNNSTFLSmZhbmF3TnV0T0VkRXorVHp4aE45cWRCOTFv\" style=\"border: 2px solid #422800;\n                border-radius: 30px;\n                box-shadow: #422800 4px 4px 0 0;\n                color: #ddd;\n                cursor: pointer;\n                display: inline-block;\n                font-weight: 600;\n                font-size: 12px;\n                padding: 0 12px;\n                line-height: 40px;\n                text-align: center;\n                text-decoration: none;\n                user-select: none;\n                -webkit-user-select: none;\n                touch-action: manipulation;\n                width: 250px; background-color: #3399cc;\">Approve Meeting: 1646300612861</a><br/><br/>\n        <a href=\"https://spekta.id/index.php?c=PublicController&m=pinVerification&action=negative&token=Kzd5L1VlSWtpVFhvb1hQQVhZL245ZVZ4YU1RQ2JsWXJoYmJ3Tk83a3hFZGFWVmR4K0l5eEQxZ2ZOWVF3cEI1VXZjOWFFKzk2WlQyK0t4OEF0MUdtUDZSUWY2K3dvdEsrQ3FuMzRORUhTWkV4M01HYzJvNlZDMGVrU2FUNWRpQUtKSi84d3lmZk84MVkrdmVXT3N5QUlhbEQvbXMrR0Jnb1hoWU9VODNhaksyUmE4UlN1QldQNXVUSzA3NWJrR0ZR\" style=\"border: 2px solid #422800;\n                border-radius: 30px;\n                box-shadow: #422800 4px 4px 0 0;\n                color: #ddd;\n                cursor: pointer;\n                display: inline-block;\n                font-weight: 600;\n                font-size: 12px;\n                padding: 0 12px;\n                line-height: 40px;\n                text-align: center;\n                text-decoration: none;\n                user-select: none;\n                -webkit-user-select: none;\n                touch-action: manipulation;\n                width: 250px; background-color: #db8a10;\">Reject Meeting: 1646300612861</a>\n    </div>\n\n    <div style=\"margin-top: 10px;\">\n    <p>Notifikasi email ini dikirim secara otomatis oleh sistem dan tidak memerlukan balasan</p>\n    <hr>\n    <p>Kw. Industri Pulo Gadung, Blok N6-11, Jl. Rw. Gelam V No.1, RW.9, Jatinegara, Kec. Cakung, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13920</p>\n    </div>\n</div>', '', 1, '2022-03-03 16:43:05', '2022-03-03 09:42:14'),
+(11, 'MEETING_INVITATION', 'fajar.firmansyah@kimiafarma.co.id', '', 'Undangan Meeting Dari Administrator (Teknik & Pemeliharaan) Di Ruang Calcidol @04 Maret 2022 12:00:00', 'Spekta Alert: Undangan Meeting Dari Administrator (Teknik & Pemeliharaan) Di Ruang Calcidol @04 Maret 2022 12:00:00', '\n<div>\n    <div style=\"padding: 5px 0px 0px 10px;text-align:center;\">\n        <img style=\"width: 220px;height: auto;\" src=\"https://goreklame.com/assets/logo-kf.png\" alt=\"kf\">\n        <hr style=\"border: 1px solid #422800\">\n        <p><b>PT Kimia Farma Tbk. Plant Jakarta</b></p>\n    </div>\n\n    <div style=\"background: white;margin-top: 20px;border-radius: 5px;border: 1px solid #422800;padding: 10px;box-shadow: 5px 10px #ccc;\">\n        <p>Dear Bapak/Ibu <b>FAJAR FIRMANSYAH</b>,</p>\n        <p>Berikut ini adalah <b>Undangan Meeting Internal</b> dari <b>Administrator (Teknik & Pemeliharaan)</b> dengan Nomor: <b>1646300612861</b></p>\n        <p>Yang akan dilaksanakan pada:</p>\n        <p style=\"text-align:center\"><b>Jumat, 04 Maret 2022 12:00 - 13:00</b></p>        \n        <p>Adapun detail meeting yang akan di laksanan adalah sebagai berikut:</p>\n        <table style=\"font-family:sans-serif;border-collapse: collapse;width:100%;\">\n            <tr>\n                <th style=\"border: 1px solid #422800;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #116171;color: #fff;\" colspan=\"2\">Detail Meeting</th>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">No. Tiket</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">1646300612861</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Topik</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\"><b>Tes Bro</b></td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Jenis Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Meeting Internal</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Deskripsi</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Tes Bro</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Ruang Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Calcidol</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Waktu Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Jumat, 04 Maret 2022 12:00 - 13:00</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Durasi</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">1.00 Jam</td>\n            </tr>\n        </table>\n    </div>\n   \n    <p>Silahkan tekan tombol dibawah ini untuk melakukan konfirmasi kehadiran</b>,</p>\n    <p style=\'color:red\'><i><b>Note: Jumlah Snack akan di sesuaikan dengan jumlah peserta yang melakukan konfirmasi kehadiran!</b></i></p>\n\n    <div style=\"padding:10px;text-align:center;margin-top:20px;\">\n        <a href=\"https://spekta.id/index.php?c=PublicController&m=responseMeeting&token=RDhwUTNGdHQvWEloUHdOeGZoTE5PWEg4djErLzNBd29WWktIOElIMWh4RjlVQWVzSFBOSE52L1BRREVVMllOSmVVdWI1ZWZLdWpNN1BQMlp4M1NTL1E9PQ==\" style=\"border: 2px solid #422800;\n                border-radius: 30px;\n                box-shadow: #422800 4px 4px 0 0;\n                color: #ddd;\n                cursor: pointer;\n                display: inline-block;\n                font-weight: 600;\n                font-size: 12px;\n                padding: 0 12px;\n                line-height: 40px;\n                text-align: center;\n                text-decoration: none;\n                user-select: none;\n                -webkit-user-select: none;\n                touch-action: manipulation;\n                width: 150px; background-color: #116171;\">HADIR</a><br/><br/>\n        <a href=\"https://spekta.id/index.php?c=PublicController&m=responseMeeting&token=RDhwUTNGdHQvWEloUHdOeGZoTE5PWEg4djErLzNBd29WWktIOElIMWh4RjlVQWVzSFBOSE52L1BRREVVMllOSmJ0L01HeFY2Zi8xQlRBK2lsc1BZaGc9PQ==\" style=\"border: 2px solid #422800;\n                border-radius: 30px;\n                box-shadow: #422800 4px 4px 0 0;\n                color: #ddd;\n                cursor: pointer;\n                display: inline-block;\n                font-weight: 600;\n                font-size: 12px;\n                padding: 0 12px;\n                line-height: 40px;\n                text-align: center;\n                text-decoration: none;\n                user-select: none;\n                -webkit-user-select: none;\n                touch-action: manipulation;\n                width: 150px; background-color: #db8a10;\">TIDAK HADIR</a>\n    </div>\n</div>', '', 1, '2022-03-03 16:48:04', '2022-03-03 16:47:04');
+INSERT INTO `email` (`id`, `alert_name`, `email_to`, `email_cc`, `subject`, `subject_name`, `message`, `filename`, `status`, `send_date`, `created_at`) VALUES
+(12, 'MEETING_INVITATION', 'septian.arman009@gmail.com', '', 'Undangan Meeting Dari Administrator (Teknik & Pemeliharaan) Di Ruang Calcidol @04 Maret 2022 12:00:00', 'Spekta Alert: Undangan Meeting Dari Administrator (Teknik & Pemeliharaan) Di Ruang Calcidol @04 Maret 2022 12:00:00', '\n<div>\n    <div style=\"padding: 5px 0px 0px 10px;text-align:center;\">\n        <img style=\"width: 220px;height: auto;\" src=\"https://goreklame.com/assets/logo-kf.png\" alt=\"kf\">\n        <hr style=\"border: 1px solid #422800\">\n        <p><b>PT Kimia Farma Tbk. Plant Jakarta</b></p>\n    </div>\n\n    <div style=\"background: white;margin-top: 20px;border-radius: 5px;border: 1px solid #422800;padding: 10px;box-shadow: 5px 10px #ccc;\">\n        <p>Dear Bapak/Ibu <b>ARMAN SEPTIAN</b>,</p>\n        <p>Berikut ini adalah <b>Undangan Meeting Internal</b> dari <b>Administrator (Teknik & Pemeliharaan)</b> dengan Nomor: <b>1646300612861</b></p>\n        <p>Yang akan dilaksanakan pada:</p>\n        <p style=\"text-align:center\"><b>Jumat, 04 Maret 2022 12:00 - 13:00</b></p>        \n        <p>Adapun detail meeting yang akan di laksanan adalah sebagai berikut:</p>\n        <table style=\"font-family:sans-serif;border-collapse: collapse;width:100%;\">\n            <tr>\n                <th style=\"border: 1px solid #422800;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #116171;color: #fff;\" colspan=\"2\">Detail Meeting</th>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">No. Tiket</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">1646300612861</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Topik</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\"><b>Tes Bro</b></td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Jenis Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Meeting Internal</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Deskripsi</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Tes Bro</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Ruang Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Calcidol</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Waktu Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Jumat, 04 Maret 2022 12:00 - 13:00</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Durasi</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">1.00 Jam</td>\n            </tr>\n        </table>\n    </div>\n   \n    <p>Silahkan tekan tombol dibawah ini untuk melakukan konfirmasi kehadiran</b>,</p>\n    <p style=\'color:red\'><i><b>Note: Jumlah Snack akan di sesuaikan dengan jumlah peserta yang melakukan konfirmasi kehadiran!</b></i></p>\n\n    <div style=\"padding:10px;text-align:center;margin-top:20px;\">\n        <a href=\"https://spekta.id/index.php?c=PublicController&m=responseMeeting&token=aEpaeUd0emkydUZmeE1YRWdDSm9yWEJjcFgwQ0NjNi9TUVZ5OTV1ajdHcDZyVEFGYkpCM2w4VjlIblRGcUtyRw==\" style=\"border: 2px solid #422800;\n                border-radius: 30px;\n                box-shadow: #422800 4px 4px 0 0;\n                color: #ddd;\n                cursor: pointer;\n                display: inline-block;\n                font-weight: 600;\n                font-size: 12px;\n                padding: 0 12px;\n                line-height: 40px;\n                text-align: center;\n                text-decoration: none;\n                user-select: none;\n                -webkit-user-select: none;\n                touch-action: manipulation;\n                width: 150px; background-color: #116171;\">HADIR</a><br/><br/>\n        <a href=\"https://spekta.id/index.php?c=PublicController&m=responseMeeting&token=aEpaeUd0emkydUZmeE1YRWdDSm9yWEJjcFgwQ0NjNi9TUVZ5OTV1ajdHcEFZZi9ubjhvOEt3RDhxcWVEK1lQbA==\" style=\"border: 2px solid #422800;\n                border-radius: 30px;\n                box-shadow: #422800 4px 4px 0 0;\n                color: #ddd;\n                cursor: pointer;\n                display: inline-block;\n                font-weight: 600;\n                font-size: 12px;\n                padding: 0 12px;\n                line-height: 40px;\n                text-align: center;\n                text-decoration: none;\n                user-select: none;\n                -webkit-user-select: none;\n                touch-action: manipulation;\n                width: 150px; background-color: #db8a10;\">TIDAK HADIR</a>\n    </div>\n</div>', '', 1, '2022-03-03 16:48:07', '2022-03-03 16:47:04'),
+(13, 'MEETING_INVITATION', 'asep.diki@kimiafarma.co.id', '', 'Undangan Meeting Dari Administrator (Teknik & Pemeliharaan) Di Ruang Calcidol @04 Maret 2022 12:00:00', 'Spekta Alert: Undangan Meeting Dari Administrator (Teknik & Pemeliharaan) Di Ruang Calcidol @04 Maret 2022 12:00:00', '\n<div>\n    <div style=\"padding: 5px 0px 0px 10px;text-align:center;\">\n        <img style=\"width: 220px;height: auto;\" src=\"https://goreklame.com/assets/logo-kf.png\" alt=\"kf\">\n        <hr style=\"border: 1px solid #422800\">\n        <p><b>PT Kimia Farma Tbk. Plant Jakarta</b></p>\n    </div>\n\n    <div style=\"background: white;margin-top: 20px;border-radius: 5px;border: 1px solid #422800;padding: 10px;box-shadow: 5px 10px #ccc;\">\n        <p>Dear Bapak/Ibu <b>ASEP DIKI ARIYANTO</b>,</p>\n        <p>Berikut ini adalah <b>Undangan Meeting Internal</b> dari <b>Administrator (Teknik & Pemeliharaan)</b> dengan Nomor: <b>1646300612861</b></p>\n        <p>Yang akan dilaksanakan pada:</p>\n        <p style=\"text-align:center\"><b>Jumat, 04 Maret 2022 12:00 - 13:00</b></p>        \n        <p>Adapun detail meeting yang akan di laksanan adalah sebagai berikut:</p>\n        <table style=\"font-family:sans-serif;border-collapse: collapse;width:100%;\">\n            <tr>\n                <th style=\"border: 1px solid #422800;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #116171;color: #fff;\" colspan=\"2\">Detail Meeting</th>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">No. Tiket</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">1646300612861</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Topik</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\"><b>Tes Bro</b></td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Jenis Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Meeting Internal</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Deskripsi</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Tes Bro</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Ruang Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Calcidol</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Waktu Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Jumat, 04 Maret 2022 12:00 - 13:00</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Durasi</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">1.00 Jam</td>\n            </tr>\n        </table>\n    </div>\n   \n    <p>Silahkan tekan tombol dibawah ini untuk melakukan konfirmasi kehadiran</b>,</p>\n    <p style=\'color:red\'><i><b>Note: Jumlah Snack akan di sesuaikan dengan jumlah peserta yang melakukan konfirmasi kehadiran!</b></i></p>\n\n    <div style=\"padding:10px;text-align:center;margin-top:20px;\">\n        <a href=\"https://spekta.id/index.php?c=PublicController&m=responseMeeting&token=VzdWM3VVSDFNa00xdHBOaGp6MnIyY2ZCcXVId3BNbEpvYUxta3lLMlNyMnN5V0hEeUx6SUQvNGEremlVSUY3ZA==\" style=\"border: 2px solid #422800;\n                border-radius: 30px;\n                box-shadow: #422800 4px 4px 0 0;\n                color: #ddd;\n                cursor: pointer;\n                display: inline-block;\n                font-weight: 600;\n                font-size: 12px;\n                padding: 0 12px;\n                line-height: 40px;\n                text-align: center;\n                text-decoration: none;\n                user-select: none;\n                -webkit-user-select: none;\n                touch-action: manipulation;\n                width: 150px; background-color: #116171;\">HADIR</a><br/><br/>\n        <a href=\"https://spekta.id/index.php?c=PublicController&m=responseMeeting&token=VzdWM3VVSDFNa00xdHBOaGp6MnIyY2ZCcXVId3BNbEpvYUxta3lLMlNyME96UDZIb1gvTFVmNHlTWWRxL3ZNYQ==\" style=\"border: 2px solid #422800;\n                border-radius: 30px;\n                box-shadow: #422800 4px 4px 0 0;\n                color: #ddd;\n                cursor: pointer;\n                display: inline-block;\n                font-weight: 600;\n                font-size: 12px;\n                padding: 0 12px;\n                line-height: 40px;\n                text-align: center;\n                text-decoration: none;\n                user-select: none;\n                -webkit-user-select: none;\n                touch-action: manipulation;\n                width: 150px; background-color: #db8a10;\">TIDAK HADIR</a>\n    </div>\n</div>', '', 1, '2022-03-03 16:48:09', '2022-03-03 16:47:04'),
+(14, 'APPROVAL_MEETING_NOTIFICATION', 'dhnnesaka@gmail.com,siregar.evendy@kimiafarma.co.id,fikrianto@kimiafarma.co.id', '', 'Notifikasi Approval Meeting Di Ruang Calcidol @04 Maret 2022 12:00:00', 'Spekta Alert: Notifikasi Approval Meeting Di Ruang Calcidol @04 Maret 2022 12:00:00', '\n<div>\n    <div style=\"padding: 5px 0px 0px 10px;text-align:center;\">\n        <img style=\"width: 220px;height: auto;\" src=\"https://goreklame.com/assets/logo-kf.png\" alt=\"kf\">\n        <hr>\n        <p>PT Kimia Farma Tbk. Plant Jakarta</p>\n    </div>\n\n    <div style=\"background: white;margin-top: 20px;border-radius: 5px;border: 1px solid #422800;padding: 10px;box-shadow: 5px 10px #ccc;\">\n        <p>Dear Team,</p>\n        <p>Berikut ini adalah <b>Notifikasi Approval Meeting</b> yang telah disetujui oleh <b>EVENDY SIREGAR</b> yang akan dilaksanakan pada:</P>\n        <p style=\"text-align:center\"><b>Jumat, 04 Maret 2022 12:00 - 13:00</b></p>\n        <p>Dengan rincian sebagai berikut:</p>\n\n        <table style=\"font-family:sans-serif;border-collapse: collapse;width:100%;\">\n            <tr>\n                <th style=\"border: 1px solid #ddd;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #116171;color: white;\" colspan=\"2\">Detail Meeting</th>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">No. Tiket</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">1646300612861</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Nama Ruangan</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Calcidol</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Banyaknya Meeting</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">\n                                    <b style=\'color:red\'>1X</b>\n                                </td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Waktu Meeting</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Jumat, 04 Maret 2022 12:00 - 13:00</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Durasi</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">1.00 Jam</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Snack</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">-</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Total Peserta</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">4 Orang</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Topik Meeting</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Tes Bro</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Jenis Meeting</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Meeting Internal</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Catatan</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Tes Bro</td>\n            </tr>\n        </table>\n    </div>\n\n    <div style=\"margin-top: 10px;\">\n    <p>Notifikasi email ini dikirim secara otomatis oleh sistem dan tidak memerlukan balasan</p>\n    <hr>\n    <p>Kw. Industri Pulo Gadung, Blok N6-11, Jl. Rw. Gelam V No.1, RW.9, Jatinegara, Kec. Cakung, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13920</p>\n    </div>\n</div>', '', 1, '2022-03-03 16:48:12', '2022-03-03 09:47:05'),
+(15, 'MEETING_INVITATION', 'fajar.firmansyah@kimiafarma.co.id', '', 'Undangan Meeting Dari Administrator (Teknik & Pemeliharaan) Di Ruang Calcidol @04 Maret 2022 12:00:00', 'Spekta Alert: Undangan Meeting Dari Administrator (Teknik & Pemeliharaan) Di Ruang Calcidol @04 Maret 2022 12:00:00', '\n<div>\n    <div style=\"padding: 5px 0px 0px 10px;text-align:center;\">\n        <img style=\"width: 220px;height: auto;\" src=\"https://goreklame.com/assets/logo-kf.png\" alt=\"kf\">\n        <hr style=\"border: 1px solid #422800\">\n        <p><b>PT Kimia Farma Tbk. Plant Jakarta</b></p>\n    </div>\n\n    <div style=\"background: white;margin-top: 20px;border-radius: 5px;border: 1px solid #422800;padding: 10px;box-shadow: 5px 10px #ccc;\">\n        <p>Dear Bapak/Ibu <b>FAJAR FIRMANSYAH</b>,</p>\n        <p>Berikut ini adalah <b>Undangan Meeting Internal</b> dari <b>Administrator (Teknik & Pemeliharaan)</b> dengan Nomor: <b>1646300612861</b></p>\n        <p>Yang akan dilaksanakan pada:</p>\n        <p style=\"text-align:center\"><b>Jumat, 04 Maret 2022 12:00 - 13:00</b></p>        \n        <p>Adapun detail meeting yang akan di laksanan adalah sebagai berikut:</p>\n        <table style=\"font-family:sans-serif;border-collapse: collapse;width:100%;\">\n            <tr>\n                <th style=\"border: 1px solid #422800;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #116171;color: #fff;\" colspan=\"2\">Detail Meeting</th>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">No. Tiket</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">1646300612861</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Topik</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\"><b>Tes Bro</b></td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Jenis Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Meeting Internal</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Deskripsi</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Tes Bro</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Ruang Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Calcidol</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Waktu Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Jumat, 04 Maret 2022 12:00 - 13:00</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Durasi</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">1.00 Jam</td>\n            </tr>\n        </table>\n    </div>\n   \n    <p>Silahkan tekan tombol dibawah ini untuk melakukan konfirmasi kehadiran</b>,</p>\n    <p style=\'color:red\'><i><b>Note: Jumlah Snack akan di sesuaikan dengan jumlah peserta yang melakukan konfirmasi kehadiran!</b></i></p>\n\n    <div style=\"padding:10px;text-align:center;margin-top:20px;\">\n        <a href=\"https://spekta.id/index.php?c=PublicController&m=responseMeeting&token=RDhwUTNGdHQvWEloUHdOeGZoTE5PWEg4djErLzNBd29WWktIOElIMWh4RjlVQWVzSFBOSE52L1BRREVVMllOSmVVdWI1ZWZLdWpNN1BQMlp4M1NTL1E9PQ==\" style=\"border: 2px solid #422800;\n                border-radius: 30px;\n                box-shadow: #422800 4px 4px 0 0;\n                color: #ddd;\n                cursor: pointer;\n                display: inline-block;\n                font-weight: 600;\n                font-size: 12px;\n                padding: 0 12px;\n                line-height: 40px;\n                text-align: center;\n                text-decoration: none;\n                user-select: none;\n                -webkit-user-select: none;\n                touch-action: manipulation;\n                width: 150px; background-color: #116171;\">HADIR</a><br/><br/>\n        <a href=\"https://spekta.id/index.php?c=PublicController&m=responseMeeting&token=RDhwUTNGdHQvWEloUHdOeGZoTE5PWEg4djErLzNBd29WWktIOElIMWh4RjlVQWVzSFBOSE52L1BRREVVMllOSmJ0L01HeFY2Zi8xQlRBK2lsc1BZaGc9PQ==\" style=\"border: 2px solid #422800;\n                border-radius: 30px;\n                box-shadow: #422800 4px 4px 0 0;\n                color: #ddd;\n                cursor: pointer;\n                display: inline-block;\n                font-weight: 600;\n                font-size: 12px;\n                padding: 0 12px;\n                line-height: 40px;\n                text-align: center;\n                text-decoration: none;\n                user-select: none;\n                -webkit-user-select: none;\n                touch-action: manipulation;\n                width: 150px; background-color: #db8a10;\">TIDAK HADIR</a>\n    </div>\n</div>', '', 1, '2022-03-03 16:48:15', '2022-03-03 16:47:27'),
+(16, 'MEETING_INVITATION', 'septian.arman009@gmail.com', '', 'Undangan Meeting Dari Administrator (Teknik & Pemeliharaan) Di Ruang Calcidol @04 Maret 2022 12:00:00', 'Spekta Alert: Undangan Meeting Dari Administrator (Teknik & Pemeliharaan) Di Ruang Calcidol @04 Maret 2022 12:00:00', '\n<div>\n    <div style=\"padding: 5px 0px 0px 10px;text-align:center;\">\n        <img style=\"width: 220px;height: auto;\" src=\"https://goreklame.com/assets/logo-kf.png\" alt=\"kf\">\n        <hr style=\"border: 1px solid #422800\">\n        <p><b>PT Kimia Farma Tbk. Plant Jakarta</b></p>\n    </div>\n\n    <div style=\"background: white;margin-top: 20px;border-radius: 5px;border: 1px solid #422800;padding: 10px;box-shadow: 5px 10px #ccc;\">\n        <p>Dear Bapak/Ibu <b>ARMAN SEPTIAN</b>,</p>\n        <p>Berikut ini adalah <b>Undangan Meeting Internal</b> dari <b>Administrator (Teknik & Pemeliharaan)</b> dengan Nomor: <b>1646300612861</b></p>\n        <p>Yang akan dilaksanakan pada:</p>\n        <p style=\"text-align:center\"><b>Jumat, 04 Maret 2022 12:00 - 13:00</b></p>        \n        <p>Adapun detail meeting yang akan di laksanan adalah sebagai berikut:</p>\n        <table style=\"font-family:sans-serif;border-collapse: collapse;width:100%;\">\n            <tr>\n                <th style=\"border: 1px solid #422800;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #116171;color: #fff;\" colspan=\"2\">Detail Meeting</th>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">No. Tiket</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">1646300612861</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Topik</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\"><b>Tes Bro</b></td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Jenis Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Meeting Internal</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Deskripsi</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Tes Bro</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Ruang Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Calcidol</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Waktu Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Jumat, 04 Maret 2022 12:00 - 13:00</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Durasi</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">1.00 Jam</td>\n            </tr>\n        </table>\n    </div>\n   \n    <p>Silahkan tekan tombol dibawah ini untuk melakukan konfirmasi kehadiran</b>,</p>\n    <p style=\'color:red\'><i><b>Note: Jumlah Snack akan di sesuaikan dengan jumlah peserta yang melakukan konfirmasi kehadiran!</b></i></p>\n\n    <div style=\"padding:10px;text-align:center;margin-top:20px;\">\n        <a href=\"https://spekta.id/index.php?c=PublicController&m=responseMeeting&token=aEpaeUd0emkydUZmeE1YRWdDSm9yWEJjcFgwQ0NjNi9TUVZ5OTV1ajdHcDZyVEFGYkpCM2w4VjlIblRGcUtyRw==\" style=\"border: 2px solid #422800;\n                border-radius: 30px;\n                box-shadow: #422800 4px 4px 0 0;\n                color: #ddd;\n                cursor: pointer;\n                display: inline-block;\n                font-weight: 600;\n                font-size: 12px;\n                padding: 0 12px;\n                line-height: 40px;\n                text-align: center;\n                text-decoration: none;\n                user-select: none;\n                -webkit-user-select: none;\n                touch-action: manipulation;\n                width: 150px; background-color: #116171;\">HADIR</a><br/><br/>\n        <a href=\"https://spekta.id/index.php?c=PublicController&m=responseMeeting&token=aEpaeUd0emkydUZmeE1YRWdDSm9yWEJjcFgwQ0NjNi9TUVZ5OTV1ajdHcEFZZi9ubjhvOEt3RDhxcWVEK1lQbA==\" style=\"border: 2px solid #422800;\n                border-radius: 30px;\n                box-shadow: #422800 4px 4px 0 0;\n                color: #ddd;\n                cursor: pointer;\n                display: inline-block;\n                font-weight: 600;\n                font-size: 12px;\n                padding: 0 12px;\n                line-height: 40px;\n                text-align: center;\n                text-decoration: none;\n                user-select: none;\n                -webkit-user-select: none;\n                touch-action: manipulation;\n                width: 150px; background-color: #db8a10;\">TIDAK HADIR</a>\n    </div>\n</div>', '', 1, '2022-03-03 16:48:19', '2022-03-03 16:47:27'),
+(17, 'MEETING_INVITATION', 'asep.diki@kimiafarma.co.id', '', 'Undangan Meeting Dari Administrator (Teknik & Pemeliharaan) Di Ruang Calcidol @04 Maret 2022 12:00:00', 'Spekta Alert: Undangan Meeting Dari Administrator (Teknik & Pemeliharaan) Di Ruang Calcidol @04 Maret 2022 12:00:00', '\n<div>\n    <div style=\"padding: 5px 0px 0px 10px;text-align:center;\">\n        <img style=\"width: 220px;height: auto;\" src=\"https://goreklame.com/assets/logo-kf.png\" alt=\"kf\">\n        <hr style=\"border: 1px solid #422800\">\n        <p><b>PT Kimia Farma Tbk. Plant Jakarta</b></p>\n    </div>\n\n    <div style=\"background: white;margin-top: 20px;border-radius: 5px;border: 1px solid #422800;padding: 10px;box-shadow: 5px 10px #ccc;\">\n        <p>Dear Bapak/Ibu <b>ASEP DIKI ARIYANTO</b>,</p>\n        <p>Berikut ini adalah <b>Undangan Meeting Internal</b> dari <b>Administrator (Teknik & Pemeliharaan)</b> dengan Nomor: <b>1646300612861</b></p>\n        <p>Yang akan dilaksanakan pada:</p>\n        <p style=\"text-align:center\"><b>Jumat, 04 Maret 2022 12:00 - 13:00</b></p>        \n        <p>Adapun detail meeting yang akan di laksanan adalah sebagai berikut:</p>\n        <table style=\"font-family:sans-serif;border-collapse: collapse;width:100%;\">\n            <tr>\n                <th style=\"border: 1px solid #422800;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #116171;color: #fff;\" colspan=\"2\">Detail Meeting</th>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">No. Tiket</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">1646300612861</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Topik</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\"><b>Tes Bro</b></td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Jenis Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Meeting Internal</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Deskripsi</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Tes Bro</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Ruang Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Calcidol</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Waktu Meeting</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Jumat, 04 Maret 2022 12:00 - 13:00</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">Durasi</td>\n                <td style=\"border: 1px solid #422800;padding: 8px;text-align:left\">1.00 Jam</td>\n            </tr>\n        </table>\n    </div>\n   \n    <p>Silahkan tekan tombol dibawah ini untuk melakukan konfirmasi kehadiran</b>,</p>\n    <p style=\'color:red\'><i><b>Note: Jumlah Snack akan di sesuaikan dengan jumlah peserta yang melakukan konfirmasi kehadiran!</b></i></p>\n\n    <div style=\"padding:10px;text-align:center;margin-top:20px;\">\n        <a href=\"https://spekta.id/index.php?c=PublicController&m=responseMeeting&token=VzdWM3VVSDFNa00xdHBOaGp6MnIyY2ZCcXVId3BNbEpvYUxta3lLMlNyMnN5V0hEeUx6SUQvNGEremlVSUY3ZA==\" style=\"border: 2px solid #422800;\n                border-radius: 30px;\n                box-shadow: #422800 4px 4px 0 0;\n                color: #ddd;\n                cursor: pointer;\n                display: inline-block;\n                font-weight: 600;\n                font-size: 12px;\n                padding: 0 12px;\n                line-height: 40px;\n                text-align: center;\n                text-decoration: none;\n                user-select: none;\n                -webkit-user-select: none;\n                touch-action: manipulation;\n                width: 150px; background-color: #116171;\">HADIR</a><br/><br/>\n        <a href=\"https://spekta.id/index.php?c=PublicController&m=responseMeeting&token=VzdWM3VVSDFNa00xdHBOaGp6MnIyY2ZCcXVId3BNbEpvYUxta3lLMlNyME96UDZIb1gvTFVmNHlTWWRxL3ZNYQ==\" style=\"border: 2px solid #422800;\n                border-radius: 30px;\n                box-shadow: #422800 4px 4px 0 0;\n                color: #ddd;\n                cursor: pointer;\n                display: inline-block;\n                font-weight: 600;\n                font-size: 12px;\n                padding: 0 12px;\n                line-height: 40px;\n                text-align: center;\n                text-decoration: none;\n                user-select: none;\n                -webkit-user-select: none;\n                touch-action: manipulation;\n                width: 150px; background-color: #db8a10;\">TIDAK HADIR</a>\n    </div>\n</div>', '', 1, '2022-03-03 16:48:22', '2022-03-03 16:47:27'),
+(18, 'APPROVAL_MEETING_NOTIFICATION', 'dhnnesaka@gmail.com,siregar.evendy@kimiafarma.co.id,fikrianto@kimiafarma.co.id', '', 'Notifikasi Approval Meeting Di Ruang Calcidol @04 Maret 2022 12:00:00', 'Spekta Alert: Notifikasi Approval Meeting Di Ruang Calcidol @04 Maret 2022 12:00:00', '\n<div>\n    <div style=\"padding: 5px 0px 0px 10px;text-align:center;\">\n        <img style=\"width: 220px;height: auto;\" src=\"https://goreklame.com/assets/logo-kf.png\" alt=\"kf\">\n        <hr>\n        <p>PT Kimia Farma Tbk. Plant Jakarta</p>\n    </div>\n\n    <div style=\"background: white;margin-top: 20px;border-radius: 5px;border: 1px solid #422800;padding: 10px;box-shadow: 5px 10px #ccc;\">\n        <p>Dear Team,</p>\n        <p>Berikut ini adalah <b>Notifikasi Approval Meeting</b> yang telah disetujui oleh <b>EVENDY SIREGAR</b> yang akan dilaksanakan pada:</P>\n        <p style=\"text-align:center\"><b>Jumat, 04 Maret 2022 12:00 - 13:00</b></p>\n        <p>Dengan rincian sebagai berikut:</p>\n\n        <table style=\"font-family:sans-serif;border-collapse: collapse;width:100%;\">\n            <tr>\n                <th style=\"border: 1px solid #ddd;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #116171;color: white;\" colspan=\"2\">Detail Meeting</th>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">No. Tiket</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">1646300612861</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Nama Ruangan</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Calcidol</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Banyaknya Meeting</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">\n                                    <b style=\'color:red\'>1X</b>\n                                </td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Waktu Meeting</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Jumat, 04 Maret 2022 12:00 - 13:00</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Durasi</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">1.00 Jam</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Snack</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">-</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Total Peserta</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">4 Orang</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Topik Meeting</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Tes Bro</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Jenis Meeting</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Meeting Internal</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Catatan</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Tes Bro</td>\n            </tr>\n        </table>\n    </div>\n\n    <div style=\"margin-top: 10px;\">\n    <p>Notifikasi email ini dikirim secara otomatis oleh sistem dan tidak memerlukan balasan</p>\n    <hr>\n    <p>Kw. Industri Pulo Gadung, Blok N6-11, Jl. Rw. Gelam V No.1, RW.9, Jatinegara, Kec. Cakung, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13920</p>\n    </div>\n</div>', '', 1, '2022-03-03 16:48:25', '2022-03-03 09:47:28'),
+(19, 'REJECTION_MEETING_NOTIFICATION', 'alternate.septian@gmail.com,dhnnesaka@gmail.com,siregar.evendy@kimiafarma.co.id,fikrianto@kimiafarma.co.id', '', 'Notifikasi Rejection Meeting Di Ruang Calcidol @04 Maret 2022 12:00:00', 'Spekta Alert: Notifikasi Rejection Meeting Di Ruang Calcidol @04 Maret 2022 12:00:00', '\n<div>\n    <div style=\"padding: 5px 0px 0px 10px;text-align:center;\">\n        <img style=\"width: 220px;height: auto;\" src=\"https://goreklame.com/assets/logo-kf.png\" alt=\"kf\">\n        <hr>\n        <p>PT Kimia Farma Tbk. Plant Jakarta</p>\n    </div>\n\n    <div style=\"background: white;margin-top: 20px;border-radius: 5px;border: 1px solid #422800;padding: 10px;box-shadow: 5px 10px #ccc;\">\n        <p>Dear Team,</p>\n        <p>Berikut ini adalah <b style=\"color:red;\">Notifikasi Rejection Meeting</b> yang telah ditolak oleh <b>EVENDY SIREGAR</b> pada:</P>\n        <p style=\"text-align:center\"><b>Kamis, 03 Maret 2022 16:48:24</b></p>\n        <p>Dengan rincian sebagai berikut:</p>\n\n        <table style=\"font-family:sans-serif;border-collapse: collapse;width:100%;\">\n            <tr>\n                <th style=\"border: 1px solid #ddd;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #116171;color: white;\" colspan=\"2\">Detail Meeting</th>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">No. Tiket</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">1646300612861</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Nama Ruangan</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Calcidol</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Waktu Meeting</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Jumat, 04 Maret 2022 12:00 - 13:00</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Durasi</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">1.00 Jam</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Snack</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">-</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Total Peserta</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">4 Orang</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Topik Meeting</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Tes Bro</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Jenis Meeting</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Meeting Internal</td>\n            </tr>\n            <tr>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Catatan</td>\n                <td style=\"border: 1px solid #ddd;padding: 8px;\">Tes Bro</td>\n            </tr>\n        </table>\n    </div>\n\n    <div style=\"margin-top: 10px;\">\n    <p>Notifikasi email ini dikirim secara otomatis oleh sistem dan tidak memerlukan balasan</p>\n    <hr>\n    <p>Kw. Industri Pulo Gadung, Blok N6-11, Jl. Rw. Gelam V No.1, RW.9, Jatinegara, Kec. Cakung, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13920</p>\n    </div>\n</div>', '', 1, '2022-03-03 16:49:04', '2022-03-03 09:48:24');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `email_send`
+--
+
+CREATE TABLE `email_send` (
+  `id` int NOT NULL,
+  `status` enum('enable','disable') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'enable',
+  `updated_by` int NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `email_send`
+--
+
+INSERT INTO `email_send` (`id`, `status`, `updated_by`, `updated_at`) VALUES
+(1, 'enable', 1, '2022-02-25 15:33:10');
 
 -- --------------------------------------------------------
 
@@ -177,14 +217,14 @@ INSERT INTO `email` (`id`, `alert_name`, `email_to`, `email_cc`, `subject`, `sub
 --
 
 CREATE TABLE `locations` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `code` varchar(15) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `locations`
@@ -200,20 +240,20 @@ INSERT INTO `locations` (`id`, `code`, `name`, `created_by`, `updated_by`, `crea
 --
 
 CREATE TABLE `menus` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `name` varchar(30) NOT NULL,
   `icon` varchar(15) NOT NULL,
   `main_folder` text NOT NULL,
   `subfolder_1` text NOT NULL,
   `subfolder_2` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `menus`
 --
 
 INSERT INTO `menus` (`id`, `name`, `icon`, `main_folder`, `subfolder_1`, `subfolder_2`) VALUES
-(1, 'Akses & Master', 'key', 'appmaster,user', 'appmaster:access,appmaster:employment,appmaster:facility,appmaster:machine,appmaster:overtime', ''),
+(1, 'Akses & Master', 'key', 'appmaster,user', 'appmaster:access,appmaster:employment,appmaster:facility,appmaster:machine,appmaster:overtime,appmaster:email', ''),
 (2, 'Human Resource', 'hrd', 'appmaster,document,hr', 'hr:emp,appmaster:employment', ''),
 (3, 'Dokumen Kontrol', 'doc', 'document', '', ''),
 (4, 'Others', 'others', 'other', 'other:meeting_room,other:vehicle,other:overtime', ''),
@@ -222,7 +262,8 @@ INSERT INTO `menus` (`id`, `name`, `icon`, `main_folder`, `subfolder_1`, `subfol
 (7, 'Warehouse', 'warehouse', 'warehouse', '', ''),
 (8, 'Teknik & Pemeliharaan', 'tools', 'tnp', 'tnp:overtime', ''),
 (9, 'Dashboard', 'dashboard', 'dashboard', 'dashboard:overtime,dashboard:meeting_room,dashboard:vehicle', ''),
-(10, 'Proyek Manajemen', 'timeline', 'project_manager', '', '');
+(10, 'Proyek Manajemen', 'timeline', 'project_manager', '', ''),
+(11, 'Tutorial', 'tutorial', 'tutorial', '', '');
 
 -- --------------------------------------------------------
 
@@ -231,18 +272,18 @@ INSERT INTO `menus` (`id`, `name`, `icon`, `main_folder`, `subfolder_1`, `subfol
 --
 
 CREATE TABLE `pics` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `location` varchar(15) NOT NULL,
   `code` varchar(50) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `sub_department_id` int(11) NOT NULL,
-  `department_id` int(11) NOT NULL,
+  `sub_department_id` int NOT NULL,
+  `department_id` int NOT NULL,
   `pic_emails` text NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `pics`
@@ -273,16 +314,16 @@ INSERT INTO `pics` (`id`, `location`, `code`, `name`, `sub_department_id`, `depa
 
 CREATE TABLE `projects_link` (
   `id` varchar(30) NOT NULL,
-  `sub_department_id` int(11) NOT NULL,
-  `division_id` int(11) NOT NULL,
+  `sub_department_id` int NOT NULL,
+  `division_id` int NOT NULL,
   `source` varchar(30) NOT NULL,
   `target` varchar(30) NOT NULL,
-  `type` int(11) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `type` int NOT NULL,
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `projects_link`
@@ -294,7 +335,9 @@ INSERT INTO `projects_link` (`id`, `sub_department_id`, `division_id`, `source`,
 ('1643984592585', 5, 18, '1643984592581', '1643984592584', 1, 1, 1, '2022-02-04 21:24:07', '2022-02-04 21:24:07'),
 ('1644427233019', 5, 18, '1644427233013', '1644427233018', 1, 1, 1, '2022-02-10 00:19:40', '2022-02-10 00:19:40'),
 ('1644427351518', 5, 18, '1644427233013', '1644427351513', 1, 1, 1, '2022-02-10 00:21:45', '2022-02-10 00:21:45'),
-('1644561458020', 5, 18, '1644427233013', '1644561458015', 1, 1, 1, '2022-02-11 13:36:38', '2022-02-11 13:36:38');
+('1644561458020', 5, 18, '1644427233013', '1644561458015', 1, 1, 1, '2022-02-11 13:36:38', '2022-02-11 13:36:38'),
+('1645142568934', 5, 18, '1644427233018', '1645142568929', 0, 1, 1, '2022-02-18 00:03:16', '2022-02-18 07:03:16'),
+('1646120665353', 5, 18, '1644054644692', '1646120665352', 1, 1, 1, '2022-03-01 07:44:51', '2022-03-01 14:44:51');
 
 -- --------------------------------------------------------
 
@@ -305,31 +348,33 @@ INSERT INTO `projects_link` (`id`, `sub_department_id`, `division_id`, `source`,
 CREATE TABLE `projects_task` (
   `id` varchar(50) NOT NULL,
   `location` varchar(15) NOT NULL,
-  `sub_department_id` int(11) NOT NULL,
-  `division_id` int(11) NOT NULL,
+  `sub_department_id` int NOT NULL,
+  `division_id` int NOT NULL,
   `text` text NOT NULL,
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
-  `duration` int(11) NOT NULL,
+  `duration` int NOT NULL,
   `progress` double(10,2) NOT NULL,
   `parent` varchar(50) NOT NULL,
   `task_id` varchar(30) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `projects_task`
 --
 
 INSERT INTO `projects_task` (`id`, `location`, `sub_department_id`, `division_id`, `text`, `start_date`, `end_date`, `duration`, `progress`, `parent`, `task_id`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-('1644054644692', 'KF-JKT', 5, 18, 'New Task', '2022-03-04', '2022-03-05', 1, 0.00, '0', '1644054644692', 1, 1, '2022-02-05 16:51:14', '2022-02-05 16:51:14'),
+('1644054644692', 'KF-JKT', 5, 18, 'Install Server', '2022-03-04', '2022-03-05', 1, 0.00, '0', '1644054644692', 1, 1, '2022-02-05 16:51:14', '2022-03-01 14:44:35'),
 ('1644427233013', 'KF-JKT', 5, 18, 'New Task', '2022-02-10', '2022-02-11', 1, 0.00, '0', '1644427233013', 1, 1, '2022-02-10 00:19:29', '2022-02-10 00:19:33'),
 ('1644427233018', 'KF-JKT', 5, 18, 'New Task', '2022-02-11', '2022-02-12', 1, 0.00, '1644427233013', '1644427233013', 1, 1, '2022-02-10 00:19:37', '2022-02-10 00:19:38'),
 ('1644427351513', 'KF-JKT', 5, 18, 'New Task', '2022-02-12', '2022-02-13', 1, 0.00, '1644427233018', '1644427233013', 1, 1, '2022-02-10 00:21:36', '2022-02-10 00:21:47'),
-('1644561458015', 'KF-JKT', 5, 18, 'New Task', '2022-02-10', '2022-02-13', 3, 0.00, '1644427351513', '1644427233013', 1, 1, '2022-02-11 13:36:33', '2022-02-11 13:36:54');
+('1644561458015', 'KF-JKT', 5, 18, 'New Task', '2022-02-12', '2022-02-14', 2, 0.00, '1644427351513', '1644427233013', 1, 1, '2022-02-11 13:36:33', '2022-02-18 07:02:53'),
+('1645142568929', 'KF-JKT', 5, 18, 'New Task', '2022-02-12', '2022-02-13', 1, 0.00, '0', '1645142568929', 1, 1, '2022-02-18 00:03:11', '2022-02-18 07:03:21'),
+('1646120665352', 'KF-JKT', 5, 18, 'Konfig Mikrotik', '2022-03-05', '2022-03-07', 2, 0.00, '1644054644692', '1644054644692', 1, 1, '2022-03-01 07:44:45', '2022-03-01 14:44:49');
 
 -- --------------------------------------------------------
 
@@ -338,11 +383,11 @@ INSERT INTO `projects_task` (`id`, `location`, `sub_department_id`, `division_id
 --
 
 CREATE TABLE `roles` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `name` varchar(10) NOT NULL,
   `display_name` varchar(25) NOT NULL,
-  `created-at` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `created-at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `roles`
@@ -359,15 +404,15 @@ INSERT INTO `roles` (`id`, `name`, `display_name`, `created-at`) VALUES
 --
 
 CREATE TABLE `temp_files` (
-  `id` int(11) NOT NULL,
-  `emp_id` int(11) NOT NULL,
+  `id` int NOT NULL,
+  `emp_id` int NOT NULL,
   `action` varchar(30) NOT NULL,
   `doc_name` varchar(50) NOT NULL,
   `filename` varchar(50) NOT NULL,
   `type` varchar(10) NOT NULL,
   `size` double NOT NULL,
-  `uploaded_at` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `uploaded_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -376,10 +421,10 @@ CREATE TABLE `temp_files` (
 --
 
 CREATE TABLE `trees` (
-  `id` int(11) NOT NULL,
-  `acc_id` int(11) NOT NULL,
+  `id` int NOT NULL,
+  `acc_id` int NOT NULL,
   `name` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -388,32 +433,31 @@ CREATE TABLE `trees` (
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `nip` varchar(15) NOT NULL,
   `username` varchar(25) NOT NULL,
   `password` varchar(100) NOT NULL,
   `bypass_password` varchar(100) NOT NULL,
-  `role_id` int(11) NOT NULL,
+  `role_id` int NOT NULL,
   `password_created` date NOT NULL,
   `password_updated` date NOT NULL,
-  `verified` int(11) NOT NULL DEFAULT 0,
+  `verified` int NOT NULL DEFAULT '0',
   `status` enum('ACTIVE','INACTIVE') NOT NULL DEFAULT 'ACTIVE',
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `access` enum('BOTH','WEB','MOBILE') NOT NULL DEFAULT 'WEB',
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `nip`, `username`, `password`, `bypass_password`, `role_id`, `password_created`, `password_updated`, `verified`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, '9999', 'superuser', '$2a$08$igPA03AhhurICd07d1kNoefqxbtwSaW3guovuH6K3CpgCshd1zFx.', '$2a$08$igPA03AhhurICd07d1kNoefqxbtwSaW3guovuH6K3CpgCshd1zFx.', 1, '2021-12-01', '2021-12-30', 1, 'ACTIVE', 1, 1, '2021-12-01 06:08:22', '2021-12-01 06:07:52'),
-(10, '19860115A', 'edfano', '$2a$08$Ir1S3n65/Iu3FozbstQQq.J7LT9Wtsba8B7t4cE.fqV00ea8/NPPO', '$2a$08$igPA03AhhurICd07d1kNoefqxbtwSaW3guovuH6K3CpgCshd1zFx.', 2, '2022-02-07', '2022-02-07', 1, 'ACTIVE', 1, 1, '2022-02-07 23:04:16', '2022-02-07 23:04:16'),
-(11, '19901125A', 'asep.diki', '$2a$08$UhjpWhIVrYifV7h7IANCe.ToOXqHbuUepxlM72.syz5bfEEWJtxoi', '$2a$08$igPA03AhhurICd07d1kNoefqxbtwSaW3guovuH6K3CpgCshd1zFx.', 2, '2022-02-07', '2022-02-07', 1, 'ACTIVE', 1, 1, '2022-02-07 23:21:14', '2022-02-07 23:21:14'),
-(12, '60000153', 'fikri.agil', '$2a$08$DIRdFCcofz.129ghd4p/EO2ebyTnrvf2DMh6PSqrX0c3Jk/.P9n.e', '$2a$08$igPA03AhhurICd07d1kNoefqxbtwSaW3guovuH6K3CpgCshd1zFx.', 2, '2022-02-08', '2022-02-08', 1, 'ACTIVE', 1, 1, '2022-02-08 00:05:47', '2022-02-08 00:05:47'),
-(13, '60000244', 'arman', '$2a$08$7woyJ4e.oysxwQ6fU5w7quvwCCvSrg2V9jPKfskmBTTexX5MCCIwa', '$2a$08$igPA03AhhurICd07d1kNoefqxbtwSaW3guovuH6K3CpgCshd1zFx.', 2, '2022-02-08', '2022-02-08', 1, 'ACTIVE', 1, 1, '2022-02-08 00:43:32', '2022-02-08 00:43:32');
+INSERT INTO `users` (`id`, `nip`, `username`, `password`, `bypass_password`, `role_id`, `password_created`, `password_updated`, `verified`, `status`, `access`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, '9999', 'superuser', '$2a$08$OuFDgLOcd1Aqnxnvwzd7qe7BCCymgIMFO/.7dzYxQ0PuuLmJAaYGS', '', 1, '2021-12-01', '2021-12-30', 1, 'ACTIVE', 'BOTH', 1, 1, '2021-12-01 06:08:22', '2021-12-01 06:07:52'),
+(22, '60000244', 'arman', '$2a$08$4Ep5iv7NqUkdVC7tVfN4uujkgqVsM7/bKnIWiLXLMvka/dVEgfLsy', '$2a$08$OuFDgLOcd1Aqnxnvwzd7qe7BCCymgIMFO/.7dzYxQ0PuuLmJAaYGS', 2, '2022-02-28', '2022-02-28', 1, 'ACTIVE', 'WEB', 1, 1, '2022-02-28 04:50:49', '2022-02-28 11:50:49'),
+(23, '60000154', 'azizah', '$2a$08$jO2pveSUzo.s5wzZ4O2Jl.bXGktvYK2f7DxO2u12uiEIEygQrBUBi', '$2a$08$OuFDgLOcd1Aqnxnvwzd7qe7BCCymgIMFO/.7dzYxQ0PuuLmJAaYGS', 2, '2022-03-01', '2022-03-01', 1, 'ACTIVE', 'BOTH', 1, 1, '2022-03-01 07:19:15', '2022-03-01 14:19:15');
 
 -- --------------------------------------------------------
 
@@ -422,16 +466,16 @@ INSERT INTO `users` (`id`, `nip`, `username`, `password`, `bypass_password`, `ro
 --
 
 CREATE TABLE `users_accordion` (
-  `id` int(11) NOT NULL,
-  `user_menu_id` int(11) NOT NULL,
-  `acc_id` int(11) NOT NULL,
+  `id` int NOT NULL,
+  `user_menu_id` int NOT NULL,
+  `acc_id` int NOT NULL,
   `trees` text NOT NULL,
   `status` enum('ACTIVE','INACTIVE') NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `users_accordion`
@@ -798,16 +842,16 @@ INSERT INTO `users_accordion` (`id`, `user_menu_id`, `acc_id`, `trees`, `status`
 --
 
 CREATE TABLE `users_accordion_dept` (
-  `id` int(11) NOT NULL,
-  `user_menu_id` int(11) NOT NULL,
-  `acc_id` int(11) NOT NULL,
+  `id` int NOT NULL,
+  `user_menu_id` int NOT NULL,
+  `acc_id` int NOT NULL,
   `trees` text NOT NULL,
   `status` enum('ACTIVE','INACTIVE') NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `users_accordion_dept`
@@ -847,16 +891,16 @@ INSERT INTO `users_accordion_dept` (`id`, `user_menu_id`, `acc_id`, `trees`, `st
 --
 
 CREATE TABLE `users_menu` (
-  `id` int(11) NOT NULL,
-  `sub_id` int(11) NOT NULL,
-  `rank_id` int(11) NOT NULL,
-  `menu_id` int(11) NOT NULL,
+  `id` int NOT NULL,
+  `sub_id` int NOT NULL,
+  `rank_id` int NOT NULL,
+  `menu_id` int NOT NULL,
   `status` enum('ACTIVE','INACTIVE') NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `users_menu`
@@ -1182,16 +1226,16 @@ INSERT INTO `users_menu` (`id`, `sub_id`, `rank_id`, `menu_id`, `status`, `creat
 --
 
 CREATE TABLE `users_menu_dept` (
-  `id` int(11) NOT NULL,
-  `dept_id` int(11) NOT NULL,
-  `rank_id` int(11) NOT NULL,
-  `menu_id` int(11) NOT NULL,
+  `id` int NOT NULL,
+  `dept_id` int NOT NULL,
+  `rank_id` int NOT NULL,
+  `menu_id` int NOT NULL,
   `status` enum('ACTIVE','INACTIVE') NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `users_menu_dept`
@@ -1223,6 +1267,45 @@ INSERT INTO `users_menu_dept` (`id`, `dept_id`, `rank_id`, `menu_id`, `status`, 
 (23, 1, 2, 9, 'ACTIVE', 1, 1, '2022-02-11 13:17:50', '2022-02-11 13:17:50'),
 (24, 1, 2, 10, 'ACTIVE', 1, 1, '2022-02-11 13:17:51', '2022-02-11 13:17:51');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `video_categories`
+--
+
+CREATE TABLE `video_categories` (
+  `id` int NOT NULL,
+  `location` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `video_categories`
+--
+
+INSERT INTO `video_categories` (`id`, `location`, `name`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(2, 'KF-JKT', 'Lemburan', 1, 1, '2022-03-03 10:48:04', '2022-03-03 17:48:20');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `video_subcategories`
+--
+
+CREATE TABLE `video_subcategories` (
+  `id` int NOT NULL,
+  `cat_id` int NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- Indexes for dumped tables
 --
@@ -1243,6 +1326,12 @@ ALTER TABLE `acc_trees`
 -- Indexes for table `email`
 --
 ALTER TABLE `email`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `email_send`
+--
+ALTER TABLE `email_send`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1332,6 +1421,22 @@ ALTER TABLE `users_menu_dept`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `video_categories`
+--
+ALTER TABLE `video_categories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `name` (`name`),
+  ADD KEY `name_2` (`name`);
+
+--
+-- Indexes for table `video_subcategories`
+--
+ALTER TABLE `video_subcategories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `name` (`name`),
+  ADD KEY `name_2` (`name`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -1339,85 +1444,103 @@ ALTER TABLE `users_menu_dept`
 -- AUTO_INCREMENT for table `accordions`
 --
 ALTER TABLE `accordions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `acc_trees`
 --
 ALTER TABLE `acc_trees`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
 -- AUTO_INCREMENT for table `email`
 --
 ALTER TABLE `email`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `email_send`
+--
+ALTER TABLE `email_send`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `locations`
 --
 ALTER TABLE `locations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `menus`
 --
 ALTER TABLE `menus`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `pics`
 --
 ALTER TABLE `pics`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `temp_files`
 --
 ALTER TABLE `temp_files`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `trees`
 --
 ALTER TABLE `trees`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `users_accordion`
 --
 ALTER TABLE `users_accordion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=352;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=352;
 
 --
 -- AUTO_INCREMENT for table `users_accordion_dept`
 --
 ALTER TABLE `users_accordion_dept`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `users_menu`
 --
 ALTER TABLE `users_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=312;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=312;
 
 --
 -- AUTO_INCREMENT for table `users_menu_dept`
 --
 ALTER TABLE `users_menu_dept`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT for table `video_categories`
+--
+ALTER TABLE `video_categories`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `video_subcategories`
+--
+ALTER TABLE `video_subcategories`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

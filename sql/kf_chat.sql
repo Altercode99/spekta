@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 4.9.10
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Feb 14, 2022 at 03:49 PM
--- Server version: 10.4.22-MariaDB
+-- Host: localhost
+-- Generation Time: Mar 03, 2022 at 10:54 AM
+-- Server version: 8.0.28-0ubuntu0.20.04.3
 -- PHP Version: 7.4.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -28,12 +29,12 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `gr_ads` (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `adslot` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `adheight` int(11) NOT NULL DEFAULT 100,
-  `xtras` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `id` bigint NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `adslot` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `adheight` int NOT NULL DEFAULT '100',
+  `xtras` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `tms` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -51,14 +52,14 @@ INSERT INTO `gr_ads` (`id`, `name`, `content`, `adslot`, `adheight`, `xtras`, `t
 --
 
 CREATE TABLE `gr_alerts` (
-  `id` bigint(20) NOT NULL,
-  `uid` bigint(20) DEFAULT NULL,
-  `type` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT '10',
-  `v1` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `v2` bigint(20) DEFAULT NULL,
-  `v3` bigint(20) DEFAULT NULL,
+  `id` bigint NOT NULL,
+  `uid` bigint DEFAULT NULL,
+  `type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '10',
+  `v1` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `v2` bigint DEFAULT NULL,
+  `v3` bigint DEFAULT NULL,
   `tms` datetime DEFAULT NULL,
-  `seen` int(11) DEFAULT 0
+  `seen` int DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -93,7 +94,13 @@ INSERT INTO `gr_alerts` (`id`, `uid`, `type`, `v1`, `v2`, `v3`, `tms`, `seen`) V
 (25, 24, 'newmsg', '2', 285, 2, '2022-02-10 12:55:42', 1),
 (26, 24, 'newmsg', '2', 286, 2, '2022-02-10 12:55:48', 1),
 (27, 24, 'newmsg', '1', 288, 1, '2022-02-10 12:58:37', 1),
-(28, 24, 'newmsg', '1', 289, 1, '2022-02-10 12:59:57', 1);
+(28, 24, 'newmsg', '1', 289, 1, '2022-02-10 12:59:57', 1),
+(29, 26, 'newmsg', '14', 310, 14, '2022-02-23 07:48:01', 0),
+(30, 14, 'newmsg', '29', 311, 29, '2022-02-23 07:49:58', 0),
+(31, 1, 'newmsg', '41', 329, 41, '2022-03-01 11:15:07', 1),
+(32, 41, 'newmsg', '1', 331, 1, '2022-03-01 12:15:19', 1),
+(33, 8, 'newmsg', '2', 332, 2, '2022-03-02 06:54:22', 1),
+(34, 2, 'newmsg', '1', 335, 1, '2022-03-02 20:48:25', 1);
 
 -- --------------------------------------------------------
 
@@ -102,13 +109,13 @@ INSERT INTO `gr_alerts` (`id`, `uid`, `type`, `v1`, `v2`, `v3`, `tms`, `seen`) V
 --
 
 CREATE TABLE `gr_complaints` (
-  `id` bigint(20) NOT NULL,
-  `gid` bigint(20) DEFAULT NULL,
-  `uid` bigint(20) DEFAULT NULL,
-  `msid` bigint(20) DEFAULT NULL,
-  `type` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `comment` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` int(11) DEFAULT 1,
+  `id` bigint NOT NULL,
+  `gid` bigint DEFAULT NULL,
+  `uid` bigint DEFAULT NULL,
+  `msid` bigint DEFAULT NULL,
+  `type` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `comment` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int DEFAULT '1',
   `tms` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -126,14 +133,14 @@ INSERT INTO `gr_complaints` (`id`, `gid`, `uid`, `msid`, `type`, `comment`, `sta
 --
 
 CREATE TABLE `gr_customize` (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `element` mediumtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `device` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT 'all',
-  `type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `v1` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `v2` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `xtra` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `id` bigint NOT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `element` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `device` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'all',
+  `type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `v1` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `v2` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `xtra` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -665,15 +672,15 @@ INSERT INTO `gr_customize` (`id`, `name`, `element`, `device`, `type`, `v1`, `v2
 --
 
 CREATE TABLE `gr_defaults` (
-  `id` bigint(20) NOT NULL,
-  `type` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `v1` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT '0',
-  `v2` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `v3` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT '0',
-  `v4` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
-  `v5` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
-  `v6` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
-  `v7` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `id` bigint NOT NULL,
+  `type` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `v1` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '0',
+  `v2` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `v3` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '0',
+  `v4` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `v5` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `v6` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `v7` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `tms` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -685,7 +692,7 @@ INSERT INTO `gr_defaults` (`id`, `type`, `v1`, `v2`, `v3`, `v4`, `v5`, `v6`, `v7
 (1, 'default', 'sitename', 'S.P.E.K.T.A Chat', '0', '0', '0', '', '', NULL),
 (2, 'default', 'sitedesc', 'Aplikasi Chatting PT. Kimia Farma Tbk. Plant Jakarta', '0', '0', '0', '', '', NULL),
 (3, 'default', 'siteslogan', 'Go Fast To The Next Level', '0', '0', '0', '', '', NULL),
-(4, 'default', 'sysemail', 'septian.arman009@gmail.com', '0', '0', '0', '', '', NULL),
+(4, 'default', 'sysemail', 'alert.kfpj@gmail.com', '0', '0', '0', '', '', NULL),
 (5, 'default', 'sendername', 'S.P.E.K.T.A Chat', '0', '0', '0', '', '', NULL),
 (6, 'default', 'userreg', 'enable', '0', '0', '0', '', '', NULL),
 (7, 'default', 'timezone', 'Asia/Jakarta', '0', '0', '0', '', '', '2019-04-06 18:10:19'),
@@ -701,12 +708,12 @@ INSERT INTO `gr_defaults` (`id`, `type`, `v1`, `v2`, `v3`, `v4`, `v5`, `v6`, `v7
 (17, 'filterwords', 'words', 'bordel\r\nbuzna\r\nčumět\r\nčurák\r\ndebil\r\ndršťka\r\ndržka\r\nflundra\r\nhajzl\r\nhovno\r\nchcanky\r\nchuj\r\njebat\r\nkokot\r\nkokotina\r\nkoňomrd\r\nkunda\r\nkurva\r\nmamrd\r\nmrdat\r\nmrdka\r\nmrdník\r\noslošoust\r\npiča\r\npíčus\r\npíchat\r\npizda\r\nprcat\r\nprdel\r\nprdelka\r\nsračka\r\nsrát\r\nšoustat\r\nšulin\r\nvypíčenec\r\nzkurvit\r\nzkurvysyn\r\nzmrd\r\nžrát\r\nanus\r\nbøsserøv\r\ncock\r\nfisse\r\nfissehår\r\nfuck\r\nfuckoff\r\nhestepik\r\nkussekryller\r\nlort\r\nluder\r\npik\r\npikhår\r\npikslugeri\r\npiksutteri\r\npis\r\nrøv\r\nrøvhul\r\nrøvskæg\r\nrøvspræke\r\nshit\r\nanalritter\r\narsch\r\narschficker\r\narschlecker\r\narschloch\r\nbimbo\r\nbratze\r\nbumsen\r\nbonze\r\ndödel\r\nfick\r\nficken\r\nflittchen\r\nfotze\r\nfratze\r\nhackfresse\r\nhure\r\nhurensohn\r\nische\r\nkackbratze\r\nkacke\r\nkacken\r\nkackwurst\r\nkampflesbe\r\nkanake\r\nkimme\r\nlümmel\r\nMILF\r\nmöpse\r\nmorgenlatte\r\nmöse\r\nmufti\r\nmuschi\r\nnackt\r\nneger\r\nnigger\r\nnippel\r\nnutte\r\nonanieren\r\norgasmus\r\npenis\r\npimmel\r\npimpern\r\npinkeln\r\npissen\r\npisser\r\npopel\r\npoppen\r\nporno\r\nreudig\r\nrosette\r\nschabracke\r\nschlampe\r\nscheiße\r\nscheisser\r\nschiesser\r\nschnackeln\r\nschwanzlutscher\r\nschwuchtel\r\ntittchen\r\ntitten\r\nvögeln\r\nvollpfosten\r\nwichse\r\nwichsen\r\nwichser\r\n2g1c\r\nacrotomophilia\r\nanal\r\nanilingus\r\nanus\r\napeshit\r\narsehole\r\nass\r\nasshole\r\nassmunch\r\nautoerotic\r\nbabeland\r\nbangbros\r\nbangbus\r\nbareback\r\nbarenaked\r\nbastard\r\nbastardo\r\nbastinado\r\nbbw\r\nbdsm\r\nbeaner\r\nbeaners\r\nbeastiality\r\nbestiality\r\nbimbos\r\nbirdlock\r\nbitch\r\nbitches\r\nblowjob\r\nblumpkin\r\nbollocks\r\nbondage\r\nboner\r\nboob\r\nboobs\r\nbukkake\r\nbulldyke\r\nbullshit\r\nbunghole\r\nbusty\r\nbutt\r\nbuttcheeks\r\nbutthole\r\ncamgirl\r\ncamslut\r\ncamwhore\r\ncarpetmuncher\r\ncialis\r\ncirclejerk\r\nclit\r\nclitoris\r\nclusterfuck\r\ncock\r\ncocks\r\ncoprolagnia\r\ncoprophilia\r\ncornhole\r\ncoon\r\ncoons\r\ncreampie\r\ncum\r\ncumming\r\ncumshot\r\ncumshots\r\ncunnilingus\r\ncunt\r\ndarkie\r\ndaterape\r\ndeepthroat\r\ndendrophilia\r\ndick\r\ndildo\r\ndingleberry\r\ndingleberries\r\ndoggiestyle\r\ndoggystyle\r\ndolcett\r\ndomination\r\ndominatrix\r\ndommes\r\ndvda\r\necchi\r\nejaculation\r\nerotic\r\nerotism\r\nescort\r\neunuch\r\nfag\r\nfaggot\r\nfecal\r\nfelch\r\nfellatio\r\nfeltch\r\nfemdom\r\nfigging\r\nfingerbang\r\nfingering\r\nfisting\r\nfootjob\r\nfrotting\r\nfuck\r\nfuckin\r\nfucking\r\nfucktards\r\nfudgepacker\r\nfutanari\r\ngangbang\r\ngenitals\r\ngoatcx\r\ngoatse\r\ngokkun\r\ngoodpoop\r\ngoregasm\r\ngrope\r\nguro\r\nhandjob\r\nhardcore\r\nhentai\r\nhomoerotic\r\nhonkey\r\nhooker\r\nhorny\r\nhumping\r\nincest\r\nintercourse\r\njailbait\r\njigaboo\r\njiggaboo\r\njiggerboo\r\njizz\r\njuggs\r\nkike\r\nkinbaku\r\nkinkster\r\nkinky\r\nknobbing\r\nlivesex\r\nlolita\r\nlovemaking\r\nmasturbate\r\nmasturbating\r\nmasturbation\r\nmilf\r\nmong\r\nmotherfucker\r\nmuffdiving\r\nnambla\r\nnawashi\r\nnegro\r\nneonazi\r\nnigga\r\nnigger\r\nnimphomania\r\nnipple\r\nnipples\r\nnsfw\r\nnude\r\nnudity\r\nnutten\r\nnympho\r\nnymphomania\r\noctopussy\r\nomorashi\r\norgasm\r\norgy\r\npaedophile\r\npaki\r\npanties\r\npanty\r\npedobear\r\npedophile\r\npegging\r\npenis\r\npikey\r\npissing\r\npisspig\r\nplayboy\r\nponyplay\r\npoof\r\npoon\r\npoontang\r\npunany\r\npoopchute\r\nporn\r\nporno\r\npornography\r\npthc\r\npubes\r\npussy\r\nqueaf\r\nqueef\r\nquim\r\nraghead\r\nrape\r\nraping\r\nrapist\r\nrectum\r\nrimjob\r\nrimming\r\nsadism\r\nsantorum\r\nscat\r\nschlong\r\nscissoring\r\nsemen\r\nsex\r\nsexcam\r\nsexo\r\nsexy\r\nsexual\r\nsexually\r\nsexuality\r\nshemale\r\nshibari\r\nshit\r\nshitblimp\r\nshitty\r\nshota\r\nshrimping\r\nskeet\r\nslanteye\r\nslut\r\ns&amp;m\r\nsmut\r\nsnatch\r\nsnowballing\r\nsodomize\r\nsodomy\r\nspastic\r\nspic\r\nsplooge\r\nspooge\r\nspunk\r\nstrapon\r\nstrappado\r\nsuck\r\nsucks\r\nswastika\r\nswinger\r\nthreesome\r\nthroating\r\nthumbzilla\r\ntit\r\ntits\r\ntitties\r\ntitty\r\ntopless\r\ntosser\r\ntowelhead\r\ntranny\r\ntribadism\r\ntubgirl\r\ntushy\r\ntwat\r\ntwink\r\ntwinkie\r\nundressing\r\nupskirt\r\nurophilia\r\nvagina\r\nviagra\r\nvibrator\r\nvorarephilia\r\nvoyeur\r\nvoyeurweb\r\nvoyuer\r\nvulva\r\nwank\r\nwetback\r\nwhore\r\nworldsex\r\nxx\r\nxxx\r\nyaoi\r\nyiffy\r\nzoophilia\r\nbugren\r\nbugri\r\nbugru\r\nĉiesulino\r\nĉiesulo\r\ndiofek\r\ndiofeka\r\nfek\r\nfeken\r\nfekfikanto\r\nfeklekulo\r\nfekulo\r\nfik\r\nfikado\r\nfikema\r\nfikfek\r\nfiki\r\nfikiĝi\r\nfikiĝu\r\nfikilo\r\nfikklaŭno\r\nfikota\r\nfiku\r\nforfiki\r\nforfikiĝu\r\nforfiku\r\nforfurzu\r\nforpisi\r\nforpisu\r\nfurzulo\r\nkacen\r\nkaco\r\nkacsuĉulo\r\nkojono\r\npiĉen\r\npiĉo\r\nzamenfek\r\nAsesinato\r\nasno\r\nbastardo\r\nBollera\r\nCabrón\r\nCaca\r\nChupada\r\nChupapollas\r\nChupetón\r\nconcha\r\nCoño\r\nCoprofagía\r\nCulo\r\nDrogas\r\nEsperma\r\nFollador\r\nFollar\r\nGilipichis\r\nGilipollas\r\nHeroína\r\nHijaputa\r\nHijoputa\r\nIdiota\r\nImbécil\r\ninfierno\r\nJilipollas\r\nKapullo\r\nLameculos\r\nMaciza\r\nMacizorra\r\nmaldito\r\nMamada\r\nMarica\r\nMaricón\r\nMariconazo\r\nmartillo\r\nMierda\r\nNazi\r\nOrina\r\nPedo\r\nPendejo\r\nPervertido\r\nPezón\r\nPinche\r\nPis\r\nProstituta\r\nPuta\r\nRacista\r\nRamera\r\nSádico\r\nSemen\r\nSexo\r\nSoplagaitas\r\nSoplapollas\r\nTravesti\r\nTrio\r\nVerga\r\nVulva\r\nbylsiä\r\nhaahka\r\nhatullinen\r\nhelvetisti\r\nhevonkuusi\r\nhevonpaska\r\nhevonperse\r\nhevonvittu\r\nhevonvitunperse\r\nhitosti\r\nhitto\r\nhuorata\r\nhässiä\r\njutku\r\njutsku\r\njätkä\r\nkananpaska\r\nkoiranpaska\r\nkulli\r\nkullinluikaus\r\nkuppainen\r\nkusaista\r\nkuseksia\r\nkusettaa\r\nkusi\r\nkusipää\r\nkusta\r\nkyrpiintynyt\r\nkyrpiintyä\r\nkyrpiä\r\nkyrpä\r\nkyrpänaama\r\nkyrvitys\r\nlahtari\r\nlutka\r\nmolo\r\nmolopää\r\nmulkero\r\nmulkku\r\nmulkvisti\r\nmuna\r\nmunapää\r\nmunaton\r\nmutakuono\r\nmutiainen\r\nnaida\r\nnainti\r\nnarttu\r\nneekeri\r\nnekru\r\nnussia\r\nnussija\r\nnussinta\r\npaljaalla\r\npalli\r\npallit\r\npaneskella\r\npanettaa\r\npanna\r\npano\r\npantava\r\npaska\r\npaskainen\r\npaskamainen\r\npaskanmarjat\r\npaskantaa\r\npaskapuhe\r\npaskapää\r\npaskattaa\r\npaskiainen\r\npaskoa\r\npehko\r\npentele\r\nperkele\r\nperkeleesti\r\npersaukinen\r\nperse\r\nperseennuolija\r\npersereikä\r\nperseääliö\r\npersläpi\r\nperspano\r\npersvako\r\npilkunnussija\r\npillu\r\npillut\r\npipari\r\npiru\r\npistää\r\npyllyvako\r\nreikä\r\nreva\r\nripsipiirakka\r\nrunkata\r\nrunkkari\r\nrunkkaus\r\nrunkku\r\nryssä\r\nrättipää\r\nsaatanasti\r\nsuklaaosasto\r\ntavara\r\ntoosa\r\ntuhkaluukku\r\ntumputtaa\r\nturpasauna\r\ntussu\r\ntussukka\r\ntussut\r\nvakipano\r\nviiksi\r\nvittu\r\nvittuilla\r\nvittuilu\r\nvittumainen\r\nvittuuntua\r\nvittuuntunut\r\nvitun\r\nvitusti\r\nvituttaa\r\nvitutus\r\näpärä\r\ntangina\r\nburat\r\nbayag\r\nbobo\r\nnognog\r\ntanga\r\nulol\r\nkantot\r\nulol\r\njakol\r\nbaiser\r\nbander\r\nbigornette\r\nbite\r\nbitte\r\nbloblos\r\nbordel\r\nbourré\r\nbourrée\r\nbrackmard\r\nbranlage\r\nbranler\r\nbranlette\r\nbranleur\r\nbranleuse\r\ncaca\r\nchatte\r\nchiasse\r\nchier\r\nchiottes\r\nclito\r\nclitoris\r\ncon\r\nconnard\r\nconnasse\r\nconne\r\ncouilles\r\ncramouille\r\ncul\r\ndéconne\r\ndéconner\r\nemmerdant\r\nemmerder\r\nemmerdeur\r\nemmerdeuse\r\nenculé\r\nenculée\r\nenculeur\r\nenculeurs\r\nenfoiré\r\nenfoirée\r\nétron\r\nfolle\r\nfoutre\r\ngerbe\r\ngerber\r\ngouine\r\ngrogniasse\r\ngueule\r\njouir\r\nMALPT\r\nmerde\r\nmerdeuse\r\nmerdeux\r\nmeuf\r\nnègre\r\nnegro\r\npalucher\r\npédale\r\npédé\r\npéter\r\npipi\r\npisser\r\npouffiasse\r\nputain\r\npute\r\nramoner\r\nsalaud\r\nsalope\r\nsuce\r\ntapette\r\ntanche\r\nteuch\r\ntringler\r\ntrique\r\ntroncher\r\nturlute\r\nzigounette\r\nzizi\r\naand\r\naandu\r\nbalatkar\r\nbalatkari\r\nbhadva\r\nbhadve\r\nbhandve\r\nbhangi\r\nbhosad\r\nboobe\r\nchakke\r\nchinaal\r\nchinki\r\nchod\r\nchodu\r\nchooche\r\nchoochi\r\nchoope\r\nchoot\r\nchootia\r\nchootiya\r\nchuche\r\nchuchi\r\nchudaap\r\nchude\r\nchut\r\nchutad\r\nchutadd\r\nchutan\r\nchutia\r\nchutiya\r\ngaand\r\ngaandfat\r\ngaandmasti\r\ngaandufad\r\ngandfattu\r\ngandu\r\ngashti\r\ngasti\r\nghassa\r\nghasti\r\ngucchi\r\ngucchu\r\nharami\r\nharamzade\r\nhawas\r\nhijda\r\nhijra\r\njhant\r\njhantu\r\nkamine\r\nkaminey\r\nkanjar\r\nkutta\r\nkuttiya\r\nloda\r\nlodu\r\nlund\r\nlundtopi\r\nlundure\r\nmaal\r\nmadarchod\r\nmadhavchod\r\nmutth\r\nmutthal\r\nnajayaz\r\npaki\r\npataka\r\npatakha\r\nraand\r\nrandaap\r\nrandi\r\nsaala\r\nsuar\r\ntatte\r\ntatti\r\ntharak\r\ntharki\r\nbalfasz\r\nbalfaszok\r\nbalfaszokat\r\nbalfaszt\r\nbarmok\r\nbarmokat\r\nbarmot\r\nbarom\r\nbaszik\r\nbazmeg\r\nbuksza\r\nbukszák\r\nbukszákat\r\nbukszát\r\nbúr\r\nbúrok\r\ncsöcs\r\ncsöcsök\r\ncsöcsöket\r\ncsöcsöt\r\nfasz\r\nfaszfej\r\nfaszfejek\r\nfaszfejeket\r\nfaszfejet\r\nfaszok\r\nfaszokat\r\nfaszt\r\nfing\r\nfingok\r\nfingokat\r\nfingot\r\nfranc\r\nfrancok\r\nfrancokat\r\nfrancot\r\ngeci\r\ngecibb\r\ngecik\r\ngeciket\r\ngecit\r\nkibaszott\r\nkibaszottabb\r\nkúr\r\nkurafi\r\nkurafik\r\nkurafikat\r\nkurafit\r\nkurva\r\nkurvák\r\nkurvákat\r\nkurvát\r\nleggecibb\r\nlegkibaszottabb\r\nlegszarabb\r\nmarha\r\nmarhák\r\nmarhákat\r\nmarhát\r\nmegdöglik\r\npele\r\npelék\r\npicsa\r\npicsákat\r\npicsát\r\npina\r\npinák\r\npinákat\r\npinát\r\npofa\r\npofákat\r\npofát\r\npöcs\r\npöcsök\r\npöcsöket\r\npöcsöt\r\npunci\r\npuncik\r\nsegg\r\nseggek\r\nseggeket\r\nsegget\r\nseggfej\r\nseggfejek\r\nseggfejeket\r\nseggfejet\r\nszajha\r\nszajhák\r\nszajhákat\r\nszajhát\r\nszar\r\nszarabb\r\nszarik\r\nszarok\r\nszarokat\r\nszart\r\nallupato\r\nammucchiata\r\nanale\r\narrapato\r\narrusa\r\narruso\r\nassatanato\r\nbagascia\r\nbagassa\r\nbagnarsi\r\nbaldracca\r\nballe\r\nbattere\r\nbattona\r\nbelino\r\nbiga\r\nbocchinara\r\nbocchino\r\nbofilo\r\nboiata\r\nbordello\r\nbrinca\r\nbucaiolo\r\nbudiùlo\r\nbusone\r\ncacca\r\ncaciocappella\r\ncadavere\r\ncagare\r\ncagata\r\ncagna\r\ncasci\r\ncazzata\r\ncazzimma\r\ncazzo\r\ncesso\r\ncazzone\r\nchecca\r\nchiappa\r\nchiavare\r\nchiavata\r\nciospo\r\ncoglione\r\ncoglioni\r\ncornuto\r\ncozza\r\nculattina\r\nculattone\r\nculo\r\nditalino\r\nfava\r\nfemminuccia\r\nfica\r\nfiga\r\nfigone\r\nfinocchio\r\nfottere\r\nfottersi\r\nfracicone\r\nfregna\r\nfrocio\r\nfroscio\r\ngoldone\r\nguardone\r\nimbecille\r\nincazzarsi\r\nincoglionirsi\r\ningoio\r\nleccaculo\r\nlecchino\r\nlofare\r\nloffa\r\nloffare\r\nmannaggia\r\nmerda\r\nmerdata\r\nmerdoso\r\nmignotta\r\nminchia\r\nminchione\r\nmona\r\nmonta\r\nmontare\r\nmussa\r\nnerchia\r\npadulo\r\npalle\r\npalloso\r\npatacca\r\npatonza\r\npecorina\r\npesce\r\npicio\r\npincare\r\npippa\r\npinnolone\r\npipì\r\npippone\r\npirla\r\npisciare\r\npiscio\r\npisello\r\npistolotto\r\npomiciare\r\npompa\r\npompino\r\nporca\r\nporco\r\npotta\r\npuppami\r\nputtana\r\nquaglia\r\nrecchione\r\nregina\r\nrincoglionire\r\nrizzarsi\r\nrompiballe\r\nrompipalle\r\nruffiano\r\nsbattere\r\nsbattersi\r\nsborra\r\nsborrata\r\nsborrone\r\nsbrodolata\r\nscopare\r\nscopata\r\nscorreggiare\r\nsega\r\nslinguare\r\nslinguata\r\nsmandrappata\r\nsoccia\r\nsocmel\r\nsorca\r\nspagnola\r\nspompinare\r\nsticchio\r\nstronza\r\nstronzata\r\nstronzo\r\nsucchiami\r\nsucchione\r\nsveltina\r\nsverginare\r\ntarzanello\r\nterrone\r\ntette\r\ntirare\r\ntopa\r\ntroia\r\ntrombare\r\nvacca\r\nvaffanculo\r\nvangare\r\nzinne\r\nzoccola\r\nabbuc\r\naεeṭṭuḍ\r\naḥeččun\r\ntaḥeččunt\r\naxuzziḍ\r\nasxuẓeḍ\r\nqqu\r\nqquɣ\r\nqqiɣ\r\nqqan\r\nqqant\r\ntteqqun\r\ntteqqunt\r\ntteqqun\r\naqerqur\r\najeḥniḍ\r\nawellaq\r\niwellaqen\r\niḥeččan\r\niḥeččunen\r\nuqan\r\ntaxna\r\nafberen\r\naflebberen\r\nafrossen\r\nafrukken\r\naftrekken\r\nafwerkplaats\r\nafzeiken\r\nafzuigen\r\nanita\r\nasbak\r\naso\r\nbalen\r\nbedonderen\r\nbefborstel\r\nbeffen\r\nbekken\r\nbelazeren\r\nbesodemieteren\r\nbeurt\r\nboemelen\r\nboerelul\r\nboerenpummel\r\nbokkelul\r\nbotergeil\r\nbroekhoesten\r\nbrugpieper\r\nbuffelen\r\ndel\r\ndombo\r\ndraaikont\r\ndrol\r\ndrooggeiler\r\ndroogkloot\r\neikel\r\nengerd\r\nflamoes\r\nflikken\r\nflikker\r\ngadverdamme\r\ngalbak\r\ngat\r\ngedoogzone\r\ngeilneef\r\ngesodemieter\r\ngodverdomme\r\ngraftak\r\ngratenkut\r\ngreppeldel\r\ngriet\r\nhoempert\r\nhoer\r\nhoerenbuurt\r\nhoerenloper\r\nhoerig\r\nhol\r\nhufter\r\nhuisdealer\r\njohny\r\nkanen\r\nkettingzeug\r\nklaarkomen\r\nklerebeer\r\nklojo\r\nklooien\r\nklootjesvolk\r\nklootoog\r\nklootzak\r\nkloten\r\nknor\r\nkont\r\nkontneuken\r\nkrentekakker\r\nkut\r\nkuttelikkertje\r\nkwakkie\r\nliefdesgrot\r\nlul\r\nlulhannes\r\nlummel\r\nmafketel\r\nmatennaaier\r\nmatje\r\nmof\r\nmuts\r\nnaaien\r\nnaakt\r\nneuken\r\nneukstier\r\nnicht\r\noetlul\r\nopgeilen\r\nopkankeren\r\noprotten\r\nopsodemieteren\r\nopzouten\r\nouwehoer\r\nouwehoeren\r\npaal\r\npaardelul\r\npalen\r\npenoze\r\npiesen\r\npijpbekkieg\r\npijpen\r\npik\r\npleurislaaier\r\npoep\r\npoepen\r\npoot\r\nportiekslet\r\npot\r\npotverdorie\r\npubliciteitsgeil\r\nraaskallen\r\nreet\r\nreetridder\r\nremsporen\r\nreutelen\r\nrothoer\r\nrotzak\r\nrukhond\r\nrukken\r\nschatje\r\nschijt\r\nschijten\r\nschoft\r\nschuinsmarcheerder\r\nshit\r\nslempen\r\nslet\r\nsletterig\r\nsnol\r\nspuiten\r\nstandje\r\nstoephoer\r\nstootje\r\nstront\r\nsufferd\r\ntapijtnek\r\nteef\r\ntemeier\r\nteringlijer\r\ntoeter\r\ntongzoeng\r\ntriootjeg\r\ntrottoirteef\r\nvergallen\r\nverkloten\r\nverneuken\r\nviespeuk\r\nvingeren\r\nvleesroos\r\nwatje\r\nwelzijnsmafia\r\nwijf\r\nwippen\r\nwuftje\r\nzaadje\r\nzakkenwasser\r\nzeiken\r\nzeiker\r\nzuigen\r\nzuiplap\r\nasshole\r\ndritt\r\ndrittsekk\r\nfaen\r\nfan\r\nfanken\r\nfitte\r\nforbanna\r\nforbannet\r\nforjævlig\r\nfuck\r\nføkk\r\nføkka\r\nføkkings\r\njævla\r\njævlig\r\nhelvete\r\nhelvetet\r\nkuk\r\nkukene\r\nkuker\r\nmorraknuller\r\nmorrapuler\r\nnigger\r\npakkis\r\npikk\r\npokker\r\nræva\r\nræven\r\nsatan\r\nshit\r\nsinnsykt\r\nskitt\r\nsotrør\r\nståpikk\r\nståpikkene\r\nståpikker\r\nsvartheiteste\r\nburdel\r\nburdelmama\r\nchuj\r\nchujnia\r\nciota\r\ncipa\r\ncyc\r\ndebil\r\ndmuchać\r\ndupa\r\ndupek\r\nduperele\r\ndziwka\r\nfiut\r\ngówno\r\nhuj\r\njajco\r\njajko\r\njebać\r\njebany\r\nkurwa\r\nkurwy\r\nkutafon\r\nkutas\r\npieprzyć\r\npierdolec\r\npierdolić\r\npierdolnąć\r\npierdolnięty\r\npierdoła\r\npierdzieć\r\npizda\r\npojeb\r\npojebany\r\npopierdolony\r\nruchać\r\nrzygać\r\nskurwysyn\r\nsraczka\r\nsrać\r\nsuka\r\nsyf\r\nwkurwiać\r\nzajebisty\r\naborto\r\namador\r\nânus\r\naranha\r\nariano\r\nbalalao\r\nbastardo\r\nbicha\r\nbiscate\r\nbissexual\r\nboceta\r\nboob\r\nbosta\r\nbumbum\r\nburro\r\ncabrao\r\ncacete\r\ncagar\r\ncamisinha\r\ncaralho\r\ncerveja\r\nchochota\r\nchupar\r\nclitoris\r\ncocaína\r\ncoito\r\ncolhoes\r\ncomer\r\ncona\r\nconsolo\r\ncorno\r\ncu\r\nesporra\r\nfecal\r\nfoda\r\nfoder\r\ngozar\r\ngrelho\r\nheroína\r\nheterosexual\r\nhomoerótico\r\nhomosexual\r\ninferno\r\nlésbica\r\nlolita\r\nmama\r\nmerda\r\npaneleiro\r\npau\r\npeidar\r\npênis\r\npinto\r\nporra\r\nputa\r\nqueca\r\nsacanagem\r\nsaco\r\ntorneira\r\ntransar\r\nvadia\r\nveado\r\nvibrador\r\nxana\r\nxochota\r\nbychara\r\nbyk\r\nchernozhopyi\r\ndolboy&#039;eb\r\nebalnik\r\nebalo\r\ngol\r\nmudack\r\nopizdenet\r\nosto&#039;eblo\r\nostokhuitel&#039;no\r\not&#039;ebis\r\notmudohat\r\notpizdit\r\notsosi\r\npadlo\r\npedik\r\nperdet\r\npetuh\r\npizda\r\npizdato\r\npizdatyi\r\npiz&#039;det\r\npizdetc\r\npizd&#039;uk\r\npiz`dyulina\r\npoeben\r\nprissat\r\nproebat\r\npropezdoloch\r\nprosrat\r\nraspeezdeyi\r\nraspizdatyi\r\nraz&#039;yebuy\r\nraz&#039;yoba\r\ns&#039;ebat&#039;sya\r\nshalava\r\nstyervo\r\nsvoloch\r\ntrakhat&#039;sya\r\nubl&#039;yudok\r\nuboy\r\nu&#039;ebitsche\r\nvafl&#039;a\r\nvyperdysh\r\nvzdrochennyi\r\nza&#039;ebat\r\nzaebis\r\nzalupa\r\nzalupat\r\nzasranetc\r\nzassat\r\nzlo&#039;ebuchy\r\nбздёнок\r\nблядки\r\nблядовать\r\nблядство\r\nблядь\r\nбугор\r\nвыёбываться\r\nгандон\r\nговно\r\nговнюк\r\nголый\r\nдерьмо\r\nдрочить\r\nёбарь\r\nебать\r\nебло\r\nебнуть\r\nжопа\r\nжополиз\r\nизмудохать\r\nмалофья\r\nманда\r\nмандавошка\r\nмент\r\nмуда\r\nмудило\r\nмудозвон\r\nнаебать\r\nнаебениться\r\nнаебнуться\r\nнахуячиться\r\nневебенный\r\nобнаженный\r\nопесдол\r\nофигеть\r\nохуеть\r\nохуительно\r\nсекс\r\nсиськи\r\nспиздить\r\nсрать\r\nссать\r\nтраxать\r\nфига\r\nхапать\r\nхохол\r\nхрен\r\nхуёво\r\nхуёвый\r\nхуеплет\r\nхуило\r\nхуиня\r\nхуй\r\nхуйнуть\r\narsle\r\nbrutta\r\ndiscofitta\r\nfan\r\nfitta\r\nfittig\r\nhelvete\r\nhård\r\njävlar\r\nknulla\r\nkuk\r\nkuksås\r\nkötthuvud\r\nköttnacke\r\nmoona\r\nmoonade\r\nmoonar\r\nmoonat\r\nmutta\r\nnigger\r\nneger\r\nolla\r\npippa\r\npitt\r\nprutt\r\npök\r\nrunka\r\nröv\r\nrövhål\r\nrövknulla\r\nsatan\r\nskita\r\nskäggbiff\r\nsnedfitta\r\nsnefitta\r\nstake\r\nsubba\r\nsås\r\ntusan\r\namcıkta\r\namcıktan\r\namı\r\namlar\r\nçingene\r\nÇingenede\r\nÇingeneden\r\nÇingeneler\r\nÇingenelerde\r\nÇingenelerden\r\nÇingenelere\r\nÇingeneleri\r\nÇingenelerin\r\nÇingenenin\r\nÇingeneye\r\nÇingeneyi\r\ngöt\r\ngöte\r\ngötler\r\ngötlerde\r\ngötlerden\r\ngötlere\r\ngötleri\r\ngötlerin\r\ngötte\r\ngötten\r\ngötü\r\ngötün\r\ngötveren\r\ngötverende\r\ngötverenden\r\ngötverene\r\ngötvereni\r\ngötverenin\r\ngötverenler\r\ngötverenlerde\r\ngötverenlerden\r\ngötverenlere\r\ngötverenleri\r\ngötverenlerin\r\nkaltağa\r\nkaltağı\r\nkaltağın\r\nkaltak\r\nkaltaklar\r\nkaltaklara\r\nkaltaklarda\r\nkaltaklardan\r\nkaltakları\r\nkaltakların\r\nkaltakta\r\nkaltaktan\r\norospu\r\norospuda\r\norospudan\r\norospular\r\norospulara\r\norospularda\r\norospulardan\r\norospuları\r\norospuların\r\norospunun\r\norospuya\r\norospuyu\r\nsaksocu\r\nsaksocuda\r\nsaksocudan\r\nsaksocular\r\nsaksoculara\r\nsaksocularda\r\nsaksoculardan\r\nsaksocuları\r\nsaksocuların\r\nsaksocunun\r\nsaksocuya\r\nsaksocuyu\r\nsıçmak\r\nsik\r\nsike\r\nsiki\r\nsikin\r\nsikler\r\nsiklerde\r\nsiklerden\r\nsiklere\r\nsikleri\r\nsiklerin\r\nsikmek\r\nsikmemek\r\nsikte\r\nsikten\r\nsiktir\r\ntaşağa\r\ntaşağı\r\ntaşağın\r\ntaşak\r\ntaşaklar\r\ntaşaklara\r\ntaşaklarda\r\ntaşaklardan\r\ntaşakları\r\ntaşakların\r\ntaşakta\r\ntaşaktan\r\nyarağa\r\nyarağı\r\nyarağın\r\nyarak\r\nyaraklar\r\nyaraklara\r\nyaraklarda\r\nyaraklardan\r\nyarakları\r\nyarakların\r\nyarakta\r\nyaraktan', '0', '0', '0', '', '', NULL),
 (18, 'default', 'guest_login', 'disable', '0', '0', '0', '', '', NULL),
 (19, 'default', 'autodeletemsg', '7200', '0', '0', '0', '', '', NULL),
-(20, 'default', 'email_verification', 'disable', '0', '0', '0', '', '', NULL),
-(21, 'default', 'smtp_authentication', 'disable', '0', '0', '0', '', '', NULL),
+(20, 'default', 'email_verification', 'enable', '0', '0', '0', '', '', NULL),
+(21, 'default', 'smtp_authentication', 'enable', '0', '0', '0', '', '', NULL),
 (22, 'default', 'smtp_host', 'ssl://smtp.gmail.com', '0', '0', '0', '', '', NULL),
 (23, 'default', 'smtp_user', 'alert.kfpj@gmail.com', '0', '0', '0', '', '', NULL),
 (24, 'default', 'smtp_pass', 'j@nuari1993', '0', '0', '0', '', '', NULL),
-(25, 'default', 'smtp_protocol', 'smtp', '0', '0', '0', '', '', NULL),
+(25, 'default', 'smtp_protocol', 'ssl', '0', '0', '0', '', '', NULL),
 (26, 'default', 'smtp_port', '465', '0', '0', '0', '', '', NULL),
 (27, 'default', 'alert', 'gem/ore/grupo/alerts/alert005.mp3', '0', '0', '0', '', '', NULL),
 (28, 'default', 'maxmsgsperload', '25', '0', '0', '0', '', '', NULL),
@@ -766,12 +773,12 @@ INSERT INTO `gr_defaults` (`id`, `type`, `v1`, `v2`, `v3`, `v4`, `v5`, `v6`, `v7
 --
 
 CREATE TABLE `gr_logs` (
-  `id` bigint(20) NOT NULL,
-  `type` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `v1` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `v2` bigint(20) DEFAULT NULL,
-  `v3` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `xtra` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint NOT NULL,
+  `type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `v1` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `v2` bigint DEFAULT NULL,
+  `v3` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `xtra` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tms` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -781,26 +788,32 @@ CREATE TABLE `gr_logs` (
 
 INSERT INTO `gr_logs` (`id`, `type`, `v1`, `v2`, `v3`, `xtra`, `tms`) VALUES
 (1, 'cache', '1606903987', 0, '0', '0', '2020-07-20 03:32:31'),
-(2, 'browsing', '1', NULL, '43', 'group', '2022-02-14 20:11:46'),
-(3, 'typing', '43', 1, '0', NULL, '2022-02-10 13:07:19'),
-(4, 'browsing', '2', NULL, '52', 'group', '2022-02-10 13:00:35'),
+(2, 'browsing', '1', NULL, '1-2', 'user', '2022-03-02 21:42:25'),
+(3, 'typing', '1-2', 1, '0', NULL, '2022-03-02 20:55:43'),
+(4, 'browsing', '2', NULL, '1-2', 'user', '2022-03-02 20:52:13'),
 (5, 'browsing', '4', NULL, '13', 'group', '2022-01-31 09:55:35'),
 (6, 'typing', '13', 4, '0', NULL, '2022-01-31 09:55:25'),
-(7, 'typing', '2-24', 2, '0', NULL, '2022-02-10 12:55:42'),
-(8, 'browsing', '3', NULL, '43', 'group', '2022-02-10 21:43:52'),
+(7, 'typing', '1-2', 2, '0', NULL, '2022-03-02 20:52:42'),
+(8, 'browsing', '3', NULL, '52', 'group', '2022-03-03 08:51:33'),
 (9, 'typing', '43', 3, '0', NULL, '2022-02-05 20:13:53'),
 (10, 'browsing', '53', NULL, '0', 'group', '2022-02-07 05:56:57'),
 (11, 'browsing', '62', NULL, '0', 'group', '2022-02-10 12:26:14'),
 (12, 'browsing', '26', NULL, '52', 'group', '2022-02-10 13:15:12'),
-(13, 'browsing', '14', NULL, '0', 'group', '2022-02-10 13:35:19'),
+(13, 'browsing', '14', NULL, '52', 'group', '2022-02-23 12:10:01'),
 (14, 'typing', '14-26', 26, '0', NULL, '2022-02-10 12:26:52'),
-(15, 'typing', '14-26', 14, '0', NULL, '2022-02-10 12:25:47'),
+(15, 'typing', '14-26', 14, '0', NULL, '2022-02-23 07:48:00'),
 (16, 'browsing', '24', NULL, '52', 'group', '2022-02-11 07:30:31'),
 (17, 'browsing', '23', NULL, '52', 'group', '2022-02-10 17:37:00'),
 (18, 'browsing', '48', NULL, '52', 'group', '2022-02-10 18:09:10'),
 (19, 'browsing', '46', NULL, '52', 'group', '2022-02-11 05:50:15'),
 (20, 'browsing', '11', NULL, '52', 'group', '2022-02-11 12:14:51'),
-(21, 'browsing', '41', NULL, '52', 'group', '2022-02-11 07:50:46');
+(21, 'browsing', '41', NULL, '1-41', 'user', '2022-03-01 14:17:09'),
+(22, 'browsing', '29', NULL, '0', 'user', '2022-02-23 08:01:53'),
+(23, 'typing', '14-29', 29, '0', NULL, '2022-02-23 07:50:34'),
+(24, 'browsing', '65', NULL, '0', 'group', '2022-02-23 08:33:08'),
+(25, 'typing', '1-41', 41, '0', NULL, '2022-03-01 11:15:05'),
+(26, 'browsing', '8', NULL, '0', 'group', '2022-03-02 06:59:40'),
+(27, 'typing', '2-8', 8, '0', NULL, '2022-03-02 06:54:30');
 
 -- --------------------------------------------------------
 
@@ -809,14 +822,32 @@ INSERT INTO `gr_logs` (`id`, `type`, `v1`, `v2`, `v3`, `xtra`, `tms`) VALUES
 --
 
 CREATE TABLE `gr_mails` (
-  `id` bigint(20) NOT NULL,
-  `uid` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `type` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `valz` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `code` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `sent` int(11) NOT NULL DEFAULT 0,
+  `id` bigint NOT NULL,
+  `uid` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `type` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `valz` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sent` int NOT NULL DEFAULT '0',
   `tms` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `gr_mails`
+--
+
+INSERT INTO `gr_mails` (`id`, `uid`, `type`, `valz`, `code`, `sent`, `tms`) VALUES
+(1, '29', 'reset', '0', 'MdtFQ', 1, '2022-02-23 07:43:36'),
+(2, '29', 'reset', '0', 'sBn7N', 1, '2022-02-23 07:59:46'),
+(3, '1', 'reset', '0', '6jxEw', 1, '2022-02-23 08:07:08'),
+(4, '29', 'reset', '0', 'PLVGN', 1, '2022-02-23 08:08:18'),
+(5, '1', 'reset', '0', 'ohahs', 1, '2022-02-23 08:11:51'),
+(6, '1', 'reset', '0', 's41Qy', 1, '2022-02-23 08:12:47'),
+(7, '1', 'reset', '0', 'Qk0kv', 1, '2022-02-23 08:15:04'),
+(8, '29', 'reset', '0', 'IF2Xq', 1, '2022-02-23 08:16:01'),
+(9, '2', 'reset', '0', '5NQmR', 1, '2022-02-23 08:16:12'),
+(10, '1', 'reset', '0', 'pXGfZ', 1, '2022-02-23 08:18:30'),
+(11, '1', 'reset', '0', 'vTNbW', 1, '2022-02-23 08:19:31'),
+(12, '65', 'verify', '0', 'w0cpk', 1, '2022-02-23 08:26:17');
 
 -- --------------------------------------------------------
 
@@ -825,21 +856,21 @@ CREATE TABLE `gr_mails` (
 --
 
 CREATE TABLE `gr_msgs` (
-  `id` bigint(20) NOT NULL,
-  `gid` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `uid` bigint(20) DEFAULT NULL,
-  `msg` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `type` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'msg',
-  `rtxt` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `rid` bigint(20) DEFAULT NULL,
-  `rmid` bigint(20) DEFAULT NULL,
-  `rtype` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'msg',
-  `cat` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'group',
-  `lnurl` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `lntitle` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT '0',
-  `lndesc` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT '0',
-  `lnimg` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `xtra` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `id` bigint NOT NULL,
+  `gid` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `uid` bigint DEFAULT NULL,
+  `msg` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'msg',
+  `rtxt` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `rid` bigint DEFAULT NULL,
+  `rmid` bigint DEFAULT NULL,
+  `rtype` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'msg',
+  `cat` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'group',
+  `lnurl` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `lntitle` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '0',
+  `lndesc` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '0',
+  `lnimg` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `xtra` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `tms` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -865,30 +896,44 @@ INSERT INTO `gr_msgs` (`id`, `gid`, `uid`, `msg`, `type`, `rtxt`, `rid`, `rmid`,
 (96, '1-2', 1, 'aah', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-02-02 22:21:05'),
 (97, '1-2', 2, 'kenapa man ?', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-02-02 22:21:27'),
 (140, '1-2', 1, 'Sep', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-02-04 17:20:00'),
-(258, '1-2', 1, '<div style=\"display:flex;flex-direction:column;justify-content:space-between;align-items:center;width:100%;height:auto\"><div style=\"font-family:sans-serif;text-align:center;width:100%;color:#ccc;padding-top:10px\"><p>PT. Kimia Farma Tbk. Plant Jakarta</p><hr style=\"border; 1px solid #ccc\" /></div><div style=\"width:100%;color:#ccc\"><div style=\"text-align:left;padding:10px\"><p>Jadwal Pekerjaan</p><br /><p style=\"text-align:left\">Dear Bapak/Ibu</p><p style=\"text-align:left\">Berikut ini adalah <b>Jadwal Pekerjaan</b> Bagian Teknik & Pemeliharaan yang dikirim oleh <b>Administrator</b></p><p style=\"text-align:left\">Untuk info lebih lanjut, silahkan klik <a target=\'_blank\' href=\'http://localhost/spekta/index.php?c=PublicController&m=ganttChart&token=MnIrZXZHRmFXVFNUeXVsUkRib2tJdz09\'><i>di sini.</i></a></p></div></div>\n</div>', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', NULL),
 (259, '1-53', 1, '<div style=\"display:flex;flex-direction:column;justify-content:space-between;align-items:center;width:100%;height:auto\"><div style=\"font-family:sans-serif;text-align:center;width:100%;color:#ccc;padding-top:10px\"><p>PT. Kimia Farma Tbk. Plant Jakarta</p><hr style=\"border; 1px solid #ccc\" /></div><div style=\"width:100%;color:#ccc\"><div style=\"text-align:left;padding:10px\"><p>Jadwal Pekerjaan</p><br /><p style=\"text-align:left\">Dear Bapak/Ibu</p><p style=\"text-align:left\">Berikut ini adalah <b>Jadwal Pekerjaan</b> Bagian Teknik & Pemeliharaan Februari 2022 yang dikirim oleh <b>Administrator</b></p><p style=\"text-align:left\">Untuk info lebih lanjut, silahkan klik <a target=\'_blank\' href=\'http://spekta.id/index.php?c=PublicController&m=ganttChart&token=MnIrZXZHRmFXVFNUeXVsUkRib2tJdz09\'><i>di sini.</i></a></p></div></div>\n</div>', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', NULL),
-(264, '52', 1, 'hHglFACaQ-gr-1st.jpeg', 'file', '0', 0, 0, 'msg', 'group', '', NULL, NULL, '', '1st.jpeg', '2022-02-10 11:17:40'),
-(265, '52', 1, '1. Kunjungi alamat https://spekta.id/spektachat, kemudian pada pojok kanan atas Google Chrome klik icon 3 titik di pojok kanan atas.', 'msg', '0', 0, 0, 'msg', 'group', 'https://spekta.id/spektachat', 'S.P.E.K.T.A Chat - Go Fast To The Next Level', 'Aplikasi Chatting PT. Kimia Farma Tbk. Plant Jakarta', 'https://spekta.id/spektachat/gem/ore/grupo/global/socialmedia.jpg', '0', '2022-02-10 11:19:18'),
-(266, '52', 1, 'GTTIZMMLf-gr-2st.jpeg', 'file', '0', 0, 0, 'msg', 'group', '', NULL, NULL, '', '2st.jpeg', '2022-02-10 11:20:03'),
-(267, '52', 1, '2. Seteah muncul menu pada Chrome, silahkan pilih Add To Home Screen', 'msg', '0', 0, 0, 'msg', 'group', '', NULL, NULL, '', '0', '2022-02-10 11:20:42'),
-(268, '52', 1, 'WOhYW5bLa-gr-3rd.jpeg', 'file', '0', 0, 0, 'msg', 'group', '', NULL, NULL, '', '3rd.jpeg', '2022-02-10 11:20:53'),
-(269, '52', 1, '3. Aplikasi S.P.E.K.T.A Chat sudah tersimpan kedalam Home Screen Smartphone anda (Bisa dilakukan di Android &amp;amp; iOS)', 'msg', '0', 0, 0, 'msg', 'group', '', NULL, NULL, '', '0', '2022-02-10 11:21:47'),
 (272, '14-26', 26, 'assalamualaikum Ibu', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-02-10 12:25:34'),
 (273, '14-26', 14, 'hi', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-02-10 12:25:39'),
 (274, '14-26', 14, 'waalaikumsalam', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-02-10 12:25:48'),
 (275, '14-26', 14, ':heart_eyes:', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-02-10 12:25:54'),
 (276, '14-26', 14, 'https://spekta.id/spektachat/gem/ore/grupo/stickers/Covid19/sticker-xsfhyg.png|512|512', 'stickers', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', 'https://spekta.id/spektachat/gem/ore/grupo/stickers/Covid19/sticker-xsfhyg.png', '2022-02-10 12:26:28'),
 (277, '14-26', 26, ':heartpulse:', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-02-10 12:26:52'),
-(282, '52', 1, 'Selamat Datang Bapak/Ibu di Aplikasi S.P.E.K.T.A Chat. Kami dari Bagian Teknik &amp;amp; Pemeliharaan (Hardware &amp;amp; Network) saat ini sedang melakukan Development System dalam Program Digitalisasi. Aplikasi Chat ini akan menjadi platform dimana notifikasi akan dikirimkan (selain Email). Aplikasi ini dapat digunakan untuk alat bantu komunikasi saat bekerja (Pengganti LAN Messanger). Terdapat fitur File Sharing, Chat, Gift, Emoticon, Private Message, Group Message, File Storage, Voice Note Dll', 'msg', '0', 0, 0, 'msg', 'group', '', NULL, NULL, '', '0', '2022-02-10 12:54:19'),
 (283, '2-24', 2, 'tes', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-02-10 12:55:18'),
 (284, '2-24', 2, 'disini bisa kita pakai buat koordinasi kerjaan pak is', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-02-10 12:55:35'),
 (285, '2-24', 2, ':grin:', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-02-10 12:55:42'),
 (286, '2-24', 2, ':smiley:', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-02-10 12:55:48'),
-(287, '1-2', 1, '<div style=\"display:flex;flex-direction:column;justify-content:space-between;align-items:center;width:100%;height:auto\"><div style=\"font-family:sans-serif;text-align:center;width:100%;color:#ccc;padding-top:10px\"><p>PT. Kimia Farma Tbk. Plant Jakarta</p><hr style=\"border; 1px solid #ccc\" /></div><div style=\"width:100%;color:#ccc\"><div style=\"text-align:left;padding:10px\"><p>Jadwal Pekerjaan</p><br /><p style=\"text-align:left\">Dear Bapak/Ibu</p><p style=\"text-align:left\">Berikut ini adalah <b>Jadwal Pekerjaan</b> Bagian Teknik & Pemeliharaan Februari 2022 yang dikirim oleh <b>Administrator</b></p><p style=\"text-align:left\">Untuk info lebih lanjut, silahkan klik <a target=\'_blank\' href=\'https://spekta.id/index.php?c=PublicController&m=ganttChart&token=MnIrZXZHRmFXVFNUeXVsUkRib2tJdz09\'><i>di sini.</i></a></p></div></div>\n</div>', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', NULL),
 (288, '1-24', 1, 'Hallo pak', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-02-10 12:58:37'),
 (289, '1-24', 1, 'Untuk cara membuka di HP silahkan ikuti petunjuk di Group KFUPJ', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-02-10 12:59:57'),
-(300, '43', 1, 'kpZYNuS1C-gr-views.zip', 'file', '0', 0, 0, 'msg', 'group', '', NULL, NULL, '', 'views.zip', '2022-02-14 20:10:48'),
-(301, '43', 1, '83atS11mk-gr-js.zip', 'file', '0', 0, 0, 'msg', 'group', '', NULL, NULL, '', 'js.zip', '2022-02-14 20:11:22');
+(302, '1-1', 1, '<div style=\"display:flex;flex-direction:column;justify-content:space-between;align-items:center;width:100%;height:auto\"><div style=\"font-family:sans-serif;text-align:center;width:100%;color:#ccc;padding-top:10px\"><p>PT. Kimia Farma Tbk. Plant Jakarta</p><hr style=\"border; 1px solid #ccc\" /></div><div style=\"width:100%;color:#ccc\"><div style=\"text-align:left;padding:10px\"><p>Jadwal Pekerjaan</p><br /><p style=\"text-align:left\">Dear Bapak/Ibu</p><p style=\"text-align:left\">Berikut ini adalah <b>Jadwal Pekerjaan</b> Bagian Teknik & Pemeliharaan Februari 2022 yang dikirim oleh <b>Administrator</b></p><p style=\"text-align:left\">Untuk info lebih lanjut, silahkan klik <a target=\'_blank\' href=\'https://spekta.id/index.php?c=PublicController&m=ganttChart&token=MnIrZXZHRmFXVFNUeXVsUkRib2tJdz09\'><i>di sini.</i></a></p></div></div>\n</div>', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', NULL),
+(310, '14-26', 14, 'Uyyy', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-02-23 07:48:01'),
+(311, '14-29', 29, 'https://spekta.id/spektachat/gem/ore/grupo/stickers/Simpsons/sticker-92f1gm.png|512|512', 'stickers', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', 'https://spekta.id/spektachat/gem/ore/grupo/stickers/Simpsons/sticker-92f1gm.png', '2022-02-23 07:49:58'),
+(315, '52', 65, 'joined_group', 'system', '0', 0, 0, 'msg', 'group', '', NULL, NULL, '', '0', '2022-02-23 08:31:28'),
+(321, '52', 1, 'renamed_group', 'system', '0', 0, 0, 'msg', 'group', '', NULL, NULL, '', '0', '2022-02-25 19:40:42'),
+(323, '43', 1, 'renamed_group', 'system', '0', 0, 0, 'msg', 'group', '', NULL, NULL, '', '0', '2022-02-28 15:55:17'),
+(324, '43', 1, 'renamed_group', 'system', '0', 0, 0, 'msg', 'group', '', NULL, NULL, '', '0', '2022-02-28 15:55:35'),
+(326, '52', 1, 'Tes', 'msg', '0', 0, 0, 'msg', 'group', '', NULL, NULL, '', '0', '2022-03-01 11:14:26'),
+(327, '52', 1, 'kkk', 'msg', '0', 0, 0, 'msg', 'group', '', NULL, NULL, '', '0', '2022-03-01 11:14:36'),
+(329, '1-41', 41, 'tes', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-03-01 11:15:06'),
+(330, '1-41', 1, 'Tes', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-03-01 11:15:20'),
+(331, '1-41', 1, 'Gas mas', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-03-01 12:15:18'),
+(332, '2-8', 2, 'Tes', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-03-02 06:54:22'),
+(333, '2-8', 8, 'tes', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-03-02 06:54:31'),
+(335, '1-2', 1, '8qFSF4Swr-gr-Sosialisasi_#1.pptx', 'file', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', 'Sosialisasi_#1.pptx', '2022-03-02 20:48:25'),
+(337, '1-2', 1, 'mbee', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-03-02 20:50:32'),
+(340, '1-2', 2, 'Nais, blm k donlot klo dri hp ting', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-03-02 20:51:35'),
+(341, '1-2', 1, 'gak ada notif downloadnya ?', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-03-02 20:51:58'),
+(342, '1-2', 1, 'di hp gua bisa sep', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-03-02 20:52:03'),
+(343, '1-2', 1, 'dari laptop atuh', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-03-02 20:52:14'),
+(344, '1-2', 2, 'Iya ntr w coba dri laptop', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-03-02 20:52:35'),
+(345, '1-2', 2, 'Bocah blm tdr', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-03-02 20:52:46'),
+(346, '1-2', 1, 'tidurin sep', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-03-02 20:55:39'),
+(347, '1-2', 1, 'kasih susu', 'msg', '0', 0, 0, 'msg', 'user', '', NULL, NULL, '', '0', '2022-03-02 20:55:45'),
+(348, '52', 1, 'changed_group_icon', 'system', '0', 0, 0, 'msg', 'group', '', NULL, NULL, '', '0', '2022-03-02 20:56:41');
 
 -- --------------------------------------------------------
 
@@ -897,15 +942,15 @@ INSERT INTO `gr_msgs` (`id`, `gid`, `uid`, `msg`, `type`, `rtxt`, `rid`, `rmid`,
 --
 
 CREATE TABLE `gr_options` (
-  `id` bigint(20) NOT NULL,
-  `type` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `v1` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT '0',
-  `v2` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `v3` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT '0',
-  `v4` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT '0',
-  `v5` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT '0',
-  `v6` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT '0',
-  `v7` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT '0',
+  `id` bigint NOT NULL,
+  `type` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `v1` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '0',
+  `v2` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `v3` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '0',
+  `v4` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '0',
+  `v5` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '0',
+  `v6` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '0',
+  `v7` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '0',
   `tms` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -916,19 +961,19 @@ CREATE TABLE `gr_options` (
 INSERT INTO `gr_options` (`id`, `type`, `v1`, `v2`, `v3`, `v4`, `v5`, `v6`, `v7`, `tms`) VALUES
 (1, 'profile', 'name', 'ARMAN SEPTIAN', '1', 'superuser', '#007761', '', '', '2020-11-15 10:40:17'),
 (4, 'usrole', '421aa90e079fa326b6494f812ad13e79', '9gfQKxvoHd', 'rzDFT', '0', '0', '0', '0', NULL),
-(5, 'profile', 'status', 'online', '1', '0', '0', '0', '0', '2022-02-14 20:15:38'),
-(6, 'profile', 'autotmz', 'America/New_York', '1', '0', '0', '0', '0', '2022-02-14 20:10:38'),
+(5, 'profile', 'status', 'offline', '1', '0', '0', '0', '0', '2022-03-03 08:51:11'),
+(6, 'profile', 'autotmz', 'America/New_York', '1', '0', '0', '0', '0', '2022-03-02 21:42:19'),
 (8, 'profile', 'name', 'ASEP DIKI ARIYANTO', '2', 'asep.diki', '#193C87', '0', '0', '2022-01-30 09:39:13'),
-(9, 'profile', 'status', 'offline', '2', '0', '0', '0', '0', '2022-02-14 20:09:39'),
-(10, 'profile', 'autotmz', 'America/New_York', '2', '0', '0', '0', '0', '2022-02-14 18:39:04'),
-(11, 'lview', '1-2', '1', '287', '0', '0', '0', '0', '2022-02-10 12:58:16'),
-(12, 'lview', '1-2', '2', '287', '0', '0', '0', '0', '2022-02-10 12:56:13'),
+(9, 'profile', 'status', 'offline', '2', '0', '0', '0', '0', '2022-03-02 21:42:19'),
+(10, 'profile', 'autotmz', 'America/New_York', '2', '0', '0', '0', '0', '2022-03-02 20:52:10'),
+(11, 'lview', '1-2', '1', '347', '0', '0', '0', '0', '2022-03-02 21:42:25'),
+(12, 'lview', '1-2', '2', '345', '0', '0', '0', '0', '2022-03-02 20:52:46'),
 (25, 'profile', 'alert', 'gem/ore/grupo/alerts/alert005.mp3', '2', '0', '0', '0', '0', '2022-02-07 18:06:31'),
 (26, 'profile', 'skinmode', 'light', '1', '0', '0', '0', '0', '2022-02-07 05:57:08'),
 (29, 'profile', 'name', 'FIKRI AGIL ROYHAM MURTHADO', '3', 'fikri.agil', '#BC6A04', '0', '0', '2022-01-31 05:38:55'),
 (31, 'clearchat', '2', '1', '62', '0', '0', '0', '0', '2022-02-02 11:59:39'),
-(32, 'profile', 'status', 'offline', '3', '0', '0', '0', '0', '2022-02-11 07:50:45'),
-(33, 'profile', 'autotmz', 'America/New_York', '3', '0', '0', '0', '0', '2022-02-11 07:02:26'),
+(32, 'profile', 'status', 'online', '3', '0', '0', '0', '0', '2022-03-03 14:23:02'),
+(33, 'profile', 'autotmz', 'America/New_York', '3', '0', '0', '0', '0', '2022-03-03 14:23:04'),
 (34, 'profile', 'alert', 'gem/ore/grupo/alerts/alert005.mp3', '3', '0', '0', '0', '0', '2022-02-06 04:29:43'),
 (35, 'profile', 'name', 'azizah', '4', 'azizah', '#6A96CE', '0', '0', '2022-01-31 09:54:57'),
 (37, 'profile', 'status', 'offline', '4', '0', '0', '0', '0', '2022-01-31 18:08:37'),
@@ -936,25 +981,25 @@ INSERT INTO `gr_options` (`id`, `type`, `v1`, `v2`, `v3`, `v4`, `v5`, `v6`, `v7`
 (40, 'profile', 'skinmode', 'dark', '2', '0', '0', '0', '0', '2022-02-10 23:01:56'),
 (41, 'lview', '1-4', '1', '76', '0', '0', '0', '0', '2022-02-02 11:59:00'),
 (42, 'lview', '1-4', '4', '0', '0', '0', '0', '0', '2022-01-31 10:06:58'),
-(43, 'group', 'H&amp;amp;N (Distorcy Team)', '172f58ab41c290e7da29bb93b514c834', '0', 'rtqFWn', '0', 'unleavable', '0', '2022-02-14 20:11:22'),
+(43, 'group', 'Distorcy', '172f58ab41c290e7da29bb93b514c834', '0', 'rtqFWn', '0', 'unleavable', '0', '2022-02-28 15:58:40'),
 (44, 'groupslug', '43', 'hnn', '0', '0', '0', '0', '0', '2022-01-31 11:53:17'),
 (45, 'gruser', '43', '1', '2', '0', '0', '0', '0', '2022-01-31 11:53:17'),
-(46, 'lview', '43', '1', '301', '0', '0', '0', '0', '2022-02-14 20:11:46'),
+(46, 'lview', '43', '1', '324', '0', '0', '0', '0', '2022-03-02 20:55:55'),
 (47, 'profile', 'alert', 'gem/ore/grupo/alerts/alert005.mp3', '1', '0', '0', '0', '0', '2022-02-06 04:22:52'),
 (48, 'gruser', '43', '2', '0', '0', '0', '0', '0', '2022-02-01 00:30:25'),
-(49, 'lview', '43', '2', NULL, '0', '0', '0', '0', '2022-02-09 23:46:10'),
+(49, 'lview', '43', '2', '325', '0', '0', '0', '0', '2022-02-28 22:12:40'),
 (50, 'clearchat', '1', '2', '62', '0', '0', '0', '0', '2022-02-02 11:58:46'),
 (51, 'clearchat', '1', '4', '76', '0', '0', '0', '0', '2022-02-02 11:59:03'),
-(52, 'group', 'KFUPJ', '282e9777d3b649e4f60c5e3f941b42b0', '0', 'VMoReo', '0', 'unleavable', '0', '2022-02-10 12:54:19'),
-(53, 'groupslug', '52', 'kfupj', '0', '0', '0', '0', '0', '2022-02-02 21:31:05'),
+(52, 'group', 'KFPJ', '282e9777d3b649e4f60c5e3f941b42b0', '0', 'VMoReo', '0', 'unleavable', '0', '2022-03-02 20:56:41'),
+(53, 'groupslug', '52', 'kfpj', '0', '0', '0', '0', '0', '2022-02-25 19:40:51'),
 (54, 'gruser', '52', '1', '2', '0', '0', '0', '0', '2022-02-02 21:31:05'),
-(55, 'lview', '52', '1', '282', '0', '0', '0', '0', '2022-02-10 13:52:21'),
+(55, 'lview', '52', '1', '348', '0', '0', '0', '0', '2022-03-02 20:57:01'),
 (56, 'gruser', '52', '2', '0', '0', '0', '0', '0', '2022-02-02 22:12:23'),
-(57, 'lview', '52', '2', '282', '0', '0', '0', '0', '2022-02-10 13:00:35'),
+(57, 'lview', '52', '2', '327', '0', '0', '0', '0', '2022-03-02 20:49:03'),
 (58, 'gruser', '52', '3', '0', '0', '0', '0', '0', '2022-02-04 14:18:13'),
-(59, 'lview', '52', '3', '282', '0', '0', '0', '0', '2022-02-10 15:49:36'),
+(59, 'lview', '52', '3', '348', '0', '0', '0', '0', '2022-03-03 08:51:33'),
 (60, 'gruser', '43', '3', '0', '0', '0', '0', '0', '2022-02-04 17:24:43'),
-(61, 'lview', '43', '3', '297', '0', '0', '0', '0', '2022-02-10 21:43:52'),
+(61, 'lview', '43', '3', '324', '0', '0', '0', '0', '2022-03-03 08:51:17'),
 (62, 'profile', 'skinmode', 'dark', '3', '0', '0', '0', '0', NULL),
 (63, 'profile', 'name', 'AFIFI HILMIYANTI', '5', 'afifihilmiyanti89@gmail.com', '#A10BA8', '0', '0', '2022-02-06 04:21:57'),
 (64, 'gruser', '52', '5', '0', '0', '0', '0', '0', '2022-02-06 04:21:57'),
@@ -962,7 +1007,7 @@ INSERT INTO `gr_options` (`id`, `type`, `v1`, `v2`, `v3`, `v4`, `v5`, `v6`, `v7`
 (66, 'gruser', '52', '6', '0', '0', '0', '0', '0', '2022-02-06 04:23:50'),
 (67, 'profile', 'name', 'AHMAD SARMALI', '7', 'ahmad.sarmali1003@kimiafarma.co.id', '#79D4C6', '0', '0', '2022-02-06 04:24:59'),
 (68, 'gruser', '52', '7', '0', '0', '0', '0', '0', '2022-02-06 04:24:59'),
-(69, 'profile', 'name', 'ANINDYA HANA IRADHATI', '8', 'anindya.hana@kimiafarma.co.id', '#7E0027', '0', '0', '2022-02-06 04:25:36'),
+(69, 'profile', 'name', 'Anindya Hana I', '8', 'anindya.hana', '#125ABA', '0', '0', '2022-02-06 04:25:36'),
 (70, 'gruser', '52', '8', '0', '0', '0', '0', '0', '2022-02-06 04:25:36'),
 (71, 'profile', 'name', 'ANITA ELSYA UTARI', '9', 'anita.eu@kimiafarma.co.id', '#E0AF88', '0', '0', '2022-02-06 04:25:55'),
 (72, 'gruser', '52', '9', '0', '0', '0', '0', '0', '2022-02-06 04:25:55'),
@@ -1005,7 +1050,7 @@ INSERT INTO `gr_options` (`id`, `type`, `v1`, `v2`, `v3`, `v4`, `v5`, `v6`, `v7`
 (109, 'gruser', '52', '27', '0', '0', '0', '0', '0', '2022-02-06 04:35:51'),
 (110, 'profile', 'name', 'KURNIAWATI HIDAYAH', '28', 'kurniawati.hidayah@gmail.com', '#F93907', '0', '0', '2022-02-06 04:36:59'),
 (111, 'gruser', '52', '28', '0', '0', '0', '0', '0', '2022-02-06 04:36:59'),
-(112, 'profile', 'name', 'LUTFI RATNA WAHYUNINGTYAS', '29', 'lutfiratnaaw@gmail.com', '#A0C713', '0', '0', '2022-02-06 04:37:14'),
+(112, 'profile', 'name', 'LUTFI RATNA WAHYUNINGTYAS', '29', 'lutfi.ratna', '#A0C713', '0', '0', '2022-02-06 04:37:14'),
 (113, 'gruser', '52', '29', '0', '0', '0', '0', '0', '2022-02-06 04:37:14'),
 (114, 'profile', 'name', 'MUHAMAD ISAPUDIN JANUAR', '30', 'isapudin.januar@kimiafarma.co.id', '#30C4EC', '0', '0', '2022-02-06 04:37:30'),
 (115, 'gruser', '52', '30', '0', '0', '0', '0', '0', '2022-02-06 04:37:30'),
@@ -1090,13 +1135,13 @@ INSERT INTO `gr_options` (`id`, `type`, `v1`, `v2`, `v3`, `v4`, `v5`, `v6`, `v7`
 (194, 'profile', 'status', 'offline', '26', '0', '0', '0', '0', '2022-02-10 14:26:20'),
 (195, 'profile', 'autotmz', 'America/New_York', '26', '0', '0', '0', '0', '2022-02-10 12:30:18'),
 (196, 'lview', '52', '26', '282', '0', '0', '0', '0', '2022-02-10 13:15:12'),
-(197, 'profile', 'status', 'offline', '14', '0', '0', '0', '0', '2022-02-10 13:35:19'),
-(198, 'profile', 'autotmz', 'America/New_York', '14', '0', '0', '0', '0', '2022-02-10 13:32:53'),
+(197, 'profile', 'status', 'offline', '14', '0', '0', '0', '0', '2022-02-24 14:29:00'),
+(198, 'profile', 'autotmz', 'America/New_York', '14', '0', '0', '0', '0', '2022-02-23 12:09:58'),
 (199, 'profile', 'skinmode', 'dark', '26', '0', '0', '0', '0', '2022-02-10 12:30:17'),
 (200, 'profile', 'alert', 'gem/ore/grupo/alerts/alert005.mp3', '14', '0', '0', '0', '0', '2022-02-10 12:24:58'),
-(201, 'lview', '52', '14', '282', '0', '0', '0', '0', '2022-02-10 13:33:40'),
+(201, 'lview', '52', '14', '315', '0', '0', '0', '0', '2022-02-23 12:10:01'),
 (202, 'lview', '14-26', '26', '277', '0', '0', '0', '0', '2022-02-10 12:26:53'),
-(203, 'lview', '14-26', '14', '277', '0', '0', '0', '0', '2022-02-10 13:33:06'),
+(203, 'lview', '14-26', '14', '310', '0', '0', '0', '0', '2022-02-23 07:48:03'),
 (204, 'profile', 'status', 'offline', '24', '0', '0', '0', '0', '2022-02-11 12:14:45'),
 (205, 'profile', 'autotmz', 'America/New_York', '24', '0', '0', '0', '0', '2022-02-11 07:29:52'),
 (206, 'lview', '52', '24', '282', '0', '0', '0', '0', '2022-02-11 07:30:31'),
@@ -1119,9 +1164,34 @@ INSERT INTO `gr_options` (`id`, `type`, `v1`, `v2`, `v3`, `v4`, `v5`, `v6`, `v7`
 (223, 'profile', 'status', 'offline', '11', '0', '0', '0', '0', '2022-02-14 10:18:05'),
 (224, 'profile', 'autotmz', 'America/New_York', '11', '0', '0', '0', '0', '2022-02-11 12:14:45'),
 (225, 'lview', '52', '11', '282', '0', '0', '0', '0', '2022-02-11 12:14:51'),
-(226, 'profile', 'status', 'offline', '41', '0', '0', '0', '0', '2022-02-14 10:18:05'),
-(227, 'profile', 'autotmz', 'America/New_York', '41', '0', '0', '0', '0', '2022-02-11 07:50:46'),
-(228, 'lview', '52', '41', '282', '0', '0', '0', '0', '2022-02-11 07:50:46');
+(226, 'profile', 'status', 'offline', '41', '0', '0', '0', '0', '2022-03-02 06:40:55'),
+(227, 'profile', 'autotmz', 'America/New_York', '41', '0', '0', '0', '0', '2022-03-01 11:13:07'),
+(228, 'lview', '52', '41', '328', '0', '0', '0', '0', '2022-03-01 11:15:28'),
+(229, 'profile', 'alert', 'gem/ore/grupo/alerts/alert005.mp3', '29', '0', '0', '0', '0', '2022-02-23 08:01:12'),
+(230, 'profile', 'status', 'offline', '29', '0', '0', '0', '0', '2022-02-23 09:31:32'),
+(231, 'profile', 'autotmz', 'Asia/Jakarta', '29', '0', '0', '0', '0', '2022-02-23 08:23:16'),
+(232, 'lview', '52', '29', '282', '0', '0', '0', '0', '2022-02-23 07:50:17'),
+(233, 'lview', '14-29', '29', '311', '0', '0', '0', '0', '2022-02-23 08:01:36'),
+(234, 'lview', '14-29', '14', '0', '0', '0', '0', '0', '2022-02-23 07:49:58'),
+(235, 'lview', '1-14', '1', NULL, '0', '0', '0', '0', '2022-02-23 07:51:15'),
+(236, 'profile', 'name', 'Arman Septian 2', '65', 'alternate.septian', '#6C54AA', '0', '0', '2022-02-23 08:26:17'),
+(237, 'gruser', '52', '65', '0', '0', '0', '0', '0', '2022-02-23 08:31:28'),
+(238, 'profile', 'status', 'offline', '65', '0', '0', '0', '0', '2022-02-23 08:33:09'),
+(239, 'profile', 'autotmz', 'America/New_York', '65', '0', '0', '0', '0', '2022-02-23 08:31:53'),
+(240, 'profile', 'autotmz', 'America/New_York', '65', '0', '0', '0', '0', '2022-02-23 08:31:53'),
+(241, 'lview', '52', '65', '315', '0', '0', '0', '0', '2022-02-23 08:31:32'),
+(242, 'deaccount', 'yes', NULL, '65', '0', '0', '0', '0', NULL),
+(243, 'profile', 'alert', 'gem/ore/grupo/alerts/alert005.mp3', '65', '0', '0', '0', '0', '2022-02-23 08:33:09'),
+(244, 'lview', '1-41', '41', '331', '0', '0', '0', '0', '2022-03-01 14:17:09'),
+(245, 'lview', '1-41', '1', '331', '0', '0', '0', '0', '2022-03-01 12:15:19'),
+(246, 'profile', 'status', 'offline', '8', '0', '0', '0', '0', '2022-03-02 06:59:40'),
+(247, 'profile', 'autotmz', 'Asia/Jakarta', '8', '0', '0', '0', '0', '2022-03-02 06:54:09'),
+(248, 'lview', '52', '8', '328', '0', '0', '0', '0', '2022-03-02 06:55:17'),
+(249, 'profile', 'skinmode', 'dark', '8', '0', '0', '0', '0', '2022-03-02 06:53:32'),
+(250, 'profile', 'tmz', 'Asia/Jakarta', '8', '0', '0', '0', '0', '2022-03-02 06:53:18'),
+(251, 'profile', 'alert', 'gem/ore/grupo/alerts/alert005.mp3', '8', '0', '0', '0', '0', '2022-03-02 06:53:18'),
+(252, 'lview', '2-8', '2', '333', '0', '0', '0', '0', '2022-03-02 06:54:33'),
+(253, 'lview', '2-8', '8', '333', '0', '0', '0', '0', '2022-03-02 06:54:32');
 
 -- --------------------------------------------------------
 
@@ -1130,20 +1200,20 @@ INSERT INTO `gr_options` (`id`, `type`, `v1`, `v2`, `v3`, `v4`, `v5`, `v6`, `v7`
 --
 
 CREATE TABLE `gr_permissions` (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `groups` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `features` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `files` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `users` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `languages` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `sys` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `roles` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `fields` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `privatemsg` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `autodel` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'off',
-  `autounjoin` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'off',
-  `xtras` text COLLATE utf8mb4_unicode_ci NOT NULL
+  `id` bigint NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `groups` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `features` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `files` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `users` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `languages` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sys` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `roles` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fields` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `privatemsg` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `autodel` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'off',
+  `autounjoin` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'off',
+  `xtras` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1151,7 +1221,7 @@ CREATE TABLE `gr_permissions` (
 --
 
 INSERT INTO `gr_permissions` (`id`, `name`, `groups`, `features`, `files`, `users`, `languages`, `sys`, `roles`, `fields`, `privatemsg`, `autodel`, `autounjoin`, `xtras`) VALUES
-(1, 'Unverified', '', '9', '', '', '', '', '', '', '', 'Off', 'Off', '{\"maxgroup\":\"100\",\"maxfileuploadsize\":\"10\"}'),
+(1, 'Unverified', '', '1,9', '', '', '', '', '', '', '1,2', 'Off', 'Off', '{\"maxgroup\":\"100\",\"maxfileuploadsize\":\"10\"}'),
 (2, 'Site Administrator', '1,13,14,15,2,3,4,5,12,6,11,8,9,10,7,16,18,17', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17', '1,2,3,4,5', '1,2,3,4,7,9,5,6,8,10,11,12', '1,2,3,4', '1,2,3,4,5,6,7,8', '1,2,3', '1,2,3,4', '1,2,3,4', 'Off', 'Off', '{\"maxgroup\":\"999999\",\"maxfileuploadsize\":\"100000\"}'),
 (3, 'Verified', '4,5,6,8,9,10,16,18', '1,3,4,5,6,7,8,9,10,11,12,15,17', '1,2,3,4,5', '5,10', '', '', '', '', '1,2,3,4', 'Off', 'Off', '{\"maxgroup\":\"100\",\"maxfileuploadsize\":\"1000\"}'),
 (4, 'Banned', '', '', '', '', '', '', '', '', '', 'Off', 'Off', '{\"maxgroup\":0,\"maxfileuploadsize\":1000}'),
@@ -1164,11 +1234,11 @@ INSERT INTO `gr_permissions` (`id`, `name`, `groups`, `features`, `files`, `user
 --
 
 CREATE TABLE `gr_phrases` (
-  `id` bigint(20) NOT NULL,
-  `type` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT 'phrase',
-  `short` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `full` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `lid` bigint(20) DEFAULT NULL
+  `id` bigint NOT NULL,
+  `type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'phrase',
+  `short` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `full` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `lid` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1329,8 +1399,8 @@ INSERT INTO `gr_phrases` (`id`, `type`, `short`, `full`, `lid`) VALUES
 (151, 'phrase', 'got_it', 'Got It', 1),
 (152, 'phrase', 'user_does_not_exist', 'User Does not Exist', 1),
 (153, 'phrase', 'check_inbox', 'We have sent an email to your email address. Please check your Inbox.', 1),
-(154, 'phrase', 'email_reset_title', 'Trouble signing in?', 1),
-(155, 'phrase', 'email_reset_desc', 'Resetting your password is easy. Just press the button below and once logged in, you can change your password from edit profile tab.', 1),
+(154, 'phrase', 'email_reset_title', 'Punya Masalah Saat Login ?', 1),
+(155, 'phrase', 'email_reset_desc', 'Menyetel ulang kata sandi Anda mudah. Cukup tekan tombol di bawah dan setelah masuk, Anda dapat mengubah kata sandi dari tab edit profil.', 1),
 (156, 'phrase', 'email_reset_btn', 'Auto Login', 1),
 (157, 'phrase', 'email_replied_title', 'Awaiting your reply', 1),
 (158, 'phrase', 'email_replied_desc', 'You received this email because someone has replied to your message', 1),
@@ -1344,18 +1414,18 @@ INSERT INTO `gr_phrases` (`id`, `type`, `short`, `full`, `lid`) VALUES
 (166, 'phrase', 'email_signup_title', 'Profile Registered', 1),
 (167, 'phrase', 'email_signup_desc', 'Congratulations! Your account has been created. Just press the button below and once logged in, you can change your password from edit profile tab.', 1),
 (168, 'phrase', 'email_signup_btn', 'Auto Login', 1),
-(169, 'phrase', 'email_reset_sub', 'Forgot Your Password', 1),
+(169, 'phrase', 'email_reset_sub', 'Lupa Password', 1),
 (170, 'phrase', 'email_replied_sub', 'You got a Reply', 1),
 (171, 'phrase', 'email_invitation_sub', 'Group Invitation', 1),
 (172, 'phrase', 'email_mentioned_sub', 'Mentioned you', 1),
 (173, 'phrase', 'email_signup_sub', 'Account Created', 1),
-(174, 'phrase', 'email_verify_title', 'You&#039;re almost there', 1),
-(175, 'phrase', 'email_verify_desc', 'We have finished setting up your account. It is time to confirm your email address. Just click on the button below to get started', 1),
+(174, 'phrase', 'email_verify_title', 'Sedikit Langkah Lagi Untuk Bergabung', 1),
+(175, 'phrase', 'email_verify_desc', 'Kami telah selesai menyiapkan akun Anda. Saatnya untuk mengkonfirmasi alamat email Anda. Cukup klik tombol di bawah ini untuk memulai', 1),
 (176, 'phrase', 'email_verify_btn', 'Confirm Email', 1),
-(177, 'phrase', 'email_footer', 'If you dont know why you got this email, please tell us straight away so we can fix this for you.', 1),
-(178, 'phrase', 'email_complimentary_close', 'Best regards,', 1),
-(179, 'phrase', 'email_verify_sub', 'Verify your email address', 1),
-(180, 'phrase', 'email_copy_link', 'Or copy this link and paste in your web browser', 1),
+(177, 'phrase', 'email_footer', 'Jika Anda tidak tahu mengapa Anda menerima email ini, harap beri tahu kami segera agar kami dapat memperbaikinya untuk Anda.', 1),
+(178, 'phrase', 'email_complimentary_close', 'Salam,', 1),
+(179, 'phrase', 'email_verify_sub', 'Verifikasi Email S.P.E.K.T.A Chat', 1),
+(180, 'phrase', 'email_copy_link', 'Atau salin tautan ini dan tempel di browser web Anda', 1),
 (181, 'phrase', 'sitename', 'Site Name', 1),
 (182, 'phrase', 'sitedesc', 'Description', 1),
 (183, 'phrase', 'sysemail', 'Email Address', 1),
@@ -1791,14 +1861,14 @@ INSERT INTO `gr_phrases` (`id`, `type`, `short`, `full`, `lid`) VALUES
 --
 
 CREATE TABLE `gr_profiles` (
-  `id` bigint(20) NOT NULL,
-  `type` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `uid` bigint(20) NOT NULL DEFAULT 0,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `cat` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `v1` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `v2` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `req` int(11) NOT NULL DEFAULT 0,
+  `id` bigint NOT NULL,
+  `type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `uid` bigint NOT NULL DEFAULT '0',
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cat` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `v1` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `v2` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `req` int NOT NULL DEFAULT '0',
   `tms` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -1813,8 +1883,8 @@ INSERT INTO `gr_profiles` (`id`, `type`, `uid`, `name`, `cat`, `v1`, `v2`, `req`
 (4, 'field', 0, 'cf_phone', 'numfield', NULL, NULL, 0, '2020-11-15 10:53:06'),
 (5, 'field', 0, 'cf_location', 'shorttext', '0', NULL, 0, '2020-11-15 10:53:09'),
 (6, 'field', 0, 'cf_country', 'dropdownfield', 'Afghanistan,Albania,Algeria,Andorra,Angola,Antigua &amp;amp; Deps,Argentina,Armenia,Australia,Austria,Azerbaijan,Bahamas,Bahrain,Bangladesh,Barbados,Belarus,Belgium,Belize,Benin,Bhutan,Bolivia,Bosnia Herzegovina,Botswana,Brazil,Brunei,Bulgaria,Burkina,Burma,Burundi,Cambodia,Cameroon,Canada,Cape Verde,Central African Rep,Chad,Chile,People&amp;#039;s Republic of China,Republic of China,Colombia,Comoros,Democratic Republic of the Congo,Republic of the Congo,Costa Rica,Croatia,Cuba,Cyprus,Czech Republic,Danzig,Denmark,Djibouti,Dominica,Dominican Republic,East Timor,Ecuador,Egypt,El Salvador,Equatorial Guinea,Eritrea,Estonia,Ethiopia,Fiji,Finland,France,Gabon,Gaza Strip,The Gambia,Georgia,Germany,Ghana,Greece,Grenada,Guatemala,Guinea,Guinea-Bissau,Guyana,Haiti,Holy Roman Empire,Honduras,Hungary,Iceland,India,Indonesia,Iran,Iraq,Republic of Ireland,Israel,Italy,Ivory Coast,Jamaica,Japan,Jonathanland,Jordan,Kazakhstan,Kenya,Kiribati,North Korea,South Korea,Kosovo,Kuwait,Kyrgyzstan,Laos,Latvia,Lebanon,Lesotho,Liberia,Libya,Liechtenstein,Lithuania,Luxembourg,Macedonia,Madagascar,Malawi,Malaysia,Maldives,Mali,Malta,Marshall Islands,Mauritania,Mauritius,Mexico,Micronesia,Moldova,Monaco,Mongolia,Montenegro,Morocco,Mount Athos,Mozambique,Namibia,Nauru,Nepal,Newfoundland,Netherlands,New Zealand,Nicaragua,Niger,Nigeria,Norway,Oman,Ottoman Empire,Pakistan,Palau,Panama,Papua New Guinea,Paraguay,Peru,Philippines,Poland,Portugal,Prussia,Qatar,Romania,Rome,Russian Federation,Rwanda,St Kitts &amp;amp; Nevis,St Lucia,Saint Vincent &amp;amp; the,Grenadines,Samoa,San Marino,Sao Tome &amp;amp; Principe,Saudi Arabia,Senegal,Serbia,Seychelles,Sierra Leone,Singapore,Slovakia,Slovenia,Solomon Islands,Somalia,South Africa,Spain,Sri Lanka,Sudan,Suriname,Swaziland,Sweden,Switzerland,Syria,Tajikistan,Tanzania,Thailand,Togo,Tonga,Trinidad &amp;amp; Tobago,Tunisia,Turkey,Turkmenistan,Tuvalu,Uganda,Ukraine,United Arab Emirates,United Kingdom,United States of America,Uruguay,Uzbekistan,Vanuatu,Vatican City,Venezuela,Vietnam,Yemen,Zambia,Zimbabwe', NULL, 0, '2020-11-15 10:52:30'),
-(8, 'group', 43, 'description', NULL, 'Spektakuler', NULL, 0, '2022-02-10 13:48:04'),
-(9, 'group', 52, 'description', NULL, 'Go Fast To The Next Level', NULL, 0, '2022-02-02 22:31:13');
+(8, 'group', 43, 'description', NULL, 'Spektakuler', NULL, 0, '2022-02-28 15:55:35'),
+(9, 'group', 52, 'description', NULL, 'Go Fast To The Next Level', NULL, 0, '2022-03-02 20:56:41');
 
 -- --------------------------------------------------------
 
@@ -1823,12 +1893,12 @@ INSERT INTO `gr_profiles` (`id`, `type`, `uid`, `name`, `cat`, `v1`, `v2`, `req`
 --
 
 CREATE TABLE `gr_session` (
-  `id` bigint(20) NOT NULL,
-  `uid` bigint(20) DEFAULT NULL,
-  `device` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `code` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint NOT NULL,
+  `uid` bigint DEFAULT NULL,
+  `device` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tms` datetime DEFAULT NULL,
-  `try` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0'
+  `try` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1836,61 +1906,46 @@ CREATE TABLE `gr_session` (
 --
 
 INSERT INTO `gr_session` (`id`, `uid`, `device`, `code`, `tms`, `try`) VALUES
-(2, 1, '::1mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 'otPE6IwfhpOqeQ', '2022-01-30 06:15:48', '0'),
-(4, 1, '::1mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', '1L5oCtf96mJvKD', '2022-01-30 06:20:56', '0'),
-(6, 1, '::1mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 'JDMxzn4brlLSfx', '2022-01-30 06:25:23', '0'),
 (9, 2, '::1mozilla5.0macintoshintelmacosx10157applewebkit605.1.15khtmllikegeckoversion15.2safari605.1.15', 'CYQuuHj6u7zZqR', '2022-01-30 09:39:13', '0'),
-(19, 1, '::1mozilla5.0windowsnt6.3win64x64applewebkit537.36khtmllikegeckochrome97.0.4692.99safari537.36', 'iNwPxdmYG4JuYm', '2022-01-31 09:50:49', '0'),
 (22, 4, '10.9.115.226mozilla5.0windowsnt10.0win64x64applewebkit537.36khtmllikegeckochrome97.0.4692.99safari537.36', 'O9dsGDY4OMerfq', '2022-01-31 09:54:57', '0'),
-(24, 1, '10.9.113.86mozilla5.0linuxandroid7.1.2redmi4xapplewebkit537.36khtmllikegeckochrome96.0.4664.104mobilesafari537.36', 'P9qSjczKfKCw6s', '2022-01-31 10:07:40', '0'),
 (28, 2, '10.9.113.77mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 'nDstldrU0KBfEH', '2022-01-31 11:56:30', '0'),
-(32, 1, '10.9.113.77mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', '60v1nh60s9KU6l', '2022-01-31 13:45:22', '0'),
 (34, 2, '10.9.113.77mozilla5.0macintoshintelmacosx10.15rv96.0gecko20100101firefox96.0', 'fOsv90cvsGh2TK', '2022-01-31 13:47:07', '0'),
 (36, 2, '182.2.169.181mozilla5.0linuxandroid8.1.0redmi5plusapplewebkit537.36khtmllikegeckochrome97.0.4692.98mobilesafari537.36', 'vF6vrSSx8rr9F7', '2022-01-31 18:08:34', '0'),
 (38, 2, '182.2.169.181mozilla5.0windowsnt10.0win64x64applewebkit537.36khtmllikegeckochrome97.0.4692.99safari537.36', 'MEtKEuMIJVg5qP', '2022-01-31 18:11:44', '0'),
-(42, 1, '114.79.5.60mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 'jkgpfQF4AEOAHO', '2022-02-01 00:34:35', '0'),
-(44, 1, '10.9.113.77mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 'LQFvstF8ftse2K', '2022-02-02 07:25:12', '0'),
-(52, 1, '115.178.200.217mozilla5.0windowsnt10.0win64x64applewebkit537.36khtmllikegeckochrome96.0.4664.93safari537.36', '7bLoFig7sCV9we', '2022-02-02 21:30:07', '0'),
-(56, 1, '115.178.200.217mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 'ryT7CLvjTRdNWm', '2022-02-02 22:22:33', '0'),
 (60, 2, '10.9.115.65mozilla5.0windowsnt10.0win64x64applewebkit537.36khtmllikegeckochrome97.0.4692.99safari537.36', 'P6d5kh3FELMQVi', '2022-02-03 07:07:43', '0'),
-(62, 1, '10.9.115.56mozilla5.0linuxandroid7.1.2redmi4xapplewebkit537.36khtmllikegeckochrome96.0.4664.104mobilesafari537.36', 'GSq3qg0cp7nFDT', '2022-02-03 08:22:56', '0'),
-(64, 1, '10.9.113.77mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 'QGpp1yQoy8E8VA', '2022-02-03 11:35:36', '0'),
 (68, 2, '10.9.113.77mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 'cKN3ErIDM1rmGR', '2022-02-04 09:43:44', '0'),
 (72, 2, '::1mozilla5.0windowsnt6.3win64x64applewebkit537.36khtmllikegeckochrome97.0.4692.99safari537.36', 'YQ4m2Kk7woWZwC', '2022-02-04 12:13:24', '0'),
-(74, 1, '10.9.113.77mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 'oYfTYfetQz5pKE', '2022-02-04 12:16:54', '0'),
 (76, 3, '10.9.113.84mozilla5.0linuxandroid11sma515fapplewebkit537.36khtmllikegeckochrome97.0.4692.98mobilesafari537.36', 'JP1xgtf0zsPfRv', '2022-02-04 14:17:42', '0'),
 (78, 3, '114.79.6.74mozilla5.0windowsnt10.0win64x64applewebkit537.36khtmllikegeckochrome97.0.4692.99safari537.36', 'nqoo4EAlftikOi', '2022-02-04 17:23:27', '0'),
-(80, 1, '114.79.6.74mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', '5TYAp0pTQQB3kd', '2022-02-05 00:37:09', '0'),
 (91, 0, '::1mozilla5.0windowsnt6.3win64x64applewebkit537.36khtmllikegeckochrome97.0.4692.99safari537.36', 'YjvzyaiHzCloT6', '2022-02-06 13:26:25', '0'),
 (97, 2, '::1mozilla5.0windowsnt6.3win64x64applewebkit537.36khtmllikegeckochrome97.0.4692.99safari537.36', '4A8sqNKQjMysOf', '2022-02-06 20:05:01', '0'),
-(99, 1, '10.9.113.77mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', '6xPGq2e4nbuQFa', '2022-02-07 05:57:02', '0'),
-(101, 1, '115.178.197.202mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 'NrxgWNI5Z0UxO3', '2022-02-09 10:07:10', '0'),
-(105, 1, '115.178.197.202mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 'OAIB7S1B6RcLoJ', '2022-02-09 11:27:36', '0'),
-(107, 1, '114.79.6.247mozilla5.0linuxandroid7.1.2redmi4xapplewebkit537.36khtmllikegeckochrome96.0.4664.104mobilesafari537.36', 'nEe45zYoD70qYD', '2022-02-09 23:01:09', '0'),
-(111, 1, '114.79.6.247mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 'pgOGWx6JovRosP', '2022-02-09 23:46:31', '0'),
 (113, 2, '114.124.193.62mozilla5.0windowsnt10.0win64x64applewebkit537.36khtmllikegeckochrome97.0.4692.99safari537.36', 'ANzL0QnfzOlqAV', '2022-02-10 00:45:09', '0'),
-(115, 1, '10.9.113.77mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 'VAcGxecXUt9d9s', '2022-02-10 05:43:54', '0'),
-(117, 1, '127.0.0.1mozilla5.0windowsnt6.3win64x64applewebkit537.36khtmllikegeckochrome98.0.4758.82safari537.36', 'kE8X3MNgBDxVTB', '2022-02-10 05:54:49', '0'),
-(119, 1, '10.9.113.77mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 'BpDY7EBbKgWZN9', '2022-02-10 05:56:59', '0'),
-(121, 1, '10.9.113.77mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 'SXjlfxFd6tSR0o', '2022-02-10 06:44:11', '0'),
-(123, 1, '127.0.0.1mozilla5.0windowsnt6.3win64x64applewebkit537.36khtmllikegeckochrome98.0.4758.82safari537.36', 'KM7vjugjQx552Z', '2022-02-10 09:38:36', '0'),
-(127, 1, '114.79.4.119mozilla5.0linuxandroid7.1.2redmi4xapplewebkit537.36khtmllikegeckochrome96.0.4664.104mobilesafari537.36', 'Eje6pZHP5QjFZo', '2022-02-10 11:11:06', '0'),
 (132, 26, '192.168.10.2mozilla5.0windowsnt10.0win64x64applewebkit537.36khtmllikegeckochrome97.0.4692.99safari537.36', 'qMCm2q5cTqBb7C', '2022-02-10 12:22:11', '0'),
 (133, 2, '10.9.115.61mozilla5.0linuxandroid8.1.0redmi5plusapplewebkit537.36khtmllikegeckochrome98.0.4758.87mobilesafari537.36', 'tg3g2B8MpMZhsV', '2022-02-10 12:22:16', '0'),
-(139, 1, '10.9.113.77mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', '8JROzV43DGErFF', '2022-02-10 12:27:21', '0'),
 (145, 24, '182.0.176.158mozilla5.0windowsnt10.0win64x64rv96.0gecko20100101firefox96.0', 'gdTjQW5rFe8dIN', '2022-02-10 12:57:44', '0'),
 (147, 2, '10.9.115.11mozilla5.0windowsnt10.0win64x64applewebkit537.36khtmllikegeckochrome98.0.4758.82safari537.36', '9wOOyjcoIAtUBi', '2022-02-10 13:00:08', '0'),
 (149, 24, '182.0.176.158mozilla5.0windowsnt10.0win64x64applewebkit537.36khtmllikegeckochrome97.0.4692.99safari537.36', 'Atlw9drKhgOFck', '2022-02-10 13:04:57', '0'),
 (151, 3, '10.9.113.84mozilla5.0linuxandroid11samsungsma515fapplewebkit537.36khtmllikegeckosamsungbrowser16.0chrome92.0.4515.166mobilesafari537.36', 'gTBHsIoq5sZAaI', '2022-02-10 13:51:41', '0'),
-(153, 1, '::1mozilla5.0windowsnt6.3win64x64applewebkit537.36khtmllikegeckochrome98.0.4758.82safari537.36', 'vxLTySB76Dio23', '2022-02-10 17:23:38', '0'),
 (155, 23, '114.124.195.165mozilla5.0linuxandroid11sma525fapplewebkit537.36khtmllikegeckochrome96.0.4664.45mobilesafari537.36', 'JTfGm6DLLz35kt', '2022-02-10 17:36:51', '0'),
-(157, 1, '115.178.214.151mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 'vPEsaY4qtrvEmD', '2022-02-10 17:37:10', '0'),
 (159, 48, '118.137.81.74mozilla5.0macintoshintelmacosx10157applewebkit605.1.15khtmllikegeckoversion15.3safari605.1.15', 'c51Q2Q2TcWaq3L', '2022-02-10 18:08:54', '0'),
 (161, 46, '10.9.115.196mozilla5.0windowsnt10.0win64x64applewebkit537.36khtmllikegeckochrome97.0.4692.99safari537.36', 'RHjD5agCQvbuTd', '2022-02-11 05:49:55', '0'),
 (165, 41, '10.9.113.186mozilla5.0windowsnt10.0win64x64applewebkit537.36khtmllikegeckochrome98.0.4758.82safari537.36', 'mgpyLenw63M8wp', '2022-02-11 07:14:46', '0'),
 (167, 11, '10.9.113.15mozilla5.0windowsnt10.0win64x64applewebkit537.36khtmllikegeckochrome98.0.4758.82safari537.36', 'fUJ21yZbi6Hsf6', '2022-02-11 12:14:42', '0'),
-(169, 1, '10.9.113.77mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 'cxdtWtPIEs9xCS', '2022-02-14 10:18:04', '0'),
-(171, 2, '182.0.151.146mozilla5.0linuxandroid8.1.0redmi5plusapplewebkit537.36khtmllikegeckochrome98.0.4758.87mobilesafari537.36', 'O2OQIy6LjKvvJ8', '2022-02-14 18:38:43', '0');
+(171, 2, '182.0.151.146mozilla5.0linuxandroid8.1.0redmi5plusapplewebkit537.36khtmllikegeckochrome98.0.4758.87mobilesafari537.36', 'O2OQIy6LjKvvJ8', '2022-02-14 18:38:43', '0'),
+(173, 2, '192.168.10.2mozilla5.0windowsnt6.1applewebkit537.36khtmllikegeckochrome98.0.4758.102safari537.36', '6kezJIyjjwV66D', '2022-02-17 15:19:18', '0'),
+(179, 2, '114.124.212.219mozilla5.0linuxandroid8.1.0redmi5plusapplewebkit537.36khtmllikegeckochrome98.0.4758.101mobilesafari537.36', 'UUSEHzhAL4Anz3', '2022-02-17 18:50:54', '0'),
+(181, 14, '182.0.143.209mozilla5.0linuxandroid11smm215fapplewebkit537.36khtmllikegeckochrome98.0.4758.101mobilesafari537.36', 'sCmiP0O4iN6b0l', '2022-02-23 07:39:03', '0'),
+(182, 29, 'bs.114.124.244.181mozilla5.0iphonecpuiphoneos142likemacosxapplewebkit605.1.15khtmllikegeckoversion14.0.1mobile15e148safari604.1', 'spjWJz1dyJ5rLEpgJpvA', '2022-02-23 07:40:25', '10'),
+(187, 29, 'bs.114.124.245.36mozilla5.0iphonecpuiphoneos142likemacosxapplewebkit605.1.15khtmllikegeckoversion14.0.1mobile15e148safari604.1', 'lFJcieXc9OK84OCmrZZj', '2022-02-23 07:49:28', '8'),
+(225, 29, '114.124.213.4mozilla5.0iphonecpuiphoneos142likemacosxapplewebkit605.1.15khtmllikegeckoversion14.0.1mobile15e148safari604.1', 'CTGAUxpwWuYBMD', '2022-02-23 08:23:13', '0'),
+(229, 1, '10.9.115.10mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', '5EEE4OKUDcz0mp', '2022-02-23 08:27:23', '0'),
+(233, 1, '10.9.115.10mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 'U7c7fD4bRPMzWq', '2022-02-23 08:32:02', '0'),
+(235, 1, '10.9.114.134mozilla5.0windowsnt10.0win64x64applewebkit537.36khtmllikegeckochrome98.0.4758.102safari537.36', '9drVAkEt3lho8z', '2022-02-23 09:30:56', '0'),
+(237, 1, '10.9.115.10mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 'ctLni5bJcLciCP', '2022-02-23 09:32:12', '0'),
+(239, 1, '10.9.115.10mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 'H5PAnVe5XXnvZW', '2022-02-24 14:28:59', '0'),
+(241, 1, '154.28.188.182mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 'njW9N3TQQbFWqI', '2022-02-25 19:17:12', '0'),
+(243, 1, '114.79.7.159mozilla5.0linuxandroid7.1.2redmi4xapplewebkit537.36khtmllikegeckochrome96.0.4664.104mobilesafari537.36', '7PM99yV5tQL2HB', '2022-02-28 15:53:45', '0'),
+(251, 1, '115.178.216.196mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 'yCubu0QRjqTzKx', '2022-03-02 20:44:24', '0');
 
 -- --------------------------------------------------------
 
@@ -1899,16 +1954,16 @@ INSERT INTO `gr_session` (`id`, `uid`, `device`, `code`, `tms`, `try`) VALUES
 --
 
 CREATE TABLE `gr_users` (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `pass` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mask` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `depict` int(11) NOT NULL DEFAULT 1,
-  `role` bigint(20) NOT NULL DEFAULT 1,
+  `id` bigint NOT NULL,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pass` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mask` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `depict` int NOT NULL DEFAULT '1',
+  `role` bigint NOT NULL DEFAULT '1',
   `created` datetime NOT NULL,
   `altered` datetime NOT NULL,
-  `extra` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0'
+  `extra` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1944,7 +1999,7 @@ INSERT INTO `gr_users` (`id`, `name`, `email`, `pass`, `mask`, `depict`, `role`,
 (26, 'katrin.dayatri', 'katrin.dayatri@kimiafarma.co.id', 'd2bb514b9b8ac2161196623e0c2ce15c', 'TheZjSe4wtGHtJ', 8, 3, '2022-02-06 04:35:33', '2022-02-06 04:35:33', '0'),
 (27, 'kresma.oky', 'kresma.oky@kimiafarma.co.id', 'a5b083dcf7048cbb00a9e510df7ade1f', 'zzPArfTw', 8, 3, '2022-02-06 04:35:51', '2022-02-06 04:35:51', '0'),
 (28, 'kurniawati.hidayah', 'kurniawati.hidayah@gmail.com', '237b63f3877a5a4e8a0a38efb2e1871d', 'UMrRanFPqtt38y0', 4, 3, '2022-02-06 04:36:59', '2022-02-06 04:36:59', '0'),
-(29, 'lutfi.ratna', 'lutfi.ratna@kimiafarma.co.id', 'da3c309bfd0b492e16c7901de88445f6', '1bXrbMyhdw3gpa8', 10, 3, '2022-02-06 04:37:14', '2022-02-06 04:37:14', '0'),
+(29, 'lutfi.ratna', 'lutfi.ratna@kimiafarma.co.id', '9853794b25ecdd67f65a623283cd2827', 'hWtrItEks8nv6', 5, 3, '2022-02-06 04:37:14', '2022-02-23 08:01:12', '0'),
 (30, 'isapudin.januar', 'isapudin.januar@kimiafarma.co.id', '4825ebd53646ec95c969e53ab3a817b52bf06950', 'CyebEzElM2fGR', 9, 3, '2022-02-06 04:37:30', '2022-02-06 04:37:30', '0'),
 (31, 'muhamad.zefri', 'muhamad.zefri@kimiafarma.co.id', 'a88252893dd5ef74b00a88602f5079ce', 'jn2W1tFd7Pt', 5, 3, '2022-02-06 04:37:45', '2022-02-06 04:37:45', '0'),
 (32, 'muji.s', 'muji.s@kimiafarma.co.id', '35a5c5df07d41ff1d5b2b1d19d421942', 'xdzrKA1pf', 1, 3, '2022-02-06 04:38:03', '2022-02-06 04:38:03', '0'),
@@ -1979,7 +2034,8 @@ INSERT INTO `gr_users` (`id`, `name`, `email`, `pass`, `mask`, `depict`, `role`,
 (61, 'yanti.hardiyanti', 'yanti.hardiyanti@kimiafarma.co.id', '417c3fca4408055b994020c6de8acd12', 'oHiLoa131Z', 1, 3, '2022-02-06 04:48:02', '2022-02-06 04:48:02', '0'),
 (62, 'angga.saenagri', 'angga.saenagri@kimiafarma.co.id', '8dd6dde7d65fadad080c1af8c24f3687', '327mV4K1J', 5, 3, '2022-02-06 04:48:41', '2022-02-06 04:48:41', '0'),
 (63, 'yogi.sugianto', 'yogi.sugianto@kimiafarma.co.id', '816601e5d9f3070955c974b81e260e00', 'SqAcfELF723HBWl', 1, 3, '2022-02-06 04:49:43', '2022-02-06 04:49:43', '0'),
-(64, 'yurista.gilang', 'yurista.gilang@kimiafarma.co.id', '40e6728bb76fcc9b5499f4f897c1c6df', 'VQZnayXuWQZN', 1, 3, '2022-02-06 04:50:38', '2022-02-06 04:50:38', '0');
+(64, 'yurista.gilang', 'yurista.gilang@kimiafarma.co.id', '40e6728bb76fcc9b5499f4f897c1c6df', 'VQZnayXuWQZN', 1, 3, '2022-02-06 04:50:38', '2022-02-06 04:50:38', '0'),
+(65, 'alternate.septian', 'alternate.septian@gmail.com', '807b4e546645f0c4e3fb476ff5a5d6d900556b54', 'XZpOYqI5btNBI9', 9, 3, '2022-02-23 08:26:17', '2022-02-23 08:33:08', '0');
 
 -- --------------------------------------------------------
 
@@ -1988,11 +2044,11 @@ INSERT INTO `gr_users` (`id`, `name`, `email`, `pass`, `mask`, `depict`, `role`,
 --
 
 CREATE TABLE `gr_utrack` (
-  `id` bigint(20) NOT NULL,
-  `ip` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `dev` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `uid` bigint(20) DEFAULT NULL,
-  `status` int(11) DEFAULT 0,
+  `id` bigint NOT NULL,
+  `ip` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `dev` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `uid` bigint DEFAULT NULL,
+  `status` int DEFAULT '0',
   `tms` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -2204,7 +2260,66 @@ INSERT INTO `gr_utrack` (`id`, `ip`, `dev`, `uid`, `status`, `tms`) VALUES
 (201, '10.9.113.77', 'mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 1, 0, '2022-02-14 14:14:45'),
 (202, '182.0.151.146', 'mozilla5.0linuxandroid8.1.0redmi5plusapplewebkit537.36khtmllikegeckochrome98.0.4758.87mobilesafari537.36', 2, 0, '2022-02-14 18:38:43'),
 (203, '115.178.194.212', 'mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 1, 0, '2022-02-14 20:09:39'),
-(204, '::1', 'mozilla5.0windowsnt6.3win64x64applewebkit537.36khtmllikegeckochrome98.0.4758.82safari537.36', 1, 0, '2022-02-14 20:10:37');
+(204, '::1', 'mozilla5.0windowsnt6.3win64x64applewebkit537.36khtmllikegeckochrome98.0.4758.82safari537.36', 1, 0, '2022-02-14 20:10:37'),
+(205, '10.9.113.77', 'mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 1, 0, '2022-02-17 13:41:41'),
+(206, '10.9.113.77', 'mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 1, 0, '2022-02-17 13:50:28'),
+(207, '10.9.113.77', 'mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 1, 0, '2022-02-17 13:58:02'),
+(208, '10.9.113.77', 'mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 1, 0, '2022-02-17 14:09:38'),
+(209, '10.9.113.77', 'mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 1, 0, '2022-02-17 14:20:52'),
+(210, '192.168.10.2', 'mozilla5.0windowsnt6.1applewebkit537.36khtmllikegeckochrome98.0.4758.102safari537.36', 2, 0, '2022-02-17 15:19:18'),
+(211, '10.9.115.57', 'mozilla5.0windowsnt6.1wow64applewebkit537.36khtmllikegeckochrome98.0.4758.82safari537.36', 1, 0, '2022-02-17 12:16:15'),
+(212, '10.9.112.45', 'mozilla5.0linuxandroid7.1.2redmi4xapplewebkit537.36khtmllikegeckochrome96.0.4664.104mobilesafari537.36', 1, 0, '2022-02-17 12:17:46'),
+(213, '10.9.115.11', 'mozilla5.0windowsnt10.0win64x64applewebkit537.36khtmllikegeckochrome98.0.4758.102safari537.36', 2, 0, '2022-02-17 14:33:53'),
+(214, '114.79.0.163', 'mozilla5.0linuxandroid7.1.2redmi4xapplewebkit537.36khtmllikegeckochrome96.0.4664.104mobilesafari537.36', 1, 0, '2022-02-17 14:46:42'),
+(215, '10.9.115.11', 'mozilla5.0windowsnt10.0win64x64applewebkit537.36khtmllikegeckochrome98.0.4758.102safari537.36', 2, 0, '2022-02-17 15:15:10'),
+(216, '114.124.212.219', 'mozilla5.0linuxandroid8.1.0redmi5plusapplewebkit537.36khtmllikegeckochrome98.0.4758.101mobilesafari537.36', 2, 0, '2022-02-17 18:50:39'),
+(217, '114.5.219.154', 'mozilla5.0linuxandroid11samsungsma515fapplewebkit537.36khtmllikegeckosamsungbrowser16.0chrome92.0.4515.166mobilesafari537.36', 3, 0, '2022-02-18 15:01:10'),
+(218, '182.2.139.13', 'mozilla5.0linuxandroid8.1.0redmi5plusapplewebkit537.36khtmllikegeckochrome98.0.4758.101mobilesafari537.36', 2, 0, '2022-02-21 22:46:10'),
+(219, '114.5.211.122', 'mozilla5.0linuxandroid11samsungsma515fapplewebkit537.36khtmllikegeckosamsungbrowser16.0chrome92.0.4515.166mobilesafari537.36', 3, 0, '2022-02-22 08:11:20'),
+(220, '115.178.212.31', 'mozilla5.0linuxandroid7.1.2redmi4xapplewebkit537.36khtmllikegeckochrome96.0.4664.104mobilesafari537.36', 1, 0, '2022-02-22 12:42:38'),
+(221, '182.0.143.209', 'mozilla5.0linuxandroid11smm215fapplewebkit537.36khtmllikegeckochrome98.0.4758.101mobilesafari537.36', 14, 0, '2022-02-23 07:39:03'),
+(222, '10.9.115.10', 'mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 1, 0, '2022-02-23 07:46:54'),
+(223, '182.0.143.209', 'mozilla5.0linuxandroid11smm215fapplewebkit537.36khtmllikegeckochrome98.0.4758.101mobilesafari537.36', 14, 0, '2022-02-23 07:47:26'),
+(224, '10.9.115.10', 'mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 29, 0, '2022-02-23 07:47:40'),
+(225, '10.9.115.10', 'mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 1, 0, '2022-02-23 08:00:32'),
+(226, '10.9.115.10', 'mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 29, 0, '2022-02-23 08:01:27'),
+(227, '10.9.115.10', 'mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 1, 0, '2022-02-23 08:07:20'),
+(228, '10.9.115.10', 'mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 1, 0, '2022-02-23 08:12:36'),
+(229, '110.50.81.197', 'mozilla5.0windowsnt10.0wow64applewebkit537.36khtmllikegeckochrome97.0.4692.99safari537.36', 1, 0, '2022-02-23 08:15:42'),
+(230, '10.9.115.10', 'mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 1, 0, '2022-02-23 08:18:21'),
+(231, '114.124.213.4', 'mozilla5.0iphonecpuiphoneos142likemacosxapplewebkit605.1.15khtmllikegeckoversion14.0.1mobile15e148safari604.1', 29, 0, '2022-02-23 08:23:14'),
+(232, '10.9.115.10', 'mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 1, 0, '2022-02-23 08:24:21'),
+(233, '10.9.115.10', 'mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 1, 0, '2022-02-23 08:31:26'),
+(234, '10.9.115.10', 'mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 65, 0, '2022-02-23 08:31:29'),
+(235, '175.45.186.196', 'mozilla5.0windowsnt10.0win64x64applewebkit537.36khtmllikegeckochrome97.0.4692.99safari537.36', 65, 0, '2022-02-23 08:31:38'),
+(236, '10.9.113.89', 'mozilla5.0linuxandroid8.1.0redmi5plusapplewebkit537.36khtmllikegeckochrome98.0.4758.101mobilesafari537.36', 2, 0, '2022-02-23 08:48:49'),
+(237, '10.9.114.134', 'mozilla5.0windowsnt10.0win64x64applewebkit537.36khtmllikegeckochrome98.0.4758.102safari537.36', 1, 0, '2022-02-23 09:30:58'),
+(238, '10.9.115.10', 'mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 1, 0, '2022-02-23 09:32:12'),
+(239, '182.0.175.39', 'mozilla5.0linuxandroid11smm215fapplewebkit537.36khtmllikegeckochrome98.0.4758.101mobilesafari537.36', 14, 0, '2022-02-23 12:09:56'),
+(240, '10.9.115.10', 'mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 1, 0, '2022-02-24 14:28:59'),
+(241, '120.188.65.109', 'mozilla5.0linuxandroid11samsungsma515fapplewebkit537.36khtmllikegeckosamsungbrowser16.0chrome92.0.4515.166mobilesafari537.36', 3, 0, '2022-02-24 14:31:15'),
+(242, '182.2.136.69', 'mozilla5.0linuxandroid8.1.0redmi5plusapplewebkit537.36khtmllikegeckochrome98.0.4758.101mobilesafari537.36', 2, 0, '2022-02-24 21:41:40'),
+(243, '10.9.113.170', 'mozilla5.0windowsnt10.0win64x64applewebkit537.36khtmllikegeckochrome98.0.4758.102safari537.36', 2, 0, '2022-02-25 13:42:10'),
+(244, '154.28.188.182', 'mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 1, 0, '2022-02-25 19:17:14'),
+(245, '114.79.0.206', 'mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 1, 0, '2022-02-25 19:41:54'),
+(246, '182.3.36.95', 'mozilla5.0linuxandroid8.1.0redmi5plusapplewebkit537.36khtmllikegeckochrome98.0.4758.101mobilesafari537.36', 2, 0, '2022-02-26 20:22:14'),
+(247, '182.3.36.95', 'mozilla5.0linuxandroid8.1.0redmi5plusapplewebkit537.36khtmllikegeckochrome98.0.4758.101mobilesafari537.36', 2, 0, '2022-02-26 20:30:07'),
+(248, '114.79.7.159', 'mozilla5.0linuxandroid7.1.2redmi4xapplewebkit537.36khtmllikegeckochrome96.0.4664.104mobilesafari537.36', 1, 0, '2022-02-28 15:53:45'),
+(249, '114.124.247.238', 'mozilla5.0windowsnt10.0win64x64applewebkit537.36khtmllikegeckochrome98.0.4758.102safari537.36', 2, 0, '2022-02-28 22:12:35'),
+(250, '10.9.113.186', 'mozilla5.0windowsnt10.0win64x64applewebkit537.36khtmllikegeckochrome98.0.4758.102safari537.36', 41, 0, '2022-03-01 11:13:05'),
+(251, '115.178.210.157', 'mozilla5.0linuxandroid7.1.2redmi4xapplewebkit537.36khtmllikegeckochrome96.0.4664.104mobilesafari537.36', 1, 0, '2022-03-01 11:14:06'),
+(252, '115.178.199.22', 'mozilla5.0linuxandroid7.1.2redmi4xapplewebkit537.36khtmllikegeckochrome96.0.4664.104mobilesafari537.36', 1, 0, '2022-03-01 12:15:04'),
+(253, '10.9.115.226', 'mozilla5.0windowsnt10.0win64x64applewebkit537.36khtmllikegeckochrome98.0.4758.102safari537.36', 1, 0, '2022-03-01 13:14:03'),
+(254, '10.9.112.13', 'mozilla5.0windowsnt10.0win64x64rv97.0gecko20100101firefox97.0', 8, 0, '2022-03-02 06:40:53'),
+(255, '10.9.112.13', 'mozilla5.0windowsnt10.0win64x64rv97.0gecko20100101firefox97.0', 8, 0, '2022-03-02 06:50:30'),
+(256, '114.124.172.2', 'mozilla5.0linuxandroid8.1.0redmi5plusapplewebkit537.36khtmllikegeckochrome98.0.4758.101mobilesafari537.36', 2, 0, '2022-03-02 06:53:37'),
+(257, '10.9.115.132', 'mozilla5.0windowsnt6.1win64x64applewebkit537.36khtmllikegeckochrome98.0.4758.102safari537.36', 1, 0, '2022-03-02 08:37:36'),
+(258, '115.178.216.196', 'mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 1, 0, '2022-03-02 20:44:24'),
+(259, '182.0.215.76', 'mozilla5.0linuxandroid8.1.0redmi5plusapplewebkit537.36khtmllikegeckochrome98.0.4758.101mobilesafari537.36', 2, 0, '2022-03-02 20:48:58'),
+(260, '115.178.216.196', 'mozilla5.0macintoshintelmacosx10157applewebkit537.36khtmllikegeckochrome95.0.4638.69safari537.36', 1, 0, '2022-03-02 20:56:53'),
+(261, '115.178.216.196', 'mozilla5.0linuxandroid7.1.2redmi4xapplewebkit537.36khtmllikegeckochrome96.0.4664.104mobilesafari537.36', 1, 0, '2022-03-02 21:42:15'),
+(262, '114.4.212.125', 'mozilla5.0linuxandroid11samsungsma515fapplewebkit537.36khtmllikegeckosamsungbrowser16.0chrome92.0.4515.166mobilesafari537.36', 3, 0, '2022-03-03 08:51:10'),
+(263, '114.4.212.125', 'mozilla5.0linuxandroid11samsungsma515fapplewebkit537.36khtmllikegeckosamsungbrowser16.0chrome92.0.4515.166mobilesafari537.36', 3, 0, '2022-03-03 14:23:02');
 
 --
 -- Indexes for dumped tables
@@ -2347,91 +2462,91 @@ ALTER TABLE `gr_utrack`
 -- AUTO_INCREMENT for table `gr_ads`
 --
 ALTER TABLE `gr_ads`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `gr_alerts`
 --
 ALTER TABLE `gr_alerts`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `gr_complaints`
 --
 ALTER TABLE `gr_complaints`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `gr_customize`
 --
 ALTER TABLE `gr_customize`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=516;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=516;
 
 --
 -- AUTO_INCREMENT for table `gr_defaults`
 --
 ALTER TABLE `gr_defaults`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT for table `gr_logs`
 --
 ALTER TABLE `gr_logs`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `gr_mails`
 --
 ALTER TABLE `gr_mails`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `gr_msgs`
 --
 ALTER TABLE `gr_msgs`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=302;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=349;
 
 --
 -- AUTO_INCREMENT for table `gr_options`
 --
 ALTER TABLE `gr_options`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=229;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=254;
 
 --
 -- AUTO_INCREMENT for table `gr_permissions`
 --
 ALTER TABLE `gr_permissions`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `gr_phrases`
 --
 ALTER TABLE `gr_phrases`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=614;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=614;
 
 --
 -- AUTO_INCREMENT for table `gr_profiles`
 --
 ALTER TABLE `gr_profiles`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `gr_session`
 --
 ALTER TABLE `gr_session`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=172;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=252;
 
 --
 -- AUTO_INCREMENT for table `gr_users`
 --
 ALTER TABLE `gr_users`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `gr_utrack`
 --
 ALTER TABLE `gr_utrack`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=205;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=264;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

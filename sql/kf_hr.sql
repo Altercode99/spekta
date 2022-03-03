@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 4.9.10
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Feb 14, 2022 at 03:50 PM
--- Server version: 10.4.22-MariaDB
+-- Host: localhost
+-- Generation Time: Mar 03, 2022 at 10:54 AM
+-- Server version: 8.0.28-0ubuntu0.20.04.3
 -- PHP Version: 7.4.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -24,18 +25,45 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `absen_202202`
+--
+
+CREATE TABLE `absen_202202` (
+  `id` int NOT NULL,
+  `location` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `emp_id` int NOT NULL,
+  `gate` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `action` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `qr_code` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `qr_code_couple` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `couple_date` date NOT NULL,
+  `action_date` datetime NOT NULL,
+  `updated_by` int NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `absen_202202`
+--
+
+INSERT INTO `absen_202202` (`id`, `location`, `emp_id`, `gate`, `action`, `qr_code`, `qr_code_couple`, `couple_date`, `action_date`, `updated_by`, `updated_at`) VALUES
+(3, 'KF-JKT', 1, 'Gate 1', 'IN', '1645833035-g1', '', '0000-00-00', '2022-02-26 06:50:42', 1, '2022-02-26 06:50:42');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `departments`
 --
 
 CREATE TABLE `departments` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `location` varchar(15) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `departments`
@@ -53,16 +81,16 @@ INSERT INTO `departments` (`id`, `location`, `name`, `created_by`, `updated_by`,
 --
 
 CREATE TABLE `divisions` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `location` varchar(15) NOT NULL,
-  `department_id` int(11) NOT NULL,
-  `sub_department_id` int(11) NOT NULL,
+  `department_id` int NOT NULL,
+  `sub_department_id` int NOT NULL,
   `name` varchar(150) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `divisions`
@@ -123,7 +151,7 @@ INSERT INTO `divisions` (`id`, `location`, `department_id`, `sub_department_id`,
 --
 
 CREATE TABLE `employees` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `nip` varchar(15) NOT NULL,
   `location` varchar(15) NOT NULL,
   `sap_id` varchar(15) NOT NULL,
@@ -135,31 +163,31 @@ CREATE TABLE `employees` (
   `birth_date` date NOT NULL,
   `gender` enum('Laki-Laki','Perempuan') NOT NULL,
   `religion` enum('Islam','Kristen','Katholik','Budha','Hindu','Konghucu','Penganut Kepercayaan') NOT NULL,
-  `age` int(11) NOT NULL,
+  `age` int NOT NULL,
   `employee_status` varchar(15) NOT NULL,
   `os_name` varchar(30) NOT NULL,
   `address` text NOT NULL,
   `phone` varchar(15) NOT NULL,
   `mobile` varchar(15) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `division_id` int(11) NOT NULL,
-  `sub_department_id` int(11) NOT NULL,
-  `department_id` int(11) NOT NULL,
-  `rank_id` int(11) NOT NULL,
-  `location_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL DEFAULT 0,
+  `division_id` int NOT NULL,
+  `sub_department_id` int NOT NULL,
+  `department_id` int NOT NULL,
+  `rank_id` int NOT NULL,
+  `location_id` int NOT NULL,
+  `user_id` int NOT NULL DEFAULT '0',
   `sk_number` varchar(25) NOT NULL,
   `sk_date` date NOT NULL,
   `sk_start_date` date NOT NULL,
   `sk_end_date` date NOT NULL,
   `status` enum('ACTIVE','INACTIVE') NOT NULL DEFAULT 'ACTIVE',
-  `overtime` int(11) NOT NULL DEFAULT 0,
+  `overtime` int NOT NULL DEFAULT '0',
   `direct_spv` varchar(15) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `employees`
@@ -346,7 +374,7 @@ INSERT INTO `employees` (`id`, `nip`, `location`, `sap_id`, `parent_nik`, `nik`,
 (193, '19690515A', 'KF-JKT', '10000221', '', '3216061505690031', '072987670413000', 'UDIN MUJAHIDIN', 'Kuningan', '1969-05-15', 'Laki-Laki', 'Islam', 53, 'Permanen', '-', 'PERUM BUMI SANI PERMAI BLOK C4 NO.33 RT.16 RW.14', '', '081285518025', 'mujahidin@kimiafarma.co.id', 0, 15, 2, 5, 1, 0, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 1, '10000106', 0, 0, '2022-02-03 14:41:24', '0000-00-00 00:00:00'),
 (194, '19731002A', 'KF-JKT', '10000500', '', '3175020210730012', '689205946003000', 'AGUS ISWANTO', 'Brebes', '1973-10-02', 'Laki-Laki', 'Islam', 48, 'Permanen', '-', 'JL. JATI UNGGUL NO.35 RT.05 RW.03', '', '085780441755', 'ghost15@ymail.com', 16, 5, 1, 7, 1, 0, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 0, '10001946', 0, 0, '2022-02-03 14:41:24', '0000-00-00 00:00:00'),
 (195, '19851230A', 'KF-JKT', '10001105', '', '1207283012850003', '970540761125000', 'ANDA VICTORIA', 'Jakarta', '1995-12-30', 'Laki-Laki', 'Islam', 26, 'Permanen', '-', 'DUSUN KARYA', '', '082365649911', 'anda.victoria@kimiafarma.co.id', 17, 5, 1, 7, 1, 0, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 0, '10000193', 0, 0, '2022-02-03 14:41:24', '0000-00-00 00:00:00'),
-(196, '19901125A', 'KF-JKT', '10001210', '', '3175062511900012', '870954112004000', 'ASEP DIKI ARIYANTO', 'Kuningan', '1990-11-25', 'Laki-Laki', 'Islam', 31, 'Permanen', '-', 'KP PENGGILINGAN NO.7A, JAKARTA TIMUR', '', '081286374654', 'asep.diki@kimiafarma.co.id', 18, 5, 1, 7, 1, 11, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 0, '10000192', 0, 0, '2022-02-03 14:41:24', '0000-00-00 00:00:00'),
+(196, '19901125A', 'KF-JKT', '10001210', '', '3175062511900012', '870954112004000', 'ASEP DIKI ARIYANTO', 'Kuningan', '1990-11-25', 'Laki-Laki', 'Islam', 31, 'Permanen', '-', 'KP PENGGILINGAN NO.7A, JAKARTA TIMUR', '', '081286374654', 'asep.diki@kimiafarma.co.id', 18, 5, 1, 7, 1, 0, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 0, '10000192', 0, 0, '2022-02-03 14:41:24', '0000-00-00 00:00:00'),
 (197, '19860914A', 'KF-JKT', '10001216', '', '3175071409860007', '746975903008000', 'ASEP SUSANTO', 'Jakarta', '1986-09-14', 'Laki-Laki', 'Islam', 35, 'Permanen', '-', 'JL. RAWADAS RT.005 RW.003', '', '081289562974', 'asepsusanto98018@gmail.com', 17, 5, 1, 7, 1, 0, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 0, '10000193', 0, 0, '2022-02-03 14:41:24', '0000-00-00 00:00:00'),
 (198, '19940807A', 'KF-JKT', '10001211', '', '3403090708940002', '835416470545000', 'BAGUS TRI SUGIARTO', 'Gunung Kidul', '1994-08-07', 'Laki-Laki', 'Islam', 28, 'Permanen', '-', 'GELARAN 2, RT.0 01 RW.016', '', '087839872002', 'bagustrisugiarto@gmail.com', 15, 5, 1, 7, 1, 0, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 0, '10000498', 0, 0, '2022-02-03 14:41:24', '0000-00-00 00:00:00'),
 (199, '19911204A', 'KF-JKT', '10001213', '', '3175020412910008', '464594605003000', 'BUDIYANSAH', 'Jakarta', '1991-12-04', 'Laki-Laki', 'Islam', 30, 'Permanen', '-', 'JL CIPINANG KEBEMBEM NO 20 RT. 004 RW. 013', '', '085811272670', 'budii041291@gmail.com', 16, 5, 1, 7, 1, 0, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 0, '10001946', 0, 0, '2022-02-03 14:41:24', '0000-00-00 00:00:00'),
@@ -517,7 +545,7 @@ INSERT INTO `employees` (`id`, `nip`, `location`, `sap_id`, `parent_nik`, `nik`,
 (363, '19960422D', 'KF-JKT', '10002676', '', '3208146204960001', '827917477438000', 'YATI CAHAYATI', 'Kuningan', '1996-04-22', 'Perempuan', 'Islam', 26, 'PKWT', '-', 'DUSUN JATISARI RT/RW 004/001', '', '081321980519', 'y.cahayati@gmail.com', 28, 7, 2, 9, 1, 0, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 0, '10001297', 0, 0, '2022-02-03 14:41:24', '0000-00-00 00:00:00'),
 (364, '19971018D', 'KF-JKT', '10002702', '', '3275091810970018', '947094645447000', 'ABI TONJO BUONO', 'Jakarta', '1997-10-18', 'Laki-Laki', 'Islam', 24, 'PKWT', '-', 'KP KEBANTENAN RT002 RW007', '', '081286458017', 'abitonjobuono@gmail.com', 16, 5, 1, 9, 1, 0, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 0, '10001946', 0, 1, '2022-02-03 14:41:24', '2022-02-10 14:01:06'),
 (365, '19950203B', 'KF-JKT', '10002546', '', '3275120302950001', '835931577447000', 'ANSGARIO BONDHAN DIGDYARHAMA', 'Jakarta', '1995-02-03', 'Laki-Laki', 'Kristen', 27, 'PKWT', '-', 'JALAN MELATI TENGAH NO.18 RT 008/ RW 006', '', '081281702093', 'ansgariobondhan@gmail.com', 16, 5, 1, 9, 1, 0, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 0, '10001946', 0, 0, '2022-02-03 14:41:24', '0000-00-00 00:00:00'),
-(366, '19980204H', 'KF-JKT', '10002703', '', '3276014402980002', '862425972068000', 'ARIFAH BUDIARTI NURFITRI', 'Gunung Kidul', '1998-02-04', 'Perempuan', 'Islam', 24, 'PKWT', '-', 'JL. CIPEDAK 1 NO.65A RT 003/RW009, KELURAHAN SRENGSENG SAWAH, KECAMATAN JAGAKARSA, JAKARTA SELATAN', '', '081212052341', 'arifah.budiarti8@gmail.com', 46, 5, 1, 9, 1, 0, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 0, '10000192', 0, 0, '2022-02-03 14:41:24', '0000-00-00 00:00:00'),
+(366, '19980204H', 'KF-JKT', '10002703', '', '3276014402980002', '862425972068000', 'ARIFAH BUDIARTI NURFITRI', 'Gunung Kidul', '1998-02-04', 'Perempuan', 'Islam', 24, 'PKWT', '-', 'JL. CIPEDAK 1 NO.65A RT 003/RW009, KELURAHAN SRENGSENG SAWAH, KECAMATAN JAGAKARSA, JAKARTA SELATAN', '', '081212052341', 'arifah.budiarti8@gmail.com', 46, 5, 1, 9, 1, 14, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 0, '10000192', 0, 0, '2022-02-03 14:41:24', '0000-00-00 00:00:00'),
 (367, '19971227B', 'KF-JKT', '10002350', '', '3175062712970013', '863601688004000', 'AULIA TRISNADI PUTRA', 'Jakarta', '1997-12-27', 'Laki-Laki', 'Islam', 24, 'PKWT', '-', 'KP. JEMBATAN RT 015 RW 012', '', '081818738025', 'aulia.trisnadi27@gmail.com', 15, 5, 1, 9, 1, 0, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 0, '10000498', 0, 0, '2022-02-03 14:41:24', '0000-00-00 00:00:00'),
 (368, '19971105D', 'KF-JKT', '10002701', '', '3603180511970014', '956503460452000', 'DENY PRAKARSA', 'Subang', '1997-11-05', 'Laki-Laki', 'Islam', 24, 'PKWT', '-', 'BUKIT TIARA BLK F1/3 RT/RW 20/4', '', '081294440801', 'denyprakarsa@gmail.com', 16, 5, 1, 9, 1, 0, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 0, '10001946', 0, 0, '2022-02-03 14:41:24', '0000-00-00 00:00:00'),
 (369, '19950917C', 'KF-JKT', '10001773', '', '3175025709950002', '835567959003000', 'DINDA ALINA ZAHRA', 'Jakarta', '1995-09-17', 'Perempuan', 'Islam', 26, 'PKWT', '-', 'JL. CIPINANG TIMUR V NO. 16, JAKARTA 13240', '', '081289133717', 'dindaalza@gmail.com', 18, 5, 1, 9, 1, 0, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 0, '10001210', 0, 0, '2022-02-03 14:41:24', '0000-00-00 00:00:00'),
@@ -583,11 +611,11 @@ INSERT INTO `employees` (`id`, `nip`, `location`, `sap_id`, `parent_nik`, `nik`,
 (428, '60000201', 'KF-JKT', '60000201', '', '3175075904950009', '', 'RESTIA PUTRI RAMADHAN', '', '1997-01-18', 'Perempuan', 'Islam', 25, 'Kontrak OS', 'PT. KREASIBOGA PRIMATAMA', '', '', '', '', 31, 7, 2, 9, 1, 0, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 0, '', 0, 0, '2022-02-05 01:13:17', '0000-00-00 00:00:00'),
 (429, '60000151', 'KF-JKT', '60000151', '', '3175060708970004', '', 'AGUS PRIYANTO', '', '1997-08-17', 'Laki-Laki', 'Islam', 24, 'Kontrak OS', 'PT. KREASIBOGA PRIMATAMA', '', '', '', '', 16, 5, 1, 9, 1, 0, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 0, '', 0, 0, '2022-02-05 01:13:17', '0000-00-00 00:00:00'),
 (430, '60000152', 'KF-JKT', '60000152', '', '3520152606920001', '', 'AMIRUL ALHADI WIJAYA', '', '1992-06-26', 'Laki-Laki', 'Islam', 30, 'Kontrak OS', 'PT. KREASIBOGA PRIMATAMA', '', '', '', '', 46, 5, 1, 9, 1, 0, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 1, '', 0, 0, '2022-02-05 01:13:17', '0000-00-00 00:00:00'),
-(431, '60000244', 'KF-JKT', '60000244', '', '3275112809930002', '', 'ARMAN SEPTIAN', 'Bekasi', '1993-09-28', 'Laki-Laki', 'Islam', 28, 'Kontrak OS', 'PT. KREASIBOGA PRIMATAMA', 'Jl. Kh. Agus Salim No.8 Kp. Bulak Slamet RT6 RW8 Bekasi Jaya Bekasi Timur', '', '089517227009', 'septian.arman009@gmail.com', 18, 5, 1, 9, 1, 13, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 0, '', 0, 1, '2022-02-05 01:13:17', '2022-02-05 01:20:17'),
-(432, '60000153', 'KF-JKT', '60000153', '', '3216062003950020', '', 'FIKRI AGIL ROIHAN MURTADHO', '', '1995-03-20', 'Laki-Laki', 'Islam', 27, 'Kontrak OS', 'PT. KREASIBOGA PRIMATAMA', '', '', '', '', 18, 5, 1, 9, 1, 12, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 0, '', 0, 0, '2022-02-05 01:13:17', '0000-00-00 00:00:00'),
+(431, '60000244', 'KF-JKT', '60000244', '', '3275112809930002', '', 'ARMAN SEPTIAN', 'Bekasi', '1993-09-28', 'Laki-Laki', 'Islam', 28, 'Kontrak OS', 'PT. KREASIBOGA PRIMATAMA', 'Jl. Kh. Agus Salim No.8 Kp. Bulak Slamet RT6 RW8 Bekasi Jaya Bekasi Timur', '', '089517227009', 'septian.arman009@gmail.com', 18, 5, 1, 9, 1, 22, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 0, '', 0, 1, '2022-02-05 01:13:17', '2022-02-05 01:20:17'),
+(432, '60000153', 'KF-JKT', '60000153', '', '3216062003950020', '', 'FIKRI AGIL ROIHAN MURTADHO', '', '1995-03-20', 'Laki-Laki', 'Islam', 27, 'Kontrak OS', 'PT. KREASIBOGA PRIMATAMA', '', '', '', '', 18, 5, 1, 9, 1, 0, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 0, '', 0, 0, '2022-02-05 01:13:17', '0000-00-00 00:00:00'),
 (433, '60000245', 'KF-JKT', '60000245', '', '3276030308000004', '', 'MUHAMMAD HAIKAL ABDI', '', '2000-08-03', 'Laki-Laki', 'Islam', 22, 'Kontrak OS', 'PT. KREASIBOGA PRIMATAMA', '', '', '', '', 46, 5, 1, 9, 1, 0, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 1, '', 0, 0, '2022-02-05 01:13:17', '0000-00-00 00:00:00'),
 (434, '60000211', 'KF-JKT', '60000211', '', '330122203980004', '', 'SAMSUL ANAM', '', '1998-03-22', 'Laki-Laki', 'Islam', 24, 'Kontrak OS', 'PT. KREASIBOGA PRIMATAMA', '', '', '', '', 16, 5, 1, 9, 1, 0, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 0, '', 0, 0, '2022-02-05 01:13:17', '0000-00-00 00:00:00'),
-(435, '60000154', 'KF-JKT', '60000154', '', '3328095001960002', '', 'SITI NURAZIZAH', 'Indonesia', '1996-01-10', 'Perempuan', 'Islam', 26, 'Kontrak OS', 'PT. KREASIBOGA PRIMATAMA', 'Indonesia', '', '085325461244', 'teknik.kfupj@kimiafarma.co.id', 0, 5, 1, 9, 1, 0, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 0, '', 0, 1, '2022-02-05 01:13:17', '2022-02-10 10:22:49'),
+(435, '60000154', 'KF-JKT', '60000154', '', '3328095001960002', '', 'SITI NURAZIZAH', 'Indonesia', '1996-01-10', 'Perempuan', 'Islam', 26, 'Kontrak OS', 'PT. KREASIBOGA PRIMATAMA', 'Indonesia', '', '085325461244', 'teknik.kfupj@kimiafarma.co.id', 0, 5, 1, 9, 1, 23, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 0, '', 0, 1, '2022-02-05 01:13:17', '2022-02-10 10:22:49'),
 (436, '60000200', 'KF-JKT', '60000200', '', '3175077108990010', '', 'SYADZA SORAYA', 'Indonesia', '1999-08-31', 'Perempuan', 'Islam', 22, 'Kontrak OS', 'PT. KREASIBOGA PRIMATAMA', 'Indonesia', '', '08970667107', 'capex.upj@kimiafarma.co.id', 0, 14, 3, 9, 1, 0, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 0, '', 0, 1, '2022-02-05 01:13:17', '2022-02-10 13:37:50'),
 (437, '60000156', 'KF-JKT', '60000156', '', '3310064105980001', '', 'CINDY PUSPITAWATI', 'Indonesia', '1998-05-01', 'Perempuan', 'Islam', 24, 'Kontrak OS', 'PT. KREASIBOGA PRIMATAMA', 'Indonesia', '', '62', 'k3l.plantjakarta@gmail.com', 35, 12, 3, 9, 1, 0, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 0, '', 0, 1, '2022-02-05 01:13:17', '2022-02-10 13:59:05'),
 (438, '70000169', 'KF-JKT', '70000169', '', '3214013003890002', '', 'DENI HAMDAN', 'Indonesia', '1989-03-30', 'Laki-Laki', 'Islam', 33, 'Kontrak OS', 'PT. KREASIBOGA PRIMATAMA', 'Indonesia', '', '087883464367', 'dhnnesaka@gmail.com', 34, 12, 3, 9, 1, 0, '', '0000-00-00', '0000-00-00', '0000-00-00', 'ACTIVE', 0, '', 0, 1, '2022-02-05 01:13:17', '2022-02-10 10:20:42'),
@@ -762,8 +790,8 @@ INSERT INTO `employees` (`id`, `nip`, `location`, `sap_id`, `parent_nik`, `nik`,
 --
 
 CREATE TABLE `employee_educations` (
-  `id` int(11) NOT NULL,
-  `emp_id` int(11) NOT NULL,
+  `id` int NOT NULL,
+  `emp_id` int NOT NULL,
   `level` varchar(30) NOT NULL,
   `major` varchar(30) NOT NULL,
   `description` text NOT NULL,
@@ -773,11 +801,11 @@ CREATE TABLE `employee_educations` (
   `sttb_number` varchar(20) NOT NULL,
   `sttb_date` date NOT NULL,
   `graduation_year` varchar(4) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -786,8 +814,8 @@ CREATE TABLE `employee_educations` (
 --
 
 CREATE TABLE `employee_families` (
-  `id` int(11) NOT NULL,
-  `emp_id` int(11) NOT NULL,
+  `id` int NOT NULL,
+  `emp_id` int NOT NULL,
   `family_name` varchar(30) NOT NULL,
   `relation` enum('Suami','Istri','Putra','Putri','Ayah','Ibu') NOT NULL,
   `birth_date` date NOT NULL,
@@ -796,11 +824,11 @@ CREATE TABLE `employee_families` (
   `description` text NOT NULL,
   `divorce_date` date NOT NULL,
   `profession` varchar(30) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -809,14 +837,14 @@ CREATE TABLE `employee_families` (
 --
 
 CREATE TABLE `employee_overtimes` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `location` varchar(15) NOT NULL,
   `task_id` varchar(30) NOT NULL,
   `ref` varchar(30) NOT NULL,
-  `department_id` int(11) NOT NULL,
-  `sub_department_id` int(11) NOT NULL,
-  `division_id` int(11) NOT NULL,
-  `personil` int(11) NOT NULL,
+  `department_id` int NOT NULL,
+  `sub_department_id` int NOT NULL,
+  `division_id` int NOT NULL,
+  `personil` int NOT NULL,
   `machine_ids` varchar(255) NOT NULL,
   `overtime_date` date NOT NULL,
   `start_date` datetime NOT NULL,
@@ -825,17 +853,17 @@ CREATE TABLE `employee_overtimes` (
   `notes` text NOT NULL,
   `revision_note` text NOT NULL,
   `rejection_note` text NOT NULL,
-  `makan` int(11) NOT NULL DEFAULT 0,
-  `steam` int(11) NOT NULL DEFAULT 0,
-  `ahu` int(11) NOT NULL DEFAULT 0,
-  `compressor` int(11) NOT NULL DEFAULT 0,
-  `pw` int(11) NOT NULL DEFAULT 0,
-  `jemputan` int(11) NOT NULL DEFAULT 0,
-  `dust_collector` int(11) NOT NULL DEFAULT 0,
-  `wfi` int(11) NOT NULL,
-  `mechanic` int(11) NOT NULL,
-  `electric` int(11) NOT NULL,
-  `hnn` int(11) NOT NULL,
+  `makan` int NOT NULL DEFAULT '0',
+  `steam` int NOT NULL DEFAULT '0',
+  `ahu` int NOT NULL DEFAULT '0',
+  `compressor` int NOT NULL DEFAULT '0',
+  `pw` int NOT NULL DEFAULT '0',
+  `jemputan` int NOT NULL DEFAULT '0',
+  `dust_collector` int NOT NULL DEFAULT '0',
+  `wfi` int NOT NULL,
+  `mechanic` int NOT NULL,
+  `electric` int NOT NULL,
+  `hnn` int NOT NULL,
   `status` enum('CREATED','CANCELED','CLOSED','REJECTED','PROCESS') NOT NULL,
   `change_time` varchar(50) NOT NULL,
   `apv_spv` enum('APPROVED','REJECTED','CREATED','BY PASS') NOT NULL,
@@ -851,20 +879,18 @@ CREATE TABLE `employee_overtimes` (
   `apv_head_nip` varchar(15) NOT NULL,
   `apv_head_date` datetime NOT NULL,
   `overtime_review` text NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `employee_overtimes`
 --
 
 INSERT INTO `employee_overtimes` (`id`, `location`, `task_id`, `ref`, `department_id`, `sub_department_id`, `division_id`, `personil`, `machine_ids`, `overtime_date`, `start_date`, `end_date`, `status_day`, `notes`, `revision_note`, `rejection_note`, `makan`, `steam`, `ahu`, `compressor`, `pw`, `jemputan`, `dust_collector`, `wfi`, `mechanic`, `electric`, `hnn`, `status`, `change_time`, `apv_spv`, `apv_spv_nip`, `apv_spv_date`, `apv_asman`, `apv_asman_nip`, `apv_asman_date`, `apv_mgr`, `apv_mgr_nip`, `apv_mgr_date`, `apv_head`, `apv_head_nip`, `apv_head_date`, `overtime_review`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 'KF-JKT', '001/OT/KF-JKT/II/2022', '', 3, 12, 34, 1, '', '2022-02-19', '2022-02-19 07:30:00', '2022-02-19 16:00:00', 'Hari Libur', 'Tes', '', '', 1, 0, 0, 0, 0, 0, 0, 0, 9, 10, 11, 'CLOSED', '', 'APPROVED', '19710621A', '2022-02-11 10:17:29', 'APPROVED', '19690314A', '2022-02-11 10:18:07', 'BY PASS', '-', '2022-02-11 10:16:38', 'APPROVED', '19880210A', '2022-02-11 10:19:05', '', 1, 20, '2022-02-11 10:16:18', '2022-02-11 10:19:05'),
-(2, 'KF-JKT', '002/OT/KF-JKT/II/2022', '001/OT/KF-JKT/II/2022', 1, 5, 0, 1, '', '2022-02-19', '2022-02-19 07:30:00', '2022-02-19 19:30:00', 'Hari Libur', 'Tes', '', '', 1, 0, 0, 0, 0, 0, 0, 0, 9, 10, 11, 'CLOSED', 'Revised By Administrator @Jumat, 11 Februari 2022 ', 'BY PASS', '-', '2022-02-11 10:21:29', 'APPROVED', '19860424A', '2022-02-11 10:30:57', 'APPROVED', '19870410B', '2022-02-11 10:32:31', 'APPROVED', '19880210A', '2022-02-11 10:33:21', '', 369, 20, '2022-02-11 10:20:04', '2022-02-11 10:33:21'),
-(3, 'KF-JKT', '003/OT/KF-JKT/II/2022', '-', 1, 5, 18, 1, '', '2022-02-13', '2022-02-13 07:30:00', '2022-02-13 21:00:00', 'Hari Libur', 'Tes', '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'CREATED', '', 'CREATED', '', '0000-00-00 00:00:00', 'CREATED', '', '0000-00-00 00:00:00', 'CREATED', '', '0000-00-00 00:00:00', 'CREATED', '', '0000-00-00 00:00:00', '', 1, 1, '2022-02-11 13:18:47', '2022-02-11 13:18:47');
+(1, 'KF-JKT', '001/OT/KF-JKT/III/2022', '-', 1, 5, 18, 1, '', '2022-03-26', '2022-03-26 07:30:00', '2022-03-26 21:00:00', 'Hari Libur', 'Tes', '', '', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'PROCESS', '', 'APPROVED', '19901125A', '2022-03-02 11:10:06', 'CREATED', '', '0000-00-00 00:00:00', 'CREATED', '', '0000-00-00 00:00:00', 'CREATED', '', '0000-00-00 00:00:00', '', 1, 1, '2022-03-02 04:06:58', '2022-03-02 11:07:16');
 
 -- --------------------------------------------------------
 
@@ -873,18 +899,18 @@ INSERT INTO `employee_overtimes` (`id`, `location`, `task_id`, `ref`, `departmen
 --
 
 CREATE TABLE `employee_overtimes_detail` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `location` varchar(15) NOT NULL,
   `task_id` varchar(30) NOT NULL,
-  `emp_id` int(11) NOT NULL,
+  `emp_id` int NOT NULL,
   `emp_task_id` varchar(30) NOT NULL,
-  `department_id` int(11) NOT NULL,
-  `sub_department_id` int(11) NOT NULL,
-  `ovt_sub_department` int(11) NOT NULL,
-  `ovt_division` int(11) NOT NULL,
-  `division_id` int(11) NOT NULL,
-  `machine_1` int(11) NOT NULL,
-  `machine_2` int(11) NOT NULL,
+  `department_id` int NOT NULL,
+  `sub_department_id` int NOT NULL,
+  `ovt_sub_department` int NOT NULL,
+  `ovt_division` int NOT NULL,
+  `division_id` int NOT NULL,
+  `machine_1` int NOT NULL,
+  `machine_2` int NOT NULL,
   `requirements` varchar(255) NOT NULL,
   `overtime_date` date NOT NULL,
   `start_date` datetime NOT NULL,
@@ -897,27 +923,25 @@ CREATE TABLE `employee_overtimes_detail` (
   `premi_overtime` double(10,2) NOT NULL,
   `overtime_value` double(10,2) NOT NULL,
   `meal` double(10,2) NOT NULL,
-  `total_meal` int(11) NOT NULL,
+  `total_meal` int NOT NULL,
   `notes` text NOT NULL,
   `status` enum('CREATED','CANCELED','CLOSED','REJECTED','PROCESS') NOT NULL,
   `payment_status` enum('VERIFIED','PENDING','CREATED') NOT NULL DEFAULT 'CREATED',
   `payment_status_by` varchar(15) NOT NULL,
   `status_by` varchar(15) NOT NULL,
-  `change_time` int(11) NOT NULL DEFAULT 0,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `change_time` int NOT NULL DEFAULT '0',
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `employee_overtimes_detail`
 --
 
 INSERT INTO `employee_overtimes_detail` (`id`, `location`, `task_id`, `emp_id`, `emp_task_id`, `department_id`, `sub_department_id`, `ovt_sub_department`, `ovt_division`, `division_id`, `machine_1`, `machine_2`, `requirements`, `overtime_date`, `start_date`, `end_date`, `status_day`, `effective_hour`, `break_hour`, `real_hour`, `overtime_hour`, `premi_overtime`, `overtime_value`, `meal`, `total_meal`, `notes`, `status`, `payment_status`, `payment_status_by`, `status_by`, `change_time`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 'KF-JKT', '001/OT/KF-JKT/II/2022', 532, '001/OT-EMP/KF-JKT/II/2022', 3, 12, 12, 34, 34, 0, 0, '-', '2022-02-19', '2022-02-19 07:30:00', '2022-02-19 16:00:00', 'Hari Libur', 8.50, 1.00, 7.50, 14.50, 0.00, 0.00, 20000.00, 1, 'Tes', 'CLOSED', 'CREATED', '', '', 0, 1, 20, '2022-02-11 10:16:34', '2022-02-11 10:19:05'),
-(2, 'KF-JKT', '002/OT/KF-JKT/II/2022', 431, '002/OT-EMP/KF-JKT/II/2022', 1, 5, 5, 0, 18, 0, 0, 'Hardware & Network', '2022-02-19', '2022-02-19 07:30:00', '2022-02-19 16:00:00', 'Hari Libur', 8.50, 1.00, 7.50, 14.50, 26831.53, 389057.18, 20000.00, 1, 'Tes', 'CLOSED', 'VERIFIED', '9999', '9999', 1, 1, 1, '2022-02-11 10:21:01', '2022-02-11 13:39:40'),
-(3, 'KF-JKT', '003/OT/KF-JKT/II/2022', 432, '003/OT-EMP/KF-JKT/II/2022', 1, 5, 5, 18, 18, 0, 0, '-', '2022-02-13', '2022-02-13 07:30:00', '2022-02-13 21:00:00', 'Hari Libur', 13.50, 2.00, 11.50, 31.00, 26831.53, 831777.43, 40000.00, 2, 'Tes', 'CREATED', 'CREATED', '', '', 0, 1, 1, '2022-02-11 13:19:11', '2022-02-11 13:19:11');
+(1, 'KF-JKT', '001/OT/KF-JKT/III/2022', 431, '001/OT-EMP/KF-JKT/III/2022', 1, 5, 5, 18, 18, 0, 0, '-', '2022-03-26', '2022-03-26 07:30:00', '2022-03-26 21:00:00', 'Hari Libur', 13.50, 2.00, 11.50, 31.00, 26831.53, 831777.43, 40000.00, 2, 'Tes', 'PROCESS', 'CREATED', '', '', 0, 1, 1, '2022-03-02 04:07:12', '2022-03-02 11:07:17');
 
 -- --------------------------------------------------------
 
@@ -926,16 +950,16 @@ INSERT INTO `employee_overtimes_detail` (`id`, `location`, `task_id`, `emp_id`, 
 --
 
 CREATE TABLE `employee_pins` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `location` varchar(15) NOT NULL,
-  `emp_id` int(11) NOT NULL,
+  `emp_id` int NOT NULL,
   `pin` varchar(6) NOT NULL,
   `status` enum('ACTIVE','INACTIVE') NOT NULL DEFAULT 'ACTIVE',
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `employee_pins`
@@ -1003,8 +1027,10 @@ INSERT INTO `employee_pins` (`id`, `location`, `emp_id`, `pin`, `status`, `creat
 (64, 'KF-JKT', 215, '857572', 'ACTIVE', 1, 1, '2022-02-09 12:20:54', '2022-02-09 12:20:54'),
 (65, 'KF-JKT', 216, '023315', 'ACTIVE', 1, 1, '2022-02-09 12:20:54', '2022-02-09 12:20:54'),
 (66, 'KF-JKT', 217, '435877', 'ACTIVE', 1, 1, '2022-02-09 12:20:54', '2022-02-09 12:20:54'),
-(67, 'KF-JKT', 196, '123456', 'ACTIVE', 1, 1, '2022-02-09 12:42:31', '2022-02-09 12:42:31'),
-(68, 'KF-JKT', 369, '333444', 'ACTIVE', 1, 1, '2022-02-11 09:28:13', '2022-02-11 09:28:13');
+(67, 'KF-JKT', 196, '000111', 'ACTIVE', 1, 1, '2022-02-09 12:42:31', '2022-03-02 11:11:05'),
+(68, 'KF-JKT', 369, '333444', 'ACTIVE', 1, 1, '2022-02-11 09:28:13', '2022-02-11 09:28:13'),
+(69, 'KF-JKT', 435, '111222', 'ACTIVE', 1, 1, '2022-02-24 01:06:21', '2022-02-24 08:06:21'),
+(70, 'KF-JKT', 438, '123444', 'ACTIVE', 1, 1, '2022-03-03 09:42:55', '2022-03-03 16:42:55');
 
 -- --------------------------------------------------------
 
@@ -1013,22 +1039,22 @@ INSERT INTO `employee_pins` (`id`, `location`, `emp_id`, `pin`, `status`, `creat
 --
 
 CREATE TABLE `employee_ranks` (
-  `id` int(11) NOT NULL,
-  `emp_id` int(11) NOT NULL,
-  `department_id` int(11) NOT NULL,
-  `sub_department_id` int(11) NOT NULL,
-  `division_id` int(11) NOT NULL,
-  `rank_id` int(11) NOT NULL,
+  `id` int NOT NULL,
+  `emp_id` int NOT NULL,
+  `department_id` int NOT NULL,
+  `sub_department_id` int NOT NULL,
+  `division_id` int NOT NULL,
+  `rank_id` int NOT NULL,
   `sk_number` varchar(25) NOT NULL,
   `sk_date` date NOT NULL,
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
   `status` enum('ACTIVE','NONACTIVE','CURRENT') NOT NULL DEFAULT 'NONACTIVE',
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `employee_ranks`
@@ -1052,17 +1078,17 @@ INSERT INTO `employee_ranks` (`id`, `emp_id`, `department_id`, `sub_department_i
 --
 
 CREATE TABLE `employee_sallary` (
-  `id` int(11) NOT NULL,
-  `emp_id` int(11) NOT NULL,
+  `id` int NOT NULL,
+  `emp_id` int NOT NULL,
   `sap_id` varchar(15) NOT NULL,
   `basic_sallary` double(10,2) NOT NULL,
   `total_sallary` double(10,2) NOT NULL,
   `premi_overtime` double(10,2) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `employee_sallary`
@@ -1661,18 +1687,18 @@ INSERT INTO `employee_sallary` (`id`, `emp_id`, `sap_id`, `basic_sallary`, `tota
 --
 
 CREATE TABLE `employee_trainings` (
-  `id` int(11) NOT NULL,
-  `emp_id` int(11) NOT NULL,
-  `training_id` int(11) NOT NULL,
+  `id` int NOT NULL,
+  `emp_id` int NOT NULL,
+  `training_id` int NOT NULL,
   `description` text NOT NULL,
   `location` varchar(30) NOT NULL,
   `certificate_date` date NOT NULL,
-  `total_hour` int(11) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
+  `total_hour` int NOT NULL,
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
   `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `employee_trainings`
@@ -1688,22 +1714,22 @@ INSERT INTO `employee_trainings` (`id`, `emp_id`, `training_id`, `description`, 
 --
 
 CREATE TABLE `gates` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `gate` varchar(10) NOT NULL,
   `gate_name` varchar(15) NOT NULL,
   `token` varchar(30) NOT NULL,
   `before_token` varchar(30) NOT NULL,
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `gates`
 --
 
 INSERT INTO `gates` (`id`, `gate`, `gate_name`, `token`, `before_token`, `updated_at`) VALUES
-(1, 'g1', 'Gate 1', '1644813093-g1', '1644812893-g1', '2022-02-14 07:31:24'),
+(1, 'g1', 'Gate 1', '1645833991-g1', '1645833980-g1', '2022-02-14 07:31:24'),
 (2, 'g2', 'Gate 2', '1644806759-g2', '1644806725-g2', '2022-02-14 07:31:24'),
-(3, 'g3', 'Gate 3', '1644806759-g3', '1644806725-g3', '2022-02-14 07:31:47'),
+(3, 'g3', 'Gate 3', '1645760632-g3', '1645760620-g3', '2022-02-14 07:31:47'),
 (4, 'g4', 'Gate 4', '1644806755-g4', '1644806723-g4', '2022-02-14 07:31:47'),
 (5, 'g5', 'Gate 5', '1644806731-g5', '1644806697-g5', '2022-02-14 07:32:06'),
 (6, 'g6', 'Gate 6', '1644806760-g6', '1644806726-g6', '2022-02-14 07:32:06'),
@@ -1716,15 +1742,15 @@ INSERT INTO `gates` (`id`, `gate`, `gate_name`, `token`, `before_token`, `update
 --
 
 CREATE TABLE `national_days` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `location` varchar(15) NOT NULL,
   `date` date NOT NULL,
   `description` text NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `national_days`
@@ -1755,20 +1781,20 @@ INSERT INTO `national_days` (`id`, `location`, `date`, `description`, `created_b
 --
 
 CREATE TABLE `overtime_requirement` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `location` varchar(15) NOT NULL,
   `table_code` varchar(15) NOT NULL,
   `name` varchar(30) NOT NULL,
   `category` varchar(20) NOT NULL,
-  `department_id` int(11) NOT NULL,
-  `sub_department_id` int(11) NOT NULL,
-  `division_id` int(11) NOT NULL,
+  `department_id` int NOT NULL,
+  `sub_department_id` int NOT NULL,
+  `division_id` int NOT NULL,
   `pic_emails` text NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `overtime_requirement`
@@ -1794,20 +1820,20 @@ INSERT INTO `overtime_requirement` (`id`, `location`, `table_code`, `name`, `cat
 --
 
 CREATE TABLE `overtime_revision_requests` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `location` varchar(15) NOT NULL,
   `task_id` varchar(30) NOT NULL,
   `description` text NOT NULL,
   `response` text NOT NULL,
-  `department_id` int(11) NOT NULL,
-  `sub_department_id` int(11) NOT NULL,
+  `department_id` int NOT NULL,
+  `sub_department_id` int NOT NULL,
   `filename` varchar(50) NOT NULL,
   `status` enum('CREATED','CANCELED','REJECTED','CLOSED','PROCESS') NOT NULL DEFAULT 'CREATED',
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `overtime_revision_requests`
@@ -1823,13 +1849,13 @@ INSERT INTO `overtime_revision_requests` (`id`, `location`, `task_id`, `descript
 --
 
 CREATE TABLE `overtime_revision_requests_detail` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `task_id` varchar(30) NOT NULL,
   `emp_task_id` varchar(30) NOT NULL,
   `status` enum('CREATED','CLOSED','REJECTED','CANCELED') NOT NULL DEFAULT 'CREATED',
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `overtime_revision_requests_detail`
@@ -1845,15 +1871,15 @@ INSERT INTO `overtime_revision_requests_detail` (`id`, `task_id`, `emp_task_id`,
 --
 
 CREATE TABLE `ranks` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `location` varchar(15) NOT NULL,
   `name` varchar(50) NOT NULL,
   `grade` varchar(10) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `ranks`
@@ -1878,16 +1904,16 @@ INSERT INTO `ranks` (`id`, `location`, `name`, `grade`, `created_by`, `updated_b
 --
 
 CREATE TABLE `sub_departments` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `location` varchar(15) NOT NULL,
-  `department_id` int(11) NOT NULL,
+  `department_id` int NOT NULL,
   `name` varchar(100) NOT NULL,
   `file_limit` double NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `sub_departments`
@@ -1918,18 +1944,27 @@ INSERT INTO `sub_departments` (`id`, `location`, `department_id`, `name`, `file_
 --
 
 CREATE TABLE `trainings` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `location` varchar(15) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `absen_202202`
+--
+ALTER TABLE `absen_202202`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `emp_id` (`emp_id`),
+  ADD KEY `emp_id_2` (`emp_id`),
+  ADD KEY `action_date` (`action_date`);
 
 --
 -- Indexes for table `departments`
@@ -2074,118 +2109,124 @@ ALTER TABLE `trainings`
 --
 
 --
+-- AUTO_INCREMENT for table `absen_202202`
+--
+ALTER TABLE `absen_202202`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `divisions`
 --
 ALTER TABLE `divisions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=601;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=601;
 
 --
 -- AUTO_INCREMENT for table `employee_educations`
 --
 ALTER TABLE `employee_educations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `employee_families`
 --
 ALTER TABLE `employee_families`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `employee_overtimes`
 --
 ALTER TABLE `employee_overtimes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `employee_overtimes_detail`
 --
 ALTER TABLE `employee_overtimes_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `employee_pins`
 --
 ALTER TABLE `employee_pins`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `employee_ranks`
 --
 ALTER TABLE `employee_ranks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `employee_sallary`
 --
 ALTER TABLE `employee_sallary`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=584;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=584;
 
 --
 -- AUTO_INCREMENT for table `employee_trainings`
 --
 ALTER TABLE `employee_trainings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `gates`
 --
 ALTER TABLE `gates`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `national_days`
 --
 ALTER TABLE `national_days`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `overtime_requirement`
 --
 ALTER TABLE `overtime_requirement`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `overtime_revision_requests`
 --
 ALTER TABLE `overtime_revision_requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `overtime_revision_requests_detail`
 --
 ALTER TABLE `overtime_revision_requests_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ranks`
 --
 ALTER TABLE `ranks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `sub_departments`
 --
 ALTER TABLE `sub_departments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `trainings`
 --
 ALTER TABLE `trainings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

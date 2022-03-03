@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 4.9.10
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Feb 14, 2022 at 03:50 PM
--- Server version: 10.4.22-MariaDB
+-- Host: localhost
+-- Generation Time: Mar 03, 2022 at 10:55 AM
+-- Server version: 8.0.28-0ubuntu0.20.04.3
 -- PHP Version: 7.4.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -28,21 +29,21 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `production_machines` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `location` varchar(15) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `department_id` int(11) NOT NULL,
-  `sub_department_id` int(11) NOT NULL,
-  `division_id` int(11) NOT NULL,
-  `building_id` int(11) NOT NULL,
-  `room_id` int(11) NOT NULL,
+  `department_id` int NOT NULL,
+  `sub_department_id` int NOT NULL,
+  `division_id` int NOT NULL,
+  `building_id` int NOT NULL,
+  `room_id` int NOT NULL,
   `dimension` varchar(25) NOT NULL,
   `filename` varchar(30) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `production_machines`
@@ -178,7 +179,7 @@ ALTER TABLE `production_machines`
 -- AUTO_INCREMENT for table `production_machines`
 --
 ALTER TABLE `production_machines`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

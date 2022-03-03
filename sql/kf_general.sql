@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 4.9.10
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Feb 14, 2022 at 03:49 PM
--- Server version: 10.4.22-MariaDB
+-- Host: localhost
+-- Generation Time: Mar 03, 2022 at 10:54 AM
+-- Server version: 8.0.28-0ubuntu0.20.04.3
 -- PHP Version: 7.4.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -28,14 +29,14 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `buildings` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `location` varchar(15) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `buildings`
@@ -52,14 +53,14 @@ INSERT INTO `buildings` (`id`, `location`, `name`, `created_by`, `updated_by`, `
 --
 
 CREATE TABLE `building_rooms` (
-  `id` int(11) NOT NULL,
-  `building_id` int(11) NOT NULL,
+  `id` int NOT NULL,
+  `building_id` int NOT NULL,
   `name` varchar(50) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `building_rooms`
@@ -153,17 +154,17 @@ INSERT INTO `building_rooms` (`id`, `building_id`, `name`, `created_by`, `update
 --
 
 CREATE TABLE `catherings` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `location` varchar(15) NOT NULL,
   `vendor_name` varchar(50) NOT NULL,
   `price` double(10,2) NOT NULL,
   `status` enum('ACTIVE','NONACTIVE') NOT NULL DEFAULT 'NONACTIVE',
   `expired` date NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `catherings`
@@ -180,25 +181,14 @@ INSERT INTO `catherings` (`id`, `location`, `vendor_name`, `price`, `status`, `e
 --
 
 CREATE TABLE `guest_books` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `name` varchar(30) NOT NULL,
   `email` varchar(100) NOT NULL,
   `company` varchar(100) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `guest_books`
---
-
-INSERT INTO `guest_books` (`id`, `name`, `email`, `company`, `created_by`, `updated_by`, `created_at`) VALUES
-(11, 'Arman Septian', 'arman@gmail.com', 'PT. Wijaya', 1, 1, '2022-01-28 07:23:58'),
-(12, 'Asep Diki Ariyanto', 'asep.diki@gmail.com', 'PT. Wijoyo', 1, 1, '2022-01-28 07:23:58'),
-(13, 'Fikri Agil', 'fikri.agil@gmail.com', 'PT. Sejahtera', 1, 1, '2022-01-28 07:24:28'),
-(14, 'Dinda', 'dinda@gmail.com', 'PT. Kimia Farma', 1, 1, '2022-01-28 07:26:27'),
-(15, 'Arafah', 'arafah@gmail.com', 'P. Kimia Farma', 1, 1, '2022-01-28 07:26:27');
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -207,32 +197,14 @@ INSERT INTO `guest_books` (`id`, `name`, `email`, `company`, `created_by`, `upda
 --
 
 CREATE TABLE `meeting_participants` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `meeting_id` varchar(30) NOT NULL,
   `name` varchar(30) NOT NULL,
   `email` varchar(100) NOT NULL,
   `company` varchar(100) NOT NULL,
   `status` enum('HADIR','TIDAK HADIR','BELUM MEMUTUSKAN') NOT NULL DEFAULT 'BELUM MEMUTUSKAN',
   `comfirm_date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `meeting_participants`
---
-
-INSERT INTO `meeting_participants` (`id`, `meeting_id`, `name`, `email`, `company`, `status`, `comfirm_date`) VALUES
-(1, '1644513139783', 'ABDUL ANAM', 'abdulanam51@gmail.com', 'KF-JKT', 'HADIR', '0000-00-00 00:00:00'),
-(2, '1644513139783', 'AAN FATUR RAHMAN', 'vaturrasta46@gmail.com', 'KF-JKT', 'HADIR', '0000-00-00 00:00:00'),
-(3, '1644513139783', 'Dinda', 'dinda@gmail.com', 'PT. Kimia Farma', 'TIDAK HADIR', '0000-00-00 00:00:00'),
-(4, '1644513139783', 'Arafah', 'arafah@gmail.com', 'P. Kimia Farma', 'HADIR', '0000-00-00 00:00:00'),
-(5, '1644513139783', 'ABDUL ANAM', 'abdulanam51@gmail.com', 'KF-JKT', 'HADIR', '0000-00-00 00:00:00'),
-(6, '1644513139783', 'AAN FATUR RAHMAN', 'vaturrasta46@gmail.com', 'KF-JKT', 'HADIR', '0000-00-00 00:00:00'),
-(7, '1644513139783', 'Dinda', 'dinda@gmail.com', 'PT. Kimia Farma', 'TIDAK HADIR', '0000-00-00 00:00:00'),
-(8, '1644513139783', 'Arafah', 'arafah@gmail.com', 'P. Kimia Farma', 'HADIR', '0000-00-00 00:00:00'),
-(9, '16445131397831', 'ABDUL ANAM', 'abdulanam51@gmail.com', 'KF-JKT', 'HADIR', '0000-00-00 00:00:00'),
-(10, '16445131397831', 'AAN FATUR RAHMAN', 'vaturrasta46@gmail.com', 'KF-JKT', 'HADIR', '0000-00-00 00:00:00'),
-(11, '16445131397831', 'Dinda', 'dinda@gmail.com', 'PT. Kimia Farma', 'BELUM MEMUTUSKAN', '0000-00-00 00:00:00'),
-(12, '16445131397831', 'Arafah', 'arafah@gmail.com', 'P. Kimia Farma', 'BELUM MEMUTUSKAN', '0000-00-00 00:00:00');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -241,27 +213,27 @@ INSERT INTO `meeting_participants` (`id`, `meeting_id`, `name`, `email`, `compan
 --
 
 CREATE TABLE `meeting_rooms` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `location` varchar(15) NOT NULL,
   `name` varchar(30) NOT NULL,
-  `capacity` int(11) NOT NULL,
+  `capacity` int NOT NULL,
   `building` varchar(25) NOT NULL,
   `on_floor` varchar(5) NOT NULL,
   `facility` text NOT NULL,
   `filename` varchar(30) NOT NULL,
   `color` varchar(10) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `meeting_rooms`
 --
 
 INSERT INTO `meeting_rooms` (`id`, `location`, `name`, `capacity`, `building`, `on_floor`, `facility`, `filename`, `color`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 'KF-JKT', 'Calcidol', 10, 'Perkantoran', '2', '-', '1642661656_1_280.jpeg', '#a26e06', 1, 1, '2022-01-20 13:51:56', '2022-01-28 23:26:13'),
+(1, 'KF-JKT', 'Calcidol', 10, 'Perkantoran', '2', '-', '1645087437_1_570.jpeg', '#a26e06', 1, 1, '2022-01-20 13:51:56', '2022-01-28 23:26:13'),
 (2, 'KF-JKT', 'Lamivudin', 6, 'Perkantoran', '2', '-', '1643099208_1_719.jpeg', '#3f3f3f', 1, 1, '2022-01-25 15:27:11', '2022-01-28 23:26:13'),
 (3, 'KF-JKT', 'Zidovudin', 6, 'Perkantoran', '2', '-', '1643099276_1_814.jpeg', '#7f3f3f', 1, 1, '2022-01-25 15:27:56', '2022-01-28 23:26:13'),
 (4, 'KF-JKT', 'Magasida', 50, 'Perkantoran', '2', '-', '1643099363_1_780.jpeg', '#007f3f', 1, 1, '2022-01-25 15:29:23', '2022-01-28 23:26:13');
@@ -279,33 +251,25 @@ CREATE TABLE `meeting_rooms_reservation` (
   `name` varchar(100) NOT NULL,
   `meeting_type` varchar(20) NOT NULL,
   `description` text NOT NULL,
-  `room_id` int(11) NOT NULL DEFAULT 0,
+  `room_id` int NOT NULL DEFAULT '0',
   `start_date` datetime NOT NULL,
   `end_date` datetime NOT NULL,
   `duration` double(10,2) NOT NULL,
   `participants` text NOT NULL,
   `guests` text NOT NULL,
-  `meal` int(11) NOT NULL,
-  `snack_id` int(11) NOT NULL,
-  `total_participant` int(11) NOT NULL,
-  `participant_confirmed` int(11) NOT NULL,
-  `participant_rejected` int(11) NOT NULL,
+  `meal` int NOT NULL,
+  `snack_id` int NOT NULL,
+  `total_participant` int NOT NULL,
+  `participant_confirmed` int NOT NULL,
+  `participant_rejected` int NOT NULL,
   `status` enum('CREATED','APPROVED','REJECTED','CLOSED') NOT NULL DEFAULT 'CREATED',
   `reason` text NOT NULL,
-  `repeat_meet` int(11) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `repeat_meet` int NOT NULL,
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `meeting_rooms_reservation`
---
-
-INSERT INTO `meeting_rooms_reservation` (`id`, `ref`, `location`, `name`, `meeting_type`, `description`, `room_id`, `start_date`, `end_date`, `duration`, `participants`, `guests`, `meal`, `snack_id`, `total_participant`, `participant_confirmed`, `participant_rejected`, `status`, `reason`, `repeat_meet`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-('1644513139783', '', 'KF-JKT', 'Tes', 'external', 'Tes', 1, '2022-02-01 08:00:00', '2022-02-01 10:00:00', 2.00, 'vaturrasta46@gmail.com,abdulanam51@gmail.com', 'arafah@gmail.com,dinda@gmail.com', 1, 0, 4, 3, 1, 'CLOSED', '', 2, 1, 215, '2022-02-11 00:11:27', '2022-02-11 07:17:04'),
-('16445131397831', '1644513139783', 'KF-JKT', 'Tes', 'external', 'Tes', 1, '2022-02-02 08:00:00', '2022-02-02 10:00:00', 2.00, 'vaturrasta46@gmail.com,abdulanam51@gmail.com', 'arafah@gmail.com,dinda@gmail.com', 1, 4, 4, 4, 0, 'CLOSED', '', 0, 1, 215, '2022-02-11 00:11:28', '2022-02-11 07:16:59');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -314,16 +278,16 @@ INSERT INTO `meeting_rooms_reservation` (`id`, `ref`, `location`, `name`, `meeti
 --
 
 CREATE TABLE `snacks` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `location` varchar(15) NOT NULL,
   `name` varchar(50) NOT NULL,
   `price` double(10,2) NOT NULL,
   `filename` varchar(30) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `snacks`
@@ -341,7 +305,7 @@ INSERT INTO `snacks` (`id`, `location`, `name`, `price`, `filename`, `created_by
 --
 
 CREATE TABLE `vehicles` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `location` varchar(15) NOT NULL,
   `name` varchar(30) NOT NULL,
   `brand` varchar(25) NOT NULL,
@@ -350,17 +314,17 @@ CREATE TABLE `vehicles` (
   `bpkb_no` varchar(25) NOT NULL,
   `stnk_no` varchar(25) NOT NULL,
   `machine_no` varchar(25) NOT NULL,
-  `machine_capacity` int(11) NOT NULL,
-  `passenger_capacity` int(11) NOT NULL,
+  `machine_capacity` int NOT NULL,
+  `passenger_capacity` int NOT NULL,
   `last_km` double NOT NULL,
   `last_service_date` date NOT NULL,
   `filename` varchar(30) NOT NULL,
   `color` varchar(10) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `vehicles`
@@ -384,31 +348,24 @@ CREATE TABLE `vehicles_reservation` (
   `destination` varchar(50) NOT NULL,
   `trip_type` varchar(5) NOT NULL,
   `description` text NOT NULL,
-  `vehicle_id` int(11) NOT NULL,
+  `vehicle_id` int NOT NULL,
   `start_date` datetime NOT NULL,
   `end_date` datetime NOT NULL,
   `duration` double(10,2) NOT NULL,
   `driver` varchar(50) NOT NULL,
   `driver_confirmed` enum('DISETUJUI','MENOLAK','BELUM MEMUTUSKAN') NOT NULL DEFAULT 'BELUM MEMUTUSKAN',
   `passenger` text NOT NULL,
-  `total_passenger` int(11) NOT NULL,
-  `start_km` int(11) NOT NULL DEFAULT 0,
-  `end_km` int(11) NOT NULL DEFAULT 0,
-  `distance` double(10,2) NOT NULL DEFAULT 0.00,
+  `total_passenger` int NOT NULL,
+  `start_km` int NOT NULL DEFAULT '0',
+  `end_km` int NOT NULL DEFAULT '0',
+  `distance` double(10,2) NOT NULL DEFAULT '0.00',
   `status` enum('CREATED','APPROVED','REJECTED','CLOSED') NOT NULL DEFAULT 'CREATED',
   `reason` text NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `vehicles_reservation`
---
-
-INSERT INTO `vehicles_reservation` (`id`, `location`, `destination`, `trip_type`, `description`, `vehicle_id`, `start_date`, `end_date`, `duration`, `driver`, `driver_confirmed`, `passenger`, `total_passenger`, `start_km`, `end_km`, `distance`, `status`, `reason`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-('1644539552016', 'KF-JKT', 'Tes', 'drop', 'Tes', 1, '2022-02-01 08:00:00', '2022-02-01 10:00:00', 2.00, 'nurul.anwar@gmail.com', 'DISETUJUI', 'vaturrasta46@gmail.com', 4, 10000, 10250, 250.00, 'CLOSED', '', 1, 1, '2022-02-11 07:31:37', '2022-02-11 07:37:16');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Indexes for dumped tables
@@ -492,49 +449,49 @@ ALTER TABLE `vehicles_reservation`
 -- AUTO_INCREMENT for table `buildings`
 --
 ALTER TABLE `buildings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `building_rooms`
 --
 ALTER TABLE `building_rooms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `catherings`
 --
 ALTER TABLE `catherings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `guest_books`
 --
 ALTER TABLE `guest_books`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `meeting_participants`
 --
 ALTER TABLE `meeting_participants`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `meeting_rooms`
 --
 ALTER TABLE `meeting_rooms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `snacks`
 --
 ALTER TABLE `snacks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `vehicles`
 --
 ALTER TABLE `vehicles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
