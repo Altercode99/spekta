@@ -180,10 +180,10 @@ class UserController extends Erp_Controller
         $username = $post['username'];
         $hasher = new PasswordHash(8, false);
         $oldPassword = $post['old_password'];
-        $password = $hasher->HashPassword($post['password']);
+        $password = $hasher->HashPassword(md5($post['password']));
         $user = $this->Main->getOne('users', ['username' => $username]);
 
-        $checkPassword = $hasher->CheckPassword($oldPassword, $user->password);
+        $checkPassword = $hasher->CheckPassword(md5($oldPassword), $user->password);
         if (!$checkPassword) {
             xmlResponse('error', 'Password lama tidak cocok!');
         }

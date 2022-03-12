@@ -210,6 +210,26 @@ class HrModel extends CI_Model
             $reqs[] = $overtime->jemputan;
         }
 
+        if($overtime->qc > 0) {
+            $reqs[] = $overtime->qc;
+        }
+
+        if($overtime->qa > 0) {
+            $reqs[] = $overtime->qa;
+        }
+
+        if($overtime->penandaan > 0) {
+            $reqs[] = $overtime->penandaan;
+        }
+
+        if($overtime->gbb > 0) {
+            $reqs[] = $overtime->gbb;
+        }
+
+        if($overtime->gbk > 0) {
+            $reqs[] = $overtime->gbk;
+        }
+
         $name = '';
         $array = [];
 

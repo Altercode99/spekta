@@ -70,13 +70,13 @@ class AuthController extends Erp_Controller
                         'empLoc' => $emp->location,
                         'locName' => $locName,
                         'picOvertime' => $picOvertime,
-                        'pltDepartment' => $plt ? $plt->department : null,
-                        'pltDeptId' => $plt ? $plt->department_id : null,
-                        'pltSubDepartment' => $plt ? $plt->sub_department : null,
-                        'pltSubId' => $plt ? $plt->sub_department_id : null,
-                        'pltDivision' => $plt ? $plt->division : null,
-                        'pltDivId' => $plt ? $plt->division_id : null,
-                        'pltRankId' => $plt ? $plt->rank_id : null,
+                        'pltDepartment' => $plt ? $plt->department : '-',
+                        'pltDeptId' => $plt ? $plt->department_id : '-',
+                        'pltSubDepartment' => $plt ? $plt->sub_department : '-',
+                        'pltSubId' => $plt ? $plt->sub_department_id : '-',
+                        'pltDivision' => $plt ? $plt->division : '-',
+                        'pltDivId' => $plt ? $plt->division_id : '-',
+                        'pltRankId' => $plt ? $plt->rank_id : '-',
                     ];
 
                     $this->session->set_userdata(SESSION_KEY, $sessionData);

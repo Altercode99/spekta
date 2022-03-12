@@ -19,11 +19,11 @@ $script = <<< "JS"
 
             //OVERTIME
             if(isHaveTrees("tnp_request_lembur")) {
-                overtimeSubItems.push({id: "tnp_request_lembur", text: "Request Lembur Produksi", icons: {file: "menu_icon"}});
+                overtimeSubItems.push({id: "tnp_request_lembur", text: "Request Lembur", icons: {file: "menu_icon"}});
             }
 
             if(isHaveTrees("tnp_input_lembur")) {
-                overtimeSubItems.push({id: "tnp_input_lembur", text: "Input Lembur", icons: {file: "menu_icon"}});
+                overtimeSubItems.push({id: "tnp_input_lembur", text: "Input Lembur (B)", icons: {file: "menu_icon"}});
             }
 
             //TREES

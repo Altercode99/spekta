@@ -66,33 +66,121 @@ class OvertimeController extends Erp_Controller
     public function getOTRequirement()
     {
         $params = getParam();
-        $reqs = $this->Hr->getAll("overtime_requirement")->result();
+        $reqs = $this->Hr->getWhere("overtime_requirement", ['table_code !=' => 'makan'])->result();
         $data = [];
         $data[] = [
             'type' => 'settings',
             'position' => 'label-right',
         ];
-
-        if (isset($params['mtn'])) {
-            foreach ($reqs as $req) {
-                if ($req->id == 2) {
-                    $data[] = [
-                        'type' => 'checkbox',
-                        'name' => $req->table_code,
-                        'value' => $req->id,
-                        'label' => $req->name,
-                    ];
+        if (isset($params['support'])) {
+            if ($params['support'] == 'mtn') {
+                foreach ($reqs as $req) {
+                    if($params['split'] == 'support'){
+                        if ($req->id == 2) {
+                            $data[] = [
+                                'type' => 'checkbox',
+                                'name' => $req->table_code,
+                                'value' => $req->id,
+                                'label' => $req->name,
+                            ];
+                        }
+                    }
+                }
+            } else if ($params['support'] == 'qc') {
+                foreach ($reqs as $req) {
+                    if ($req->id != 12) {
+                        if ($params['split'] == 'teknik') {
+                            if ($req->id >= 2 && $req->id <= 11) {
+                                $data[] = [
+                                    'type' => 'checkbox',
+                                    'name' => $req->table_code,
+                                    'value' => $req->id,
+                                    'label' => $req->name,
+                                ];
+                            }
+                        } else {
+                            if ($req->id >= 12 && $req->id <= 16) {
+                                $data[] = [
+                                    'type' => 'checkbox',
+                                    'name' => $req->table_code,
+                                    'value' => $req->id,
+                                    'label' => $req->name,
+                                ];
+                            }
+                        }
+                    }
+                }
+            } else if ($params['support'] == 'qa') {
+                foreach ($reqs as $req) {
+                    if ($req->id != 13) {
+                        if ($params['split'] == 'teknik') {
+                            if ($req->id >= 2 && $req->id <= 11) {
+                                $data[] = [
+                                    'type' => 'checkbox',
+                                    'name' => $req->table_code,
+                                    'value' => $req->id,
+                                    'label' => $req->name,
+                                ];
+                            }
+                        } else {
+                            if ($req->id >= 12 && $req->id <= 16) {
+                                $data[] = [
+                                    'type' => 'checkbox',
+                                    'name' => $req->table_code,
+                                    'value' => $req->id,
+                                    'label' => $req->name,
+                                ];
+                            }
+                        }
+                    }
+                }
+            } else if ($params['support'] == 'whs') {
+                foreach ($reqs as $req) {
+                    if ($req->id != 14 && $req->id != 15 && $req->id != 16) {
+                        if ($params['split'] == 'teknik') {
+                            if ($req->id >= 2 && $req->id <= 11) {
+                                $data[] = [
+                                    'type' => 'checkbox',
+                                    'name' => $req->table_code,
+                                    'value' => $req->id,
+                                    'label' => $req->name,
+                                ];
+                            }
+                        } else {
+                            if ($req->id >= 12 && $req->id <= 16) {
+                                $data[] = [
+                                    'type' => 'checkbox',
+                                    'name' => $req->table_code,
+                                    'value' => $req->id,
+                                    'label' => $req->name,
+                                ];
+                            }
+                        }
+                    }
                 }
             }
         } else {
-            foreach ($reqs as $req) {
-                if ($req->id != 1 && $req->id != 9 && $req->id != 10) {
-                    $data[] = [
-                        'type' => 'checkbox',
-                        'name' => $req->table_code,
-                        'value' => $req->id,
-                        'label' => $req->name,
-                    ];
+            if ($params['split'] == 'teknik') {
+                foreach ($reqs as $req) {
+                    if ($req->id >= 2 && $req->id <= 11) {
+                        $data[] = [
+                            'type' => 'checkbox',
+                            'name' => $req->table_code,
+                            'value' => $req->id,
+                            'label' => $req->name,
+                        ];
+                    }
+                }
+            } else if ($params['split'] == 'support') {
+                foreach ($reqs as $req) {
+                    if ($req->id >= 12 && $req->id <= 16) {
+                        $data[] = [
+                            'type' => 'checkbox',
+                            'name' => $req->table_code,
+                            'value' => $req->id,
+                            'label' => $req->name,
+                        ];
+                    }
                 }
             }
         }
@@ -106,13 +194,13 @@ class OvertimeController extends Erp_Controller
         $no = 1;
         foreach ($machines as $machine) {
             $xml .= "<row id='$machine->id'>";
-            $xml .= "<cell>". cleanSC($no) ."</cell>";
+            $xml .= "<cell>" . cleanSC($no) . "</cell>";
             $xml .= "<cell>0</cell>";
-            $xml .= "<cell>". cleanSC($machine->name) ."</cell>";
-            $xml .= "<cell>". cleanSC($machine->department) ."</cell>";
-            $xml .= "<cell>". cleanSC($machine->sub_department) ."</cell>";
-            $xml .= "<cell>". cleanSC($machine->division) ."</cell>";
-            $xml .= "<cell>". cleanSC("Gedung $machine->building Ruang $machine->room") ."</cell>";
+            $xml .= "<cell>" . cleanSC($machine->name) . "</cell>";
+            $xml .= "<cell>" . cleanSC($machine->department) . "</cell>";
+            $xml .= "<cell>" . cleanSC($machine->sub_department) . "</cell>";
+            $xml .= "<cell>" . cleanSC($machine->division) . "</cell>";
+            $xml .= "<cell>" . cleanSC("Gedung $machine->building Ruang $machine->room") . "</cell>";
             $xml .= "</row>";
             $no++;
         }
@@ -130,8 +218,8 @@ class OvertimeController extends Erp_Controller
         $start = genOvtDate($date, $post['start_date']);
         $end = genOvtDate($date, $post['end_date']);
 
-        if (countHour($start, $end, 'h') > 24) {
-            xmlResponse('invalid', 'Maksimum jam lembur adalah 24 jam!');
+        if (countHour($start, $end, 'h') > 12) {
+            xmlResponse('invalid', 'Maksimum jam lembur adalah 12 jam!');
         }
 
         $checkOvertimes = $this->Hr->getWhere('employee_overtimes', [
@@ -193,12 +281,17 @@ class OvertimeController extends Erp_Controller
             'ahu' => isset($post['ahu']) ? $post['ahu'] : 0,
             'compressor' => isset($post['compressor']) ? $post['compressor'] : 0,
             'pw' => isset($post['pw']) ? $post['pw'] : 0,
-            'jemputan' => $post['jemputan'],
+            'jemputan' => isset($post['jemputan']) ? $post['jemputan'] : 0,
             'dust_collector' => isset($post['dust_collector']) ? $post['dust_collector'] : 0,
             'wfi' => isset($post['wfi']) ? $post['wfi'] : 0,
-            'mechanic' => isset($post['machine_id']) ? 9 : 0,
-            'electric' => isset($post['machine_id']) && $post['sub_department_id'] != 5 ? 10 : 0,
+            'mechanic' => isset($post['mechanic']) ? $post['mechanic'] : 0,
+            'electric' => isset($post['electric']) ? $post['electric'] : 0,
             'hnn' => isset($post['hnn']) ? $post['hnn'] : 0,
+            'qc' => isset($post['qc']) ? $post['qc'] : 0,
+            'qa' => isset($post['qa']) ? $post['qa'] : 0,
+            'penandaan' => isset($post['penandaan']) ? $post['penandaan'] : 0,
+            'gbk' => isset($post['gbk']) ? $post['gbk'] : 0,
+            'gbk' => isset($post['gbk']) ? $post['gbk'] : 0,
             'status' => 'CREATED',
             'apv_spv' => 'CREATED',
             'apv_asman' => 'CREATED',
@@ -233,6 +326,11 @@ class OvertimeController extends Erp_Controller
             $mechanic = $overtime->mechanic > 0 ? '✓' : '-';
             $electric = $overtime->electric > 0 ? '✓' : '-';
             $hnn = $overtime->hnn > 0 ? '✓' : '-';
+            $qc = $overtime->qc > 0 ? '✓' : '-';
+            $qa = $overtime->qa > 0 ? '✓' : '-';
+            $penandaan = $overtime->penandaan > 0 ? '✓' : '-';
+            $gbk = $overtime->gbk > 0 ? '✓' : '-';
+            $gbk = $overtime->gbk > 0 ? '✓' : '-';
 
             $color = null;
             if ($overtime->status_day === 'Hari Libur') {
@@ -250,36 +348,41 @@ class OvertimeController extends Erp_Controller
             $rejectionNote = $overtime->rejection_note != '' ? $overtime->rejection_note : '-';
 
             $xml .= "<row id='$overtime->id'>";
-            $xml .= "<cell $color>". cleanSC($no) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->task_id) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->department) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->sub_department) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->division) ."</cell>";
-            $xml .= "<cell $color>". cleanSC("$overtime->personil Orang") ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->status_day) ."</cell>";
-            $xml .= "<cell $color>". cleanSC(toIndoDateDay($overtime->overtime_date)) ."</cell>";
-            $xml .= "<cell $color>". cleanSC(toIndoDateTime2($overtime->start_date)) ."</cell>";
-            $xml .= "<cell $color>". cleanSC(toIndoDateTime2($overtime->end_date)) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->notes) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($makan) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($steam) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($ahu) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($compressor) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($pw) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($jemputan) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($dust_collector) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($mechanic) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($electric) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($hnn) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->status) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($revisionHour) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($revisionNote) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($rejectionNote) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->emp1) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->emp2) ."</cell>";
-            $xml .= "<cell $color>". cleanSC(toIndoDateTime($overtime->created_at))."</cell>";
-            if(isset(getParam()['position']) && getParam()['position'] == 'tnp') {
-                $xml .= "<cell>". cleanSC($overtime->ref) ."</cell>";
+            $xml .= "<cell $color>" . cleanSC($no) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->task_id) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->department) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->sub_department) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->division) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC("$overtime->personil Orang") . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->status_day) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateDay($overtime->overtime_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->start_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->end_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->notes) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($makan) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($steam) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($ahu) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($compressor) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($pw) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($jemputan) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($dust_collector) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($mechanic) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($electric) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($hnn) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($qc) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($qa) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($penandaan) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($gbk) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($gbk) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->status) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($revisionHour) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($revisionNote) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($rejectionNote) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->emp1) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->emp2) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime($overtime->created_at)) . "</cell>";
+            if (isset(getParam()['position']) && getParam()['position'] == 'tnp') {
+                $xml .= "<cell>" . cleanSC($overtime->ref) . "</cell>";
             }
             $xml .= "</row>";
             $no++;
@@ -315,34 +418,34 @@ class OvertimeController extends Erp_Controller
             $machine2 = $overtime->machine_2 ? $overtime->machine_2 : '-';
             $meal = $overtime->meal > 0 ? "✓ ($overtime->total_meal x)" : '-';
             $xml .= "<row id='$overtime->id'>";
-            $xml .= "<cell $color>". cleanSC($no) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->emp_task_id) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->employee_name) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->department) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->sub_department) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->division) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($machine1) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($machine2) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->requirements) ."</cell>";
-            $xml .= "<cell $color>". cleanSC(toIndoDateDay($overtime->overtime_date))."</cell>";
-            $xml .= "<cell $color>". cleanSC(toIndoDateTime2($overtime->start_date))."</cell>";
-            $xml .= "<cell $color>". cleanSC(toIndoDateTime2($overtime->end_date))."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->status_day) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->effective_hour) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->break_hour) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->real_hour) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->overtime_hour) ."</cell>";
-            $xml .= "<cell $color>". cleanSC(toNumber($overtime->premi_overtime))."</cell>";
-            $xml .= "<cell $color>". cleanSC(toNumber($overtime->overtime_value))."</cell>";
-            $xml .= "<cell $color>". cleanSC($meal) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->notes) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->status) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($status_updater) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->emp1) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->emp2) ."</cell>";
-            $xml .= "<cell $color>". cleanSC(toIndoDateTime($overtime->created_at))."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->status_by) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->emp_id) ."</cell>";
+            $xml .= "<cell $color>" . cleanSC($no) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->emp_task_id) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->employee_name) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->department) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->sub_department) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->division) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($machine1) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($machine2) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->requirements) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateDay($overtime->overtime_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->start_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->end_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->status_day) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->effective_hour) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->break_hour) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->real_hour) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->overtime_hour) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toNumber($overtime->premi_overtime)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toNumber($overtime->overtime_value)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($meal) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->notes) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->status) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($status_updater) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->emp1) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->emp2) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime($overtime->created_at)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->status_by) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->emp_id) . "</cell>";
 
             $xml .= "</row>";
             $no++;
@@ -402,7 +505,7 @@ class OvertimeController extends Erp_Controller
         ], true);
         response([
             'status' => 'success',
-            'template' => $template
+            'template' => $template,
         ]);
     }
 
@@ -413,9 +516,9 @@ class OvertimeController extends Erp_Controller
         $no = 1;
         foreach ($machines as $machine) {
             $xml .= "<row id='$machine->id'>";
-            $xml .= "<cell>". cleanSC($no) ."</cell>";
-            $xml .= "<cell>". cleanSC($machine->name) ."</cell>";
-            $xml .= "<cell>". cleanSC("Gedung $machine->building Ruang $machine->room") ."</cell>";
+            $xml .= "<cell>" . cleanSC($no) . "</cell>";
+            $xml .= "<cell>" . cleanSC($machine->name) . "</cell>";
+            $xml .= "<cell>" . cleanSC("Gedung $machine->building Ruang $machine->room") . "</cell>";
             $xml .= "</row>";
             $no++;
         }
@@ -430,12 +533,12 @@ class OvertimeController extends Erp_Controller
         $no = 1;
         foreach ($emps as $emp) {
             $xml .= "<row id='$emp->id'>";
-            $xml .= "<cell>". cleanSC($no) ."</cell>";
+            $xml .= "<cell>" . cleanSC($no) . "</cell>";
             $xml .= "<cell>0</cell>";
-            $xml .= "<cell>". cleanSC($emp->employee_name) ."</cell>";
-            $xml .= "<cell>". cleanSC($emp->dept_name) ."</cell>";
-            $xml .= "<cell>". cleanSC($emp->sub_name) ."</cell>";
-            $xml .= "<cell>". cleanSC($emp->division_name) ."</cell>";
+            $xml .= "<cell>" . cleanSC($emp->employee_name) . "</cell>";
+            $xml .= "<cell>" . cleanSC($emp->dept_name) . "</cell>";
+            $xml .= "<cell>" . cleanSC($emp->sub_name) . "</cell>";
+            $xml .= "<cell>" . cleanSC($emp->division_name) . "</cell>";
             $xml .= "</row>";
             $no++;
         }
@@ -446,31 +549,46 @@ class OvertimeController extends Erp_Controller
     {
         $post = prettyText(getPost(), ['notes']);
         $overtime = $this->Hr->getDataById('employee_overtimes', $post['overtime_id']);
+        $ovtDateStart = date('Y-m-d', strtotime($overtime->start_date));
+        $ovtDateEnd = date('Y-m-d', strtotime($overtime->end_date));
+        $ovtClockStart = dtToFloat($overtime->start_date);
+        $ovtClockEnd = dtToFloat($overtime->end_date);
+        $curentClockStart = clockToFloat($post['start_date']);
+        $curentClockEnd = clockToFloat($post['end_date']);
 
-        $expDate = explode('-', $overtime->overtime_date);
-        $lastId = $this->Overtime->lastOt('employee_overtimes_detail', 'overtime_date', $overtime->overtime_date);
-        $start = genOvtDate($overtime->overtime_date, $post['start_date']);
-        $end = genOvtDate($overtime->overtime_date, $post['end_date']);
-
-        if (countHour($start, $end, 'h') > 24) {
-            xmlResponse('invalid', 'Maksimum jam lembur adalah 24 jam!');
-        }
-
-        $dateStart = new DateTime($start);
-        $dateEnd = new DateTime($end);
-        if ($dateEnd <= $dateStart) {
-            $end = addDayToDate($end, 1);
-            $newEnd = date('Y-m-d', strtotime($end));
-            $newOvtEnd = date('Y-m-d', strtotime($overtime->end_date));
-            if ($newEnd != $newOvtEnd) {
-                xmlResponse('invalid', 'Jam lembur tidak valid!');
+        if($ovtDateStart == $ovtDateEnd) {
+            $start = genOvtDate($overtime->overtime_date, $post['start_date']);
+            $end = genOvtDate($overtime->overtime_date, $post['end_date']);
+            $dateStart = new DateTime($start);
+            $dateEnd = new DateTime($end);
+            if ($dateEnd <= $dateStart) {
+                xmlResponse('invalid', 'Waktu selesai harus lebih besar dari waktu mulai!');
             }
         } else {
-            if ($dateStart >= $dateEnd) {
-                $newOvtEnd = date('Y-m-d', strtotime($overtime->end_date));
-                $timeStart = date('H:i:s', strtotime($dateStart));
-                $start = date('Y-m-d H:i:s', strtotime("$newOvtEnd $timeStart"));
+            if($curentClockStart < $ovtClockStart) {
+                $start = addDayToDate(genOvtDate($ovtDateStart, $post['start_date']), 1);
+            } else {
+                $start = genOvtDate($ovtDateStart, $post['start_date']);
             }
+
+            if($curentClockEnd > $ovtClockEnd) {
+                $end = backDayToDate(genOvtDate($ovtDateEnd, $post['end_date']), 1);
+            } else {
+                $end = genOvtDate($ovtDateEnd, $post['end_date']);
+            }
+
+            $dateStart = new DateTime($start);
+            $dateEnd = new DateTime($end);
+            if ($dateEnd <= $dateStart) {
+                xmlResponse('invalid', 'Waktu selesai harus lebih besar dari waktu mulai!');
+            }
+        }
+       
+        $expDate = explode('-', $overtime->overtime_date);
+        $lastId = $this->Overtime->lastOt('employee_overtimes_detail', 'overtime_date', $overtime->overtime_date);
+
+        if (countHour($start, $end, 'h') > 12) {
+            xmlResponse('invalid', 'Maksimum jam lembur adalah 12 jam!');
         }
 
         $personils = explode(',', $post['personil_id']);
@@ -487,7 +605,7 @@ class OvertimeController extends Erp_Controller
         $machine = isset($post['machine_id']) ? explode(',', $post['machine_id']) : [];
         $machine_1 = isset($machine[0]) ? $machine[0] : 0;
         $machine_2 = isset($machine[1]) ? $machine[1] : 0;
-        $requirements = isset($post['requirements']) && $post['requirements'] !== ''? $post['requirements'] : '-';
+        $requirements = isset($post['requirements']) && $post['requirements'] !== '' ? $post['requirements'] : '-';
 
         $catheringPrice = $this->General->getOne('catherings', ['status' => 'ACTIVE']);
         $catPrice = $catheringPrice ? $catheringPrice->price : 0;
@@ -496,7 +614,7 @@ class OvertimeController extends Erp_Controller
         foreach ($personils as $key => $id) {
             $emp = $this->Hr->getDataById('employees', $id);
             $taskId = sprintf('%03d', ($lastId + $no)) . '/OT-EMP/' . empLoc() . '/' . toRomawi($expDate[1]) . '/' . $expDate[0];
-            $overtimeHour = totalHour($id, $overtime->overtime_date, $start, $end, $post['start_date'], $post['end_date']);
+            $overtimeHour = totalHour($id, $start, $end, $post['start_date'], $post['end_date']);
 
             $data[] = [
                 'location' => empLoc(),
@@ -511,7 +629,7 @@ class OvertimeController extends Erp_Controller
                 'machine_1' => $machine_1,
                 'machine_2' => $machine_2,
                 'requirements' => $requirements,
-                'overtime_date' => $overtime->overtime_date,
+                'overtime_date' => date('Y-m-d', strtotime($start)),
                 'start_date' => $start,
                 'end_date' => $end,
                 'status_day' => $overtimeHour['status_day'],
@@ -524,7 +642,8 @@ class OvertimeController extends Erp_Controller
                 'meal' => $overtimeHour['total_meal'] * $catPrice,
                 'total_meal' => $overtimeHour['total_meal'],
                 'notes' => $post['notes'],
-                'status' => 'CREATED',
+                'status' => isset($post['status']) ? $post['status'] : 'CREATED',
+                'revision_status' => isset($post['status']) ? $post['status'] : 'NONE',
                 'created_by' => empId(),
                 'updated_by' => empId(),
                 'updated_at' => date('Y-m-d H:i:s'),
@@ -580,10 +699,10 @@ class OvertimeController extends Erp_Controller
             $data['apv_spv_nip'] = '-';
             $data['apv_spv_date'] = date('Y-m-d H:i:s');
         } else {
-            if($overtime->apv_spv_nip == '' && !$sendEmail) {
-                if($isHaveSpv) {
+            if ($overtime->apv_spv_nip == '' && !$sendEmail) {
+                if ($isHaveSpv) {
                     $this->ovtlib->sendEmailAppv($isHaveSpv->email, 'Supervisor', 'spv', $overtime, $post->taskId);
-                } else if($isHaveSpvPLT) {
+                } else if ($isHaveSpvPLT) {
                     $email = $this->Hr->getDataById('employees', $isHaveSpvPLT->emp_id)->email;
                     $this->ovtlib->sendEmailAppv($email, 'Supervisor', 'spv', $overtime, $post->taskId);
                 }
@@ -598,12 +717,30 @@ class OvertimeController extends Erp_Controller
             $data['apv_asman_nip'] = '-';
             $data['apv_asman_date'] = date('Y-m-d H:i:s');
         } else {
-            if($overtime->apv_asman_nip == '' && !$sendEmail) {
-                if($isHaveAsman) {
+            if ($overtime->apv_asman_nip == '' && !$sendEmail) {
+                if ($isHaveAsman) {
                     $this->ovtlib->sendEmailAppv($isHaveAsman->email, 'ASMAN', 'asman', $overtime, $post->taskId);
-                } else if($isHaveAsmanPLT){
+                } else if ($isHaveAsmanPLT) {
                     $email = $this->Hr->getDataById('employees', $isHaveAsmanPLT->emp_id)->email;
                     $this->ovtlib->sendEmailAppv($email, 'ASMAN', 'asman', $overtime, $post->taskId);
+                }
+                $sendEmail = true;
+            }
+        }
+
+        $isHavePPIC = $this->Hr->getOne('employees', ['sub_department_id' => 9], '*', ['rank_id' => ['3', '4']]);
+        $isHavePPICPLT = $this->Hr->getOne('employee_ranks', ['sub_department_id' => 9, 'status' => 'ACTIVE'], '*', ['rank_id' => ['3', '4']]);
+        if ($overtime->sub_department_id == 0 || ($overtime->sub_department_id != 1 && $overtime->sub_department_id != 2 && $overtime->sub_department_id != 3 && $overtime->sub_department_id != 13) || (!$isHavePPIC && !$isHavePPICPLT)) {
+            $data['apv_ppic'] = 'BY PASS';
+            $data['apv_ppic_nip'] = '-';
+            $data['apv_ppic_date'] = date('Y-m-d H:i:s');
+        } else {
+            if ($overtime->apv_ppic_nip == '' && !$sendEmail) {
+                if ($isHavePPIC) {
+                    $this->ovtlib->sendEmailAppv($isHavePPIC->email, 'PPIC', 'ppic', $overtime, $post->taskId);
+                } else if ($isHavePPICPLT) {
+                    $email = $this->Hr->getDataById('employees', $isHavePPICPLT->emp_id)->email;
+                    $this->ovtlib->sendEmailAppv($email, 'PPIC', 'ppic', $overtime, $post->taskId);
                 }
                 $sendEmail = true;
             }
@@ -622,10 +759,10 @@ class OvertimeController extends Erp_Controller
             $data['apv_mgr_nip'] = '-';
             $data['apv_mgr_date'] = date('Y-m-d H:i:s');
         } else {
-            if($overtime->apv_mgr_nip == '' && !$sendEmail) {
-                if($isHaveAsman) {
+            if ($overtime->apv_mgr_nip == '' && !$sendEmail) {
+                if ($isHaveAsman) {
                     $this->ovtlib->sendEmailAppv($isHaveMgr->email, 'Manager', 'mgr', $overtime, $post->taskId);
-                } else if($isHaveMgrPLT){
+                } else if ($isHaveMgrPLT) {
                     $email = $this->Hr->getDataById('employees', $isHaveMgrPLT->emp_id)->email;
                     $this->ovtlib->sendEmailAppv($email, 'Manager', 'mgr', $overtime, $post->taskId);
                 }
@@ -643,12 +780,13 @@ class OvertimeController extends Erp_Controller
     public function cancelOvertime()
     {
         $post = fileGetContent();
-        $tnpTaskId = $this->Hr->getOne('employee_overtimes', ['ref' => $post->taskId])->task_id;
+        $tnp = $this->Hr->getOne('employee_overtimes', ['ref' => $post->taskId]);
+        if($tnp) {
+            $this->Hr->update('employee_overtimes', ['status' => 'CANCELED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['task_id' => $tnp->task_id]);
+            $this->Hr->update('employee_overtimes_detail', ['status' => 'CANCELED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['task_id' => $tnp->task_id]);
+        }
         $this->Hr->update('employee_overtimes', ['status' => 'CANCELED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['task_id' => $post->taskId]);
         $this->Hr->update('employee_overtimes_detail', ['status' => 'CANCELED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['task_id' => $post->taskId]);
-
-        $this->Hr->update('employee_overtimes', ['status' => 'CANCELED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['task_id' => $tnpTaskId]);
-        $this->Hr->update('employee_overtimes_detail', ['status' => 'CANCELED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['task_id' => $tnpTaskId]);
         response(['status' => 'success', 'message' => 'Lemburan berhasil di batalkan']);
     }
 
@@ -677,6 +815,11 @@ class OvertimeController extends Erp_Controller
             $mechanic = $overtime->mechanic > 0 ? '✓' : '-';
             $electric = $overtime->electric > 0 ? '✓' : '-';
             $hnn = $overtime->hnn > 0 ? '✓' : '-';
+            $qc = $overtime->qc > 0 ? '✓' : '-';
+            $qa = $overtime->qa > 0 ? '✓' : '-';
+            $penandaan = $overtime->penandaan > 0 ? '✓' : '-';
+            $gbk = $overtime->gbk > 0 ? '✓' : '-';
+            $gbk = $overtime->gbk > 0 ? '✓' : '-';
 
             $color = null;
             if ($overtime->status_day === 'Hari Libur') {
@@ -701,7 +844,7 @@ class OvertimeController extends Erp_Controller
                 $mgrAppv = "$overtime->apv_mgr By $overtime->mgr @" . toIndoDateTime3($overtime->apv_mgr_date);
             } else if ($overtime->apv_mgr_nip && $overtime->apv_mgr_nip === '-') {
                 $mgrAppv = "$overtime->apv_mgr By Sistem @" . toIndoDateTime3($overtime->apv_mgr_date);
-                
+
             }
 
             $asmanAppv = '-';
@@ -709,6 +852,13 @@ class OvertimeController extends Erp_Controller
                 $asmanAppv = "$overtime->apv_asman By $overtime->asman @" . toIndoDateTime3($overtime->apv_asman_date);
             } else if ($overtime->apv_asman_nip && $overtime->apv_asman_nip === '-') {
                 $asmanAppv = "$overtime->apv_asman By Sistem @" . toIndoDateTime3($overtime->apv_asman_date);
+            }
+
+            $ppicAppv = '-';
+            if ($overtime->apv_ppic_nip && $overtime->apv_ppic_nip !== '-') {
+                $ppicAppv = "$overtime->apv_ppic By $overtime->ppic @" . toIndoDateTime3($overtime->apv_ppic_date);
+            } else if ($overtime->apv_ppic_nip && $overtime->apv_ppic_nip === '-') {
+                $ppicAppv = "$overtime->apv_ppic By Sistem @" . toIndoDateTime3($overtime->apv_ppic_date);
             }
 
             $spvAppv = '-';
@@ -720,68 +870,96 @@ class OvertimeController extends Erp_Controller
 
             $isSpvBySys = $overtime->apv_mgr_nip && $overtime->apv_mgr_nip === '-';
             $isAsmanBySys = $overtime->apv_asman_nip && $overtime->apv_asman_nip === '-';
+            $isPPICBySys = $overtime->apv_ppic_nip && $overtime->apv_ppic_nip === '-';
             $isMgrBySys = $overtime->apv_mgr_nip && $overtime->apv_mgr_nip === '-';
 
-            if($overtime->apv_mgr_nip) {
-                if(!$isMgrBySys) {
+            if ($overtime->apv_mgr_nip) {
+                if (!$isMgrBySys) {
                     $appvStatus = "bgColor='#d968b1'"; //mgr
                 } else {
-                    if($overtime->apv_asman_nip) {
-                        $appvStatus = "bgColor='#d968b1'"; //mgr
-                    } else if($overtime->apv_spv_nip){
+                    if ($overtime->sub_department_id == 1 || $overtime->sub_department_id == 2 || $overtime->sub_department_id == 3 || $overtime->sub_department_id == 13) {
+                        if ($overtime->apv_ppic_nip) {
+                            $appvStatus = "bgColor='#d968b1'"; //mgr
+                        } else if ($overtime->apv_asman_nip) {
+                            $appvStatus = "bgColor='#db8a10'"; //asman
+                        } else if ($overtime->apv_spv_nip) {
+                            $appvStatus = "bgColor='#cedb10'"; //spv
+                        }
+                    } else {
+                        if ($overtime->apv_asman_nip) {
+                            $appvStatus = "bgColor='#d968b1'"; //asman
+                        } else if ($overtime->apv_spv_nip) {
+                            $appvStatus = "bgColor='#cedb10'"; //spv
+                        }
+                    }
+                }
+            } else if ($overtime->apv_ppic_nip) {
+                if (!$isPPICBySys) {
+                    $appvStatus = "bgColor='#1fb3a5'"; //ppic
+                } else {
+                    if ($overtime->apv_asman_nip) {
+                        $appvStatus = "bgColor='#1fb3a5'"; //asman
+                    } else if ($overtime->apv_spv_nip) {
                         $appvStatus = "bgColor='#cedb10'"; //spv
                     }
                 }
-            } else if($overtime->apv_asman_nip) {
-                if(!$isAsmanBySys) {
+            } else if ($overtime->apv_asman_nip) {
+                if (!$isAsmanBySys) {
                     $appvStatus = "bgColor='#db8a10'"; //asman
                 } else {
-                    if($overtime->apv_spv_nip) {
+                    if ($overtime->apv_spv_nip) {
                         $appvStatus = "bgColor='#db8a10'"; //asman
                     }
                 }
-            } else if($overtime->apv_spv_nip){
+            } else if ($overtime->apv_spv_nip) {
                 $appvStatus = "bgColor='#cedb10'"; //spv
             }
-            
+
             $changeTime = $overtime->change_time !== '' ? $overtime->change_time : '-';
             $rejectionNote = $overtime->rejection_note !== '' ? $overtime->rejection_note : '-';
 
             $xml .= "<row id='$overtime->id'>";
-            $xml .= "<cell $appvStatus>". cleanSC($no) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->task_id) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->department) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->sub_department) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->division) ."</cell>";
-            $xml .= "<cell $color>". cleanSC("$overtime->personil Orang") ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->status_day) ."</cell>";
-            $xml .= "<cell $color>". cleanSC(toIndoDateDay($overtime->overtime_date))."</cell>";
-            $xml .= "<cell $color>". cleanSC(toIndoDateTime2($overtime->start_date))."</cell>";
-            $xml .= "<cell $color>". cleanSC(toIndoDateTime2($overtime->end_date))."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->notes) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($makan) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($steam) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($ahu) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($compressor) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($pw) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($jemputan) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($dust_collector) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($mechanic) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($electric) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($hnn) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->status) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($spvAppv) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($asmanAppv) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($mgrAppv) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($headAppv) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($changeTime) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($rejectionNote) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->emp1) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->emp2) ."</cell>";
-            $xml .= "<cell $color>". cleanSC(toIndoDateTime($overtime->created_at))."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->apv_spv_nip) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->apv_asman_nip) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->apv_mgr_nip) ."</cell>";
+            $xml .= "<cell $appvStatus>" . cleanSC($no) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->task_id) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->department) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->sub_department) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->division) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC("$overtime->personil Orang") . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->status_day) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateDay($overtime->overtime_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->start_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->end_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->notes) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($makan) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($steam) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($ahu) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($compressor) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($pw) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($jemputan) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($dust_collector) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($mechanic) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($electric) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($hnn) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($qc) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($qa) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($penandaan) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($gbk) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($gbk) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->status) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($spvAppv) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($asmanAppv) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($ppicAppv) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($mgrAppv) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($headAppv) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($changeTime) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($rejectionNote) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->emp1) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->emp2) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime($overtime->created_at)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->apv_spv_nip) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->apv_asman_nip) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->apv_ppic_nip) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->apv_mgr_nip) . "</cell>";
             $xml .= "</row>";
             $no++;
         }
@@ -829,6 +1007,22 @@ class OvertimeController extends Erp_Controller
 
         $empData = ['status' => 'CREATED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')];
         $this->Hr->update('employee_overtimes_detail', $empData, ['task_id' => $post->taskId], null, ['status' => ['CANCELED', 'REJECTED']]);
+
+        $requestor = $this->Hr->getDataById('employees', empId());
+        $overtime = $this->Overtime->getOvertime(['equal_task_id' => $post->taskId])->row();
+        $emp = $this->Hr->getDataById('employees', $overtime->created_by);
+        $message = $this->load->view('html/overtime/email/back_to_admin', [
+            'overtime' => $overtime, 'revisionNote' => $post->revisionNote, 
+            'emp' => $emp, 'requestor' => $requestor, 'location' => locName()], true);
+        $data = [
+            'alert_name' => 'OVERTIME_REVISION_REQUEST',
+            'email_to' => $emp->email,
+            'subject' => "Request Revisi Lembur (Task ID: $overtime->task_id) From ",
+            'subject_name' => "Spekta Alert: Request Revisi Lembur (Task ID: $overtime->task_id)",
+            'message' => $message,
+        ];
+        $insert = $this->Main->create('email', $data);
+
         response(['status' => 'success', 'message' => 'Lemburan berhasil di kembalikan ke Admin Lembur']);
     }
 
@@ -836,19 +1030,27 @@ class OvertimeController extends Erp_Controller
     {
         $post = fileGetContent();
         $rankId = $this->auth->rankId;
+        $subId = $this->auth->subId;
 
         if ($this->auth->role === "admin" && $rankId > 6) {
             response(['error' => 'success', 'message' => 'Silahkan ganti privilage anda menjadi PIC lemburan!']);
         }
 
+        $overtime = $this->Overtime->getOvertime(['equal_task_id' => $post->taskId])->row();
         if ($rankId == 5 || $rankId == 6) {
             $columnApv = 'apv_spv';
             $columnApvNip = 'apv_spv_nip';
             $columnApvDate = 'apv_spv_date';
         } else if ($rankId == 3 || $rankId == 4) {
-            $columnApv = 'apv_asman';
-            $columnApvNip = 'apv_asman_nip';
-            $columnApvDate = 'apv_asman_date';
+            if ($subId == 9 && ($overtime->sub_department_id == 1 || $overtime->sub_department_id == 2 || $overtime->sub_department_id == 3 || $overtime->sub_department_id == 13)) {
+                $columnApv = 'apv_ppic';
+                $columnApvNip = 'apv_ppic_nip';
+                $columnApvDate = 'apv_ppic_date';
+            } else {
+                $columnApv = 'apv_asman';
+                $columnApvNip = 'apv_asman_nip';
+                $columnApvDate = 'apv_asman_date';
+            }
         } else if ($rankId == 2) {
             $columnApv = 'apv_mgr';
             $columnApvNip = 'apv_mgr_nip';
@@ -878,27 +1080,23 @@ class OvertimeController extends Erp_Controller
         $this->Hr->update('employee_overtimes', $data, ['task_id' => $post->taskId]);
         $this->Hr->update('employee_overtimes_detail', $empData, ['task_id' => $post->taskId, 'status !=' => 'CANCELED']);
 
-        $overtime = $this->Overtime->getOvertime(['equal_task_id' => $post->taskId])->row();
-        if($columnApv == 'apv_spv') {
-            $isHaveAsman = $this->Hr->getOne('employees', ['sub_department_id' => $overtime->sub_department_id], '*', ['rank_id' => ['3', '4']]);
-            $isHaveAsmanPLT = $this->Hr->getOne('employee_ranks', ['sub_department_id' => $overtime->sub_department_id, 'status' => 'ACTIVE'], '*', ['rank_id' => ['3', '4']]);
-            if($overtime->apv_asman_nip == '' && ($isHaveAsman || $isHaveAsmanPLT)) {
-                $this->ovtlib->sendEmailReject('ASMAN', 'asman', $overtime, $post->taskId);
-            }
-        } else if ($columnApv == 'apv_asman') {
-            $isHaveMgr = $this->Hr->getOne('employees', ['department_id' => $overtime->department_id, 'rank_id' => 2]);
-            $isHaveMgrPLT = $this->Hr->getOne('employee_ranks', ['department_id' => $overtime->department_id, 'rank_id' => 2, 'status' => 'ACTIVE']);
-            if($overtime->apv_mgr_nip == '' && ($isHaveMgr && !$isHaveMgrPLT)) {
-                $this->ovtlib->sendEmailReject('Manager', 'mgr', $overtime, $post->taskId);
-            }
-        } else if($columnApv == 'apv_mgr') {
-            $isHaveHead = $this->Hr->getOne('employees', ['rank_id' => 1]);
-            $isHaveHeadPLT = $this->Hr->getOne('employee_ranks', ['rank_id' => 1, 'status' => 'ACTIVE']);
-            if($overtime->apv_head_nip == '' && ($isHaveHead || $isHaveHeadPLT)) {
-                $this->ovtlib->sendEmailReject('Plant Manager', 'head', $overtime, $post->taskId);
-            }
+        $ref = $this->Hr->getOne('employee_overtimes', ['ref' => $post->taskId]);
+        if ($ref) {
+            $this->Hr->update('employee_overtimes', $data, ['ref' => $post->taskId]);
+            $this->Hr->update('employee_overtimes_detail', $empData, ['task_id' => $ref->task_id, 'status !=' => 'CANCELED']);
         }
 
+        if ($columnApv == 'apv_spv') {
+            $this->ovtlib->sendEmailReject('Supervisor', 'spv', $overtime, $post->taskId);
+        } else if ($columnApv == 'apv_asman') {
+            $this->ovtlib->sendEmailReject('ASMAN', 'asman', $overtime, $post->taskId);
+        } else if ($columnApv == 'apv_ppic') {
+            $this->ovtlib->sendEmailReject('PPIC', 'ppic', $overtime, $post->taskId);
+        } else if ($columnApv == 'apv_mgr') {
+            $this->ovtlib->sendEmailReject('Manager', 'mgr', $overtime, $post->taskId);
+        } else if ($columnApv == 'apv_head') {
+            $this->ovtlib->sendEmailReject('Plant Manager', 'head', $overtime, $post->taskId);
+        }
         response(['status' => 'success', 'message' => 'Lemburan berhasil di batalkan']);
     }
 
@@ -912,7 +1110,7 @@ class OvertimeController extends Erp_Controller
     public function updatePersonilNeeded()
     {
         $post = getPost();
-        $totalPersonil = $this->Hr->countWhere('employee_overtimes_detail', ['task_id' => $post['task_id']]);
+        $totalPersonil = $this->Hr->countWhere('employee_overtimes_detail', ['task_id' => $post['task_id']], ['status' => ['CREATED', 'PROCESS']]);
         if ($post['personil'] < $totalPersonil) {
             xmlResponse('error', 'Jumlah personil kurang dari total personil yang sudah dilemburkan!');
         }
@@ -973,23 +1171,26 @@ class OvertimeController extends Erp_Controller
     {
         $post = getPost();
         $overtime = $this->Hr->getDataById('employee_overtimes_detail', $post['id']);
-        $startDate = genOvtDate(date('Y-m-d', strtotime($overtime->start_date)), $post['start_date']);
-        $endDate = genOvtDate(date('Y-m-d', strtotime($overtime->end_date)), $post['end_date']);
-
-        $checkStart = $this->Hr->getOne('employee_overtimes', ['task_id' => $overtime->task_id, 'start_date >' => $overtime->start_date]);
+        $startDate = genOvtDate(date('Y-m-d', strtotime(doToMysqlDate($post['labelStartDetail']))), $post['start_date']);
+        $endDate = genOvtDate(date('Y-m-d', strtotime(doToMysqlDate($post['labelEndDetail']))), $post['end_date']);
+        $checkStart = $this->Hr->getOne('employee_overtimes', ['task_id' => $overtime->task_id, 'start_date >' => $startDate]);
         if ($checkStart) {
             xmlResponse('error', "Waktu lembur awal karyawan lebih kecil dari waktu perintah lembur!");
         }
 
-        $checkEnd = $this->Hr->getOne('employee_overtimes', ['task_id' => $overtime->task_id, 'end_date <' => $overtime->end_date]);
+        $checkEnd = $this->Hr->getOne('employee_overtimes', ['task_id' => $overtime->task_id, 'end_date <' => $endDate]);
         if ($checkEnd) {
             xmlResponse('error', "Waktu lembur akhir karyawan lebih beasr dari waktu perintah lembur!");
         }
+        
+        if(new DateTime($endDate) < new DateTime($startDate)) {
+            xmlResponse('error', "Waktu selesai harus lebih besar dari waktu mulai!");
+        }
 
-        $overtimeHour = totalHour($overtime->emp_id, $overtime->overtime_date, $startDate, $endDate, $post['start_date'], $post['end_date']);
+        $overtimeHour = totalHour($overtime->emp_id, $startDate, $endDate, $post['start_date'], $post['end_date']);
         $catPrice = 0;
         $catheringPrice = $this->General->getOne('catherings', ['status' => 'ACTIVE']);
-        if($catheringPrice) {
+        if ($catheringPrice) {
             $catPrice = $catheringPrice->price;
         }
 
@@ -1007,6 +1208,7 @@ class OvertimeController extends Erp_Controller
             'total_meal' => $overtimeHour['total_meal'],
             'status_by' => empNip(),
             'change_time' => 1,
+            'overtime_date' => date('Y-m-d', strtotime($startDate))
         ], $post['id']);
 
         xmlResponse('updated', "Berhasil update jam lembur $overtime->emp_task_id");
@@ -1017,20 +1219,28 @@ class OvertimeController extends Erp_Controller
         $post = fileGetContent();
         $taskId = $post->taskId;
         $rankId = $this->auth->rankId;
+        $subId = $this->auth->subId; // 1 Produksi
         $pltRankId = $this->auth->pltRankId;
 
         if ($this->auth->role === "admin" && $rankId > 6 && $pltRankId > 6) {
             response(['error' => 'success', 'message' => 'Silahkan ganti privilage anda menjadi PIC lemburan!']);
         }
 
+        $overtime = $this->Overtime->getOvertime(['equal_task_id' => $post->taskId])->row();
         if ($rankId == 5 || $rankId == 6 || $pltRankId == 5 || $pltRankId == 6) {
             $columnApv = 'apv_spv';
             $columnApvNip = 'apv_spv_nip';
             $columnApvDate = 'apv_spv_date';
         } else if ($rankId == 3 || $rankId == 4 || $pltRankId == 3 || $pltRankId == 4) {
-            $columnApv = 'apv_asman';
-            $columnApvNip = 'apv_asman_nip';
-            $columnApvDate = 'apv_asman_date';
+            if ($subId == 9 && ($overtime->sub_department_id == 1 || $overtime->sub_department_id == 2 || $overtime->sub_department_id == 3 || $overtime->sub_department_id == 13)) {
+                $columnApv = 'apv_ppic';
+                $columnApvNip = 'apv_ppic_nip';
+                $columnApvDate = 'apv_ppic_date';
+            } else {
+                $columnApv = 'apv_asman';
+                $columnApvNip = 'apv_asman_nip';
+                $columnApvDate = 'apv_asman_date';
+            }
         } else if ($rankId == 2 || $pltRankId == 2) {
             $columnApv = 'apv_mgr';
             $columnApvNip = 'apv_mgr_nip';
@@ -1054,42 +1264,58 @@ class OvertimeController extends Erp_Controller
         $update = $this->Hr->update('employee_overtimes', $data, ['task_id' => $taskId]);
         if ($update) {
             if ($rankId == 1 || $pltRankId == 1) {
-                $this->Hr->update('employee_overtimes_detail', ['status' => 'CLOSED'], ['task_id' => $taskId], null, ['status' => ['CANCELED', 'REJECTED']]);
+                $this->Hr->update('employee_overtimes_detail', ['status' => 'CLOSED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['task_id' => $taskId], null, ['status' => ['CANCELED', 'REJECTED']]);
             }
-
-            $overtime = $this->Overtime->getOvertime(['equal_task_id' => $post->taskId])->row();
-            if($columnApv == 'apv_spv') {
+            if ($columnApv == 'apv_spv') {
                 $isHaveAsman = $this->isHaveAsman($overtime, $post);
-                if(!$isHaveAsman) {
+                if (!$isHaveAsman) {
                     $isHaveMgr = $this->isHaveMgr($overtime, $post);
-                    if(!$isHaveMgr) {
+                    if (!$isHaveMgr) {
                         $this->isHaveHead($overtime, $post);
                     }
                 }
-            } else if ($columnApv == 'apv_asman') {
-                if($overtime->sub_department_id != 5 && $overtime->ref == "") {
-                    $picEmails = $this->Main->getOne('pics', ['code' => 'overtime', 'sub_department_id' => 5])->pic_emails;
-                    $tokenTaskId = simpleEncrypt($post->taskId);
-                    $linkAction = LIVE_URL . "index.php?c=PublicController&m=generateOvertime&token=$tokenTaskId";
-                    $tokenLink = simpleEncrypt($linkAction);
-                    $link = LIVE_URL . "index.php?c=PublicController&m=pinVerification&token=$tokenLink";
-                    $message = $this->load->view('html/overtime/email/generate_overtime', ['overtime' => $overtime, 'link' => $link], true);
-                    $services = $this->HrModel->getRequestList($overtime);
-                    $data = [
-                        'alert_name' => 'OVERTIME_REQUEST',
-                        'email_to' => $picEmails,
-                        'subject' => "Request Lembur (Task ID: $overtime->task_id) Untuk Support Produksi $services[string]",
-                        'subject_name' => "Spekta Alert: Request Lembur (Task ID: $overtime->task_id) Untuk Support Produksi $services[string]",
-                        'message' => $message,
-                    ];
-                    $insert = $this->Main->create('email', $data);
-                }
+            } else if ($columnApv == 'apv_asman' || $columnApv == 'apv_ppic') {
+                if ($columnApv == 'apv_asman') {
+                    if ($overtime->sub_department_id != 5 && $overtime->sub_department_id != 7 && $overtime->sub_department_id != 8 &&
+                        $overtime->sub_department_id != 13 && $overtime->ref == "") {
+                        if (isMtnSupport($overtime)) {
+                            $this->requestOvertime($overtime, 5);
+                        }
 
-                $isHaveMgr = $this->isHaveMgr($overtime, $post);
-                if(!$isHaveMgr) {
-                    $this->isHaveHead($overtime, $post);
+                        if (isQaSupport($overtime)) {
+                            $this->requestOvertime($overtime, 7);
+                        }
+
+                        if (isQcSupport($overtime)) {
+                            $this->requestOvertime($overtime, 8);
+                        }
+
+                        if (isWhsSupport($overtime)) {
+                            $this->requestOvertime($overtime, 13);
+                        }
+                    }
+
+                    if ($overtime->sub_department_id == 1 || $overtime->sub_department_id == 2 || $overtime->sub_department_id == 3 || $overtime->sub_department_id == 13) {
+                        $isHavePPIC = $this->isHavePPIC($overtime, $post);
+                        if (!$isHavePPIC) {
+                            $isHaveMgr = $this->isHaveMgr($overtime, $post);
+                            if (!$isHaveMgr) {
+                                $this->isHaveHead($overtime, $post);
+                            }
+                        }
+                    } else {
+                        $isHaveMgr = $this->isHaveMgr($overtime, $post);
+                        if (!$isHaveMgr) {
+                            $this->isHaveHead($overtime, $post);
+                        }
+                    }
+                } else if ($columnApv == 'apv_ppic') {
+                    $isHaveMgr = $this->isHaveMgr($overtime, $post);
+                    if (!$isHaveMgr) {
+                        $this->isHaveHead($overtime, $post);
+                    }
                 }
-            } else if($columnApv == 'apv_mgr') {
+            } else if ($columnApv == 'apv_mgr') {
                 $this->isHaveHead($overtime, $post);
             }
             response(['status' => 'success', 'message' => 'Approve lemburan berhasil']);
@@ -1098,17 +1324,54 @@ class OvertimeController extends Erp_Controller
         }
     }
 
+    public function requestOvertime($overtime, $subId)
+    {
+        $picEmails = $this->Main->getOne('pics', ['code' => 'overtime', 'sub_department_id' => $subId])->pic_emails;
+        $tokenTaskId = simpleEncrypt($overtime->task_id);
+        $linkAction = LIVE_URL . "index.php?c=PublicController&m=generateOvertime&token=$tokenTaskId";
+        $tokenLink = simpleEncrypt($linkAction);
+        $link = LIVE_URL . "index.php?c=PublicController&m=pinVerification&token=$tokenLink";
+        $message = $this->load->view('html/overtime/email/generate_overtime', ['overtime' => $overtime, 'link' => $link, 'subId' => $subId], true);
+        $services = $this->HrModel->getRequestList($overtime);
+        $data = [
+            'alert_name' => 'OVERTIME_REQUEST',
+            'email_to' => $picEmails,
+            'subject' => "Request Lembur (Task ID: $overtime->task_id) Untuk Support Produksi $services[string]",
+            'subject_name' => "Spekta Alert: Request Lembur (Task ID: $overtime->task_id) Untuk Support Produksi $services[string]",
+            'message' => $message,
+        ];
+        $insert = $this->Main->create('email', $data);
+    }
+
     public function isHaveAsman($overtime, $post)
     {
         $isHaveAsman = $this->Hr->getOne('employees', ['sub_department_id' => $overtime->sub_department_id], '*', ['rank_id' => ['3', '4']]);
         $isHaveAsmanPLT = $this->Hr->getOne('employee_ranks', ['sub_department_id' => $overtime->sub_department_id, 'status' => 'ACTIVE'], '*', ['rank_id' => ['3', '4']]);
-        if($overtime->apv_asman_nip == '' && ($isHaveAsman || $isHaveAsmanPLT)) {
-            if($isHaveAsman) {
+        if ($overtime->apv_asman_nip == '' && ($isHaveAsman || $isHaveAsmanPLT)) {
+            if ($isHaveAsman) {
                 $this->ovtlib->sendEmailAppv($isHaveAsman->email, 'ASMAN', 'asman', $overtime, $post->taskId);
                 return true;
-            } else if($isHaveAsmanPLT){
+            } else if ($isHaveAsmanPLT) {
                 $email = $this->Hr->getDataById('employees', $isHaveAsmanPLT->emp_id)->email;
                 $this->ovtlib->sendEmailAppv($email, 'ASMAN', 'asman', $overtime, $post->taskId);
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function isHavePPIC($overtime, $post)
+    {
+        $isHavePPIC = $this->Hr->getOne('employees', ['sub_department_id' => 9], '*', ['rank_id' => ['3', '4']]);
+        $isHavePPICPLT = $this->Hr->getOne('employee_ranks', ['sub_department_id' => 9, 'status' => 'ACTIVE'], '*', ['rank_id' => ['3', '4']]);
+        if ($overtime->apv_ppic_nip == '' && ($isHavePPIC || $isHavePPICPLT)) {
+            if ($isHavePPIC) {
+                $this->ovtlib->sendEmailAppv($isHavePPIC->email, 'PPIC', 'ppic', $overtime, $post->taskId);
+                return true;
+            } else if ($isHavePPICPLT) {
+                $email = $this->Hr->getDataById('employees', $isHavePPIC->emp_id)->email;
+                $this->ovtlib->sendEmailAppv($email, 'PPIC', 'ppic', $overtime, $post->taskId);
                 return true;
             }
         } else {
@@ -1120,11 +1383,11 @@ class OvertimeController extends Erp_Controller
     {
         $isHaveMgr = $this->Hr->getOne('employees', ['department_id' => $overtime->department_id, 'rank_id' => 2]);
         $isHaveMgrPLT = $this->Hr->getOne('employee_ranks', ['department_id' => $overtime->department_id, 'rank_id' => 2, 'status' => 'ACTIVE']);
-        if($overtime->apv_mgr_nip == '' && ($isHaveMgr || $isHaveMgrPLT)) {
-            if($isHaveMgr) {
+        if ($overtime->apv_mgr_nip == '' && ($isHaveMgr || $isHaveMgrPLT)) {
+            if ($isHaveMgr) {
                 $this->ovtlib->sendEmailAppv($isHaveMgr->email, 'Manager', 'mgr', $overtime, $post->taskId);
                 return true;
-            } else if($isHaveMgrPLT){
+            } else if ($isHaveMgrPLT) {
                 $email = $this->Hr->getDataById('employees', $isHaveMgrPLT->emp_id)->email;
                 $this->ovtlib->sendEmailAppv($email, 'Manager', 'mgr', $overtime, $post->taskId);
                 return true;
@@ -1138,11 +1401,11 @@ class OvertimeController extends Erp_Controller
     {
         $isHaveHead = $this->Hr->getOne('employees', ['rank_id' => 1]);
         $isHaveHeadPLT = $this->Hr->getOne('employees', ['rank_id' => 1, 'status' => 'ACTIVE']);
-        if($overtime->apv_head_nip == '' && ($isHaveHead || $isHaveHeadPLT)) {
-            if($isHaveHead) {
+        if ($overtime->apv_head_nip == '' && ($isHaveHead || $isHaveHeadPLT)) {
+            if ($isHaveHead) {
                 $this->ovtlib->sendEmailAppv($isHaveHead->email, 'Plant Manager', 'head', $overtime, $post->taskId);
                 return true;
-            } else if($isHaveHeadPLT){
+            } else if ($isHaveHeadPLT) {
                 $email = $this->Hr->getDataById('employees', $isHaveHeadPLT->emp_id)->email;
                 $this->ovtlib->sendEmailAppv($email, 'Plant Manager', 'head', $overtime, $post->taskId);
                 return true;
@@ -1167,19 +1430,44 @@ class OvertimeController extends Erp_Controller
             '9' => $overtime->mechanic,
             '10' => $overtime->electric,
             '11' => $overtime->hnn,
+            '12' => $overtime->qc,
+            '13' => $overtime->qa,
+            '14' => $overtime->penandaan,
+            '15' => $overtime->gbk,
+            '16' => $overtime->gbb,
         ];
         $reqs = $this->HrModel->getRequirement();
         $xml = "";
         $no = 1;
+        $subId = empSub();
+        $mtn = ['3' => true, '4' => true, '5' => true, '6' => true, '7' => true, '8' => true, '9' => true, '10' => true, '11' => true];
+        $qa = ['13' => true];
+        $qc = ['12' => true];
+        $whs = ['14' => true, '15' => true, '16' => true];
+
+        if ($subId == 5) {
+            $support = $mtn;
+        } else if ($subId == 7) { //@Sistem Mutu
+            $support = $qa;
+        } else if ($subId == 8) { //@Pengawasan Mutu
+            $support = $qc;
+        } else if ($subId == 13) {
+            $support = $whs;
+        } else {
+            $support = array_merge($mtn, $qa, $qc, $whs);
+        }
+
         foreach ($reqs as $req) {
             if (isset($reqOvt[$req->id]) && $reqOvt[$req->id] > 0) {
-                $xml .= "<row id='$req->id'>";
-                $xml .= "<cell>". cleanSC($no) ."</cell>";
-                $xml .= "<cell>". cleanSC($req->name) ."</cell>";
-                $xml .= "<cell>". cleanSC($req->division_name) ."</cell>";
-                $xml .= "<cell>". cleanSC($req->division_id) ."</cell>";
-                $xml .= "</row>";
-                $no++;
+                if (array_key_exists($req->id, $support)) {
+                    $xml .= "<row id='$req->id'>";
+                    $xml .= "<cell>" . cleanSC($no) . "</cell>";
+                    $xml .= "<cell>" . cleanSC($req->name) . "</cell>";
+                    $xml .= "<cell>" . cleanSC($req->division_name) . "</cell>";
+                    $xml .= "<cell>" . cleanSC($req->division_id) . "</cell>";
+                    $xml .= "</row>";
+                    $no++;
+                }
             }
         }
         gridXmlHeader($xml);
@@ -1200,46 +1488,53 @@ class OvertimeController extends Erp_Controller
             }
 
             $ovtStatus = null;
-            if($overtime->payment_status == 'VERIFIED') {
+            if ($overtime->payment_status == 'VERIFIED') {
                 $ovtStatus = "bgColor='#c18cdd'";
-            } else if($overtime->payment_status == 'PENDING') {
+            } else if ($overtime->payment_status == 'PENDING') {
                 $ovtStatus = "bgColor='#c8e71c'";
-            } else if($overtime->overtime_review != '') {
+            } else if ($overtime->overtime_review != '') {
                 $ovtStatus = "bgColor='#75b175'";
+            } else {
+                if ($overtime->status_day === 'Hari Libur') {
+                    $ovtStatus = "bgColor='#efd898'";
+                } else if ($overtime->status_day === 'Libur Nasional') {
+                    $ovtStatus = "bgColor='#7ecbf1'";
+                }
             }
+
             $meal = $overtime->meal > 0 ? "✓ ($overtime->total_meal x)" : '-';
             $machine1 = $overtime->machine_1 ? $overtime->machine_1 : '-';
             $machine2 = $overtime->machine_2 ? $overtime->machine_2 : '-';
             $xml .= "<row id='$overtime->id'>";
-            $xml .= "<cell $ovtStatus>". cleanSC($no) ."</cell>";
-            if(isset($params['check'])) {
+            $xml .= "<cell $ovtStatus>" . cleanSC($no) . "</cell>";
+            if (isset($params['check'])) {
                 $xml .= "<cell $color>0</cell>";
             }
-            $xml .= "<cell $color>". cleanSC($overtime->emp_task_id) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->task_id) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->employee_name) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->emp_sub_name) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->emp_division) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->ovt_sub_name) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->ovt_division) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($machine1) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($machine2) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->requirements) ."</cell>";
-            $xml .= "<cell $color>". cleanSC(toIndoDateDay($overtime->overtime_date))."</cell>";
-            $xml .= "<cell $color>". cleanSC(toIndoDateTime2($overtime->start_date))."</cell>";
-            $xml .= "<cell $color>". cleanSC(toIndoDateTime2($overtime->end_date))."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->status_day) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->effective_hour) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->break_hour) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->real_hour) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->overtime_hour) ."</cell>";
-            $xml .= "<cell $color>". cleanSC(toNumber($overtime->premi_overtime))."</cell>";
-            $xml .= "<cell $color>". cleanSC(toNumber($overtime->overtime_value))."</cell>";
-            $xml .= "<cell $color>". cleanSC($meal) ."</cell>";
-            $xml .= "<cell $color>". cleanSC(toNumber($overtime->meal))."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->status) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->overtime_review) ."</cell>";
-            $xml .= "<cell $color>". cleanSC(toIndoDateTime($overtime->created_at))."</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->emp_task_id) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->task_id) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->employee_name) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->emp_sub_name) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->emp_division) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->ovt_sub_name) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->ovt_division) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($machine1) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($machine2) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->requirements) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateDay($overtime->overtime_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->start_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->end_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->status_day) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->effective_hour) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->break_hour) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->real_hour) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->overtime_hour) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toNumber($overtime->premi_overtime)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toNumber($overtime->overtime_value)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($meal) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toNumber($overtime->meal)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->status) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->overtime_review) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime($overtime->created_at)) . "</cell>";
             $xml .= "</row>";
             $no++;
         }
@@ -1282,24 +1577,24 @@ class OvertimeController extends Erp_Controller
             }
 
             $xml .= "<row id='$sub->id'>";
-            $xml .= "<cell>". cleanSC($no) ."</cell>";
+            $xml .= "<cell>" . cleanSC($no) . "</cell>";
             if ($sub->name != '-') {
-                $xml .= "<cell>". cleanSC($sub->name) ."</cell>";
+                $xml .= "<cell>" . cleanSC($sub->name) . "</cell>";
             } else {
                 $xml .= "<cell>Direct To Sub Unit</cell>";
             }
 
             if ($sub->dept_name != '-') {
-                $xml .= "<cell>". cleanSC($sub->dept_name) ."</cell>";
+                $xml .= "<cell>" . cleanSC($sub->dept_name) . "</cell>";
             } else {
                 $xml .= "<cell>-</cell>";
             }
-            $xml .= "<cell>". cleanSC($effectiveHour) ."</cell>";
-            $xml .= "<cell>". cleanSC($breakHour) ."</cell>";
-            $xml .= "<cell>". cleanSC($realHour) ."</cell>";
-            $xml .= "<cell>". cleanSC($overtimeHour) ."</cell>";
-            $xml .= "<cell>". cleanSC($overtimeHalue) ."</cell>";
-            $xml .= "<cell>". cleanSC($meal) ."</cell>";
+            $xml .= "<cell>" . cleanSC($effectiveHour) . "</cell>";
+            $xml .= "<cell>" . cleanSC($breakHour) . "</cell>";
+            $xml .= "<cell>" . cleanSC($realHour) . "</cell>";
+            $xml .= "<cell>" . cleanSC($overtimeHour) . "</cell>";
+            $xml .= "<cell>" . cleanSC($overtimeHalue) . "</cell>";
+            $xml .= "<cell>" . cleanSC($meal) . "</cell>";
             $xml .= "</row>";
             $no++;
         }
@@ -1342,25 +1637,25 @@ class OvertimeController extends Erp_Controller
             }
 
             $xml .= "<row id='$div->id'>";
-            $xml .= "<cell>". cleanSC($no) ."</cell>";
+            $xml .= "<cell>" . cleanSC($no) . "</cell>";
             if ($div->name != '-') {
-                $xml .= "<cell>". cleanSC($div->name) ."</cell>";
+                $xml .= "<cell>" . cleanSC($div->name) . "</cell>";
             } else {
                 $xml .= "<cell>Direct To Bagian</cell>";
             }
 
             if ($div->sub_name != '-') {
-                $xml .= "<cell>". cleanSC($div->sub_name) ."</cell>";
+                $xml .= "<cell>" . cleanSC($div->sub_name) . "</cell>";
             } else {
                 $xml .= "<cell>-</cell>";
             }
 
-            $xml .= "<cell>". cleanSC($effectiveHour) ."</cell>";
-            $xml .= "<cell>". cleanSC($breakHour) ."</cell>";
-            $xml .= "<cell>". cleanSC($realHour) ."</cell>";
-            $xml .= "<cell>". cleanSC($overtimeHour) ."</cell>";
-            $xml .= "<cell>". cleanSC($overtimeHalue) ."</cell>";
-            $xml .= "<cell>". cleanSC($meal) ."</cell>";
+            $xml .= "<cell>" . cleanSC($effectiveHour) . "</cell>";
+            $xml .= "<cell>" . cleanSC($breakHour) . "</cell>";
+            $xml .= "<cell>" . cleanSC($realHour) . "</cell>";
+            $xml .= "<cell>" . cleanSC($overtimeHour) . "</cell>";
+            $xml .= "<cell>" . cleanSC($overtimeHalue) . "</cell>";
+            $xml .= "<cell>" . cleanSC($meal) . "</cell>";
             $xml .= "</row>";
             $no++;
         }
@@ -1374,17 +1669,17 @@ class OvertimeController extends Erp_Controller
         $no = 1;
         foreach ($overtimes as $overtime) {
             $xml .= "<row id='$overtime->id'>";
-            $xml .= "<cell>". cleanSC($no) ."</cell>";
-            $xml .= "<cell>". cleanSC($overtime->emp_name) ."</cell>";
-            $xml .= "<cell>". cleanSC($overtime->div_name) ."</cell>";
-            $xml .= "<cell>". cleanSC($overtime->sub_name) ."</cell>";
-            $xml .= "<cell>". cleanSC($overtime->dept_name) ."</cell>";
-            $xml .= "<cell>". cleanSC($overtime->effective_hour) ."</cell>";
-            $xml .= "<cell>". cleanSC($overtime->break_hour) ."</cell>";
-            $xml .= "<cell>". cleanSC($overtime->real_hour) ."</cell>";
-            $xml .= "<cell>". cleanSC($overtime->overtime_hour) ."</cell>";
-            $xml .= "<cell>". cleanSC(toNumber($overtime->overtime_value))."</cell>";
-            $xml .= "<cell>". cleanSC(toNumber($overtime->meal))."</cell>";
+            $xml .= "<cell>" . cleanSC($no) . "</cell>";
+            $xml .= "<cell>" . cleanSC($overtime->emp_name) . "</cell>";
+            $xml .= "<cell>" . cleanSC($overtime->div_name) . "</cell>";
+            $xml .= "<cell>" . cleanSC($overtime->sub_name) . "</cell>";
+            $xml .= "<cell>" . cleanSC($overtime->dept_name) . "</cell>";
+            $xml .= "<cell>" . cleanSC($overtime->effective_hour) . "</cell>";
+            $xml .= "<cell>" . cleanSC($overtime->break_hour) . "</cell>";
+            $xml .= "<cell>" . cleanSC($overtime->real_hour) . "</cell>";
+            $xml .= "<cell>" . cleanSC($overtime->overtime_hour) . "</cell>";
+            $xml .= "<cell>" . cleanSC(toNumber($overtime->overtime_value)) . "</cell>";
+            $xml .= "<cell>" . cleanSC(toNumber($overtime->meal)) . "</cell>";
             $xml .= "</row>";
             $no++;
         }
@@ -1398,18 +1693,18 @@ class OvertimeController extends Erp_Controller
         $no = 1;
         foreach ($overtimes as $overtime) {
             $xml .= "<row id='$overtime->id'>";
-            $xml .= "<cell>". cleanSC($no) ."</cell>";
-            $xml .= "<cell>". cleanSC($overtime->emp_name) ."</cell>";
-            $xml .= "<cell>". cleanSC($overtime->div_name) ."</cell>";
-            $xml .= "<cell>". cleanSC($overtime->sub_name) ."</cell>";
-            $xml .= "<cell>". cleanSC($overtime->dept_name) ."</cell>";
-            $xml .= "<cell>". cleanSC($overtime->notes) ."</cell>";
-            $xml .= "<cell>". cleanSC($overtime->effective_hour) ."</cell>";
-            $xml .= "<cell>". cleanSC($overtime->break_hour) ."</cell>";
-            $xml .= "<cell>". cleanSC($overtime->real_hour) ."</cell>";
-            $xml .= "<cell>". cleanSC($overtime->overtime_hour) ."</cell>";
-            $xml .= "<cell>". cleanSC(toNumber($overtime->overtime_value))."</cell>";
-            $xml .= "<cell>". cleanSC(toNumber($overtime->meal))."</cell>";
+            $xml .= "<cell>" . cleanSC($no) . "</cell>";
+            $xml .= "<cell>" . cleanSC($overtime->emp_name) . "</cell>";
+            $xml .= "<cell>" . cleanSC($overtime->div_name) . "</cell>";
+            $xml .= "<cell>" . cleanSC($overtime->sub_name) . "</cell>";
+            $xml .= "<cell>" . cleanSC($overtime->dept_name) . "</cell>";
+            $xml .= "<cell>" . cleanSC($overtime->notes) . "</cell>";
+            $xml .= "<cell>" . cleanSC($overtime->effective_hour) . "</cell>";
+            $xml .= "<cell>" . cleanSC($overtime->break_hour) . "</cell>";
+            $xml .= "<cell>" . cleanSC($overtime->real_hour) . "</cell>";
+            $xml .= "<cell>" . cleanSC($overtime->overtime_hour) . "</cell>";
+            $xml .= "<cell>" . cleanSC(toNumber($overtime->overtime_value)) . "</cell>";
+            $xml .= "<cell>" . cleanSC(toNumber($overtime->meal)) . "</cell>";
             $xml .= "</row>";
             $no++;
         }
@@ -1431,7 +1726,7 @@ class OvertimeController extends Erp_Controller
         $post = prettyText(getGridPost());
         $data = [];
         foreach ($post as $key => $value) {
-            if($value['c1'] == 1) {
+            if ($value['c1'] == 1) {
                 $data[] = [
                     'id' => $key,
                     'payment_status' => 'VERIFIED',
@@ -1449,24 +1744,24 @@ class OvertimeController extends Erp_Controller
             xmlResponse('error', 'Verifikasi lemburan gagal!');
         }
     }
-    
+
     public function getRequestOvertimeGrid()
     {
-        $techOvertime = $this->Overtime->getTechnicOvertime();
+        $techOvertime = $this->Overtime->getTechnicOvertime(getParam()['sub_department_id']);
         $taskIds = '';
         $taskId = [];
         foreach ($techOvertime as $tOvt) {
-            if($tOvt->ref != '-') {
-                if($taskIds == '') {
-                    $taskIds = "'".$tOvt->ref."'";
+            if ($tOvt->ref != '-') {
+                if ($taskIds == '') {
+                    $taskIds = "'" . $tOvt->ref . "'";
                 } else {
-                    $taskIds = $taskIds.",'".$tOvt->ref."'";
+                    $taskIds = $taskIds . ",'" . $tOvt->ref . "'";
                 }
                 $taskId[$tOvt->ref] = $tOvt->task_id;
             }
         }
 
-        if($taskIds != '') {
+        if ($taskIds != '') {
             $overtimes = $this->Overtime->getRequestOvertimeGrid($taskIds)->result();
             $xml = "";
             $no = 1;
@@ -1481,6 +1776,11 @@ class OvertimeController extends Erp_Controller
                 $mechanic = $overtime->mechanic > 0 ? '✓' : '-';
                 $electric = $overtime->electric > 0 ? '✓' : '-';
                 $hnn = $overtime->hnn > 0 ? '✓' : '-';
+                $qc = $overtime->qc > 0 ? '✓' : '-';
+                $qa = $overtime->qa > 0 ? '✓' : '-';
+                $penandaan = $overtime->penandaan > 0 ? '✓' : '-';
+                $gbk = $overtime->gbk > 0 ? '✓' : '-';
+                $gbk = $overtime->gbk > 0 ? '✓' : '-';
                 $tTaskId = $taskId[$overtime->task_id];
 
                 $color = null;
@@ -1491,31 +1791,36 @@ class OvertimeController extends Erp_Controller
                 }
 
                 $xml .= "<row id='$overtime->id'>";
-                $xml .= "<cell $color>". cleanSC($no) ."</cell>";
-                $xml .= "<cell $color>". cleanSC($tTaskId) ."</cell>";
-                $xml .= "<cell $color>". cleanSC($overtime->task_id) ."</cell>";
-                $xml .= "<cell $color>". cleanSC($overtime->department) ."</cell>";
-                $xml .= "<cell $color>". cleanSC($overtime->sub_department) ."</cell>";
-                $xml .= "<cell $color>". cleanSC($overtime->division) ."</cell>";
-                $xml .= "<cell $color>". cleanSC("$overtime->personil Orang") ."</cell>";
-                $xml .= "<cell $color>". cleanSC($overtime->status_day) ."</cell>";
-                $xml .= "<cell $color>". cleanSC(toIndoDateDay($overtime->overtime_date)) ."</cell>";
-                $xml .= "<cell $color>". cleanSC(toIndoDateTime($overtime->start_date)) ."</cell>";
-                $xml .= "<cell $color>". cleanSC(toIndoDateTime($overtime->end_date)) ."</cell>";
-                $xml .= "<cell $color>". cleanSC($overtime->notes) ."</cell>";
-                $xml .= "<cell $color>". cleanSC($makan) ."</cell>";
-                $xml .= "<cell $color>". cleanSC($steam) ."</cell>";
-                $xml .= "<cell $color>". cleanSC($ahu) ."</cell>";
-                $xml .= "<cell $color>". cleanSC($compressor) ."</cell>";
-                $xml .= "<cell $color>". cleanSC($pw) ."</cell>";
-                $xml .= "<cell $color>". cleanSC($jemputan) ."</cell>";
-                $xml .= "<cell $color>". cleanSC($dust_collector) ."</cell>";
-                $xml .= "<cell $color>". cleanSC($mechanic) ."</cell>";
-                $xml .= "<cell $color>". cleanSC($electric) ."</cell>";
-                $xml .= "<cell $color>". cleanSC($hnn) ."</cell>";
-                $xml .= "<cell $color>". cleanSC($overtime->emp1) ."</cell>";
-                $xml .= "<cell $color>". cleanSC($overtime->emp2) ."</cell>";
-                $xml .= "<cell $color>". cleanSC(toIndoDateTime($overtime->created_at))."</cell>";
+                $xml .= "<cell $color>" . cleanSC($no) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($tTaskId) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($overtime->task_id) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($overtime->department) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($overtime->sub_department) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($overtime->division) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC("$overtime->personil Orang") . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($overtime->status_day) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC(toIndoDateDay($overtime->overtime_date)) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC(toIndoDateTime($overtime->start_date)) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC(toIndoDateTime($overtime->end_date)) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($overtime->notes) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($makan) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($steam) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($ahu) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($compressor) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($pw) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($jemputan) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($dust_collector) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($mechanic) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($electric) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($hnn) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($qc) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($qa) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($penandaan) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($gbk) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($gbk) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($overtime->emp1) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($overtime->emp2) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC(toIndoDateTime($overtime->created_at)) . "</cell>";
                 $xml .= "</row>";
                 $no++;
             }
@@ -1531,7 +1836,7 @@ class OvertimeController extends Erp_Controller
         $post = prettyText(getPost(), ['description']);
         $date = date('Y-m-d');
         $expDate = explode('-', $date);
-        $lastId = $this->Overtime->lastOt('overtime_revision_requests', 'created_at' ,$date);
+        $lastId = $this->Overtime->lastOt('overtime_revision_requests', 'created_at', $date);
         $revTaskId = sprintf('%03d', $lastId + 1) . '/OT-REV/' . empLoc() . '/' . toRomawi($expDate[1]) . '/' . $expDate[0];
         $data = [
             'location' => empLoc(),
@@ -1542,21 +1847,21 @@ class OvertimeController extends Erp_Controller
             'filename' => $post['filename'],
             'created_by' => empId(),
             'updated_by' => empId(),
-            'updated_at' => date('Y-m-d H:i:s')
+            'updated_at' => date('Y-m-d H:i:s'),
         ];
 
         $request_id = $this->Hr->create('overtime_revision_requests', $data);
-        
+
         $expTask = explode(",", $post['task_ids']);
         $dataDetail = [];
         foreach ($expTask as $taskId) {
             $dataDetail[] = [
                 'task_id' => $revTaskId,
                 'emp_task_id' => $taskId,
-                'updated_at' => date('Y-m-d H:i:s')
+                'updated_at' => date('Y-m-d H:i:s'),
             ];
         }
-        
+
         $reqDetail = $this->Hr->createMultiple('overtime_revision_requests_detail', $dataDetail);
 
         $this->sendRevisionEmail($revTaskId, $post['task_ids'], 'OVERTIME_REVISION_REQUEST');
@@ -1571,7 +1876,7 @@ class OvertimeController extends Erp_Controller
         foreach ($post->taskId as $taskId) {
             $data[] = [
                 'emp_task_id' => $taskId,
-                'task_id' => $revTaskId
+                'task_id' => $revTaskId,
             ];
         }
         $this->Hr->createMultiple('overtime_revision_requests_detail', $data);
@@ -1584,14 +1889,14 @@ class OvertimeController extends Erp_Controller
         $revisions = $this->Hr->getWhere('overtime_revision_requests_detail', ['status' => 'CREATED'])->result();
         $taskIds = '';
         foreach ($revisions as $rev) {
-            if($taskIds === '') {
+            if ($taskIds === '') {
                 $taskIds = $rev->emp_task_id;
             } else {
-                $taskIds = $taskIds.",".$rev->emp_task_id;
+                $taskIds = $taskIds . "," . $rev->emp_task_id;
             }
         }
-        
-        if($taskIds != '') {
+
+        if ($taskIds != '') {
             $params['notin_emp_task_id'] = $taskIds;
         }
 
@@ -1613,30 +1918,30 @@ class OvertimeController extends Erp_Controller
             $machine2 = $overtime->machine_2 ? $overtime->machine_2 : '-';
 
             $xml .= "<row id='$overtime->emp_task_id'>";
-            $xml .= "<cell $color>". cleanSC($no) ."</cell>";
+            $xml .= "<cell $color>" . cleanSC($no) . "</cell>";
             $xml .= "<cell $color>0</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->emp_task_id) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->employee_name) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->sub_department) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->division) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($machine1) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($machine2) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->requirements) ."</cell>";
-            $xml .= "<cell $color>". cleanSC(toIndoDateDay($overtime->overtime_date)) ."</cell>";
-            $xml .= "<cell $color>". cleanSC(toIndoDateTime2($overtime->start_date)) ."</cell>";
-            $xml .= "<cell $color>". cleanSC(toIndoDateTime2($overtime->end_date)) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->status_day) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->effective_hour) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->break_hour) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->real_hour) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->overtime_hour) ."</cell>";
-            $xml .= "<cell $color>". cleanSC(toNumber($overtime->premi_overtime))."</cell>";
-            $xml .= "<cell $color>". cleanSC(toNumber($overtime->overtime_value))."</cell>";
-            $xml .= "<cell $color>". cleanSC($meal) ."</cell>";
-            $xml .= "<cell $color>". cleanSC(toNumber($overtime->meal))."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->notes) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->status) ."</cell>";
-            $xml .= "<cell $color>". cleanSC(toIndoDateTime($overtime->created_at))."</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->emp_task_id) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->employee_name) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->sub_department) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->division) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($machine1) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($machine2) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->requirements) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateDay($overtime->overtime_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->start_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->end_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->status_day) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->effective_hour) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->break_hour) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->real_hour) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->overtime_hour) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toNumber($overtime->premi_overtime)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toNumber($overtime->overtime_value)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($meal) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toNumber($overtime->meal)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->notes) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->status) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime($overtime->created_at)) . "</cell>";
             $xml .= "</row>";
             $no++;
         }
@@ -1650,26 +1955,26 @@ class OvertimeController extends Erp_Controller
         $no = 1;
         foreach ($revisions as $rev) {
             $color = null;
-            if($rev->status == 'PROCESS') {
+            if ($rev->status == 'PROCESS') {
                 $color = "bgColor='#efd898'";
-            } else if($rev->status == 'CLOSED') {
+            } else if ($rev->status == 'CLOSED') {
                 $color = "bgColor='#7ecb87'";
-            } else if($rev->status == 'CANCELED') {
+            } else if ($rev->status == 'CANCELED') {
                 $color = "bgColor='#d7a878'";
-            } else if($rev->status == 'REJECTED') {
+            } else if ($rev->status == 'REJECTED') {
                 $color = "bgColor='#c94b62'";
             }
 
             $xml .= "<row id='$rev->task_id'>";
-            $xml .= "<cell $color>". cleanSC($no) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($rev->task_id) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($rev->description) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($rev->department) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($rev->sub_department) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($rev->status) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($rev->emp1) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($rev->emp2) ."</cell>";
-            $xml .= "<cell $color>". cleanSC(toIndoDateTime($rev->created_at))."</cell>";
+            $xml .= "<cell $color>" . cleanSC($no) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($rev->task_id) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($rev->description) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($rev->department) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($rev->sub_department) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($rev->status) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($rev->emp1) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($rev->emp2) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime($rev->created_at)) . "</cell>";
             $xml .= "</row>";
             $no++;
         }
@@ -1683,7 +1988,7 @@ class OvertimeController extends Erp_Controller
         $overtimes = $this->Overtime->getRevOvtDtlGrid($taskId);
         $xml = "";
         $no = 1;
-        foreach ($overtimes as $overtime) { 
+        foreach ($overtimes as $overtime) {
             $color = null;
             if ($overtime->status_day === 'Hari Libur') {
                 $color = "bgColor='#efd898'";
@@ -1696,29 +2001,31 @@ class OvertimeController extends Erp_Controller
             $machine2 = $overtime->machine_2 ? $overtime->machine_2 : '-';
 
             $xml .= "<row id='$overtime->emp_task_id'>";
-            $xml .= "<cell $color>". cleanSC($no) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->emp_task_id) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->employee_name) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->sub_department) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->division) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($machine1) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($machine2) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->requirements) ."</cell>";
-            $xml .= "<cell $color>". cleanSC(toIndoDateDay($overtime->overtime_date)) ."</cell>";
-            $xml .= "<cell $color>". cleanSC(toIndoDateTime2($overtime->start_date)) ."</cell>";
-            $xml .= "<cell $color>". cleanSC(toIndoDateTime2($overtime->end_date)) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->status_day) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->effective_hour) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->break_hour) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->real_hour) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->overtime_hour) ."</cell>";
-            $xml .= "<cell $color>". cleanSC(toNumber($overtime->premi_overtime)) ."</cell>";
-            $xml .= "<cell $color>". cleanSC(toNumber($overtime->overtime_value)) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($meal) ."</cell>";
-            $xml .= "<cell $color>". cleanSC(toNumber($overtime->meal)) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->notes) ."</cell>";
-            $xml .= "<cell $color>". cleanSC($overtime->status) ."</cell>";
-            $xml .= "<cell $color>". cleanSC(toIndoDateTime($overtime->created_at)) ."</cell>";
+            $xml .= "<cell $color>" . cleanSC($no) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->emp_task_id) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->employee_name) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->sub_department) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->division) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($machine1) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($machine2) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->requirements) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateDay($overtime->overtime_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->start_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->end_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->status_day) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->effective_hour) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->break_hour) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->real_hour) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->overtime_hour) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toNumber($overtime->premi_overtime)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toNumber($overtime->overtime_value)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($meal) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toNumber($overtime->meal)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->notes) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->status) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime($overtime->created_at)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->task_start_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->task_end_date)) . "</cell>";
             $xml .= "</row>";
             $no++;
         }
@@ -1729,15 +2036,31 @@ class OvertimeController extends Erp_Controller
     {
         $post = prettyText(getPost(), ['description']);
         $status = $this->Hr->getOne('overtime_revision_requests', ['task_id' => $post['task_id']])->status;
-        if($status != 'CREATED') {
+        if ($status != 'CREATED') {
             xmlResponse('error', "Gagal update deskripsi, status permintaan revisi sudah $status");
         }
         $data = [
             'description' => $post['description'],
             'updated_by' => empId(),
-            'updated_at' => date('Y-m-d H:i:s')
+            'updated_at' => date('Y-m-d H:i:s'),
         ];
         $this->Hr->update('overtime_revision_requests', $data, ['task_id' => $post['task_id']]);
+        xmlResponse('updated', 'Berhasil mengubah deskripsi pengajuan revisi lembur');
+    }
+
+    public function updatePrsRevOvtDesc()
+    {
+        $post = prettyText(getPost(), ['description']);
+        $status = $this->Hr->getOne('overtime_revision_requests_personil', ['rev_task_id' => $post['task_id']])->status;
+        if ($status != 'CREATED') {
+            xmlResponse('error', "Gagal update deskripsi, status permintaan revisi sudah $status");
+        }
+        $data = [
+            'description' => $post['description'],
+            'updated_by' => empId(),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ];
+        $this->Hr->update('overtime_revision_requests_personil', $data, ['rev_task_id' => $post['task_id']]);
         xmlResponse('updated', 'Berhasil mengubah deskripsi pengajuan revisi lembur');
     }
 
@@ -1747,22 +2070,34 @@ class OvertimeController extends Erp_Controller
         $data = [
             'response' => $post['response'],
             'updated_by' => empId(),
-            'updated_at' => date('Y-m-d H:i:s')
+            'updated_at' => date('Y-m-d H:i:s'),
         ];
         $this->Hr->update('overtime_revision_requests', $data, ['task_id' => $post['task_id']]);
         xmlResponse('updated', 'Berhasil menyimpan tanggapan pengajuan revisi lembur');
     }
 
+    public function updateRevOvtPersonilRes()
+    {
+        $post = prettyText(getPost(), ['response']);
+        $data = [
+            'response' => $post['response'],
+            'updated_by' => empId(),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ];
+        $this->Hr->update('overtime_revision_requests_personil', $data, ['task_id' => $post['task_id']]);
+        xmlResponse('updated', 'Berhasil menyimpan tanggapan pengajuan revisi lembur');
+    }
+
     public function cancelRevOvt()
     {
-       $post = fileGetContent();
-       $data = [
+        $post = fileGetContent();
+        $data = [
             'status' => 'CANCELED',
             'updated_by' => empId(),
-            'updated_at' => date('Y-m-d H:i:s')
+            'updated_at' => date('Y-m-d H:i:s'),
         ];
         $revision = $this->Hr->getOne('overtime_revision_requests', ['task_id' => $post->taskId]);
-        if($revision->status == 'CREATED') {
+        if ($revision->status == 'CREATED') {
             $this->Hr->update('overtime_revision_requests', $data, ['task_id' => $post->taskId]);
             $this->Hr->delete('overtime_revision_requests_detail', ['task_id' => $post->taskId]);
             if (file_exists('./assets/images/overtimes_revision_request/' . $revision->filename)) {
@@ -1788,6 +2123,25 @@ class OvertimeController extends Erp_Controller
         response(['status' => 'success', 'mError' => $mError, 'mSuccess' => $mSuccess]);
     }
 
+    public function cancelRevOvtSub()
+    {
+        $post = fileGetContent();
+        $revision = $this->Hr->getOne('employee_overtimes', ['task_id' => $post->taskId]);
+        if ($revision->on_revision == 1) {
+            $this->Hr->update('overtime_revision_requests_personil', [
+                'status' => 'CANCELED', 
+                'updated_by' => empId(), 
+                'updated_at' => date('Y-m-d H:i:s')
+            ], ['task_id' => $post->taskId]);
+
+            $this->Hr->update('employee_overtimes', ['on_revision' => 0], ['task_id' => $post->taskId]);
+            $this->Hr->update('employee_overtimes_detail', ['revision_status' => 'NONE'], ['task_id' => $post->taskId]);
+            response(['status' => 'success', 'message' => 'Berhasil membatalkan pengajuan revisi lembur']);
+        } else {
+            response(['status' => 'error', 'message' => 'Gagal membatalkan pengajuan revisi lembur!']);
+        }
+    }
+
     public function getDescription()
     {
         $post = fileGetContent();
@@ -1795,10 +2149,24 @@ class OvertimeController extends Erp_Controller
         response(['task_id' => $desc->task_id, 'description' => $desc->description]);
     }
 
+    public function getPersonilDescription()
+    {
+        $post = fileGetContent();
+        $desc = $this->Hr->getOne('overtime_revision_requests_personil', ['rev_task_id' => $post->taskId]);
+        response(['task_id' => $desc->task_id, 'description' => $desc->description]);
+    }
+
     public function getRevision()
     {
         $post = fileGetContent();
-        $rev = $this->Overtime->getRevOvtGrid(['equal_task_id' => $post->taskId])->row();
+        $rev = $this->Hr->getOne('overtime_revision_requests', ['task_id' => $post->taskId]);
+        response(['status' => 'success', 'revision' => $rev]);
+    }
+
+    public function getPersonilRevision()
+    {
+        $post = fileGetContent();
+        $rev = $this->Hr->getOne('overtime_revision_requests_personil', ['rev_task_id' => $post->taskId]);
         response(['status' => 'success', 'revision' => $rev]);
     }
 
@@ -1809,7 +2177,21 @@ class OvertimeController extends Erp_Controller
         $mSuccess = '';
         $datas = $post->datas;
         foreach ($datas as $id => $data) {
-            $this->Hr->update('overtime_revision_requests', ['status' => 'PROCESS'],['task_id' => $data->id]);
+            $this->Hr->update('overtime_revision_requests', ['status' => 'PROCESS', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['task_id' => $data->id]);
+            $mSuccess .= "- $data->field berhasil diproses <br>";
+        }
+
+        response(['status' => 'success', 'mError' => $mError, 'mSuccess' => $mSuccess]);
+    }
+
+    public function processRevisionPersonil()
+    {
+        $post = fileGetContent();
+        $mError = '';
+        $mSuccess = '';
+        $datas = $post->datas;
+        foreach ($datas as $id => $data) {
+            $this->Hr->update('overtime_revision_requests_personil', ['status' => 'PROCESS', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['rev_task_id' => $data->id]);
             $mSuccess .= "- $data->field berhasil diproses <br>";
         }
 
@@ -1824,21 +2206,56 @@ class OvertimeController extends Erp_Controller
         $datas = $post->datas;
         foreach ($datas as $id => $data) {
             $revision = $this->Hr->getOne('overtime_revision_requests', ['task_id' => $data->id]);
-            if($revision->status == 'CREATED' || $revision->status == 'PROCESS') {
-                $this->Hr->update('overtime_revision_requests', ['status' => 'REJECTED'],['task_id' => $data->id]);
-                $this->Hr->update('overtime_revision_requests_detail', ['status' => 'REJECTED'],['task_id' => $data->id]);
+            if ($revision->status == 'CREATED' || $revision->status == 'PROCESS') {
+                $this->Hr->update('overtime_revision_requests', ['status' => 'REJECTED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['task_id' => $data->id]);
+                $this->Hr->update('overtime_revision_requests_detail', ['status' => 'REJECTED'], ['task_id' => $data->id]);
                 $mSuccess .= "- $data->field berhasil ditolak <br>";
 
                 $empTasks = $this->Hr->getWhere('overtime_revision_requests_detail', ['task_id' => $data->id])->result();
                 $empTaskIds = '';
                 foreach ($empTasks as $rev) {
-                    if($empTaskIds == '') {
+                    if ($empTaskIds == '') {
                         $empTaskIds = $rev->emp_task_id;
                     } else {
-                        $empTaskIds = $empTaskIds.",".$rev->emp_task_id;
+                        $empTaskIds = $empTaskIds . "," . $rev->emp_task_id;
                     }
                 }
                 $this->sendRevisionEmail($data->id, $empTaskIds, 'OVERTIME_REVISION_REJECTION');
+            } else {
+                $mError .= "- Gagal mengubah status revisi $data->field <br>";
+            }
+        }
+
+        response(['status' => 'success', 'mError' => $mError, 'mSuccess' => $mSuccess]);
+    }
+
+    public function rejectRevisionPersonil()
+    {
+        $post = fileGetContent();
+        $mError = '';
+        $mSuccess = '';
+        $datas = $post->datas;
+        foreach ($datas as $id => $data) {
+            $revision = $this->Hr->getOne('overtime_revision_requests_personil', ['rev_task_id' => $data->id]);
+            if ($revision->status == 'CREATED' || $revision->status == 'PROCESS') {
+                $this->Overtime->backStatusBefore($revision->task_id);
+                $empOvts = $this->Hr->getWhere('employee_overtimes_detail', ['task_id' => $revision->task_id, 'status' => 'CLOSED', 'revision_status !=' => 'NONE'])->result();
+                $dataHistory =[];
+                foreach ($empOvts as $ovt) {
+                    $dataHistory[] = [
+                        'rev_task_id' => $revision->rev_task_id,
+                        'task_id' => $revision->task_id,
+                        'emp_task_id' => $ovt->emp_task_id,
+                        'status' => $ovt->status,
+                        'revision_status' => $ovt->revision_status,
+                        'status_before' => $ovt->status_before,
+                    ];
+                }
+                $this->Hr->update('overtime_revision_requests_personil', ['status' => 'REJECTED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['rev_task_id' => $data->id]);
+                $this->Hr->createMultiple('overtime_revision_requests_personil_history', $dataHistory);
+                // $this->sendRevisionEmail($data->id, $empTaskIds, 'OVERTIME_PERSONIL_REVISION_REJECTION');
+                //HISTORY REVISI PERSONIL ------------------------------------------------------------------
+                $mSuccess .= "- $data->field berhasil ditolak <br>";
             } else {
                 $mError .= "- Gagal mengubah status revisi $data->field <br>";
             }
@@ -1851,18 +2268,22 @@ class OvertimeController extends Erp_Controller
     {
         $post = getPost();
         $overtime = $this->Hr->getOne('employee_overtimes_detail', ['emp_task_id' => $post['task_id']]);
-        $startDate = genOvtDate(date('Y-m-d', strtotime($overtime->start_date)), $post['start_date']);
-        $endDate = genOvtDate(date('Y-m-d', strtotime($overtime->end_date)), $post['end_date']);
-    
-        $overtimeHour = totalHour($overtime->emp_id, $overtime->overtime_date, $startDate, $endDate, $post['start_date'], $post['end_date']);
+        $startDate = genOvtDate(date('Y-m-d', strtotime(doToMysqlDate($post['labelStartDetail']))), $post['start_date']);
+        $endDate = genOvtDate(date('Y-m-d', strtotime(doToMysqlDate($post['labelEndDetail']))), $post['end_date']);
+
+        $overtimeHour = totalHour($overtime->emp_id, $startDate, $endDate, $post['start_date'], $post['end_date']);
         $catPrice = 0;
         $catheringPrice = $this->General->getOne('catherings', ['status' => 'ACTIVE']);
-        if($catheringPrice) {
+        if ($catheringPrice) {
             $catPrice = $catheringPrice->price;
         }
 
-        if($startDate > $endDate || $startDate == $endDate) {
+        if ($startDate > $endDate || $startDate == $endDate) {
             xmlResponse('error', "Waktu selesai harus lebih besar dari waktu mulai!");
+        }
+
+        if (countHour($startDate, $endDate, 'h') > 12) {
+            xmlResponse('error', 'Maksimum jam lembur adalah 12 jam!');
         }
 
         $this->Hr->update('employee_overtimes_detail', [
@@ -1879,6 +2300,7 @@ class OvertimeController extends Erp_Controller
             'total_meal' => $overtimeHour['total_meal'],
             'status_by' => empNip(),
             'change_time' => 1,
+            'overtime_date' => date('Y-m-d', strtotime($startDate))
         ], ['emp_task_id' => $post['task_id']]);
 
         xmlResponse('updated', "Berhasil update jam lembur $overtime->emp_task_id");
@@ -1887,45 +2309,62 @@ class OvertimeController extends Erp_Controller
     public function closeRevision()
     {
         $post = fileGetContent();
-        $this->Hr->update('overtime_revision_requests', ['status' => 'CLOSED'], ['task_id' => $post->taskId]);
+        $response = $this->Hr->getOne("overtime_revision_requests", ['task_id' => $post->taskId])->response;
+        if(!$response) {
+            return response(['error' => 'success', 'message' => 'Tanggapan SDM masih kosong!']);
+        }
+        $this->Hr->update('overtime_revision_requests', ['status' => 'CLOSED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['task_id' => $post->taskId]);
         $this->Hr->update('overtime_revision_requests_detail', ['status' => 'CLOSED'], ['task_id' => $post->taskId]);
         $empTasks = $this->Hr->getWhere('overtime_revision_requests_detail', ['task_id' => $post->taskId])->result();
         $empTaskIds = '';
         foreach ($empTasks as $rev) {
-            if($empTaskIds == '') {
+            if ($empTaskIds == '') {
                 $empTaskIds = $rev->emp_task_id;
             } else {
-                $empTaskIds = $empTaskIds.",".$rev->emp_task_id;
+                $empTaskIds = $empTaskIds . "," . $rev->emp_task_id;
             }
         }
         $this->sendRevisionEmail($post->taskId, $empTaskIds, 'OVERTIME_REVISION_CLOSED');
         response(['status' => 'success', 'message' => 'Berhasil menutup revisi!']);
     }
 
+    public function closeRevisionPersonil()
+    {
+        $post = fileGetContent();
+        $response = $this->Hr->getOne("overtime_revision_requests_personil", ['rev_task_id' => $post->taskId])->response;
+        if(!$response) {
+            return response(['error' => 'success', 'message' => 'Tanggapan SDM masih kosong!']);
+        }
+        $this->Hr->update('overtime_revision_requests_personil', ['status' => 'CLOSED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['rev_task_id' => $post->taskId]);
+        // $this->sendRevisionEmail($post->taskId, $empTaskIds, 'OVERTIME_PERSONIL_REVISION_CLOSED');
+        response(['status' => 'success', 'message' => 'Berhasil menutup revisi!']);
+    }
+
+
     public function sendRevisionEmail($taskId, $empTaskIds, $alertName)
     {
         $email = '';
         $sdms = $this->Hr->getWhere('employees', ['division_id' => 38])->result();
         foreach ($sdms as $sdm) {
-            if($email == '') {
+            if ($email == '') {
                 $email = $sdm->email;
             } else {
-                $email = $email.','.$sdm->email;
+                $email = $email . ',' . $sdm->email;
             }
         }
         $overtimes = $this->Overtime->getOvertimeDetail(['in_emp_task_id' => $empTaskIds])->result();
         $revision = $this->Overtime->getRevOvtGrid(['in_task_id' => $taskId])->row();
         $message = $this->load->view('html/overtime/email/revision_overtime', [
-            'overtimes' => $overtimes, 
-            'revision' => $revision, 
+            'overtimes' => $overtimes,
+            'revision' => $revision,
             'location' => $this->auth->locName,
-            'status' => $alertName
+            'status' => $alertName,
         ], true);
 
         $prefix = 'Request';
-        if($alertName == 'OVERTIME_REVISION_REJECTION') {
+        if ($alertName == 'OVERTIME_REVISION_REJECTION') {
             $prefix = 'Rejection';
-        } else if($alertName == 'OVERTIME_REVISION_CLOSED'){
+        } else if ($alertName == 'OVERTIME_REVISION_CLOSED') {
             $prefix = 'Closed';
         }
         $data = [
@@ -1942,7 +2381,7 @@ class OvertimeController extends Erp_Controller
     {
         $post = fileGetContent();
         $rev = $this->Hr->getOne('overtime_revision_requests', ['task_id' => $post->taskId]);
-        if($rev->filename) {
+        if ($rev->filename) {
             $imgUrl = base_url('assets/images/overtimes_revision_requests/' . $rev->filename);
             $template = "<div style='width:100%;height:100%;'>
                                 <img style='width:100%;height:100%;' src='$imgUrl' />
@@ -1954,8 +2393,306 @@ class OvertimeController extends Erp_Controller
                         </div>";
         }
         response([
-            'status' => 'success', 
-            'template' => $template
+            'status' => 'success',
+            'template' => $template,
         ]);
+    }
+
+    public function getOvt7Day()
+    {
+        $params = getParam();
+        $overtimes = $this->Overtime->getOvt7Day($params)->result();
+        $xml = "";
+        $no = 1;
+        foreach ($overtimes as $overtime) {
+            $color = null;
+            if ($overtime->status_day === 'Hari Libur') {
+                $color = "bgColor='#efd898'";
+            } else if ($overtime->status_day === 'Libur Nasional') {
+                $color = "bgColor='#7ecbf1'";
+            }
+
+            $xml .= "<row id='$overtime->task_id'>";
+            $xml .= "<cell $color>" . cleanSC($no) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->task_id) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->department) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->sub_department) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->division) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->personil) . " Orang</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->status_day) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateDay($overtime->overtime_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->start_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->end_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->notes) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->emp1) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->emp2) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime($overtime->created_at)) . "</cell>";
+            $xml .= "</row>";
+            $no++;
+        }
+        gridXmlHeader($xml);
+    }
+
+    public function getOvertimeDetailGridRev()
+    {
+        $params = getParam();
+        $overtimes = $this->Overtime->getOvertimeDetail($params)->result();
+        $xml = "";
+        $no = 1;
+        foreach ($overtimes as $overtime) {
+
+            $color = null;
+            if ($overtime->status_day === 'Hari Libur') {
+                $color = "bgColor='#efd898'";
+            } else if ($overtime->status_day === 'Libur Nasional') {
+                $color = "bgColor='#7ecbf1'";
+            }
+
+            $status_updater = '-';
+            if ($overtime->change_time == 1) {
+                $status_updater = 'Revisi Jam Lembur By ' . $overtime->status_updater;
+            } else if ($overtime->status_by !== '') {
+                $status_updater = $overtime->status . ' By ' . $overtime->status_updater;
+            }
+
+            if($overtime->revision_status == "CANCELED") {
+                $color = "bgColor='#ed9a9a'";
+            } else if($overtime->revision_status == "CLOSED") {
+                $color = "bgColor='#75b175'";
+            }
+
+            $statusColor = $color;
+            if(isset($params['check'])) {
+               if($overtime->status == $overtime->revision_status) {
+                $statusColor = "bgColor='#df6be1'";
+               } else {
+                $statusColor = "bgColor='#ccc'";
+               }
+            }
+
+            $machine1 = $overtime->machine_1 ? $overtime->machine_1 : '-';
+            $machine2 = $overtime->machine_2 ? $overtime->machine_2 : '-';
+            $meal = $overtime->meal > 0 ? "✓ ($overtime->total_meal x)" : '-';
+            $xml .= "<row id='$overtime->id'>";
+            $xml .= "<cell $statusColor>" . cleanSC($no) . "</cell>";
+            if(isset($params['check'])) {
+                $xml .= "<cell $color>0</cell>";
+                $xml .= "<cell $color>0</cell>";
+            }
+            $xml .= "<cell $color>" . cleanSC($overtime->status) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->revision_status) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->status_before) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->emp_task_id) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->employee_name) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->department) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->sub_department) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->division) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($machine1) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($machine2) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->requirements) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateDay($overtime->overtime_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->start_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->end_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->status_day) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->effective_hour) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->break_hour) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->real_hour) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->overtime_hour) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toNumber($overtime->premi_overtime)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toNumber($overtime->overtime_value)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($meal) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->notes) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->status) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($status_updater) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->emp1) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->emp2) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime($overtime->created_at)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->emp_id) . "</cell>";
+            $xml .= "</row>";
+            $no++;
+        }
+        gridXmlHeader($xml);
+    }
+
+    public function cancelOvtRev()
+    {
+        $post = fileGetContent();
+        $taskId = $post->taskId;
+        $data = [
+            'revision_status' => 'CANCELED',
+            'updated_by' => empId(),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ];
+        $update = $this->Hr->update('employee_overtimes_detail', $data, ['emp_task_id' => $taskId]);
+        if($update) {
+            response(['status' => 'success', 'message' => 'Update personil lembur berhasil']);
+        }
+    }
+
+    public function rollbackOvtRev()
+    {
+        $post = fileGetContent();
+        $taskId = $post->taskId;
+        $overtime = $this->Hr->getOne('employee_overtimes_detail', ['emp_task_id' => $taskId]);
+        $data = [
+            'status' => $overtime->status == 'ADD' ? 'ADD' : $overtime->status_before,
+            'revision_status' => $overtime->status == 'ADD' ? 'CLOSED' : 'NONE',
+            'updated_by' => empId(),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ];
+        $update = $this->Hr->update('employee_overtimes_detail', $data, ['emp_task_id' => $taskId]);
+        if($update) {
+            response(['status' => 'success', 'message' => 'Update personil lembur berhasil']);
+        }
+    }
+
+    public function createRevisionPersonil()
+    {
+        $post = getPost();
+        $date = date('Y-m-d');
+        $expDate = explode('-', $date);
+        $lastId = $this->Overtime->lastOt('overtime_revision_requests_personil', 'created_at', $date);
+        $revTaskId = sprintf('%03d', $lastId + 1) . '/OT-REV-P/' . empLoc() . '/' . toRomawi($expDate[1]) . '/' . $expDate[0];
+        $data = [
+            'location' => empLoc(),
+            'rev_task_id' => $revTaskId,
+            'task_id' => $post['task_id'],
+            'description' => $post['description'],
+            'status' => 'CREATED',
+            'created_by' => empId(),
+            'updated_by' => empId(),
+            'updated_at' => date('Y-m-d H:i:s')
+        ];
+        $insert = $this->Hr->create('overtime_revision_requests_personil', $data);
+        if($insert) {
+            $this->Hr->update('employee_overtimes', ['on_revision' => 1], ['task_id' => $post['task_id']]);
+            $email = '';
+            $sdms = $this->Hr->getWhere('employees', ['division_id' => 38])->result();
+            foreach ($sdms as $sdm) {
+                if ($email == '') {
+                    $email = $sdm->email;
+                } else {
+                    $email = $email . ',' . $sdm->email;
+                }
+            }
+        
+            $overtime = $this->Overtime->getOvertime(['equal_task_id' => $post['task_id']])->row();
+            $overtimeDetail = $this->Overtime->getOvertimeDetail(['equal_task_id' => $post['task_id'], 'notequal_revision_status' => ''])->result();
+            $message = $this->load->view('html/overtime/email/revision_overtime_personil', [
+                'overtime' => $overtime, 
+                'overtimeDetail' => $overtimeDetail, 
+                'revision' => $data, 
+                'location' => locName()], true);
+            $dataEmail = [
+                'alert_name' => 'OVERTIME_REVISION_PERSONIL_REQUEST',
+                'email_to' => $email,
+                'subject' => "Request Revisi Personil Lembur (Task ID: $overtime->task_id) From ",
+                'subject_name' => "Spekta Alert: Request Revisi Personil Lembur (Task ID: $overtime->task_id)",
+                'message' => $message,
+            ];
+            $this->Main->create('email', $dataEmail);
+            xmlResponse('inserted', 'Berhasil membuat form pengajuan revisi lembur');
+        }
+    }
+
+    public function getRevOvtPersonil()
+    {
+        $params = getParam();
+        $overtimes = $this->Overtime->getRevOvtPersonil($params)->result();
+        $xml = "";
+        $no = 1;
+        foreach ($overtimes as $overtime) {
+            $color = null;
+            if ($overtime->rev_status == 'PROCESS') {
+                $color = "bgColor='#efd898'";
+            } else if ($overtime->rev_status == 'CLOSED') {
+                $color = "bgColor='#7ecb87'";
+            } else if ($overtime->rev_status == 'CANCELED') {
+                $color = "bgColor='#d7a878'";
+            } else if ($overtime->rev_status == 'REJECTED') {
+                $color = "bgColor='#c94b62'";
+            }
+
+            $xml .= "<row id='$overtime->rev_task_id'>";
+            $xml .= "<cell $color>" . cleanSC($no) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->rev_task_id) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->task_id) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->department) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->sub_department) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->division) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->personil) . " Orang</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->status_day) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateDay($overtime->overtime_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->start_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->end_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->notes) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->emp1) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->emp2) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime($overtime->created_at)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->rev_status) . "</cell>";
+            $xml .= "</row>";
+            $no++;
+        }
+        gridXmlHeader($xml);
+    }
+
+    public function confirmRevisionPersonil()
+    {
+        $post = getGridPost();
+        $data1 = [];
+        $data2 = [];
+        foreach ($post as $key => $value) {
+            if($value['c1'] == 1) {
+                if($value['c5'] != 'ADD') {
+                    $data1[] = [
+                        'id' => $key,
+                        'status' => $value['c4'],
+                        'status_before' => $value['c3'],
+                    ];
+                } else {
+                    $data2[] = [
+                        'id' => $key,
+                        'status' => $value['c4'],
+                    ];
+                }
+            }
+        }
+
+        if(count($data1) > 0 || count($data2) > 0) {
+            if(count($data1) > 0) {
+                $this->Hr->updateMultiple('employee_overtimes_detail', $data1, 'id');
+            }
+            if(count($data2) > 0) {
+                $this->Hr->updateMultiple('employee_overtimes_detail', $data2, 'id');
+            }
+            xmlResponse('updated', 'Berhasil mengubah status lembur karyawan');
+        } else {
+            xmlResponse('error', 'Gagal mengubah status!');
+        }
+    }
+
+    public function rollbackRevisionPersonil()
+    {
+        $post = getGridPost();
+        $data = [];
+        foreach ($post as $key => $value) {
+            if($value['c2'] == 1) {
+                $data[] = [
+                    'id' => $key,
+                    'status' => $value['c5'],
+                ];
+            }
+        }
+
+        if(count($data) > 0) {
+            $update = $this->Hr->updateMultiple('employee_overtimes_detail', $data, 'id');
+            if($update) {
+                xmlResponse('updated', 'Berhasil mengubah status lembur karyawan');
+            } else {
+                xmlResponse('error', 'Gagal mengubah status!');
+            }
+        } else {
+            xmlResponse('error', 'Gagal mengubah status!');
+        }
     }
 }

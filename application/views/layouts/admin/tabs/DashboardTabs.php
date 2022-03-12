@@ -34,7 +34,7 @@ $script = <<< "JS"
 
     function showDashOvertimeMachineTab() {
         if (!mainTab.tabs("dashboard_overtime_machine_tab")){
-            mainTab.addTab("dashboard_overtime_machine_tab", tabsStyle("bar_chart.png", "Waktu Penggunaan Mesin", "background-size: 16px 16px"), null, null, true, true);
+            mainTab.addTab("dashboard_overtime_machine_tab", tabsStyle("bar_chart.png", "Penggunaan Mesin", "background-size: 16px 16px"), null, null, true, true);
             showDashOvertimeMachine();
         } else {
             mainTab.tabs("dashboard_overtime_machine_tab").setActive();

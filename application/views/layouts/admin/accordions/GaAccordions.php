@@ -63,8 +63,8 @@ $script = <<< "JS"
                 otherItems.push({id: "ga_meeting_rooms", text: "Ruang Meeting", open: 1, icons: {folder_opened: "arrow_down", folder_closed: "arrow_right"}, items: roomSubItems});
             }
 
-            if(isHaveTrees("ga_vehicles")) {
-                otherItems.push({id: "ga_vehicles", text: "Kendaraan Dinas", open: 1, icons: {folder_opened: "arrow_down", folder_closed: "arrow_right"}, items: vehicleItems});
+            if(isHaveTrees("ga_vehicle")) {
+                otherItems.push({id: "ga_vehicle", text: "Kendaraan Dinas", open: 1, icons: {folder_opened: "arrow_down", folder_closed: "arrow_right"}, items: vehicleItems});
             }
 
             var otherTree = myTree.cells("a").attachTreeView({

@@ -10,7 +10,7 @@ $script = <<< "JS"
 
     function projectManagerTab() {
         if (!mainTab.tabs("pm")){
-            mainTab.addTab("pm", tabsStyle("timeline.png", "Project Managemen", "background-size: 16px 16px"), null, null, true, true);
+            mainTab.addTab("pm", tabsStyle("timeline.png", "Manajemen Proyek", "background-size: 16px 16px"), null, null, true, true);
             mainTab.cells("pm").attachHTMLString("<div class='pm_gantt' id='pm' style='width:100%;height:100%'></div>");
             gantt.init("pm");
             

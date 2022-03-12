@@ -54,7 +54,7 @@ $script = <<< "JS"
         var empToolbarItem = [
             {id: "refresh", text: "Refresh", type: "button", img: "refresh.png"},
             {id: "add", text: "Tambah", type: "button", img: "add.png"},
-            {id: "edit", text: "Ubah", type: "button", img: "edit.png", img_disabled: "edit_disabled.png"}
+            {id: "edit", text: "Ubah", type: "button", img: "edit.png"}
         ];
 
         if(userLogged.role === "admin" || userLogged.subId == 11) {
@@ -73,6 +73,11 @@ $script = <<< "JS"
             icon_path: "./public/codebase/icons/",
             items: empToolbarItem
         });
+
+        if(userLogged.role !== "admin" && userLogged.subId != 11) {
+            empToolbar.disableItem("add");
+            empToolbar.disableItem("edit");
+        }
 
         empToolbar.attachEvent("onClick", function(id) {
             switch (id) {

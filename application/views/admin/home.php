@@ -112,10 +112,10 @@ $script = <<< "JS"
 			});
 		}
 
-		if(isHaveMenu("Proyek Manajemen")) {
+		if(isHaveMenu("Manajemen Proyek")) {
 			dataView.add({
 				path:"./public/codebase/icons/timeline.png",
-				title: "Proyek Manajemen",
+				title: "Manajemen Proyek",
 				id:"project"
 			});
 		}

@@ -48,7 +48,11 @@ $script = <<< "JS"
             }
 
             if(isHaveTrees("hr_revisi_lembur")) {
-                empSubItems_4.push({id: "hr_revisi_lembur", text: "Request Revisi Lembur", icons: {file: "menu_icon"}});
+                empSubItems_4.push({id: "hr_revisi_lembur", text: "Request Revisi Jam Lembur", icons: {file: "menu_icon"}});
+            }
+
+            if(isHaveTrees("hr_revisi_lembur_personil")) {
+                empSubItems_4.push({id: "hr_revisi_lembur_personil", text: "Request Revisi Personil Lembur", icons: {file: "menu_icon"}});
             }
 
             //@MASTER KEPEGAWAIAN
@@ -113,6 +117,8 @@ $script = <<< "JS"
                     hrVerifiedOvtTab();
                 } else if(id == "hr_revisi_lembur") {
                     hrRevisionOvtTab();
+                } else if(id == "hr_revisi_lembur_personil") {
+                    hrRevisionOvtPersonilTab();
                 } else if(id == "hr_data_departemen") {
                     masterDeptTab();
                 } else if(id == "hr_data_sub_departemen") {

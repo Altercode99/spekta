@@ -168,6 +168,27 @@ function toIndoDateTime5($date)
     return "$date, $time[0]:$time[1]";
 }
 
+function doToMysqlDate($date)
+{
+    $date = explode(' ', $date);
+    $month = [
+        'Januari' => '01',
+        'Februari' => '02',
+        'Maret' => '03',
+        'April' => '04',
+        'Mei' => '05',
+        'Juni' => '06',
+        'Juli' => '07',
+        'Agustus' => '08',
+        'September' => '09',
+        'Oktober' => '10',
+        'November' => '11',
+        'Desember' => '12',
+    ];
+    $numMonth = $month[$date[1]];
+    return "$date[2]-$numMonth-$date[0]";
+}
+
 function toIndoSlash($date)
 {
     $newDate = explode('-', $date);
@@ -683,6 +704,20 @@ function advanceSearch($get)
     return $where;
 }
 
+function queryIn($column, $ins)
+{
+    $expValue = explode(",", $ins);
+    $in = "";
+    foreach ($expValue as $expKey => $expVal) {
+        if ($in === "") {
+            $in = "'" . $expVal . "'";
+        } else {
+            $in = $in . ",'" . $expVal . "'";
+        }
+    }
+    return " AND $column IN($in)";
+}
+
 function sortArrayDesc($array, $column)
 {
     $keys = array_column($array, $column);
@@ -914,8 +949,9 @@ function checkNationalDay($date)
     }
 }
 
-function totalHour($empId, $date, $start, $end, $startTime, $endTime)
+function totalHour($empId, $start, $end, $startTime, $endTime)
 {
+    $date = date('Y-m-d', strtotime($start));
     $ci = &get_instance();
     $startTime = $startTime;
     $endTime = $endTime;
@@ -960,32 +996,34 @@ function totalHour($empId, $date, $start, $end, $startTime, $endTime)
     $totalMeal = 0;
 
     for ($i = intval($startHour) + 1; $i <= $endFixing; $i++) {
-        if ($i == $rest1 || $i == $rest2 || $i == $rest3 || $i == $rest4 || $i == $rest5 || ($i - 1) == $rest6) {
+        if ($i == $rest1 || $i == $rest2 || $i == $rest3 || $i == $rest4 || $i == $rest5 || ($i - 1) == $rest6 || $i == $normalRest4 || $i == $normalRest4) {
             if ($i != $rest5) {
                 $div++;
             }
         }
 
-        if (($i + $divEndMinute) > $mealTime1 && $hour >= 3 && $startHour < 12) {
-            if ($meal1 == 0) {
+        $hour++;
+
+        if (($i - 1) + ($divStartMinute + $divEndMinute) >= $mealTime1) {
+            if ($meal1 == 0 && ($hour - $divStartMinute + $divEndMinute) >= 3 && ($startHour + $divStartMinute) < 12) {
                 $totalMeal++;
                 $meal1 = 1;
             }
         }
-        if (($i + $divEndMinute) > $mealTime2 && $hour >= 3 && $startHour < 18) {
-            if ($meal2 == 0) {
+        
+        if (($i - 1) + ($divStartMinute + $divEndMinute) >= $mealTime2) {
+            if ($meal2 == 0 && ($hour - $divStartMinute + $divEndMinute) >= 3 && ($startHour + $divStartMinute) < 18) {
                 $totalMeal++;
                 $meal2 = 1;
             }
         }
-        if (($i + $divEndMinute) > $mealTime3 && $hour >= 3 && $startHour < 24) {
-            if ($meal3 == 0) {
+
+        if (($i - 1) + ($divStartMinute + $divEndMinute) >= $mealTime3) {
+            if ($meal3 == 0 && ($hour - $divStartMinute + $divEndMinute) >= 3 && ($startHour + $divStartMinute) < 24) {
                 $totalMeal++;
                 $meal3 = 1;
             }
         }
-
-        $hour++;
     }
 
     if ($endHour == $rest1 || $endHour == $rest2 || $endHour == $rest3 || $endHour == $normalRest4 || $endHour == $normalRest5 || $endHour == $rest6) {
@@ -1008,7 +1046,7 @@ function totalHour($empId, $date, $start, $end, $startTime, $endTime)
         $totalHour = ($hour - $divStartMinute + $divEndMinute);
     } else {
         $totalHour = ($hour - $divStartMinute + $divEndMinute) - $div;
-        if ($endHour < $startHour && ($hour - $divStartMinute + $divEndMinute) > 7.5) {
+        if ($endHour < $startHour && ($hour - $divStartMinute + $divEndMinute) >= 7 && ($startHour + $divStartMinute) >= 19.5) {
             $totalHour += 1;
         }
     }
@@ -1039,7 +1077,7 @@ function totalHour($empId, $date, $start, $end, $startTime, $endTime)
         'overtime_hour' => $emp->rank_id <= 6 || $emp->overtime == 1 ? $totalHour : $overtimeHour,
         'premi_overtime' => $premi,
         'overtime_value' => $totalPremi,
-        'total_meal' => $totalHour >= 3 ? $totalMeal : 0,
+        'total_meal' => $totalMeal,
     ];
 }
 
@@ -1151,3 +1189,53 @@ function sendChatMsg($data, $gid)
     ];
     return $dataMessage;
 }
+
+function isMtnSupport($ovt)
+{
+    if ($ovt->ahu > 0 || $ovt->compressor > 0 || $ovt->pw > 0 || $ovt->steam > 0 || $ovt->dust_collector > 0 ||
+        $ovt->wfi > 0 || $ovt->mechanic > 0 || $ovt->electric > 0 || $ovt->hnn > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function isQcSupport($ovt)
+{
+    if ($ovt->qc) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function isQaSupport($ovt)
+{
+    if ($ovt->qa) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function isWhsSupport($ovt)
+{
+    if ($ovt->penandaan || $ovt->gbk || $ovt->gbb) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function clockToFloat($time) {
+    $expClock = explode(':', $time);
+    $hour = $expClock[0];
+    $minute = intval($expClock[1]) / 60;
+    return floatval($hour + $minute);
+}
+
+function dtToFloat($datetime) {
+    $clock = date('H:i', strtotime($datetime));
+    return clockToFloat($clock);
+}
+

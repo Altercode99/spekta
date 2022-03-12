@@ -25,12 +25,24 @@ class BasicModel extends CI_Model
         return $this->db->get($table);
     }
 
-    public function countWhere($table, $where)
+    public function countWhere($table, $where, $whereIn = null, $whereNotIn = null)
     {
         $this->db->select('id');
         $this->db->from($table);
         foreach ($where as $key => $value) {
             $this->db->where($key, $value);
+        }
+        
+        if($whereIn && count($whereIn) > 0) {
+            foreach ($whereIn as $key => $value) {
+                $this->db->where_in($key, $value);
+            }
+        }
+
+        if($whereNotIn && count($whereNotIn) > 0) {
+            foreach ($whereNotIn as $key => $value) {
+                $this->db->where_not_in($key, $value);
+            }
         }
         return $this->db->count_all_results();
     }

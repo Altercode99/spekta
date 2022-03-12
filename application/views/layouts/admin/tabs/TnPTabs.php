@@ -7,7 +7,10 @@ $script = <<< "JS"
 
     function requestOvertimeTab() {
         if (!mainTab.tabs("tnp_overtime_request")){
-            mainTab.addTab("tnp_overtime_request", tabsStyle("clock.png", "Request Lembur Produksi"), null, null, true, true);
+            if(!userLogged.picOvertime) {
+                return eaAlert("Kesalahan Hak Akses", "Anda tidak memiliki hak akses sebagai Admin lemburan!");
+            }
+            mainTab.addTab("tnp_overtime_request", tabsStyle("clock.png", "Request Lembur (Support)"), null, null, true, true);
             showRequestOvertime();
         } else {
             mainTab.tabs("tnp_overtime_request").setActive();
@@ -16,7 +19,10 @@ $script = <<< "JS"
 
     function inputOvertimeTNPTab() {
         if (!mainTab.tabs("tnp_input_overtime")){
-            mainTab.addTab("tnp_input_overtime", tabsStyle("clock.png", "Input Lembur Teknik"), null, null, true, true);
+            if(!userLogged.picOvertime) {
+                return eaAlert("Kesalahan Hak Akses", "Anda tidak memiliki hak akses sebagai Admin lemburan!");
+            }
+            mainTab.addTab("tnp_input_overtime", tabsStyle("clock.png", "Input Lembur (Support)"), null, null, true, true);
             showInputOvertimeTNP();
         } else {
             mainTab.tabs("tnp_input_overtime").setActive();

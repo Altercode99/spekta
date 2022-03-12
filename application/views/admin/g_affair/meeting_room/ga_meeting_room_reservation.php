@@ -51,7 +51,8 @@ $script = <<< "JS"
                             ]
                         });
 
-                        if(revMRoomGrid.cells(revMRoomGrid.getSelectedRowId(), 17).getValue() == "CREATED") {
+                        let status = revMRoomGrid.cells(revMRoomGrid.getSelectedRowId(), 17).getValue();
+                        if(status == "CREATED" || status == "REJECTED") {
                             appvWinToolbar.enableItem("approve");
                             appvWinToolbar.disableItem("snack");
                         } else {
@@ -374,7 +375,7 @@ $script = <<< "JS"
         revMRoomGrid.attachEvent("onRowSelect", function(rId, cidn) {
             if(revMRoomGrid.cells(rId, 17).getValue() == 'APPROVED') {
                 revMRoomToolbar.disableItem("approve");
-                revMRoomToolbar.disableItem("reject");
+                revMRoomToolbar.enableItem("reject");
                 if(revMRoomGrid.cells(rId, 9).getValue() == '-') {
                     revMRoomToolbar.disableItem("snack");
                 } else {
@@ -384,7 +385,11 @@ $script = <<< "JS"
                 revMRoomGridToolbar.enableItem("change_hour");
                 revMRoomGridToolbar.enableItem("closed");
             } else if(revMRoomGrid.cells(rId, 17).getValue() == 'REJECTED' || revMRoomGrid.cells(rId, 17).getValue() == 'CLOSED') {
-                revMRoomToolbar.disableItem("approve");
+                if(revMRoomGrid.cells(rId, 17).getValue() == "REJECTED") {
+                    revMRoomToolbar.enableItem("approve");
+                } else {
+                    revMRoomToolbar.disableItem("approve");
+                }
                 revMRoomToolbar.disableItem("reject");
                 revMRoomToolbar.disableItem("snack");
                 revMRoomGridToolbar.disableItem("update");

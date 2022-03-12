@@ -6,6 +6,7 @@ if ((strpos(strtolower($_SERVER['SCRIPT_NAME']), strtolower(basename(__FILE__)))
 
 $script = <<< "JS"
 	function showHrRevisionOvertime() {	
+        var revForm;
         var legend = legendGrid();
         var revLayout = mainTab.cells("hr_revision_overtime").attachLayout({
             pattern: "3J",
@@ -27,11 +28,13 @@ $script = <<< "JS"
         $("#hr_btn_ftr_ovt_rev").on("click", function() {
             if(checkFilterDate($("#hr_start_ovt_rev").val(), $("#hr_end_ovt_rev").val())) {
                 rRevGrid();
+                rRevDetailGrid();
             }
         });
 
         $("#hr_status_ovt_rev").on("change", function() {
             rRevGrid();
+            rRevDetailGrid();
         });
 
         var revToolbar = revLayout.cells("a").attachToolbar({
@@ -144,13 +147,12 @@ $script = <<< "JS"
 
         var revDetailGrid = revLayout.cells("c").attachGrid();
         revDetailGrid.setImagePath("./public/codebase/imgs/");
-        revDetailGrid.setHeader("No,Task ID,,Created By,Updated By,DiBuat");
-        revDetailGrid.setHeader("No,Task ID,Nama Karyawan,Bagian,Sub Bagian,Nama Mesin #1,Nama Mesin #2,Pelayanan Produksi,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Lembur,Premi,Nominal Overtime,Makan,Biaya Makan,Tugas,Status Overtime,DiBuat");
-        revDetailGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
-        revDetailGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
-        revDetailGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        revDetailGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
-        revDetailGrid.setInitWidthsP("5,20,20,20,20,20,20,20,20,20,20,15,15,15,15,15,15,15,15,15,30,25");
+        revDetailGrid.setHeader("No,Task ID,Nama Karyawan,Bagian,Sub Bagian,Nama Mesin #1,Nama Mesin #2,Pelayanan Produksi,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Lembur,Premi,Nominal Overtime,Makan,Biaya Makan,Tugas,Status Overtime,DiBuat,Task Start,Task End");
+        revDetailGrid.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
+        revDetailGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
+        revDetailGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
+        revDetailGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
+        revDetailGrid.setInitWidthsP("5,20,20,20,20,25,25,25,20,20,20,15,15,15,15,15,15,15,15,15,30,15,20,20,20");
         revDetailGrid.enableSmartRendering(true);
         revDetailGrid.enableMultiselect(true);
         revDetailGrid.attachEvent("onXLE", function() {
@@ -174,7 +176,7 @@ $script = <<< "JS"
                 revDetailGrid.clearAndLoad(Overtime("getRevOvtDtlGrid", {taskId}));
                 revLayout.cells("b").expand();
                 reqJson(Overtime("getRevision"), "POST", {taskId}, (err, res) => {
-                    var revForm = revLayout.cells("b").attachForm([
+                    revForm = revLayout.cells("b").attachForm([
                         {type: "block", offsetLeft: 5, list: [
                             {type: "input", name: "task_id", label: "Task ID", labelWidth: 130, inputWidth: 385, readonly: true, required: true, value: res.revision.task_id},
                             {type: "editor", name: "description", label: "Keterangan", labelWidth: 130, inputWidth: 385, inputHeight: 200, required: true, value: res.revision.description},
@@ -248,21 +250,27 @@ $script = <<< "JS"
                     var hourRevWin = createWindow("hr_hour_revision", "Revisi Waktu Lembur", 510, 300);
                     myWins.window("hr_hour_revision").skipMyCloseEvent = true;
 
-                    let ovtTime = getCurrentTime(revDetailGrid, 9, 10);
+                    let ovtTime = getCurrentTime(revDetailGrid, 23, 24);
+                    let startIndex = times.filterTime.indexOf(ovtTime.start);
+                    let endIndex = times.filterTime.indexOf(ovtTime.end);
+
+                    var workTime = genWorkTime(times.times, startIndex, endIndex, true);
                         
-                    let labelStart = ovtTime.labelStart;
-                    let labelEnd = ovtTime.labelEnd;
+                    var labelStartDetail = ovtTime.labelStart;
+                    var labelEndDetail = ovtTime.labelEnd;
                     var hourRevForm = hourRevWin.attachForm([
                         {type: "fieldset", offsetLeft: 30, offsetTop: 30, label: "Jam Lembur", list:[	
                             {type: "block", list: [
                                 {type: "input", name: "task_id", label: "Task ID", labelWidth: 130, inputWidth: 250, readonly: true, value: revDetailGrid.getSelectedRowId()},                               
-                                {type: "combo", name: "start_date", label: labelStart, labelWidth: 130, inputWidth: 250, required: true,
+                                {type: "hidden", name: "labelStartDetail", label: "Start Date", labelWidth: 130, inputWidth: 250, value: labelStartDetail},                               
+                                {type: "combo", name: "start_date", label: "<span id='labelStartDetail'>"+labelStartDetail+"</span>", labelWidth: 130, inputWidth: 250, required: true,
                                     validate: "NotEmpty", 
-                                    options: times.startTimes
+                                    options: workTime.newStartTime
                                 },
-                                {type: "combo", name: "end_date", label: labelEnd, labelWidth: 130, inputWidth: 250, required: true, 
+                                {type: "hidden", name: "labelEndDetail", label: "End Date", labelWidth: 130, inputWidth: 250, value: labelEndDetail},                               
+                                {type: "combo", name: "end_date", label: "<span id='labelEndDetail'>"+labelEndDetail+"</span>", labelWidth: 130, inputWidth: 250, required: true, 
                                     validate: "NotEmpty", 
-                                    options: times.endTimes,
+                                    options: workTime.newEndTime,
                                 }
                             ]},
                         ]},
@@ -276,10 +284,41 @@ $script = <<< "JS"
 
                     var startCombo = hourRevForm.getCombo("start_date");
                     var endCombo = hourRevForm.getCombo("end_date");
-                    let startIndex = times.filterStartTime.indexOf(ovtTime.start);
-                    let endIndex = times.filterEndTime.indexOf(ovtTime.end);
-                    startCombo.selectOption(startIndex);
-                    endCombo.selectOption(endIndex);
+                    let ovtDetailTime = getCurrentTime(revDetailGrid, 9, 10);
+                    let startCurrWinIndex = workTime.filterStart.indexOf(ovtDetailTime.start);
+                    let endCurrWinIndex = workTime.filterEnd.indexOf(ovtDetailTime.end);
+                    startCombo.selectOption(startCurrWinIndex);
+                    endCombo.selectOption(endCurrWinIndex);
+                    dateChangeDetail(workTime.filterStart.indexOf(startCombo.getSelectedValue()), workTime.filterEnd.indexOf(endCombo.getSelectedValue()));
+
+                    hourRevForm.attachEvent("onChange", function(name, value) {
+                        if(name === "start_date" || name === "end_date") {
+                            dateChangeDetail(workTime.filterStart.indexOf(startCombo.getSelectedValue()), workTime.filterEnd.indexOf(endCombo.getSelectedValue()));
+                            checkRevisionTime(times.filterTime, startCombo.getSelectedValue(), endCombo.getSelectedValue(), ['update'], hourRevForm);
+                        }
+                    });
+
+                    dateChangeDetail(workTime.filterStart.indexOf(startCombo.getSelectedValue()), workTime.filterEnd.indexOf(endCombo.getSelectedValue()));
+                    checkRevisionTime(times.filterTime, startCombo.getSelectedValue(), endCombo.getSelectedValue(), ['update'], hourRevForm);
+
+                    function dateChangeDetail(start, end) {
+                        let startMiddle = workTime.filterStart.indexOf("23:30");
+                        let endMiddle = workTime.filterEnd.indexOf("00:00");
+                        if(start > startMiddle) {
+                            hourRevForm.setItemValue("labelStartDetail", labelEndDetail);
+                            $("#labelStartDetail").html(labelEndDetail);
+                        } else {
+                            hourRevForm.setItemValue("labelStartDetail", labelStartDetail);
+                            $("#labelStartDetail").html(labelStartDetail);
+                        }
+                        if(end >= endMiddle) {
+                            hourRevForm.setItemValue("labelEndDetail", labelEndDetail);
+                            $("#labelEndDetail").html(labelEndDetail);
+                        } else {
+                            hourRevForm.setItemValue("labelEndDetail", labelStartDetail);
+                            $("#labelEndDetail").html(labelStartDetail);
+                        }
+                    }
 
                     hourRevForm.attachEvent("onButtonClick", function(id) {
                         switch (id) {
@@ -316,6 +355,10 @@ $script = <<< "JS"
                         return eAlert("Pilih baris yang akan di tutup!");
                     }
 
+                    if(revForm.getItemValue("response") == "") {
+                        return eAlert("Silahkan isi Response / Tanggapan SDM!")
+                    }
+
                     dhtmlx.modalbox({
                         type: "alert-warning",
                         title: "Konfirmasi Tutup Revisi",
@@ -328,6 +371,8 @@ $script = <<< "JS"
                                         rRevGrid();
                                         rRevDetailGrid();
                                         sAlert(res.message);
+                                    } else {
+                                        eAlert(res.message);
                                     }
                                 });
                             }

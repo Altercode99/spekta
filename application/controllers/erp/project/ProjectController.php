@@ -26,7 +26,7 @@ class ProjectController extends Erp_Controller
         }
 
         $divisions = $this->Hr->getWhere('divisions', ['sub_department_id' => $post->subId])->result();
-        $tasksList = $this->Main->getGroupBy('projects_task', '*', ['task_id'], ['MONTH(start_date)' => $post->month, 'YEAR(start_date)' => $post->year])->result();
+        $tasksList = $this->Main->getGroupBy('projects_task', '*', ['task_id'], ['MONTH(start_date)' => $post->month, 'YEAR(start_date)' => $post->year, 'sub_department_id' => $post->subId, 'division_id' => $post->divId])->result();
         $data = [];
         $dataLink = [];
         foreach ($tasks as $task) {
@@ -83,7 +83,7 @@ class ProjectController extends Erp_Controller
                 $html .= "<option $selected value='$division->id'>$division->name</option>";
             }
         } else {
-            $html .= "<option value=''>-</option>";
+            $html .= "<option value='-'>ALL</option>";
         }
         $html .= "</select>";
 
@@ -96,7 +96,7 @@ class ProjectController extends Erp_Controller
                 $html2 .= "<option $selected value='$tls->task_id'>$tls->text</option>";
             }
         } else {
-            $html2 .= "<option value=''>-</option>";
+            $html2 .= "<option value='-'>ALL</option>";
         }
         $html2 .= "</select>";
 
@@ -150,7 +150,7 @@ class ProjectController extends Erp_Controller
             'location' => empLoc(),
             'text' => ucwords(strtolower($data->text)),
             'sub_department_id' => empSub(),
-            'division_id' => empDiv(),
+            'division_id' => empDiv() ? empDiv() : 0,
             'start_date' => date('Y-m-d H:i:s', strtotime($data->start_date)),
             'end_date' => date('Y-m-d H:i:s', strtotime($data->end_date)),
             'duration' => $data->duration,
@@ -191,7 +191,7 @@ class ProjectController extends Erp_Controller
         $dataInsert = [
             'id' => $id,
             'sub_department_id' => empSub(),
-            'division_id' => empDiv(),
+            'division_id' => empDiv() ? empDiv() : 0,
             'source' => $data->source,
             'target' => $data->target,
             'type' => $data->type,

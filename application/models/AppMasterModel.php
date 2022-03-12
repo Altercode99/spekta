@@ -203,7 +203,7 @@ class AppMasterModel extends CI_Model
                            (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.updated_by) LIKE '%$get[search]%'
                     )";
         }
-        $sql .= " ORDER BY id";
+        $sql .= " ORDER BY a.id";
         return $this->db->query($sql)->result();
     }
 

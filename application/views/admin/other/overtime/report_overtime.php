@@ -88,7 +88,7 @@ $script = <<< "JS"
                     var personGrid = revLayout.cells("c").attachGrid();
                     personGrid.setImagePath("./public/codebase/imgs/");
                     personGrid.setImagePath("./public/codebase/imgs/");
-                    personGrid.setHeader("No,Nama Karyawan,Sub Bagian,Bagian,Sub Unit,Tugas Lembur,Jam Efektif,Jam Istirahat,Jam Ril,Jam Lembur,Nominal Overtime,Biaya Makan");
+                    personGrid.setHeader("No,Nama Karyawan,Sub Bagian,Bagian,Sub Unit,Tugas Lembur,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Nominal Overtime,Biaya Makan");
                     personGrid.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
                     personGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str");
                     personGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left");
@@ -216,12 +216,12 @@ $script = <<< "JS"
 
         var reportOvtGrid = reportTabs.cells("a").attachGrid();
         reportOvtGrid.setImagePath("./public/codebase/imgs/");
-        reportOvtGrid.setHeader("No,Task ID,No. Memo Lembur,Nama Karyawan,Bagian Personil,Sub Bagian Personil,Bagian Penyelenggara,Sub Bagian Penyelenggara,Nama Mesin #1,Nama Mesin #2,Pelayanan,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Lembur,Premi,Nominal Overtime,Makan,Biaya Makan,Status Overtime,Ulasan Pencapaian Lembur,Created At");
+        reportOvtGrid.setHeader("No,Task ID,No. Memo Lembur,Nama Karyawan,Bagian Personil,Sub Bagian Personil,Bagian Penyelenggara,Sub Bagian Penyelenggara,Nama Mesin #1,Nama Mesin #2,Pelayanan,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Premi,Nominal Overtime,Makan,Biaya Makan,Status Overtime,Ulasan Pencapaian Lembur,Created At");
         reportOvtGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
         reportOvtGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
         reportOvtGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
         reportOvtGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        reportOvtGrid.setInitWidthsP("5,20,20,20,20,20,20,20,15,15,15,15,15,15,10,10,10,10,10,10,15,5,15,10,30,25");
+        reportOvtGrid.setInitWidthsP("5,20,20,20,20,20,20,20,25,25,25,15,15,15,10,10,10,10,10,10,15,5,15,10,30,25");
         reportOvtGrid.attachFooter(",Total Summary,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#stat_total,#stat_total,#stat_total,#stat_total,,<div id='other_total_ovt_report'>0</div>,,<div id='other_total_meal_ovt_report'>0</div>,,,");
         reportOvtGrid.attachFooter(",Total Biaya Lembur,<div id='other_grand_total_ovt_report'>0</div>");
         reportOvtGrid.attachFooter(",Total Biaya Makan,<div id='other_grand_total_meal_ovt_report'>0</div>");
@@ -263,7 +263,7 @@ $script = <<< "JS"
 
         var reportOvtSubGrid = reportTabs.cells("b").attachGrid();
         reportOvtSubGrid.setImagePath("./public/codebase/imgs/");
-        reportOvtSubGrid.setHeader("No,Bagian,Sub Unit,Jam Efektif,Jam Istirahat,Jam Ril,Jam Lembur,Nominal Overtime,Biaya Makan");
+        reportOvtSubGrid.setHeader("No,Bagian,Sub Unit,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Nominal Overtime,Biaya Makan");
         reportOvtSubGrid.attachHeader("#rspan,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
         reportOvtSubGrid.setColSorting("int,str,str,str,str,str,str,str,str");
         reportOvtSubGrid.setColAlign("center,left,left,left,left,left,left,left,left");
@@ -304,7 +304,7 @@ $script = <<< "JS"
 
         var reportOvtDivGrid = reportTabs.cells("c").attachGrid();
         reportOvtDivGrid.setImagePath("./public/codebase/imgs/");
-        reportOvtDivGrid.setHeader("No,Sub Bagian,Bagian,Jam Efektif,Jam Istirahat,Jam Ril,Jam Lembur,Nominal Overtime,Biaya Makan");
+        reportOvtDivGrid.setHeader("No,Sub Bagian,Bagian,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Nominal Overtime,Biaya Makan");
         reportOvtDivGrid.attachHeader("#rspan,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
         reportOvtDivGrid.setColSorting("int,str,str,str,str,str,str,str,str");
         reportOvtDivGrid.setColAlign("center,left,left,left,left,left,left,left,left");
@@ -345,7 +345,7 @@ $script = <<< "JS"
 
         var reportOvtEmpGrid = reportTabs.cells("d").attachGrid();
         reportOvtEmpGrid.setImagePath("./public/codebase/imgs/");
-        reportOvtEmpGrid.setHeader("No,Nama Karyawan,Sub Bagian,Bagian,Sub Unit,Jam Efektif,Jam Istirahat,Jam Ril,Jam Lembur,Nominal Overtime,Biaya Makan");
+        reportOvtEmpGrid.setHeader("No,Nama Karyawan,Sub Bagian,Bagian,Sub Unit,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Nominal Overtime,Biaya Makan");
         reportOvtEmpGrid.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
         reportOvtEmpGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str");
         reportOvtEmpGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left");

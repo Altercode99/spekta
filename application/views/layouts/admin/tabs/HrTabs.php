@@ -71,10 +71,19 @@ $script = <<< "JS"
 
     function hrRevisionOvtTab() {
         if (!mainTab.tabs("hr_revision_overtime")){
-            mainTab.addTab("hr_revision_overtime", tabsStyle("clock.png", "Request Revisi Lembur", "background-size: 16px 16px"), null, null, true, true);
+            mainTab.addTab("hr_revision_overtime", tabsStyle("clock.png", "Request Revisi Jam Lembur", "background-size: 16px 16px"), null, null, true, true);
             showHrRevisionOvertime();
         } else {
             mainTab.tabs("hr_revision_overtime").setActive();
+        }
+    }
+
+    function hrRevisionOvtPersonilTab() {
+        if (!mainTab.tabs("hr_revision_overtime_personil")){
+            mainTab.addTab("hr_revision_overtime_personil", tabsStyle("clock.png", "Request Revisi Personil Lembur", "background-size: 16px 16px"), null, null, true, true);
+            showHrRevisionOvertimePersonil();
+        } else {
+            mainTab.tabs("hr_revision_overtime_personil").setActive();
         }
     }
     

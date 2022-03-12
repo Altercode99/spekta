@@ -19,34 +19,17 @@
         <p><b><?= $location ?></b></p>
     </div>
 
-    <?php if($status == 'OVERTIME_REVISION_REQUEST') { ?>
-        <p>Dear Team <b>SDM</b>,</p>
-        <p>Berikut ini adalah <b>Permintaan Revisi Lembur</b> dari Bagian <b><?= $revision->sub_department ?></b> dengan Nomor: <b><?= $revision->task_id ?></b></p>
-        <p>Instruksi Revisi:</p>
-        <br />
-        <p style="text-align:center"><?= $revision->description ?></p>
-        <br />
-    <?php } else if($status == 'OVERTIME_REVISION_REJECTION') { ?>
-        <p>Dear Team <b>ASMAN <?= $revision->sub_department ?></b>,</p>
-        <p><b>Permintaan Revisi Lembur</b> dengan Nomor: <b><?= $revision->task_id ?></b> sudah di proses oleh <b>SDM</b> dengan status:</p>
-        <br />
-        <p style="text-align:center"><b>REJECTED (DI TOLAK)</b></p>
-        <br />
-    <?php } else if($status == 'OVERTIME_REVISION_CLOSED') { ?>
-        <p>Dear Team <b>ASMAN <?= $revision->sub_department ?></b>,</p>
-        <p><b>Permintaan Revisi Lembur</b> dengan Nomor: <b><?= $revision->task_id ?></b> sudah di proses oleh <b>SDM</b> dengan status:</p>
-        <br />
-        <p style="text-align:center"><b>CLOSED</b></p>
-        <br />
-    <?php } ?>
+    <p>Dear <b><?= $emp->employee_name ?></b>,</p>
+    <p>Berikut ini adalah <b>Permintaan Revisi Lembur</b> dari <b><?= $requestor->employee_name ?></b> dengan Task ID: <b><?= $overtime->task_id ?></b></p>
+    <p>Instruksi Revisi:</p>
+    <br />
+    <p style="text-align:center"><?= $revisionNote ?></p>
+    <br />
+  
     <p>Adapun lemburan yang hendak di revisi adalah sebagai berikut:</p>
     <table style="<?= $style['table']  ?>">
         <tr>
             <th style="<?= $style['th'] ?>" colspan="2">Detail Lembur</th>
-        </tr>
-        <?php $no = 1; foreach ($overtimes as $overtime) { ?>
-        <tr>
-            <td style="<?= $style['td'] ?>" colspan="2">#<?= $no ?></td>
         </tr>
         <tr>
             <td style="<?= $style['td'] ?>">Task ID</td>
@@ -72,7 +55,6 @@
             <td style="<?= $style['td'] ?>">Tugas</td>
             <td style="<?= $style['td'] ?>"><?= $overtime->notes ?></td>
         </tr>
-        <?php $no++; } ?>
     </table>
 
     <div style="<?= $style['footer'] ?>">

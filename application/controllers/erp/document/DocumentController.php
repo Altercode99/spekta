@@ -17,7 +17,7 @@ class DocumentController extends Erp_Controller
 
     public function getDepartments()
     {
-        if (empRole() === 'admin' || empRank() == 1) {
+        if (empRole() === 'admin' || empRank() <= 4) {
             $depts = $this->Hr->getWhere('departments', ['location' => empLoc()], 'id, name')->result();
         } else {
             $depts = $this->Hr->getWhere('departments', ['location' => empLoc(), 'id' => empDept()], 'id, name')->result();
@@ -28,7 +28,11 @@ class DocumentController extends Erp_Controller
             if (empRole() === 'admin' || empSub() == 0) {
                 $subs = $this->Hr->getWhere('sub_departments', ['department_id' => $dept->id])->result();
             } else {
-                $subs = $this->Hr->getWhere('sub_departments', ['id' => empSub()])->result();
+                if(empRank() <= 4) {
+                    $subs = $this->Hr->getWhere('sub_departments', ['department_id' => $dept->id])->result();
+                } else {
+                    $subs = $this->Hr->getWhere('sub_departments', ['id' => empSub()])->result();
+                }
             }
             $items = [];
             foreach ($subs as $sub) {

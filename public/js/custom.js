@@ -563,7 +563,7 @@ function checkTime(startCombo, endCombo, button, form) {
     return true;
   }
 
-  if (newEnd - newStart <= 1) {
+  if (newEnd - newStart < 1) {
     eaAlert(
       "Kesalahan Waktu Lembur",
       "Waktu lembur minimal adalah 1 jam! <br/><b>TOMBOL DISABLED</>"
@@ -780,7 +780,7 @@ function genSelectMonth(yearName, monthName) {
   return options + "" + optionsYear;
 }
 
-function genWorkTime(times, startIndex, endIndex) {
+function genWorkTime(times, startIndex, endIndex, isEndFull = false) {
   var newStartTime = [];
   var newEndTime = [];
   var filterStart = [];
@@ -804,8 +804,30 @@ function genWorkTime(times, startIndex, endIndex) {
           filterStart.push(time.value);
         }
       }
+    });
 
+    times.map((time, index) => {
       if (index <= endIndex) {
+        if (
+          time.value !== "12:00" &&
+          time.value !== "12:30" &&
+          time.value !== "18:00" &&
+          time.value !== "00:00" &&
+          time.value !== "00:30" &&
+          time.value !== "04:30" &&
+          time.value !== "05:00"
+        ) {
+          newStartTime.push({
+            text: time.text,
+            value: time.value,
+          });
+          filterStart.push(time.value);
+        }
+      }
+    });
+
+    if (isEndFull) {
+      times.map((time, index) => {
         if (
           time.value !== "12:30" &&
           time.value !== "18:30" &&
@@ -818,8 +840,42 @@ function genWorkTime(times, startIndex, endIndex) {
           });
           filterEnd.push(time.value);
         }
-      }
-    });
+      });
+    } else {
+      times.map((time, index) => {
+        if (index >= startIndex) {
+          if (
+            time.value !== "12:30" &&
+            time.value !== "18:30" &&
+            time.value !== "00:30" &&
+            time.value !== "05:00"
+          ) {
+            newEndTime.push({
+              text: time.text,
+              value: time.value,
+            });
+            filterEnd.push(time.value);
+          }
+        }
+      });
+
+      times.map((time, index) => {
+        if (index <= endIndex) {
+          if (
+            time.value !== "12:30" &&
+            time.value !== "18:30" &&
+            time.value !== "00:30" &&
+            time.value !== "05:00"
+          ) {
+            newEndTime.push({
+              text: time.text,
+              value: time.value,
+            });
+            filterEnd.push(time.value);
+          }
+        }
+      });
+    }
   } else {
     times.map((time, index) => {
       if (index >= startIndex && index <= endIndex) {
@@ -839,7 +895,11 @@ function genWorkTime(times, startIndex, endIndex) {
           });
           filterStart.push(time.value);
         }
+      }
+    });
 
+    if (isEndFull) {
+      times.map((time, index) => {
         if (
           time.value !== "12:30" &&
           time.value !== "18:30" &&
@@ -852,8 +912,25 @@ function genWorkTime(times, startIndex, endIndex) {
           });
           filterEnd.push(time.value);
         }
-      }
-    });
+      });
+    } else {
+      times.map((time, index) => {
+        if (index >= startIndex && index <= endIndex) {
+          if (
+            time.value !== "12:30" &&
+            time.value !== "18:30" &&
+            time.value !== "00:30" &&
+            time.value !== "05:00"
+          ) {
+            newEndTime.push({
+              text: time.text,
+              value: time.value,
+            });
+            filterEnd.push(time.value);
+          }
+        }
+      });
+    }
   }
 
   return {
@@ -961,12 +1038,6 @@ function checkRevisionTime(times, start, end, button, form) {
       );
       setDisable(button, form);
     }
-  } else {
-    eaAlert(
-      "Kesalahan Waktu Lembur",
-      "Waktu selesai harus lebih besar dari waktu mulai! <br/><b>TOMBOL DISABLED</>"
-    );
-    setDisable(button, form);
   }
 }
 
@@ -1029,6 +1100,12 @@ function legendGrid() {
       "  " +
       genColor("#7ecb87", "Closed") +
       "</span>",
+    revision_overtime_personil:
+      "<span style='margin-left:5px;margin-right:5px'>Revisi: " +
+      genColor("#ed9a9a", "Dibatalkan") +
+      "  " +
+      genColor("#75b175", "Penambahan Orang Baru") +
+      "</span>",
     hr_verified_overtime:
       "<span style='margin-left:5px;margin-right:5px'>Payment: " +
       genColor("#c18cdd", "Verified") +
@@ -1070,6 +1147,8 @@ function legendGrid() {
       genColor("#cedb10", "Approval Supervisor") +
       "  " +
       genColor("#db8a10", "Approval ASMAN") +
+      "  " +
+      genColor("#1fb3a5", "Approval PPIC") +
       "  " +
       genColor("#d968b1", "Approval Manager") +
       " | Overtime: " +

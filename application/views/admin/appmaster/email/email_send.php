@@ -6,7 +6,7 @@ if ((strpos(strtolower($_SERVER['SCRIPT_NAME']), strtolower(basename(__FILE__)))
 
 $script = <<< "JS"
 
-function showEmailSend() {
+    function showEmailSend() {
         var legend = legendGrid();
 
         var emailLayout = mainTab.cells("am_send_email_tab").attachLayout({
@@ -122,10 +122,7 @@ function showEmailSend() {
         function rEmailGrid() {
             let month = $("#am_email_month").val();
             let year = $("#am_email_year").val();
-            emailGrid.clearAndLoad(AppMaster2("getEmailGrid", {
-                month, 
-                year}
-            ), emailGridCount);
+            emailGrid.clearAndLoad(AppMaster2("getEmailGrid", {month, year}), emailGridCount);
         }
 
         rEmailGrid();

@@ -43,8 +43,37 @@ class PublicController extends Erp_Controller
         $params = getParam();
         $taskId = simpleEncrypt($params['token'], 'd');
         $overtime = $this->Hr->getOne('employee_overtimes', ['task_id' => $taskId]);
+        $emp = $this->Hr->getOne('employees', ['id' => $params['emp_id']]);
         if ($overtime) {
-            $checkIsGenerated = $this->Hr->getOne('employee_overtimes', ['ref' => $taskId]);
+            $subAllow = [];
+            if(isMtnSupport($overtime)) {
+                $subAllow['5'] = true;
+            }
+            if(isQaSupport($overtime)) {
+                $subAllow['7'] = true;
+            }
+            if(isQcSupport($overtime)) {
+                $subAllow['8'] = true;
+            }
+            if(isWhsSupport($overtime)) {
+                $subAllow['13'] = true;
+            }
+
+            if($emp->sub_department_id == 5) {
+                $name = 'Teknik & Pemeliharaan';
+            } else if($emp->sub_department_id == 7){
+                $name = 'Sistem Mutu';
+            } else if($emp->sub_department_id == 8){
+                $name = 'Pengawasan Mutu';
+            } else if($emp->sub_department_id == 13){
+                $name = 'Penyimpanan';
+            } 
+
+            if(!array_key_exists($emp->sub_department_id, $subAllow)) {
+                $this->load->view('html/invalid_response', ['message' => "Tidak ada kebutuhan Support bagian <b>$name</b>!"]);
+            }
+
+            $checkIsGenerated = $this->Hr->getOne('employee_overtimes', ['ref' => $taskId, 'sub_department_id' => $emp->sub_department_id]);
             if (!$checkIsGenerated) {
                 $lastId = $this->Overtime->lastOt('employee_overtimes', 'overtime_date', $overtime->overtime_date, $overtime->location);
                 $expDate = explode('-', $overtime->overtime_date);
@@ -53,8 +82,8 @@ class PublicController extends Erp_Controller
                     'location' => $overtime->location,
                     'task_id' => $newTaskId,
                     'ref' => $overtime->task_id,
-                    'department_id' => 1,
-                    'sub_department_id' => 5,
+                    'department_id' => $emp->department_id,
+                    'sub_department_id' => $emp->sub_department_id,
                     'division_id' => 0,
                     'personil' => 0,
                     'overtime_date' => $overtime->overtime_date,
@@ -72,6 +101,11 @@ class PublicController extends Erp_Controller
                     'mechanic' => $overtime->mechanic,
                     'electric' => $overtime->electric,
                     'hnn' => $overtime->hnn,
+                    'qc' => $overtime->qc,
+                    'qa' => $overtime->qa,
+                    'penandaan' => $overtime->penandaan,
+                    'gbk' => $overtime->gbk,
+                    'gbb' => $overtime->gbb,
                     'status' => 'CREATED',
                     'apv_spv' => 'CREATED',
                     'apv_asman' => 'CREATED',
@@ -83,12 +117,12 @@ class PublicController extends Erp_Controller
                 ];
                 $newOvertime = $this->Hr->create('employee_overtimes', $tnpData);
                 if ($newOvertime) {
-                    $this->load->view('html/valid_response', ['message' => " <p>Berhasil membuat lembur <b>Teknik & Pemeliharaan</b> dengan Task ID: <b>$overtime->task_id</b><br/> Segera lakukan <b>pemilihan personil</b> untuk lemburan tersebut!</p>"]);
+                    $this->load->view('html/valid_response', ['message' => " <p>Berhasil membuat lembur <b>$name</b> dengan Task ID: <b>$overtime->task_id</b><br/> Segera lakukan <b>pemilihan personil</b> untuk lemburan tersebut!</p>"]);
                 } else {
-                    $this->load->view('html/invalid_response', ['message' => "<p>Gagal membuat lembur <b>Teknik & Pemeliharaan</b><br/> Lembur dengan No. Referensi: <b>$overtime->task_id</b> sudah dibuat sebelumnya</p>"]);
+                    $this->load->view('html/invalid_response', ['message' => "<p>Gagal membuat lembur <b>$name</b><br/> Lembur dengan No. Referensi: <b>$overtime->task_id</b> sudah dibuat sebelumnya</p>"]);
                 }
             } else {
-                $this->load->view('html/invalid_response', ['message' => "<p>Gagal membuat lembur <b>Teknik & Pemeliharaan</b><br/> Lembur dengan No. Referensi: <b>$overtime->task_id</b> sudah dibuat sebelumnya</p>"]);
+                $this->load->view('html/invalid_response', ['message' => "<p>Gagal membuat lembur <b>$name</b><br/> Lembur dengan No. Referensi: <b>$overtime->task_id</b> sudah dibuat sebelumnya</p>"]);
             }
         } else {
             $this->load->view('html/invalid_response', ['message' => 'Token tidak valid!']);
@@ -130,6 +164,17 @@ class PublicController extends Erp_Controller
                 } else {
                     $this->load->view('html/invalid_response', ['message' => 'Oops..! <b>Terjadi Kesalahan</b>']);
                 }
+            } else if ($appvType == 'ppic') {
+                $isPPICPLT = $this->Hr->getOne('employee_ranks', ['emp_id' => $empId, 'sub_department_id' => 9, 'status' => 'ACTIVE'], 'rank_id,sub_department_id', ['rank_id' => ['3', '4']]);
+                if ($emp->rank_id != 3 && $emp->rank_id != 4 && !$isPPICPLT) {
+                    $this->load->view('html/invalid_response', ['message' => 'Jabatan anda bukan <b>ASMAN</b>']);
+                } else if ($emp->sub_department_id != $overtime->sub_department_id && ($isPPICPLT && $isPPICPLT->sub_department_id != $overtime->sub_department_id)) {
+                    $this->load->view('html/invalid_response', ['message' => 'Jabatan anda tidak sesuai dengan <b>Bagian Lembur</b>']);
+                } else if (($emp->rank_id == 3 || $emp->rank_id == 4) && $emp->sub_department_id == 9 || $isPPICPLT) {
+                    $this->approveAction($overtime, $emp, $taskId, $appvType, $status, $nip, $empId);
+                } else {
+                    $this->load->view('html/invalid_response', ['message' => 'Oops..! <b>Terjadi Kesalahan</b>']);
+                }
             } else if ($appvType == 'mgr') {
                 $isMgrPLT = $this->Hr->getOne('employee_ranks', ['emp_id' => $empId, 'department_id' => $overtime->department_id, 'rank_id' => 2, 'status' => 'ACTIVE'], 'rank_id,department_id');
                 if ($emp->rank_id != 2 && !$isMgrPLT) {
@@ -166,6 +211,10 @@ class PublicController extends Erp_Controller
             $columnApv = 'apv_asman';
             $columnApvNip = 'apv_asman_nip';
             $columnApvDate = 'apv_asman_date';
+        } else if ($appvType == 'ppic') {
+            $columnApv = 'apv_ppic';
+            $columnApvNip = 'apv_ppic_nip';
+            $columnApvDate = 'apv_ppic_date';
         } else if ($appvType == 'mgr') {
             $columnApv = 'apv_mgr';
             $columnApvNip = 'apv_mgr_nip';
@@ -201,23 +250,31 @@ class PublicController extends Erp_Controller
                 ];
             }
             $this->Hr->update('employee_overtimes', $data, ['task_id' => $taskId]);
-
+            
             if($emp->rank_id == 1) {
                 $dataDetail = [
                     'status' => 'CLOSED',
+                    'status_by' => $nip,
                     'updated_by' => $empId,
                     'updated_at' => date('Y-m-d H:i:s'),
                 ];
-                $this->Hr->update('employee_overtimes_detail', $dataDetail, ['task_id' => $taskId]);
+                $this->Hr->update('employee_overtimes_detail', $dataDetail, ['task_id' => $taskId, 'status !=' => 'CANCELED']);
             }
             
             if($status == 'REJECTED') {
                 $dataDetail = [
                     'status' => 'REJECTED',
+                    'status_by' => $nip,
                     'updated_by' => $empId,
                     'updated_at' => date('Y-m-d H:i:s'),
                 ];
-                $this->Hr->update('employee_overtimes_detail', $dataDetail, ['task_id' => $taskId]);
+                $this->Hr->update('employee_overtimes_detail', $dataDetail, ['task_id' => $taskId, 'status !=' => 'CANCELED']);
+
+                $ref = $this->Hr->getOne('employee_overtimes',  ['ref' => $taskId]);
+                if($ref) {
+                    $this->Hr->update('employee_overtimes', $data, ['ref' => $taskId]);
+                    $this->Hr->update('employee_overtimes_detail', $dataDetail, ['task_id' => $ref->task_id, 'status !=' => 'CANCELED']);
+                }
             }
 
             if ($appvType == 'spv') {
@@ -232,32 +289,53 @@ class PublicController extends Erp_Controller
                 } else {
                     $this->ovtlib->sendEmailReject('Supervisor', 'spv', $overtime, $taskId);
                 }
-            } else if ($appvType == 'asman') {
+            } else if ($appvType == 'asman' || $appvType == 'ppic') {
                 if ($status == 'APPROVED') {
-                    $isHaveMgr = $this->isHaveMgr($overtime, $taskId);
-                    if(!$isHaveMgr) {
-                        $this->isHaveHead($overtime, $taskId);
-                    }
+                    if($appvType == 'asman') {
+                        if($overtime->sub_department_id != 5 && $overtime->sub_department_id != 7 && $overtime->sub_department_id != 8 && 
+                           $overtime->sub_department_id != 13 && $overtime->ref == "") {
+                            if(isMtnSupport($overtime)) {
+                                $this->requestOvertime($overtime, 5);
+                            }
 
-                    if($overtime->sub_department_id != 5 && $overtime->ref == "") {
-                        $picEmails = $this->Main->getOne('pics', ['code' => 'overtime', 'sub_department_id' => 5])->pic_emails;
-                        $tokenTaskId = simpleEncrypt($overtime->task_id);
-                        $linkAction = LIVE_URL . "index.php?c=PublicController&m=generateOvertime&token=$tokenTaskId";
-                        $tokenLink = simpleEncrypt($linkAction);
-                        $link = LIVE_URL . "index.php?c=PublicController&m=pinVerification&token=$tokenLink";
-                        $message = $this->load->view('html/overtime/email/generate_overtime', ['overtime' => $overtime, 'link' => $link], true);
-                        $services = $this->HrModel->getRequestList($overtime);
-                        $data = [
-                            'alert_name' => 'OVERTIME_REQUEST',
-                            'email_to' => $picEmails,
-                            'subject' => "Request Lembur (Task ID: $overtime->task_id) Untuk Support Produksi $services[string]",
-                            'subject_name' => "Spekta Alert: Request Lembur (Task ID: $overtime->task_id) Untuk Support Produksi $services[string]",
-                            'message' => $message,
-                        ];
-                        $insert = $this->Main->create('email', $data);
+                            if(isQaSupport($overtime)) {//@QA
+                                $this->requestOvertime($overtime, 7);
+                            }
+
+                            if(isQcSupport($overtime)) {//@QC
+                                $this->requestOvertime($overtime, 8);
+                            }
+
+                            if(isWhsSupport($overtime)) {
+                                $this->requestOvertime($overtime, 13);
+                            }
+                        }
+                        if($overtime->sub_department_id == 1 || $overtime->sub_department_id == 2 || $overtime->sub_department_id == 3 || $overtime->sub_department_id == 13) {
+                            $isHavePPIC = $this->isHavePPIC($overtime, $taskId);
+                            if(!$isHavePPIC) {
+                                $isHaveMgr = $this->isHaveMgr($overtime, $taskId);
+                                if(!$isHaveMgr) {
+                                    $this->isHaveHead($overtime, $taskId);
+                                }
+                            }
+                        } else {
+                            $isHaveMgr = $this->isHaveMgr($overtime, $taskId);
+                            if(!$isHaveMgr) {
+                                $this->isHaveHead($overtime, $taskId);
+                            }
+                        }
+                    } else if($appvType == 'ppic'){
+                        $isHaveMgr = $this->isHaveMgr($overtime, $taskId);
+                        if(!$isHaveMgr) {
+                            $this->isHaveHead($overtime, $taskId);
+                        }
                     }
                 } else {
-                    $this->ovtlib->sendEmailReject('ASMAN', 'asman', $overtime, $taskId);
+                    if($appvType == 'asman') {
+                        $this->ovtlib->sendEmailReject('ASMAN', 'asman', $overtime, $taskId);
+                    } else if($appvType == 'ppic') {
+                        $this->ovtlib->sendEmailReject('PPIC', 'ppic', $overtime, $taskId);
+                    }
                 }
             } else if ($appvType == 'mgr') {
                 if ($status == 'APPROVED') {
@@ -278,6 +356,25 @@ class PublicController extends Erp_Controller
         }
     }
 
+    public function requestOvertime($overtime, $subId)
+    {
+        $picEmails = $this->Main->getOne('pics', ['code' => 'overtime', 'sub_department_id' => $subId])->pic_emails;
+        $tokenTaskId = simpleEncrypt($overtime->task_id);
+        $linkAction = LIVE_URL . "index.php?c=PublicController&m=generateOvertime&token=$tokenTaskId";
+        $tokenLink = simpleEncrypt($linkAction);
+        $link = LIVE_URL . "index.php?c=PublicController&m=pinVerification&token=$tokenLink";
+        $message = $this->load->view('html/overtime/email/generate_overtime', ['overtime' => $overtime, 'link' => $link, 'subId' => $subId], true);
+        $services = $this->HrModel->getRequestList($overtime);
+        $data = [
+            'alert_name' => 'OVERTIME_REQUEST',
+            'email_to' => $picEmails,
+            'subject' => "Request Lembur (Task ID: $overtime->task_id) Untuk Support Produksi $services[string]",
+            'subject_name' => "Spekta Alert: Request Lembur (Task ID: $overtime->task_id) Untuk Support Produksi $services[string]",
+            'message' => $message,
+        ];
+        $insert = $this->Main->create('email', $data);
+    }
+
     public function isHaveAsman($overtime, $taskId)
     {
         $isHaveAsman = $this->Hr->getOne('employees', ['sub_department_id' => $overtime->sub_department_id], '*', ['rank_id' => ['3', '4']]);
@@ -288,6 +385,22 @@ class PublicController extends Erp_Controller
         } else if($isHaveAsmanPLT) {
             $email = $this->Hr->getDataById('employees', $isHaveAsmanPLT->emp_id)->email;
             $this->ovtlib->sendEmailAppv($email, 'ASMAN', 'asman', $overtime, $taskId);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function isHavePPIC($overtime, $taskId)
+    {
+        $isHavePPIC = $this->Hr->getOne('employees', ['sub_department_id' => 9], '*', ['rank_id' => ['3', '4']]);
+        $isHavePPICPLT = $this->Hr->getOne('employee_ranks', ['sub_department_id' => 9, 'status' => 'ACTIVE'], '*', ['rank_id' => ['3', '4']]);
+        if ($isHavePPIC) {
+            $this->ovtlib->sendEmailAppv($isHavePPIC->email, 'PPIC', 'ppic', $overtime, $taskId);
+            return true;
+        } else if($isHavePPICPLT) {
+            $email = $this->Hr->getDataById('employees', $isHavePPICPLT->emp_id)->email;
+            $this->ovtlib->sendEmailAppv($email, 'PPIC', 'ppic', $overtime, $taskId);
             return true;
         } else {
             return false;

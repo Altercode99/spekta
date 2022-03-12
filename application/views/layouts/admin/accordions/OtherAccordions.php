@@ -6,13 +6,70 @@ if ((strpos(strtolower($_SERVER['SCRIPT_NAME']), strtolower(basename(__FILE__)))
 
 $script = <<< "JS"
 
-    async function otherAccordion() {
+    function otherAccordion() {
         checkTrees();
         $("#title-menu").html("Others");
         accordionItems.map(id => myTree.removeItem(id));
         accordionItems.push("a", "b");
+
+        if(isHaveAcc("other_lembur")) {
+            myTree.addItem("b", "Lembur", true);
+            var overtimeItems = [];
+            var subOvertimeItems = [];
+
+            //@LEMBURAN
+            if(isHaveTrees("other_request_lembur_support")) {
+                subOvertimeItems.push({id: "other_request_lembur_support", text: "Request Lembur", icons: {file: "menu_icon"}});
+            }
+
+            if(isHaveTrees("other_input_lembur_support")) {
+                subOvertimeItems.push({id: "other_input_lembur_support", text: "Input Lembur (B)", icons: {file: "menu_icon"}});
+            }
+
+            if(isHaveTrees("other_input_lembur")) {
+                subOvertimeItems.push({id: "other_input_lembur", text: "Input Lembur (A)", icons: {file: "menu_icon"}});
+            }
+
+            if(isHaveTrees("other_approval_lembur")) {
+                subOvertimeItems.push({id: "other_approval_lembur", text: "Approval Lembur", icons: {file: "menu_icon"}});
+            }
+
+            if(isHaveTrees("other_report_lembur")) {
+                subOvertimeItems.push({id: "other_report_lembur", text: "Report Lembur", icons: {file: "menu_icon"}});
+            }
+
+            if(isHaveTrees("other_pengajuan_revisi_lembur")) {
+                subOvertimeItems.push({id: "other_pengajuan_revisi_lembur", text: "Pengajuan Revisi Lembur", icons: {file: "menu_icon"}});
+            }
+
+            //@TREES
+            if(isHaveTrees('other_lembur')) {
+                overtimeItems.push({id: "other_lembur", text: "Lembur", open: 1, icons: {folder_opened: "arrow_down", folder_closed: "arrow_right"}, items: subOvertimeItems})
+            }
+
+            var overtimeTree = myTree.cells("b").attachTreeView({
+                items: overtimeItems
+            });
+
+            overtimeTree.attachEvent("onClick", function(id) {
+                if(id == "other_input_lembur") {
+                    inputOvertimeTab();
+                } else if(id == "other_input_lembur_support") {
+                    inputOvertimeTNPTab();
+                } else if(id == "other_request_lembur_support") {
+                    requestOvertimeTab();
+                } else if(id == "other_approval_lembur") {
+                    appvOvertimeTab();
+                } else if(id == "other_report_lembur") {
+                    reportOvertimeTab();
+                } else if(id == "other_pengajuan_revisi_lembur") {
+                    reqRevOvertimeTab();
+                }
+            });
+        }
+
         if(isHaveAcc("other_umum")) {
-            myTree.addItem("a", "Umum", true);
+            myTree.addItem("a", "Umum");
             var generalItems = [];
             var subRoomItems = [];
             var subVehicleItems = [];
@@ -58,50 +115,6 @@ $script = <<< "JS"
                 } else if(id == "other_daftar_kendaraan") {
                     vehicleListTab();
                 } 
-            });
-        }
-
-        if(isHaveAcc("other_lembur")) {
-            myTree.addItem("b", "Lembur");
-            var overtimeItems = [];
-            var subOvertimeItems = [];
-
-            //@LEMBURAN
-            if(isHaveTrees("other_input_lembur")) {
-                subOvertimeItems.push({id: "other_input_lembur", text: "Input Lembur", icons: {file: "menu_icon"}});
-            }
-
-            if(isHaveTrees("other_approval_lembur")) {
-                subOvertimeItems.push({id: "other_approval_lembur", text: "Approval Lembur", icons: {file: "menu_icon"}});
-            }
-
-            if(isHaveTrees("other_report_lembur")) {
-                subOvertimeItems.push({id: "other_report_lembur", text: "Report Lembur", icons: {file: "menu_icon"}});
-            }
-
-            if(isHaveTrees("other_pengajuan_revisi_lembur")) {
-                subOvertimeItems.push({id: "other_pengajuan_revisi_lembur", text: "Pengajuan Revisi Lembur", icons: {file: "menu_icon"}});
-            }
-
-            //@TREES
-            if(isHaveTrees('other_lembur')) {
-                overtimeItems.push({id: "other_lembur", text: "Lembur", open: 1, icons: {folder_opened: "arrow_down", folder_closed: "arrow_right"}, items: subOvertimeItems})
-            }
-
-            var overtimeTree = myTree.cells("b").attachTreeView({
-                items: overtimeItems
-            });
-
-            overtimeTree.attachEvent("onClick", function(id) {
-                if(id == "other_input_lembur") {
-                    inputOvertimeTab();
-                } else if(id == "other_approval_lembur") {
-                    appvOvertimeTab();
-                } else if(id == "other_report_lembur") {
-                    reportOvertimeTab();
-                } else if(id == "other_pengajuan_revisi_lembur") {
-                    reqRevOvertimeTab();
-                }
             });
         }
     }

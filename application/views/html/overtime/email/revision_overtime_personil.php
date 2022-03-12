@@ -19,34 +19,17 @@
         <p><b><?= $location ?></b></p>
     </div>
 
-    <?php if($status == 'OVERTIME_REVISION_REQUEST') { ?>
-        <p>Dear Team <b>SDM</b>,</p>
-        <p>Berikut ini adalah <b>Permintaan Revisi Lembur</b> dari Bagian <b><?= $revision->sub_department ?></b> dengan Nomor: <b><?= $revision->task_id ?></b></p>
-        <p>Instruksi Revisi:</p>
-        <br />
-        <p style="text-align:center"><?= $revision->description ?></p>
-        <br />
-    <?php } else if($status == 'OVERTIME_REVISION_REJECTION') { ?>
-        <p>Dear Team <b>ASMAN <?= $revision->sub_department ?></b>,</p>
-        <p><b>Permintaan Revisi Lembur</b> dengan Nomor: <b><?= $revision->task_id ?></b> sudah di proses oleh <b>SDM</b> dengan status:</p>
-        <br />
-        <p style="text-align:center"><b>REJECTED (DI TOLAK)</b></p>
-        <br />
-    <?php } else if($status == 'OVERTIME_REVISION_CLOSED') { ?>
-        <p>Dear Team <b>ASMAN <?= $revision->sub_department ?></b>,</p>
-        <p><b>Permintaan Revisi Lembur</b> dengan Nomor: <b><?= $revision->task_id ?></b> sudah di proses oleh <b>SDM</b> dengan status:</p>
-        <br />
-        <p style="text-align:center"><b>CLOSED</b></p>
-        <br />
-    <?php } ?>
+    <p>Dear Team<b> SDM</b>,</p>
+    <p>Berikut ini adalah <b>Permintaan Revisi Lembur</b> dari Bagian <b><?= $overtime->sub_department ?></b> dengan Task ID: <b><?= $overtime->task_id ?></b></p>
+    <p>Instruksi Revisi:</p>
+    <br />
+    <p style="text-align:center"><?= $revision['description'] ?></p>
+    <br />
+  
     <p>Adapun lemburan yang hendak di revisi adalah sebagai berikut:</p>
     <table style="<?= $style['table']  ?>">
         <tr>
             <th style="<?= $style['th'] ?>" colspan="2">Detail Lembur</th>
-        </tr>
-        <?php $no = 1; foreach ($overtimes as $overtime) { ?>
-        <tr>
-            <td style="<?= $style['td'] ?>" colspan="2">#<?= $no ?></td>
         </tr>
         <tr>
             <td style="<?= $style['td'] ?>">Task ID</td>
@@ -69,10 +52,58 @@
             <td style="<?= $style['td'] ?>"><?= toIndoDateTime2($overtime->start_date) .' - '.toIndoDateTime2($overtime->end_date)  ?></td>
         </tr>
         <tr>
-            <td style="<?= $style['td'] ?>">Tugas</td>
-            <td style="<?= $style['td'] ?>"><?= $overtime->notes ?></td>
+            <td style="<?= $style['td'] ?>">Catatan Revisi</td>
+            <td style="<?= $style['td'] ?>"><b><?= $revision['description'] ?></b></td>
+        </tr>
+    </table>
+
+    <table style="<?= $style['table'] ?> margin-top:20px">
+        <tr>
+            <th style="<?= $style['th'] ?>" colspan="2">Detail Revisi</th>
+        </tr>
+        <?php 
+            $no = 1;
+            foreach ($overtimeDetail as $ovt) {
+                $start = toIndoDateTime2($ovt->start_date);
+                $end = toIndoDateTime2($ovt->end_date);
+        ?>
+        <tr>
+            <th style="<?= $style['td'] ?>" colspan="2">Personil #<?= $no ?></th>
+        </tr>
+        <tr>
+            <td style="<?= $style['td'] ?>;" width="30%">Nama Personil</td>
+            <td style="<?= $style['td'] ?>;" width="70%"><?= $ovt->employee_name ?></td>
+        </tr>
+        <tr>
+            <td style="<?= $style['td'] ?>;" width="30%">Jam Lembur</td>
+            <td style="<?= $style['td'] ?>;" width="70%"><b><?= "$start - $end" ?></b></td>
+        </tr>
+        <tr>
+            <td style="<?= $style['td'] ?>;" width="30%">Tugas</td>
+            <td style="<?= $style['td'] ?>;" width="70%"><?= $ovt->notes ?></td>
+        </tr>
+        <tr>
+            <td style="<?= $style['td'] ?>;" width="30%">Status Awal</td>
+            <td style="<?= $style['td'] ?>;color:red;" width="70%"><?= $ovt->status ?></td>
+        </tr>
+        <tr>
+            <td style="<?= $style['td'] ?>;" width="30%">Status Akhir</td>
+            <td style="<?= $style['td'] ?>;color:red;" width="70%"><?= $ovt->revision_status ?></td>
         </tr>
         <?php $no++; } ?>
+    </table>
+    <br />
+    <table>
+        <tr>
+            <td style='padding:5px;color:red'>ADD</td>
+            <td style='padding:5px;color:red'>:</td>
+            <td style='padding:5px;color:red'>Penambahan Personil Baru</td>
+        </tr>
+        <tr>
+            <td style='padding:5px;color:red'>CANCELED</td>
+            <td style='padding:5px;color:red'>:</td>
+            <td style='padding:5px;color:red'>Pembatalan Lembur Personil</td>
+        </tr>
     </table>
 
     <div style="<?= $style['footer'] ?>">

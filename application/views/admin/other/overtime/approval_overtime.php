@@ -41,7 +41,7 @@ $script = <<< "JS"
         var appvMenu =  appvTabs.cells("a").attachMenu({
             icon_path: "./public/codebase/icons/",
             items: [
-                {id: "search", text: "<div style='width:100%'>Search: <input type='text' id='other_start_ovt_appv' readonly value='"+currentDate.start+"' /> - <input type='text' id='other_end_ovt_appv' readonly value='"+currentDate.end+"' /> <button id='other_btn_ftr_ovt_appv'>Proses</button> | Status: <select id='other_status_ovt_appv'><option>ALL</option><option>PROCESS</option><option>REJECTED</option></select></div>"}
+                {id: "search", text: "<div style='width:100%'>Search: <input type='text' id='other_start_ovt_appv' readonly value='"+currentDate.start+"' /> - <input type='text' id='other_end_ovt_appv' readonly value='"+currentDate.end+"' /> <button id='other_btn_ftr_ovt_appv'>Proses</button> | Status: <select id='other_status_ovt_appv'><option>PROCESS</option><option>REJECTED</option><option>ALL</option></select></div>"}
             ]
         });
 
@@ -310,12 +310,12 @@ $script = <<< "JS"
         appvTabs.cells("a").progressOn();
         var ovtGrid = appvTabs.cells("a").attachGrid();
         ovtGrid.setImagePath("./public/codebase/imgs/");
-        ovtGrid.setHeader("No,Task ID,Sub Unit,Bagian,Sub Bagian,Kebutuhan Orang,Status Hari,Tanggal Overtime,Waktu Mulai, Waktu Selesai,Catatan,Makan,Steam,AHU,Compressor,PW,Jemputan,Dust Collector,Mekanik,Listrik,H&N,Status Overtime,SPV Approval,ASMAN Approval,MANAGER Approval,HEAD Approval,Revisi Jam Lembur,Rejection User Approval,Created By,Updated By,Created At,NIPSPV,NIPASMAN,NIPMGR");
-        ovtGrid.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
-        ovtGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
-        ovtGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
-        ovtGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        ovtGrid.setInitWidthsP("5,20,20,20,20,15,15,15,20,20,20,7,7,7,7,7,7,7,7,7,7,10,35,35,35,35,30,30,15,15,25,0,0,0");
+        ovtGrid.setHeader("No,Task ID,Sub Unit,Bagian,Sub Bagian,Kebutuhan Orang,Status Hari,Tanggal Overtime,Waktu Mulai, Waktu Selesai,Catatan,Makan,Steam,AHU,Compressor,PW,Jemputan,Dust Collector,Mekanik,Listrik,H&N,QC,QA,Penandaan,GBK,GBB,Status Overtime,SPV Approval,ASMAN Approval,PPIC Approval,MANAGER Approval,HEAD Approval,Revisi Jam Lembur,Rejection User Approval,Created By,Updated By,Created At,NIPSPV,NIPASMAN,NIPPPIC,NIPMGR");
+        ovtGrid.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
+        ovtGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
+        ovtGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
+        ovtGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
+        ovtGrid.setInitWidthsP("5,20,20,20,20,15,15,15,20,20,20,7,7,7,7,7,7,10,7,7,7,7,7,7,7,7,10,35,35,35,35,35,30,30,15,15,25,0,0,0,0");
         ovtGrid.enableSmartRendering(true);
         ovtGrid.attachEvent("onXLE", function() {
             appvTabs.cells("a").progressOff();
@@ -326,47 +326,16 @@ $script = <<< "JS"
             rOvtDetailGrid(rId);
         });
         ovtGrid.attachEvent("onRowSelect", function(rId, cIdn) {
-            if(ovtGrid.cells(rId, 24).getValue() === 'REJECTED') {
-                appvToolbar.disableItem("approve");
-                appvToolbar.disableItem("reject");
-                appvToolbar.disableItem("hour_revision");
-                if(ovtGrid.cells(rId, 25).getValue() !== "-") {  //Approval SITEHEAD
-                    if(userLogged.rankId == 1 || userLogged.pltRankId == 1 || userLogged.role === 'admin') {
-                        appvToolbar.enableItem("revision");
-                    } else {
-                        appvToolbar.disableItem("revision");
-                    }
-                } else if(ovtGrid.cells(rId, 24).getValue() !== "-") {  //Approval MGR
-                    if(ovtGrid.cells(rId, 33).getValue() == userLogged.empNip || userLogged.role === 'admin') {
-                        appvToolbar.enableItem("revision");
-                    } else {
-                        appvToolbar.disableItem("revision");
-                    }
-                } else if(ovtGrid.cells(rId, 23).getValue() !== "-") {  //Approval ASMAN
-                    if(ovtGrid.cells(rId, 32).getValue() == userLogged.empNip || userLogged.role === 'admin') {
-                        appvToolbar.enableItem("revision");
-                    } else {
-                        appvToolbar.disableItem("revision");
-                    }
-                } else if(ovtGrid.cells(rId, 22).getValue() !== "-") { //Approval SPV
-                    if(ovtGrid.cells(rId, 31).getValue() == userLogged.empNip || userLogged.role === 'admin') {
-                        appvToolbar.enableItem("revision");
-                    } else {
-                        appvToolbar.disableItem("revision");
-                    }
-                } else {
-                    if(userLogged.rankId == 5 || userLogged.rankId == 6) {
-                        appvToolbar.enableItem("revision");
-                    }
-                }
+            if(ovtGrid.cells(rId, 21).getValue() === 'REJECTED') {
+                disableAppvToolbar();
             } else {
                 let ovtDepartment = cleanSC(ovtGrid.cells(rId, 2).getValue());
                 let ovtSubDepartment = cleanSC(ovtGrid.cells(rId, 3).getValue());
                 let ovtDivision = cleanSC(ovtGrid.cells(rId, 4).getValue());
                 if((userLogged.picOvertime && userLogged.rankId <= 6) || userLogged.pltRankId <= 6) {
-                    if(ovtGrid.cells(rId, 24).getValue() !== "-" || ovtGrid.cells(rId, 33).getValue() === "-") {  //Approval MGR
-                        if(ovtGrid.cells(rId, 33).getValue() === "-") {
-                            if(ovtGrid.cells(rId, 22).getValue() === "-") {
+                    if(ovtGrid.cells(rId, 30).getValue() !== "-" || ovtGrid.cells(rId, 40).getValue() === "-") {  //Approval MGR
+                        if(ovtGrid.cells(rId, 40).getValue() === "-") {
+                            if(ovtGrid.cells(rId, 27).getValue() === "-") {
                                 //Approval SPV
                                 if(userLogged.rankId == 5 && userLogged.division == ovtDivision || userLogged.rankId == 6 && userLogged.division == ovtDivision ||
                                   userLogged.pltRankId == 5 && userLogged.pltDivision == ovtDivision || userLogged.pltRankId == 6 && userLogged.pltDivision == ovtDivision) {
@@ -374,8 +343,8 @@ $script = <<< "JS"
                                 } else {
                                     disableAppvToolbar();
                                 }
-                            } else if(ovtGrid.cells(rId, 23).getValue() === "-") {
-                                //Approval ASMAN
+                            } else if(ovtGrid.cells(rId, 28).getValue() === "-" || ovtGrid.cells(rId, 29).getValue() === "-") {
+                                //Approval ASMAN / PPIC
                                 if(userLogged.rankId == 3 && userLogged.subDepartment == ovtSubDepartment || userLogged.rankId == 4 && userLogged.subDepartment == ovtSubDepartment ||
                                    userLogged.pltRankId == 3 && userLogged.pltSubDepartment == ovtSubDepartment || userLogged.pltRankId == 4 && userLogged.pltSubDepartment == ovtSubDepartment){
                                     enableAppvToolbar();
@@ -390,9 +359,35 @@ $script = <<< "JS"
                                 disableAppvToolbar();
                             }
                         }
-                    } else if(ovtGrid.cells(rId, 23).getValue() !== "-" || ovtGrid.cells(rId, 32).getValue() === "-") {  //Approval ASMAN
-                        if(ovtGrid.cells(rId, 32).getValue() === "-") {
-                            if(ovtGrid.cells(rId, 22).getValue() === "-") {
+                    } else if(ovtGrid.cells(rId, 29).getValue() !== "-" || ovtGrid.cells(rId, 39).getValue() === "-") {  //Approval PPIC
+                        if(ovtGrid.cells(rId, 39).getValue() === "-") {
+                            if(ovtGrid.cells(rId, 27).getValue() === "-") {
+                                //Approval SPV
+                                if(userLogged.rankId == 5 && userLogged.division == ovtDivision || userLogged.rankId == 6 && userLogged.division == ovtDivision ||
+                                   userLogged.pltRankId == 5 && userLogged.pltDivision == ovtDivision || userLogged.pltRankId == 6 && userLogged.pltDivision == ovtDivision) {
+                                    enableAppvToolbar();
+                                } else {
+                                    disableAppvToolbar();
+                                }
+                            } else if(ovtGrid.cells(rId, 28).getValue() === "-") {
+                                //Approval ASMAN
+                                if(userLogged.rankId == 3 && userLogged.subDepartment == ovtSubDepartment || userLogged.rankId == 4 && userLogged.subDepartment == ovtSubDepartment ||
+                                   userLogged.pltRankId == 3 && userLogged.pltSubDepartment == ovtSubDepartment || userLogged.pltRankId == 4 && userLogged.pltSubDepartment == ovtSubDepartment){
+                                    enableAppvToolbar();
+                                } else {
+                                    disableAppvToolbar();
+                                }
+                            }
+                        } else {
+                            if((userLogged.rankId == 2 && userLogged.department == ovtDepartment) || (userLogged.pltRankId == 2 && userLogged.pltDepartment == ovtDepartment)) {
+                                enableAppvToolbar();
+                            } else {
+                                disableAppvToolbar();
+                            }
+                        }
+                    }else if(ovtGrid.cells(rId, 28).getValue() !== "-" || ovtGrid.cells(rId, 38).getValue() === "-") {  //Approval ASMAN
+                        if(ovtGrid.cells(rId, 38).getValue() === "-") {
+                            if(ovtGrid.cells(rId, 27).getValue() === "-") {
                                 //Approval SPV
                                 if(userLogged.rankId == 5 && userLogged.division == ovtDivision || userLogged.rankId == 6 && userLogged.division == ovtDivision ||
                                    userLogged.pltRankId == 5 && userLogged.pltDivision == ovtDivision || userLogged.pltRankId == 6 && userLogged.pltDivision == ovtDivision) {
@@ -402,15 +397,19 @@ $script = <<< "JS"
                                 }
                             }
                         } else {
-                            if(userLogged.rankId == 1 || userLogged.pltRankId == 1) {
-                                enableAppvToolbar();
-                            } else if((userLogged.rankId == 2 && userLogged.department == ovtDepartment) || (userLogged.pltRankId == 2 && userLogged.pltDepartment == ovtDepartment)) {
-                                enableAppvToolbar();
+                            if((userLogged.rankId == 2 && userLogged.department == ovtDepartment) || (userLogged.pltRankId == 2 && userLogged.pltDepartment == ovtDepartment)) {
+                                if(ovtGrid.cells(rId, 39).getValue() === "-") {
+                                    enableAppvToolbar();
+                                } else {
+                                    disableAppvToolbar();
+                                }
+                            } else if((userLogged.rankId == 3 || userLogged.rankId == 4) && userLogged.subId == 9 && ovtGrid.cells(rId, 39).getValue() === ""){
+                                enableLimitAppvToolbar();
                             } else {
                                 disableAppvToolbar();
                             }
                         }
-                    } else if(ovtGrid.cells(rId, 22).getValue() !== "-" || ovtGrid.cells(rId, 31).getValue() === "-") { //Approval SPV
+                    } else if(ovtGrid.cells(rId, 27).getValue() !== "-" || ovtGrid.cells(rId, 37).getValue() === "-") { //Approval SPV
                         if(userLogged.rankId == 3 && userLogged.subDepartment == ovtSubDepartment || userLogged.rankId == 4 && userLogged.subDepartment == ovtSubDepartment ||
                            userLogged.pltRankId == 3 && userLogged.pltSubDepartment == ovtSubDepartment || userLogged.pltRankId == 4 && userLogged.pltSubDepartment == ovtSubDepartment){
                             enableAppvToolbar();
@@ -446,6 +445,14 @@ $script = <<< "JS"
             appvToolbar.enableItem("revision");
             appvToolbar.enableItem("hour_revision");
         }
+
+        function enableLimitAppvToolbar() {
+            appvToolbar.enableItem("approve");
+            appvToolbar.enableItem("reject");
+            appvToolbar.disableItem("revision");
+            appvToolbar.disableItem("hour_revision");
+        }
+
         function rOvtGrid() {
             appvTabs.cells("a").progressOn();
             enableAppvToolbar();
@@ -453,7 +460,7 @@ $script = <<< "JS"
             let end = $("#other_end_ovt_appv").val();
             let status = $("#other_status_ovt_appv").val();
             let params = {
-                notin_status: "CANCELED,CREATED,CLOSED", 
+                notin_status: "CANCELED,CREATED,CLOSED,ADD", 
                 betweendate_overtime_date: start+","+end
             };
 
@@ -465,7 +472,13 @@ $script = <<< "JS"
                 if(userLogged.rankId == 2 || userLogged.pltRankId == 2) {
                     params.in_department_id = userLogged.deptId+","+userLogged.pltDeptId;
                 }else if(userLogged.rankId > 2 || userLogged.pltRankId > 2) {
-                    params.in_sub_department_id = userLogged.subId+","+userLogged.pltSubId;
+                    if(userLogged.rankId == 3 || userLogged.pltRankId == 3 || userLogged.rankId == 4 || userLogged.pltRankId == 4) {
+                        if(userLogged.subId == 9) {
+                            params.in_sub_department_id = userLogged.subId+","+userLogged.pltSubId+",1,2,3,13";
+                        }
+                    } else {
+                        params.in_sub_department_id = userLogged.subId+","+userLogged.pltSubId;
+                    }
                 }
             }
             ovtGrid.clearAndLoad(Overtime("getAppvOvertimeGrid", params), ovtGridCount);
@@ -536,27 +549,26 @@ $script = <<< "JS"
                     myWins.window("hour_revision_detail").skipMyCloseEvent = true;
 
                     let ovtTime = getCurrentTime(ovtGrid, 8, 9);
-                    let startWinIndex1 = times.filterTime.indexOf(ovtTime.start);
-                    let endWinIndex1 = times.filterTime.indexOf(ovtTime.end);
-                    let startWinIndex2 = times.filterTime.indexOf(ovtTime.start);
-                    let endWinIndex2 = times.filterTime.indexOf(ovtTime.end);
+                    let startWinIndex = times.filterTime.indexOf(ovtTime.start);
+                    let endWinIndex = times.filterTime.indexOf(ovtTime.end);
                         
-                    var workTime1 = genWorkTime(times.times, startWinIndex1, endWinIndex1);
-                    var workTime2 = genWorkTime(times.times, startWinIndex2, endWinIndex2);
+                    var workTime = genWorkTime(times.times, startWinIndex, endWinIndex);
 
-                    let labelStart = ovtTime.labelStart;
-                    let labelEnd = ovtTime.labelEnd;
+                    var labelStartDetail = ovtTime.labelStart;
+                    var labelEndDetail = ovtTime.labelEnd;
                     var hourDetailRevForm = hourDetailRevWin.attachForm([
                         {type: "fieldset", offsetLeft: 30, offsetTop: 30, label: "Jam Lembur", list:[	
                             {type: "block", list: [
                                 {type: "hidden", name: "id", label: "ID", labelWidth: 130, inputWidth: 250, value: ovtDetailGrid.getSelectedRowId()},                               
-                                {type: "combo", name: "start_date", label: labelStart, labelWidth: 130, inputWidth: 250, required: true,
+                                {type: "hidden", name: "labelStartDetail", label: "Start Date", labelWidth: 130, inputWidth: 250, value: labelStartDetail},                               
+                                {type: "combo", name: "start_date", label: "<span id='labelStartDetail'>"+labelStartDetail+"</span>", labelWidth: 130, inputWidth: 250, required: true,
                                     validate: "NotEmpty", 
-                                    options: workTime1.newStartTime
+                                    options: workTime.newStartTime
                                 },
-                                {type: "combo", name: "end_date", label: labelEnd, labelWidth: 130, inputWidth: 250, required: true, 
+                                {type: "hidden", name: "labelEndDetail", label: "End Date", labelWidth: 130, inputWidth: 250, value: labelEndDetail},                               
+                                {type: "combo", name: "end_date", label: "<span id='labelEndDetail'>"+labelEndDetail+"</span>", labelWidth: 130, inputWidth: 250, required: true, 
                                     validate: "NotEmpty", 
-                                    options: workTime2.newEndTime
+                                    options: workTime.newEndTime
                                 }
                             ]},
                         ]},
@@ -571,10 +583,39 @@ $script = <<< "JS"
                     let startDetailCombo = hourDetailRevForm.getCombo("start_date");
                     let endDetailCombo = hourDetailRevForm.getCombo("end_date");
                     let ovtDetailTime = getCurrentTime(ovtDetailGrid, 10, 11);
-                    let startCurrWinIndex = workTime1.filterStart.indexOf(ovtDetailTime.start);
-                    let endCurrWinIndex = workTime2.filterEnd.indexOf(ovtDetailTime.end);
+                    let startCurrWinIndex = workTime.filterStart.indexOf(ovtDetailTime.start);
+                    let endCurrWinIndex = workTime.filterEnd.indexOf(ovtDetailTime.end);
                     startDetailCombo.selectOption(startCurrWinIndex);
                     endDetailCombo.selectOption(endCurrWinIndex);
+
+                    hourDetailRevForm.attachEvent("onChange", function(name, value) {
+                        if(name === "start_date" || name === "end_date") {
+                            dateChangeDetail(workTime.filterStart.indexOf(startDetailCombo.getSelectedValue()), workTime.filterEnd.indexOf(endDetailCombo.getSelectedValue()));
+                            checkRevisionTime(times.filterTime, startDetailCombo.getSelectedValue(), endDetailCombo.getSelectedValue(), ['update'], hourDetailRevForm);
+                        }
+                    });
+
+                    function dateChangeDetail(start, end) {
+                        let startMiddle = workTime.filterStart.indexOf("23:30");
+                        let endMiddle = workTime.filterEnd.indexOf("00:00");
+                        if(start > startMiddle) {
+                            hourDetailRevForm.setItemValue("labelStartDetail", labelEndDetail);
+                            $("#labelStartDetail").html(labelEndDetail);
+                        } else {
+                            hourDetailRevForm.setItemValue("labelStartDetail", labelStartDetail);
+                            $("#labelStartDetail").html(labelStartDetail);
+                        }
+                        if(end >= endMiddle) {
+                            hourDetailRevForm.setItemValue("labelEndDetail", labelEndDetail);
+                            $("#labelEndDetail").html(labelEndDetail);
+                        } else {
+                            hourDetailRevForm.setItemValue("labelEndDetail", labelStartDetail);
+                            $("#labelEndDetail").html(labelStartDetail);
+                        }
+                    }
+
+                    dateChangeDetail(workTime.filterStart.indexOf(startDetailCombo.getSelectedValue()), workTime.filterEnd.indexOf(endDetailCombo.getSelectedValue()));
+                    checkRevisionTime(times.filterTime, startDetailCombo.getSelectedValue(), endDetailCombo.getSelectedValue(), ['update'], hourDetailRevForm);
 
                     hourDetailRevForm.attachEvent("onButtonClick", function(id) {
                         switch (id) {
@@ -612,12 +653,12 @@ $script = <<< "JS"
 
         var ovtDetailGrid = appvTabs.cells("b").attachGrid();
         ovtDetailGrid.setImagePath("./public/codebase/imgs/");
-        ovtDetailGrid.setHeader("No,Task ID,Nama Karyawan,Sub Unit,Bagian,Sub Bagian,Nama Mesin #1,Nama Mesin #2,Pelayanan Produksi,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Lembur,Premi,Nominal Overtime,Makan,Tugas,Status Overtime,Status Terakhir,Created By,Updated By,Created At,Nik Rejector");
+        ovtDetailGrid.setHeader("No,Task ID,Nama Karyawan,Sub Unit,Bagian,Sub Bagian,Nama Mesin #1,Nama Mesin #2,Pelayanan Produksi,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Premi,Nominal Overtime,Makan,Tugas,Status Overtime,Status Terakhir,Created By,Updated By,Created At,Nik Rejector");
         ovtDetailGrid.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
         ovtDetailGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
         ovtDetailGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
         ovtDetailGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        ovtDetailGrid.setInitWidthsP("5,20,20,20,20,20,15,15,20,15,15,15,10,10,10,10,10,10,10,5,25,10,30,15,15,22,0");
+        ovtDetailGrid.setInitWidthsP("5,20,20,20,20,20,25,25,25,15,15,15,10,10,10,10,10,10,10,5,25,10,30,15,15,22,0");
         ovtDetailGrid.attachFooter("Total,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#stat_total,#stat_total,#stat_total,#stat_total,,<div id='other_total_ovt_appv'></div>,,,,,,,,");
         ovtDetailGrid.enableSmartRendering(true);
         ovtDetailGrid.attachEvent("onXLE", function() {
@@ -626,7 +667,7 @@ $script = <<< "JS"
         ovtDetailGrid.attachEvent("onRowSelect", function(rId, cIdn){
             if(ovtDetailGrid.cells(rId, 21).getValue() === "REJECTED") {
                 if(ovtDetailGrid.cells(rId, 26).getValue() == userLogged.empNip) {
-                    if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 21).getValue() === "REJECTED") {
+                    if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 26).getValue() === "REJECTED") {
                         disableAppvDetailToolbar();
                     } else {
                         appvDetailToolbar.disableItem("reject");
@@ -637,29 +678,86 @@ $script = <<< "JS"
                     disableAppvDetailToolbar();
                 }
             } else {
-                if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 24).getValue() !== "-") { //Approval MGR
-                    if(userLogged.rankId == 1 || userLogged.pltRankId == 1) {
-                        enableAppvDetailToolbar();
+                ovtGrid.cells(ovtGrid.getSelectedRowId(), 40).getValue();
+                ovtGrid.cells(ovtGrid.getSelectedRowId(), 39).getValue();
+                ovtGrid.cells(ovtGrid.getSelectedRowId(), 38).getValue();
+                ovtGrid.cells(ovtGrid.getSelectedRowId(), 37).getValue();
+
+                if((userLogged.picOvertime && userLogged.rankId <= 6) || userLogged.pltRankId <= 6) {
+                    if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 30).getValue() !== "-" || ovtGrid.cells(ovtGrid.getSelectedRowId(), 40).getValue() === "-") { //Approval MGR
+                        if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 40).getValue() === "-") {
+                            if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 27).getValue() === "-") {
+                                if(userLogged.rankId == 5 || userLogged.rankId == 6 || userLogged.pltRankId == 5 || userLogged.pltRankId == 6) {
+                                    enableAppvDetailToolbar();
+                                } else {
+                                    disableAppvDetailToolbar();
+                                }
+                            } else if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 28).getValue() === "-" || ovtGrid.cells(ovtGrid.getSelectedRowId(), 29).getValue() === "-") {
+                                if(userLogged.rankId == 3 || userLogged.rankId == 4 || userLogged.pltRankId == 3 || userLogged.pltRankId == 4){
+                                    enableAppvDetailToolbar();
+                                } else {
+                                    disableAppvDetailToolbar();
+                                }
+                            }
+                        } else {
+                            if(userLogged.rankId == 1 || userLogged.pltRankId == 1) {
+                                enableAppvDetailToolbar();
+                            } else {
+                                disableAppvDetailToolbar();
+                            }
+                        }
+                    } else if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 29).getValue() !== "-" || ovtGrid.cells(ovtGrid.getSelectedRowId(), 39).getValue() === "-") { //Approval PPIC
+                        if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 39).getValue() === "-") {
+                            if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 27).getValue() === "-") {
+                                if(userLogged.rankId == 5 || userLogged.rankId == 6 || userLogged.pltRankId == 5 || userLogged.pltRankId == 6) {
+                                    enableAppvDetailToolbar();
+                                } else {
+                                    disableAppvDetailToolbar();
+                                }
+                            } else if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 28).getValue() === "-") {
+                                if(userLogged.rankId == 3 || userLogged.rankId == 4 || userLogged.pltRankId == 3 || userLogged.pltRankId == 4){
+                                    enableAppvDetailToolbar();
+                                } else {
+                                    disableAppvDetailToolbar();
+                                }
+                            }
+                        } else {
+                            if(userLogged.rankId == 2 || userLogged.pltRankId == 2) {
+                                enableAppvDetailToolbar();
+                            } else {
+                                disableAppvDetailToolbar();
+                            }
+                        }
+                    } else if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 28).getValue() !== "-" || ovtGrid.cells(ovtGrid.getSelectedRowId(), 38).getValue() === "-") { //Approval ASMAN
+                        if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 38).getValue() === "-") {
+                            if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 27).getValue() === "-") {
+                                if(userLogged.rankId == 5 || userLogged.rankId == 6 || userLogged.pltRankId == 5 || userLogged.pltRankId == 6) {
+                                    enableAppvDetailToolbar();
+                                } else {
+                                    disableAppvDetailToolbar();
+                                }
+                            }
+                        } else {
+                            if(userLogged.rankId == 2 || userLogged.pltRankId == 2) {
+                                if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 39).getValue() === "-") {
+                                    enableAppvDetailToolbar();
+                                } else {
+                                    disableAppvDetailToolbar();
+                                }
+                            }
+                        }
+                    } else if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 27).getValue() !== "-" || ovtGrid.cells(ovtGrid.getSelectedRowId(), 37).getValue() === "-") { //Approval SPV
+                        if(userLogged.rankId == 3 || userLogged.rankId == 4 || userLogged.pltRankId == 3 || userLogged.pltRankId == 4){
+                            enableAppvDetailToolbar();
+                        } else {
+                            disableAppvDetailToolbar();
+                        }
                     } else {
-                        disableAppvDetailToolbar();
-                    }
-                } else if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 23).getValue() !== "-") { //Approval ASMAN
-                    if(userLogged.rankId <= 2 || userLogged.pltRankId <= 2) {
-                        enableAppvDetailToolbar();
-                    } else {
-                        disableAppvDetailToolbar();
-                    }
-                } else if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 22).getValue() !== "-") { //Approval SPV
-                    if(userLogged.rankId <= 4 || userLogged.pltRankId <= 4) {
-                        enableAppvDetailToolbar();
-                    } else {
-                        disableAppvDetailToolbar();
-                    }
-                } else {
-                    if(userLogged.rankId == 5 || userLogged.rankId == 6 || userLogged.pltRankId == 5 || userLogged.pltRankId == 6) {
-                        enableAppvDetailToolbar();
-                    } else {
-                        disableAppvDetailToolbar();
+                        if(userLogged.rankId == 5 || userLogged.rankId == 6 || userLogged.pltRankId == 5 || userLogged.pltRankId == 6) {
+                            enableAppvDetailToolbar();
+                        } else {
+                            disableAppvDetailToolbar();
+                        }
                     }
                 }
             }
@@ -685,7 +783,7 @@ $script = <<< "JS"
                 appvDetailToolbar.disableItem("rollback");
                 appvDetailToolbar.disableItem("hour_revision");
                 let taskId = ovtGrid.cells(rId, 1).getValue();
-                ovtDetailGrid.clearAndLoad(Overtime("getOvertimeDetailGrid", {equal_task_id: taskId, notequal_status: "CANCELED"}), countTotalOvertime);
+                ovtDetailGrid.clearAndLoad(Overtime("getOvertimeDetailGrid", {equal_task_id: taskId, notin_status: "CANCELED,ADD"}), countTotalOvertime);
             } else {
                 ovtDetailGrid.clearAll();
                 ovtDetailGrid.callEvent("onGridReconstructed",[]);

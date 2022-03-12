@@ -40,7 +40,7 @@
         <td style='padding: 5px;font-family:sans-serif;vertical-align:text-top;'>Mesin</td>
         <td style='padding: 5px;font-family:sans-serif;vertical-align:text-top;'>:</td>
         <td style='padding: 5px;font-family:sans-serif;vertical-align:text-top;'>
-          <?php if(count($machines == 0)) { echo '-'; } else { foreach ($machines as $machine)  { ?>
+          <?php if(count($machines) == 0) { echo '-'; } else { foreach ($machines as $machine)  { ?>
             <p><?= $machine->name ?></p>
           <?php } }?>
         </td>

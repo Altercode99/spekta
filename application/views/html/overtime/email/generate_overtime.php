@@ -30,6 +30,15 @@
 
 <?php 
     $locName = $this->Main->getOne('locations', ['code' => $overtime->location])->name;
+    if($subId == 5) {
+        $name = 'Teknik & Pemeliharaan';
+    } else if($subId == 7) {
+        $name = 'Sistem Mutu';
+    } else if($subId == 8) {
+        $name = 'Pengawasan Mutu';
+    } else if($subId == 13) {
+        $name = 'Penyimpanan';
+    }
 ?>
 
 <div>
@@ -40,7 +49,7 @@
     </div>
 
     <div style="<?= $style['body'] ?>">
-        <p>Dear Team <b>Teknik & Pemeliharaan</b>,</p>
+        <p>Dear Team <b><?= $name ?></b>,</p>
         <p>Berikut ini adalah data lembur <b><?= $overtime->department ?></b> yang akan dilaksanan pada:</p>
         <p><b><?= toIndoDateDay($overtime->overtime_date) ?></b></p>
 
@@ -150,11 +159,11 @@
 
 
     <div style="<?= $style['button_container'] ?>">
-        <a href="<?= $link ?>" style="<?= $style['button'] ?>">Generate Lembur Teknik & Pemeliharaan</a>
+        <a href="<?= $link ?>" style="<?= $style['button'] ?>">Generate Lembur <?= $name ?></a>
     </div>
 
     <div style="<?= $style['footer'] ?>">
-    <p>Notifikasi email ini dikirim secara otomatis oleh sistem dan tidak memerlukan balasan</p>
+        <p>Notifikasi email ini dikirim secara otomatis oleh sistem dan tidak memerlukan balasan</p>
         <hr>
         <p>Kw. Industri Pulo Gadung, Blok N6-11, Jl. Rw. Gelam V No.1, RW.9, Jatinegara, Kec. Cakung, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13920</p>
     </div>

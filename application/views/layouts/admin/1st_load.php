@@ -87,7 +87,7 @@ $script = <<<"JS"
 			},
 			{type: "block", name: "user", offsetTop: 85, list: [
 				{type: "label", labelWidth: menuWidth * 0.77, label: "<div class='info-container'><div class='info-text'>"+userInfo+"</div></div>"},
-				{type: "label", labelWidth: menuWidth * 0.72, label: "<div class='info-version'><div><p>E-KFPJ v.1.0.0</p><ul><li>Under Development</li></ul</div></div>"},
+				{type: "label", labelWidth: menuWidth * 0.72, label: "<div class='info-version'><div><p>S.P.E.K.T.A</p><ul><li>BETA v.1.0.0</li></ul</div></div>"},
 				{type: "label", labelWidth: menuWidth * 0.72, label: "<div class='tutorial-video'><img src='public/codebase/icons/play.png' width='48' height='48' /><p style='margin-left: 10px;'>Video Tutorial</p></div>"}
 			]},
 			{

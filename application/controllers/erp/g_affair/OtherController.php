@@ -368,11 +368,13 @@ class OtherController extends Erp_Controller
         }
 
         $rev = $this->General->getDataById('meeting_rooms_reservation', $revId);
-        if ($rev->status == 'CREATED') {
+        if ($rev->status == 'CREATED' || $rev->status == 'REJECTED') {
             $this->General->updateById('meeting_rooms_reservation', $data, $revId);
             $this->General->update('meeting_rooms_reservation', $data, ['ref' => $revId]);
-            $emp = $this->Hr->getDataById('employees', empId());
-            $this->mroomlib->meetInvitation($emp, $revId);
+            if($rev->status == 'CREATED') {
+                $emp = $this->Hr->getDataById('employees', empId());
+                $this->mroomlib->meetInvitation($emp, $revId);
+            }
             response(['status' => 'success', 'message' => 'Berhasil approve reservasi ruang']);
         } else {
             response(['status' => 'error', 'message' => 'Sudah di approve sebelumnya!']);
@@ -408,7 +410,7 @@ class OtherController extends Erp_Controller
         ];
 
         $rev = $this->General->getDataById('meeting_rooms_reservation', $id);
-        if ($rev->status == 'CREATED') {
+        if ($rev->status == 'CREATED' || $rev->status == 'APPROVED') {
             $this->General->updateById('meeting_rooms_reservation', $data, $id);
             if (empRank() == 5 || empRank() == 6) {
                 $this->mroomlib->rejectionNotif('ASMAN', $id, empName());
@@ -671,7 +673,7 @@ class OtherController extends Erp_Controller
         ];
 
         $rev = $this->General->getDataById('vehicles_reservation', $revId);
-        if ($rev->status == 'CREATED') {
+        if ($rev->status == 'CREATED' || $rev->status == 'REJECTED') {
             $this->General->updateById('vehicles_reservation', $data, $revId);
             if (empRank() == 5 || empRank() == 6) {
                 $this->vehiclelib->approvalNotif('ASMAN', $revId);
@@ -696,7 +698,7 @@ class OtherController extends Erp_Controller
         ];
 
         $rev = $this->General->getDataById('vehicles_reservation', $id);
-        if ($rev->status == 'CREATED') {
+        if ($rev->status == 'CREATED' || $rev->status == 'APPROVED') {
             $this->General->updateById('vehicles_reservation', $data, $id);
             if (empRank() == 5 || empRank() == 6) {
                 $this->vehiclelib->rejectionNotif('ASMAN', $id, empName());

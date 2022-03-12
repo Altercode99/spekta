@@ -423,14 +423,18 @@ $script = <<< "JS"
         revVehicleGrid.attachEvent("onRowSelect", function(rId, cidn) {
             if(revVehicleGrid.cells(rId, 14).getValue() == 'APPROVED') {
                 revVehicleToolbar.disableItem("approve");
-                revVehicleToolbar.disableItem("reject");
+                revVehicleToolbar.enableItem("reject");
                 revVehicleToolbar.enableItem("driver");
                 revVehicleToolbar.enableItem("vehicle");
                 revVehicleGridToolbar.enableItem("update");
                 revVehicleGridToolbar.enableItem("change_hour");
                 revVehicleGridToolbar.enableItem("closed");
             } else if(revVehicleGrid.cells(rId, 14).getValue() == 'REJECTED' || revVehicleGrid.cells(rId, 14).getValue() == 'CLOSED') {
-                revVehicleToolbar.disableItem("approve");
+                if(revVehicleGrid.cells(rId, 14).getValue() == 'REJECTED') {
+                    revVehicleToolbar.enableItem("approve");
+                } else {
+                    revVehicleToolbar.disableItem("approve");
+                }
                 revVehicleToolbar.disableItem("reject");
                 revVehicleToolbar.disableItem("driver");
                 revVehicleToolbar.disableItem("vehicle");

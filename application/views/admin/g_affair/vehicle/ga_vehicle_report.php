@@ -9,7 +9,7 @@ $script = <<< "JS"
         var reportVehicleTabs =  mainTab.cells("ga_vehicles_report").attachTabbar({
             tabs: [
                 {id: "a", text: "Report Global", active: true},
-                {id: "b", text: "Report Ruangan"},
+                {id: "b", text: "Report Kendaraan"},
             ]
         });
 

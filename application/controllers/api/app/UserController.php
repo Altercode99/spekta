@@ -19,17 +19,25 @@ class UserController extends Erp_Controller
     {
         $jwtData = $this->jwt->me($this->input->request_headers('authorization'));
         $emp = $this->HrModel->getEmployee(['equal_id' => $jwtData['empId']])->row();
-        $emp->birth_date = toIndoDate($emp->birth_date);
-        $emp->os_name = $emp->os_name === '-' ? $this->Main->getDataById('locations', $emp->location_id)->name : $emp->os_name;
-        $emp->address = $emp->address ? $emp->address : '-';
-        $emp->email = $emp->email ? $emp->email : '-';
-        $emp->mobile = $emp->mobile ? $emp->mobile : '-';
-        $emp->npwp = $emp->npwp ? $emp->npwp : '-';
-        $emp->parent_nik = $emp->parent_nik ? $emp->parent_nik : '-';
-        $emp->sk_number = $emp->sk_number ? $emp->sk_number : '-';
-        $emp->sk_date = $emp->sk_date !== '0000-00-00' ? toIndoDate($emp->sk_date) : '-';
-        $emp->sk_start_date = $emp->sk_start_date !== '0000-00-00' ? toIndoDate($emp->sk_start_date) : '-';
-        $emp->sk_end_date = $emp->sk_end_date === '0000-00-00' ? toIndoDate($emp->sk_end_date) : '-';
-        response(['profile' => $emp]);
+        if(!$emp && $jwtData['empId'] == '1') {
+            $emp = $this->HrModel->getEmployee(['equal_id' => '431'])->row();
+        }
+
+        if($emp) {
+            $emp->birth_date = $emp->birth_date != '0000-00-00'? toIndoDate($emp->birth_date) : '-';
+            $emp->os_name = $emp->os_name === '-' ? $this->Main->getDataById('locations', $emp->location_id)->name : $emp->os_name;
+            $emp->address = $emp->address ? $emp->address : '-';
+            $emp->email = $emp->email ? $emp->email : '-';
+            $emp->mobile = $emp->mobile ? $emp->mobile : '-';
+            $emp->npwp = $emp->npwp ? $emp->npwp : '-';
+            $emp->parent_nik = $emp->parent_nik ? $emp->parent_nik : '-';
+            $emp->sk_number = $emp->sk_number ? $emp->sk_number : '-';
+            $emp->sk_date = $emp->sk_date !== '0000-00-00' ? toIndoDate($emp->sk_date) : '-';
+            $emp->sk_start_date = $emp->sk_start_date !== '0000-00-00' ? toIndoDate($emp->sk_start_date) : '-';
+            $emp->sk_end_date = $emp->sk_end_date === '0000-00-00' ? toIndoDate($emp->sk_end_date) : '-';
+            response(['profile' => $emp]);
+        } else {
+            response(['profile' => []]);
+        }
     }
 }

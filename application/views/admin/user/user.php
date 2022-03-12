@@ -45,9 +45,11 @@ $script = <<< "JS"
 			userToolbarItem.push({id: "delete", text: "Hapus", type: "button", img: "delete.png"});
 			userToolbarItem.push({id: "searchtext", text: "Cari : ", type: "text"});
 			userToolbarItem.push({id: "search", text: "", type: "buttonInput", width: 150});
+			userToolbarItem.push({id: "export", text: "Export To Excel", type: "button", img: "excel.png"});
 		} else {
 			userToolbarItem.push({id: "searchtext", text: "Cari : ", type: "text"});
 			userToolbarItem.push({id: "search", text: "", type: "buttonInput", width: 150});
+			userToolbarItem.push({id: "export", text: "Export To Excel", type: "button", img: "excel.png"});
 		}
 
 		var userToolbar = userTabs.cells("data").attachToolbar({
@@ -57,6 +59,9 @@ $script = <<< "JS"
 
 		userToolbar.attachEvent("onClick", function(id) {
 			switch (id) {
+				case "export":
+					userGrid.toExcel("./public/codebase/grid-to-excel-php/generate.php");
+					break;
 				case "refresh":
 					userToolbar.setValue("search","");
 					loadData();

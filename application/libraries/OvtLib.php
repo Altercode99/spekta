@@ -81,18 +81,25 @@ class OvtLib
 
         if ($rankLevel == 'spv') {
             $email = $this->getAdminEmail($overtime->sub_department_id);
-        } else if ($rankLevel == 'asman') {
+            $email = $this->getSupportEmail($email, $taskId);
+        } else if ($rankLevel == 'asman' || $rankLevel == 'ppic') {
             $email = $this->getAdminEmail($overtime->sub_department_id);
             $email = $this->getSpvEmail($email, $overtime->division_id);
+            $email = $this->getSupportEmail($email, $taskId);
+            if($rankLevel == 'ppic') {
+                $email = $this->getAsmanEmail($email, $overtime->sub_department_id);
+            }
         } else if ($rankLevel == 'mgr') {
             $email = $this->getAdminEmail($overtime->sub_department_id);
             $email = $this->getSpvEmail($email, $overtime->division_id);
             $email = $this->getAsmanEmail($email, $overtime->sub_department_id);
+            $email = $this->getSupportEmail($email, $taskId);
         } else if ($rankLevel == 'head') {
             $email = $this->getAdminEmail($overtime->sub_department_id);
             $email = $this->getSpvEmail($email, $overtime->division_id);
             $email = $this->getAsmanEmail($email, $overtime->sub_department_id);
             $email = $this->getMgrEmail($email, $overtime->department_id);
+            $email = $this->getSupportEmail($email, $taskId);
         }
 
         $emailList = '';
@@ -162,6 +169,21 @@ class OvtLib
         } else if($isHaveMgrPLT){
             $mgrMail = $this->Hr->getDataById('employees', $isHaveMgrPLT->emp_id)->email;
             $email[] = $mgrMail;
+        }
+        return $email;
+    }
+
+    public function getSupportEmail($email, $taskId)
+    {
+        $refs = $this->Hr->getWhere('employee_overtimes', ['ref' => $taskId])->result();
+        foreach ($refs as $ref) {
+            $pics = $this->Main->getOne('pics', ['sub_department_id' => $ref->sub_department_id, 'code' => 'overtime'], 'pic_emails');
+            if($pics) {
+                $picEmails = explode(',', $pics->pic_emails);
+                foreach ($picEmails as $pEmail) {
+                    $email[] = $pEmail;
+                }
+            }
         }
         return $email;
     }

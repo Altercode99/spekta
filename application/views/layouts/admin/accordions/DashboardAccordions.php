@@ -33,7 +33,7 @@ $script = <<< "JS"
             }
 
             if(isHaveTrees("dashboard_overtime_machine")) {
-                dashOvtSubItems.push({id: "dashboard_overtime_machine", text: "Waktu Pengunaan Mesin", icons: {file: "menu_icon"}});
+                dashOvtSubItems.push({id: "dashboard_overtime_machine", text: "Pengunaan Mesin", icons: {file: "menu_icon"}});
             }
 
             //SUMMARY MEETING ROOM

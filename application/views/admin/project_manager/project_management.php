@@ -11,7 +11,9 @@ $script = <<< "JS"
 		var sendEmail = [];
 		gantt.clearAll(); 
 		if(userLogged.subId != subId) {
-			return eaAlert("Akses Error", "Anda bukan karyawan bagian " + name);
+			gantt.config.readonly = true;
+		} else {
+			gantt.config.readonly = false;
 		}
 
 		$("#gantt_sub_name").html(name);
@@ -161,7 +163,7 @@ $script = <<< "JS"
 			}
 		});
 
-		function loadData() {
+		function firstLoad() {
 			gantt.clearAll(); 
 			let divId = $("#gantt_division_id").val();
 			let taskId = $("#gantt_task_id").val();
@@ -178,7 +180,23 @@ $script = <<< "JS"
 			});
 		}
 
-		loadData();
+		firstLoad();
+
+		function loadData() {
+			gantt.clearAll(); 
+			let divId = $("#gantt_division_id").val();
+			let taskId = $("#gantt_task_id").val();
+			let month = $("#gantt_month").val();
+			let year = $("#gantt_year").val();
+			reqJson(Project("loadData"), "POST", {subId, divId, taskId, month, year}, (err, res) => {
+				if(res.status === "success") {
+					if(res.tasks.data.length > 0) {
+						gantt.parse({data: res.tasks.data, links: res.tasks.links});
+					}
+					$("#gantt_task_id").html(res.tasksList);
+				}
+			});
+		}
 
 		$("#gantt_division_id").on("change", function() {
 			loadData();

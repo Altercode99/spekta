@@ -62,15 +62,30 @@ $script = <<< "JS"
             {type: "input", name: "notes", label: "Catatan", labelWidth: 130, inputWidth: 250, rows: 3},
         ];
 
-        const reqs = reqJsonResponse(Overtime("getOTRequirement", {mtn: true}), "GET", null);
+        let support;
+        if(userLogged.subId == 5) {
+            support = 'mtn';
+        } else if(userLogged.subId == 7) {
+            support = 'qa';
+        } else if(userLogged.subId == 8) {
+            support = 'qc';
+        } else if(userLogged.subId == 13) {
+            support = 'whs';
+        }
+
+        const reqs = reqJsonResponse(Overtime("getOTRequirement", {support, split: 'teknik'}), "GET", null);
+        const reqs2 = reqJsonResponse(Overtime("getOTRequirement", {support, split: 'support'}), "GET", null);
 
         var initialRight = reqs.data;
+        var initialRight2 = reqs2.data;
 
         var initialForm = inputTabs.cells("a").attachForm([
             {type: "fieldset", offsetLeft: 30, offsetTop: 30, label: "Data Lembur", list:[	
                 {type: "block", list: initialLeft},
                 {type: "newcolumn"},
-                {type: "fieldset", offsetLeft: 30, label: "Kebutuhan Lembur", list: initialRight}
+                {type: "fieldset", offsetLeft: 30, label: "Kebutuhan Teknik", list: initialRight},
+                {type: "newcolumn"},
+                {type: "fieldset", offsetLeft: 30, label: "Kebutuhan Support", list: initialRight2},
             ]},
             {type: "block", offsetLeft: 30, offsetTop: 10, list: [
                 {type: "button", name: "add", className: "button_add", offsetLeft: 15, value: "Tambah"},
@@ -79,12 +94,17 @@ $script = <<< "JS"
             ]},
         ]);
 
+        let currentDate = new Date();
+        let date = currentDate.toISOString().split('T')[0];
+        let overtime_date = initialForm.getCalendar("overtime_date");
+        overtime_date.setSensitiveRange(date, null);
+
         var addDeptCombo = initialForm.getCombo("department_id");
         var addSubCombo = initialForm.getCombo("sub_department_id");
 
-        addDeptCombo.load(Overtime("getDepartment", {equal_id: 1}));
+        addDeptCombo.load(Overtime("getDepartment", {equal_id: userLogged.deptId}));
         addDeptCombo.attachEvent("onChange", function(value, text){
-            clearComboReload(initialForm, "sub_department_id", Overtime("getSubDepartment", {equal_id: 5}));
+            clearComboReload(initialForm, "sub_department_id", Overtime("getSubDepartment", {equal_id: userLogged.subId}));
         });
 
         addSubCombo.attachEvent("onChange", function(value, text){
@@ -345,12 +365,12 @@ $script = <<< "JS"
                         detailLayout.cells("b").progressOn();
                         detailGrid = detailLayout.cells("b").attachGrid();
                         detailGrid.setImagePath("./public/codebase/imgs/");
-                        detailGrid.setHeader("No,Task ID,Nama Karyawan,Sub Unit,Bagian,Disivi,Nama Mesin #1,Nama Mesin #2,Pelayanan Produksi,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Lembur,Premi,Nominal Overtime,Makan,Tugas,Status Overtime,Status Terakhir,Created By,Updated By,Created At,Nik Rejector,EmpID");
+                        detailGrid.setHeader("No,Task ID,Nama Karyawan,Sub Unit,Bagian,Disivi,,,Pelayanan Produksi,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Premi,Nominal Overtime,Makan,Tugas,Status Overtime,Status Terakhir,Created By,Updated By,Created At,,");
                         detailGrid.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
                         detailGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
                         detailGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
                         detailGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-                        detailGrid.setInitWidthsP("5,20,20,20,20,20,0,0,15,15,15,15,10,10,10,10,10,10,10,5,25,10,30,15,15,22,0,0");
+                        detailGrid.setInitWidthsP("5,20,20,20,20,20,0,0,25,15,15,15,10,10,10,10,10,10,10,5,25,10,30,15,15,22,0,0");
                         detailGrid.attachFooter("Total,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#stat_total,#stat_total,#stat_total,#stat_total,,<div id='tnp_total_ovt_prod_detail_"+formOvtGridTnp.getSelectedRowId()+"'></div>,,,,,,,,,");
                         detailGrid.enableSmartRendering(true);
                         detailGrid.attachEvent("onXLE", function() {
@@ -360,7 +380,7 @@ $script = <<< "JS"
                         
                         function rDetailGrid(taskId) {
                             detailLayout.cells("b").progressOn();
-                            detailGrid.clearAndLoad(Overtime("getOvertimeDetailGrid", {notin_status: "CANCELED,REJECTED", equal_task_id: taskId}), countDetailOvertime);
+                            detailGrid.clearAndLoad(Overtime("getOvertimeDetailGrid", {notin_status: "CANCELED,REJECTED,ADD", equal_task_id: taskId}), countDetailOvertime);
                         }
 
                         function countDetailOvertime() {
@@ -387,18 +407,18 @@ $script = <<< "JS"
         processlayoutTnp.cells("a").progressOn();
         formOvtGridTnp = processlayoutTnp.cells("a").attachGrid();
         formOvtGridTnp.setImagePath("./public/codebase/imgs/");
-        formOvtGridTnp.setHeader("No,Task ID,Sub Unit,Bagian,Disivi,Kebutuhan Orang,Status Hari,Tanggal Overtime,Waktu Mulai, Waktu Selesai,Catatan,Makan,Steam,AHU,Compressor,PW,Jemputan,Dust Collector,Mekanik,Listrik,H&N,Status Overtime, Revisi Jam Lembur,Revisi User Approval,Rejection User Approval,Created By,Updated By,Created At,Ref");
-        formOvtGridTnp.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter");
-        formOvtGridTnp.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
-        formOvtGridTnp.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
-        formOvtGridTnp.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        formOvtGridTnp.setInitWidthsP("5,20,20,20,20,15,15,15,20,20,20,7,7,7,7,7,7,7,7,7,7,10,30,30,30,15,15,25,0");
+        formOvtGridTnp.setHeader("No,Task ID,Sub Unit,Bagian,Disivi,Kebutuhan Orang,Status Hari,Tanggal Overtime,Waktu Mulai, Waktu Selesai,Catatan,Makan,Steam,AHU,Compressor,PW,Jemputan,Dust Collector,Mekanik,Listrik,H&N,QC,QA,Penandaan,GBK,GBB,Status Overtime, Revisi Jam Lembur,Revisi User Approval,Rejection User Approval,Created By,Updated By,Created At,");
+        formOvtGridTnp.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter");
+        formOvtGridTnp.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
+        formOvtGridTnp.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
+        formOvtGridTnp.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
+        formOvtGridTnp.setInitWidthsP("5,20,20,20,20,15,15,15,20,20,20,7,7,7,7,7,7,10,7,7,7,7,7,7,7,7,10,30,30,30,15,15,25,0");
         formOvtGridTnp.enableSmartRendering(true);
         formOvtGridTnp.attachEvent("onXLE", function() {
             processlayoutTnp.cells("a").progressOff();
         });
         formOvtGridTnp.attachEvent("onRowSelect", function(rId, cIdn) {
-            if(formOvtGridTnp.cells(rId, 28).getValue() == "" || formOvtGridTnp.cells(rId, 28).getValue() == "-") {
+            if(formOvtGridTnp.cells(rId, 33).getValue() == "" || formOvtGridTnp.cells(rId, 33).getValue() == "-") {
                 procToolbar.disableItem("production_detail");
             } else {
                 procToolbar.enableItem("production_detail");
@@ -413,7 +433,7 @@ $script = <<< "JS"
         
         function rProcGrid() {
             processlayoutTnp.cells("a").progressOn();
-            let params = {in_status: "CREATED", notequal_ref: "", position: "tnp"};
+            let params = {in_status: "CREATED", notequal_ref: "", equal_sub_department_id: userLogged.subId, position: "tnp"};
             formOvtGridTnp.clearAndLoad(Overtime("getOvertimeGrid", params), procGridCount);
         }
 
@@ -431,12 +451,12 @@ $script = <<< "JS"
 
         formOvtDetailGridTnp = processlayoutTnp.cells("b").attachGrid();
         formOvtDetailGridTnp.setImagePath("./public/codebase/imgs/");
-        formOvtDetailGridTnp.setHeader("No,Task ID,Nama Karyawan,Sub Unit,Bagian,Disivi,Nama Mesin #1,Nama Mesin #2,Pelayanan Produksi,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Lembur,Premi,Nominal Overtime,Makan,Tugas,Status Overtime,Status Terakhir,Created By,Updated By,Created At,Nik Rejector,EmpID");
+        formOvtDetailGridTnp.setHeader("No,Task ID,Nama Karyawan,Sub Unit,Bagian,Disivi,,,Pelayanan Produksi,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Premi,Nominal Overtime,Makan,Tugas,Status Overtime,Status Terakhir,Created By,Updated By,Created At,,");
         formOvtDetailGridTnp.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
         formOvtDetailGridTnp.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
         formOvtDetailGridTnp.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
         formOvtDetailGridTnp.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        formOvtDetailGridTnp.setInitWidthsP("5,20,20,20,20,20,0,0,15,15,15,15,10,10,10,10,10,10,10,5,25,10,30,15,15,22,0,0");
+        formOvtDetailGridTnp.setInitWidthsP("5,20,20,20,20,20,0,0,25,15,15,15,10,10,10,10,10,10,10,5,25,10,30,15,15,22,0,0");
         formOvtDetailGridTnp.attachFooter("Total,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#stat_total,#stat_total,#stat_total,#stat_total,,<div id='tnp_total_ovt_input'></div>,,,,,,,,,");
         formOvtDetailGridTnp.enableMultiselect(true);
         formOvtDetailGridTnp.enableSmartRendering(true);
@@ -491,14 +511,12 @@ $script = <<< "JS"
                     });
 
                     personLayout.cells("a").attachHTMLString(detailOvertime.template);
+
                     let ovtPersonTime = getCurrentTime(formOvtGridTnp, 8, 9);
-                    let startIndex1 = times.filterTime.indexOf(ovtPersonTime.start);
-                    let endIndex1 = times.filterTime.indexOf(ovtPersonTime.end);
-                    let startIndex2 = times.filterTime.indexOf(ovtPersonTime.start);
-                    let endIndex2 = times.filterTime.indexOf(ovtPersonTime.end);
+                    let startIndex = times.filterTime.indexOf(ovtPersonTime.start);
+                    let endIndex = times.filterTime.indexOf(ovtPersonTime.end);
                         
-                    var workTime1 = genWorkTime(times.times, startIndex1, endIndex1);
-                    var workTime2 = genWorkTime(times.times, startIndex2, endIndex2);
+                    var workTime = genWorkTime(times.times, startIndex, endIndex);
 
                     var personilForm = personLayout.cells("c").attachForm([
                         {type: "fieldset", offsetLeft: 30, offsetTop: 30, label: "Data Lembur", list:[	
@@ -506,11 +524,11 @@ $script = <<< "JS"
                                 {type: "hidden", name: "overtime_id", label: "Overtime ID", labelWidth: 130, inputWidth: 250, value: formOvtGridTnp.getSelectedRowId()},                               
                                 {type: "combo", name: "start_date", label: "Waktu Mulai", labelWidth: 130, inputWidth: 250, required: true,
                                     validate: "NotEmpty", 
-                                    options: workTime1.newStartTime
+                                    options: workTime.newStartTime
                                 },
                                 {type: "combo", name: "end_date", label: "Waktu Selesai", labelWidth: 130, inputWidth: 250, required: true, 
                                     validate: "NotEmpty", 
-                                    options: workTime2.newEndTime,
+                                    options: workTime.newEndTime,
                                 },
                                 {type: "input", name: "requirements", label: "Nama Pelayanan", labelWidth: 130, inputWidth: 250, readonly: true},
                             ]},
@@ -533,7 +551,7 @@ $script = <<< "JS"
 
                     var startPCombo = personilForm.getCombo("start_date");
                     var endPCombo = personilForm.getCombo("end_date");
-                    endPCombo.selectOption(workTime2.newEndTime.length - 1);
+                    endPCombo.selectOption(workTime.newEndTime.length - 1);
                    
                     personilForm.attachEvent("onChange", function(name, value) {
                         if(name === 'start_date' || name === 'end_date') {
@@ -541,9 +559,18 @@ $script = <<< "JS"
                         }
                     });
 
-                    var isReqGrid = detailOvertime.overtime.steam == 0 && detailOvertime.overtime.ahu == 0 && detailOvertime.overtime.compressor == 0 &&
+                    if(userLogged.subId == 5) {
+                        var isReqGrid = detailOvertime.overtime.steam == 0 && detailOvertime.overtime.ahu == 0 && detailOvertime.overtime.compressor == 0 &&
                                     detailOvertime.overtime.pw == 0 && detailOvertime.overtime.dust_collector == 0 && detailOvertime.overtime.wfi == 0 && 
                                     detailOvertime.overtime.hnn == 0;
+                    } else if(userLogged.subId == 7) {
+                        var isReqGrid = detailOvertime.overtime.qa == 0;
+                    } else if(userLogged.subId == 8) {
+                        var isReqGrid = detailOvertime.overtime.qc == 0;
+                    } else if(userLogged.subId == 13) {
+                        var isReqGrid = detailOvertime.overtime.penandaan == 0 && detailOvertime.overtime.gbk == 0 && detailOvertime.overtime.gbb == 0;
+                    }
+                   
                     if(isReqGrid) {
                         personLayout.cells("b").attachHTMLString("<div style='width:100%;height:100%;display:flex;flex-direction:center;justify-content:center;align-items:center;font-family:sans-serif'>No Support</div>");
                         personLayout.cells("b").setText("Lembur Umum");
@@ -770,27 +797,26 @@ $script = <<< "JS"
                     myWins.window("hour_revision_detail_input_tnp").skipMyCloseEvent = true;
 
                     let ovtTime = getCurrentTime(formOvtGridTnp, 8, 9);
-                    let startWinIndex1 = times.filterTime.indexOf(ovtTime.start);
-                    let endWinIndex1 = times.filterTime.indexOf(ovtTime.end);
-                    let startWinIndex2 = times.filterTime.indexOf(ovtTime.start);
-                    let endWinIndex2 = times.filterTime.indexOf(ovtTime.end);
+                    let startWinIndex = times.filterTime.indexOf(ovtTime.start);
+                    let endWinIndex = times.filterTime.indexOf(ovtTime.end);
                         
-                    var workTime1 = genWorkTime(times.times, startWinIndex1, endWinIndex1);
-                    var workTime2 = genWorkTime(times.times, startWinIndex2, endWinIndex2);
+                    var workTime = genWorkTime(times.times, startWinIndex, endWinIndex);
 
-                    let labelStart = ovtTime.labelStart;
-                    let labelEnd = ovtTime.labelEnd;
+                    var labelStartDetail = ovtTime.labelStart;
+                    var labelEndDetail = ovtTime.labelEnd;
                     var hourDetailRevForm = hourDetailRevWin.attachForm([
                         {type: "fieldset", offsetLeft: 30, offsetTop: 30, label: "Jam Lembur", list:[	
                             {type: "block", list: [
                                 {type: "hidden", name: "id", label: "ID", labelWidth: 130, inputWidth: 250, value: formOvtDetailGridTnp.getSelectedRowId()},                               
-                                {type: "combo", name: "start_date", label: labelStart, labelWidth: 130, inputWidth: 250, required: true,
+                                {type: "hidden", name: "labelStartDetail", label: "Start Date", labelWidth: 130, inputWidth: 250, value: labelStartDetail},                               
+                                {type: "combo", name: "start_date", label: "<span id='labelStartDetail'>"+labelStartDetail+"</span>", labelWidth: 130, inputWidth: 250, required: true,
                                     validate: "NotEmpty", 
-                                    options: workTime1.newStartTime
+                                    options: workTime.newStartTime
                                 },
-                                {type: "combo", name: "end_date", label: labelEnd, labelWidth: 130, inputWidth: 250, required: true, 
+                                {type: "hidden", name: "labelEndDetail", label: "End Date", labelWidth: 130, inputWidth: 250, value: labelEndDetail},                               
+                                {type: "combo", name: "end_date", label: "<span id='labelEndDetail'>"+labelEndDetail+"</span>", labelWidth: 130, inputWidth: 250, required: true, 
                                     validate: "NotEmpty", 
-                                    options: workTime2.newEndTime
+                                    options: workTime.newEndTime
                                 }
                             ]},
                         ]},
@@ -805,17 +831,38 @@ $script = <<< "JS"
                     let startDetailCombo = hourDetailRevForm.getCombo("start_date");
                     let endDetailCombo = hourDetailRevForm.getCombo("end_date");
                     let ovtDetailTime = getCurrentTime(formOvtDetailGridTnp, 10, 11);
-                    let startCurrWinIndex = workTime1.filterStart.indexOf(ovtDetailTime.start);
-                    let endCurrWinIndex = workTime2.filterEnd.indexOf(ovtDetailTime.end);
+                    let startCurrWinIndex = workTime.filterStart.indexOf(ovtDetailTime.start);
+                    let endCurrWinIndex = workTime.filterEnd.indexOf(ovtDetailTime.end);
                     startDetailCombo.selectOption(startCurrWinIndex);
                     endDetailCombo.selectOption(endCurrWinIndex);
 
                     hourDetailRevForm.attachEvent("onChange", function(name, value) {
                         if(name === "start_date" || name === "end_date") {
+                            dateChangeDetail(workTime.filterStart.indexOf(startDetailCombo.getSelectedValue()), workTime.filterEnd.indexOf(endDetailCombo.getSelectedValue()));
                             checkRevisionTime(times.filterTime, startDetailCombo.getSelectedValue(), endDetailCombo.getSelectedValue(), ['update'], hourDetailRevForm);
                         }
                     });
 
+                    function dateChangeDetail(start, end) {
+                        let startMiddle = workTime.filterStart.indexOf("23:30");
+                        let endMiddle = workTime.filterEnd.indexOf("00:00");
+                        if(start > startMiddle) {
+                            hourDetailRevForm.setItemValue("labelStartDetail", labelEndDetail);
+                            $("#labelStartDetail").html(labelEndDetail);
+                        } else {
+                            hourDetailRevForm.setItemValue("labelStartDetail", labelStartDetail);
+                            $("#labelStartDetail").html(labelStartDetail);
+                        }
+                        if(end >= endMiddle) {
+                            hourDetailRevForm.setItemValue("labelEndDetail", labelEndDetail);
+                            $("#labelEndDetail").html(labelEndDetail);
+                        } else {
+                            hourDetailRevForm.setItemValue("labelEndDetail", labelStartDetail);
+                            $("#labelEndDetail").html(labelStartDetail);
+                        }
+                    }
+
+                    dateChangeDetail(workTime.filterStart.indexOf(startDetailCombo.getSelectedValue()), workTime.filterEnd.indexOf(endDetailCombo.getSelectedValue()));
                     checkRevisionTime(times.filterTime, startDetailCombo.getSelectedValue(), endDetailCombo.getSelectedValue(), ['update'], hourDetailRevForm);
 
                     hourDetailRevForm.attachEvent("onButtonClick", function(id) {

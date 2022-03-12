@@ -55,7 +55,7 @@ class OvertimeModel extends CI_Model
                         d.name LIKE '%$get[search]%'
                     )";
         } 
-        $sql .= " ORDER BY a.overtime_date ASC";
+        $sql .= " ORDER BY a.id DESC";
         return $this->db->query($sql);
     }
 
@@ -67,6 +67,7 @@ class OvertimeModel extends CI_Model
                        (SELECT employee_name FROM employees WHERE id = a.updated_by) AS emp2,
                        (SELECT employee_name FROM employees WHERE nip = a.apv_spv_nip) AS spv,
                        (SELECT employee_name FROM employees WHERE nip = a.apv_asman_nip) AS asman,
+                       (SELECT employee_name FROM employees WHERE nip = a.apv_ppic_nip) AS ppic,
                        (SELECT employee_name FROM employees WHERE nip = a.apv_mgr_nip) AS mgr,
                        (SELECT employee_name FROM employees WHERE nip = a.apv_head_nip) AS head
                        FROM employee_overtimes a, departments b, sub_departments c, divisions d
@@ -86,7 +87,7 @@ class OvertimeModel extends CI_Model
                         d.name LIKE '%$get[search]%'
                     )";
         } 
-        $sql .= " ORDER BY a.overtime_date ASC";
+        $sql .= " ORDER BY a.id DESC";
         return $this->db->query($sql);
     }
 
@@ -246,13 +247,13 @@ class OvertimeModel extends CI_Model
                        AND a.division_id = d.id
                        AND a.task_id IN($taskIds)
                        AND a.location = '$this->empLoc'
-                       ORDER BY a.overtime_date ASC";
+                       ORDER BY a.id DESC";
         return $this->db->query($sql);
     }
 
-    public function getTechnicOvertime()
+    public function getTechnicOvertime($subId)
     {
-        $sql = "SELECT task_id,ref FROM employee_overtimes WHERE ref != '-' AND ref != '' AND status = 'CREATED'";
+        $sql = "SELECT task_id,ref FROM employee_overtimes WHERE ref != '-' AND ref != '' AND status = 'CREATED' AND sub_department_id = '$subId'";
         return $this->db->query($sql)->result();
     }
 
@@ -283,21 +284,66 @@ class OvertimeModel extends CI_Model
                 AND a.sub_department_id = c.id
                 AND a.location = '$this->empLoc'
                 $where
-                ORDER BY a.created_at DESC";
+                ORDER BY a.id DESC";
         return $this->db->query($sql);
     }
 
     public function getRevOvtDtlGrid($taskId)
     {
-        return $this->db->select('b.*,c.name AS department,d.name AS sub_department,e.name AS division,f.employee_name')
+        return $this->db->select("b.*,c.name AS department,d.name AS sub_department,e.name AS division,f.employee_name,g.start_date AS task_start_date,g.end_date AS task_end_date,
+                                 (SELECT name FROM $this->kf_mtn.production_machines WHERE id = b.machine_1) AS machine_1,
+                                 (SELECT name FROM $this->kf_mtn.production_machines WHERE id = b.machine_2) AS machine_2")
                         ->from('overtime_revision_requests_detail a')
                         ->join('employee_overtimes_detail b', 'a.emp_task_id = b.emp_task_id')
                         ->join('departments c', 'b.department_id = c.id')
                         ->join('sub_departments d', 'b.sub_department_id = d.id')
                         ->join('divisions e', 'b.division_id = e.id')
                         ->join('employees f', 'b.emp_id = f.id')
+                        ->join('employee_overtimes g', 'b.task_id = b.task_id')
                         ->where('a.task_id', $taskId)
                         ->get()
                         ->result();
+    }
+
+    public function backStatusBefore($taskId)
+    {
+        return $this->db->query("UPDATE employee_overtimes_detail SET status = status_before WHERE task_id = '$taskId'");
+    }
+
+    public function getOvt7Day($params)
+    {
+        $lastWeeek = backDayToDate(date('Y-m-d'), 7);
+        $where = advanceSearch($params);
+        $sql = "SELECT a.*,b.name AS department,c.name AS sub_department,d.name AS division,
+                       (SELECT employee_name FROM employees WHERE id = a.created_by) AS emp1,
+                       (SELECT employee_name FROM employees WHERE id = a.updated_by) AS emp2
+                       FROM employee_overtimes a, departments b, sub_departments c, divisions d
+                       WHERE a.department_id = b.id
+                       AND a.sub_department_id = c.id
+                       AND a.division_id = d.id
+                       AND a.location = '$this->empLoc'
+                       AND DATE(a.overtime_date) > '$lastWeeek'
+                       AND on_revision = 0
+                       $where";
+        $sql .= " ORDER BY a.overtime_date DESC";
+        return $this->db->query($sql);
+    }
+
+    public function getRevOvtPersonil($params)
+    {
+        $where = advanceSearch($params);
+        $where .= isset($params['status']) ? queryIn('e.status', $params['status']) : "";
+        $sql = "SELECT a.*,b.name AS department,c.name AS sub_department,d.name AS division,e.rev_task_id,e.status AS rev_status,
+                       (SELECT employee_name FROM employees WHERE id = a.created_by) AS emp1,
+                       (SELECT employee_name FROM employees WHERE id = a.updated_by) AS emp2
+                       FROM employee_overtimes a, departments b, sub_departments c, divisions d, overtime_revision_requests_personil e
+                       WHERE a.department_id = b.id
+                       AND a.sub_department_id = c.id
+                       AND a.division_id = d.id
+                       AND a.task_id = e.task_id
+                       AND a.location = '$this->empLoc'
+                       $where";
+        $sql .= " ORDER BY a.id DESC";
+        return $this->db->query($sql);
     }
 }

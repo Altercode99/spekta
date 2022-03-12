@@ -91,7 +91,7 @@ $script = <<< "JS"
                         type: 'pie'
                     },
                     title: {
-                        text: 'Waktu Penggunaan Mesin ' + nameOfMonth(month) + ' (Top 10)'
+                        text: 'Mesin Paling Sering Digunakan ' + nameOfMonth(month) + ' (Top 10)'
                     },
                     tooltip: {
                         pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -112,7 +112,7 @@ $script = <<< "JS"
                         }
                     },
                     series: [{
-                        name: 'Persentase Jam',
+                        name: 'Jam Lembur',
                         colorByPoint: true,
                         data: res.series
                     }]

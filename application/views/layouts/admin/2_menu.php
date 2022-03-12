@@ -19,11 +19,29 @@ $script = <<<"JS"
     } else {
         mAccountItems.push({id: "exit", text: "Keluar", img: "exit.png"});
     }
-    
+    let showDeptname;
+    if(userLogged.rankId == 1) {
+        showDeptname = "";
+    } else if(userLogged.rankId == 2){
+        showDeptname = " ("+userLogged.department+")";
+    } else if(userLogged.rankId == 3 || userLogged.rankId == 4) {
+        if(userLogged.subDepartment == "-") {
+            showDeptname = " ("+userLogged.department+")";
+        } else {
+            showDeptname = " ("+userLogged.subDepartment+")";
+        }
+    } else {
+        if(userLogged.division == '-') {
+            showDeptname = " ("+userLogged.subDepartment+")";
+        } else {
+            showDeptname = " ("+userLogged.division+")";
+        }
+    }
+
     var myMenu = containerLayout.cells("a").attachMenu({
         icons_path: "./public/codebase/icons/",
         items:[
-            {id: "file", text: "Akun " + userLogged.empLoc + " - <b>" + userLogged.rank + " (" + userLogged.subDepartment + ")</b>", img: "userinfo.png", items: mAccountItems},
+            {id: "file", text: "Akun " + userLogged.empLoc + " - <b>" + userLogged.rank + "" + showDeptname + "</b>", img: "userinfo.png", items: mAccountItems},
         ]
     });
 
@@ -92,19 +110,11 @@ $script = <<<"JS"
                             var oldPassword = setEscape(cpForm.getItemValue("old_password"));
                             var password = setEscape(cpForm.getItemValue("password"));
                             var confirm = setEscape(cpForm.getItemValue("confirm"));
-                           
-                            var oldPasswordHash = genPasswordHash(oldPassword);
-                            var newPasswordHash = genPasswordHash(password);
-                            var confirmPasswordHash = genPasswordHash(confirm);
 
-                            if(newPasswordHash !== confirmPasswordHash) {
+                            if(password !== confirm) {
                                 setEnable(["update", "clear"], cpForm);
                                 return eAlert("Password konfirmasi tidak sama!");
                             }
-
-                            cpForm.setItemValue("old_password", oldPasswordHash);
-                            cpForm.setItemValue("password", newPasswordHash);
-                            cpForm.setItemValue("confirm", confirmPasswordHash);
 
                             let cpFormDP = new dataProcessor(User("changePassword"));
 					        cpFormDP.init(cpForm);

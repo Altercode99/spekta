@@ -78,7 +78,7 @@ class GaModel extends CI_Model
                         c.name LIKE '%$get[search]%'
                     )";
         }
-        $sql .= " ORDER BY a.start_date,a.id ASC";
+        $sql .= " ORDER BY a.id DESC";
         return $this->db->query($sql);
     }
 
@@ -102,7 +102,7 @@ class GaModel extends CI_Model
                         c.employee_name LIKE '%$get[search]%'
                     )";
         }
-        $sql .= " ORDER BY a.start_date ASC";
+        $sql .= " ORDER BY a.id DESC";
         return $this->db->query($sql);
     }
 

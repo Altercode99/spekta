@@ -45,12 +45,16 @@ body {
 }
 
 .dhtmlx_modal_box {
-    z-index: 99999;
+    z-index: 19999;
     min-width: 300px;
 }
 
 .dhtmlx_message_area {
-    z-index: 99999;
+    z-index: 19999;
+}
+
+.dhtmlx_popup_button {
+    z-index: 20000;
 }
 
 #mainCanvas {

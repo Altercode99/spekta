@@ -6,7 +6,7 @@ if ((strpos(strtolower($_SERVER['SCRIPT_NAME']), strtolower(basename(__FILE__)))
 
 $script = <<< "JS"
 
-    async function accessAccordion() {
+    function accessAccordion() {
         checkTrees();
         $("#title-menu").html("Akses & Master");
         accordionItems.map(id => myTree.removeItem(id));
@@ -38,7 +38,7 @@ $script = <<< "JS"
             }
 
             if(userLogged.role === "admin") {
-                var depts = await reqJsonResponse(Access("getDepartments"), "GET", null);
+                var depts = reqJsonResponse(Access("getDepartments"), "GET", null);
                 if(depts.items.length > 0) {
                     accessItems.push({id: "access_control", text: "Akses Kontrol", open: 1, icons: {folder_opened: "arrow_down", folder_closed: "arrow_right"}, items: depts.items})
                 }
