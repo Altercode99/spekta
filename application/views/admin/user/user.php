@@ -43,13 +43,13 @@ $script = <<< "JS"
 
 		if(userLogged.role === "admin") {
 			userToolbarItem.push({id: "delete", text: "Hapus", type: "button", img: "delete.png"});
+			userToolbarItem.push({id: "export", text: "Export To Excel", type: "button", img: "excel.png"});
 			userToolbarItem.push({id: "searchtext", text: "Cari : ", type: "text"});
 			userToolbarItem.push({id: "search", text: "", type: "buttonInput", width: 150});
-			userToolbarItem.push({id: "export", text: "Export To Excel", type: "button", img: "excel.png"});
 		} else {
+			userToolbarItem.push({id: "export", text: "Export To Excel", type: "button", img: "excel.png"});
 			userToolbarItem.push({id: "searchtext", text: "Cari : ", type: "text"});
 			userToolbarItem.push({id: "search", text: "", type: "buttonInput", width: 150});
-			userToolbarItem.push({id: "export", text: "Export To Excel", type: "button", img: "excel.png"});
 		}
 
 		var userToolbar = userTabs.cells("data").attachToolbar({

@@ -319,6 +319,11 @@ class EmpController extends Erp_Controller
         } else {
             $divs = $this->Hr->getWhere('divisions', ['sub_department_id' => $params['subDeptId']], "*", null, ['name' => 'ASC'])->result();
             if($divs) {
+                $divList['options'][] = [
+                    'value' => 0,
+                    'text' => '-',
+                    'selected' => isset($params['select']) && $params['select'] == $div->id ? 1 : 0,
+                ]; 
                 foreach ($divs as $div) {
                     $divList['options'][] = [
                         'value' => $div->id,

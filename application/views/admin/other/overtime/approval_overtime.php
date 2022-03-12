@@ -351,6 +351,8 @@ $script = <<< "JS"
                                 } else {
                                     disableAppvToolbar();
                                 }
+                            } else {
+                                disableAppvToolbar();
                             }
                         } else {
                             if(userLogged.rankId == 1 || userLogged.pltRankId == 1) {
@@ -360,6 +362,7 @@ $script = <<< "JS"
                             }
                         }
                     } else if(ovtGrid.cells(rId, 29).getValue() !== "-" || ovtGrid.cells(rId, 39).getValue() === "-") {  //Approval PPIC
+                        console.log();
                         if(ovtGrid.cells(rId, 39).getValue() === "-") {
                             if(ovtGrid.cells(rId, 27).getValue() === "-") {
                                 //Approval SPV
@@ -377,6 +380,15 @@ $script = <<< "JS"
                                 } else {
                                     disableAppvToolbar();
                                 }
+                            } else if(ovtGrid.cells(rId, 30).getValue() === "-") {
+                                //Approval Manager
+                                if((userLogged.rankId == 2 && userLogged.department == ovtDepartment) || (userLogged.pltRankId == 2 && userLogged.pltDepartment == ovtDepartment)){
+                                    enableAppvToolbar();
+                                } else {
+                                    disableAppvToolbar();
+                                }
+                            } else {
+                                disableAppvToolbar();
                             }
                         } else {
                             if((userLogged.rankId == 2 && userLogged.department == ovtDepartment) || (userLogged.pltRankId == 2 && userLogged.pltDepartment == ovtDepartment)) {
@@ -395,6 +407,8 @@ $script = <<< "JS"
                                 } else {
                                     disableAppvToolbar();
                                 }
+                            } else {
+                                disableAppvToolbar();
                             }
                         } else {
                             if((userLogged.rankId == 2 && userLogged.department == ovtDepartment) || (userLogged.pltRankId == 2 && userLogged.pltDepartment == ovtDepartment)) {
@@ -716,6 +730,12 @@ $script = <<< "JS"
                                 }
                             } else if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 28).getValue() === "-") {
                                 if(userLogged.rankId == 3 || userLogged.rankId == 4 || userLogged.pltRankId == 3 || userLogged.pltRankId == 4){
+                                    enableAppvDetailToolbar();
+                                } else {
+                                    disableAppvDetailToolbar();
+                                }
+                            } else if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 30).getValue() === "-") {
+                                if(userLogged.rankId == 2 || userLogged.pltRankId == 2){
                                     enableAppvDetailToolbar();
                                 } else {
                                     disableAppvDetailToolbar();

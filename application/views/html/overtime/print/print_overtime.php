@@ -58,7 +58,7 @@ class PDF extends PDF_MC_Table
         $this->SetWidths([7, 50, 65, 20, 20, 23]);
         $no = 1;
         foreach ($ovtDetail as $ovtD) {
-            $this->Row([$no, ucwords(strtolower($ovtD->employee_name)), $ovtD->notes, getTime($ovtD->start_date), getTime($ovtD->start_date), $ovtD->overtime_hour]);
+            $this->Row([$no, ucwords(strtolower($ovtD->employee_name)), $ovtD->notes, getTime($ovtD->start_date), getTime($ovtD->end_date), $ovtD->overtime_hour]);
             $no++;
         }
 

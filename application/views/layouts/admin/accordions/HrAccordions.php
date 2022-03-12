@@ -38,7 +38,6 @@ $script = <<< "JS"
             }
 
             //@LEMBUR
-
             if(isHaveTrees("hr_report_lembur")) {
                 empSubItems_4.push({id: "hr_report_lembur", text: "Report Lembur", icons: {file: "menu_icon"}});
             }

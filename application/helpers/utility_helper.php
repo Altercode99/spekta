@@ -984,8 +984,8 @@ function totalHour($empId, $start, $end, $startTime, $endTime)
     $meal2 = 0;
     $meal3 = 0;
 
-    if ($endHour < $startHour && intval($endHour) < 8) {
-        $endFixing = intval($endHour) + 24;
+    if ($endHour < $startHour && intval($endHour) < 12) {
+        $endFixing = intval($endHour) + 28;
     } else {
         $endFixing = intval($endHour);
     }

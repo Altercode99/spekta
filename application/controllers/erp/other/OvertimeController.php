@@ -218,8 +218,8 @@ class OvertimeController extends Erp_Controller
         $start = genOvtDate($date, $post['start_date']);
         $end = genOvtDate($date, $post['end_date']);
 
-        if (countHour($start, $end, 'h') > 12) {
-            xmlResponse('invalid', 'Maksimum jam lembur adalah 12 jam!');
+        if (countHour($start, $end, 'h') > 18) {
+            xmlResponse('invalid', 'Maksimum jam lembur adalah 18 jam!');
         }
 
         $checkOvertimes = $this->Hr->getWhere('employee_overtimes', [
@@ -587,8 +587,8 @@ class OvertimeController extends Erp_Controller
         $expDate = explode('-', $overtime->overtime_date);
         $lastId = $this->Overtime->lastOt('employee_overtimes_detail', 'overtime_date', $overtime->overtime_date);
 
-        if (countHour($start, $end, 'h') > 12) {
-            xmlResponse('invalid', 'Maksimum jam lembur adalah 12 jam!');
+        if (countHour($start, $end, 'h') > 18) {
+            xmlResponse('invalid', 'Maksimum jam lembur adalah 18 jam!');
         }
 
         $personils = explode(',', $post['personil_id']);
@@ -2282,8 +2282,8 @@ class OvertimeController extends Erp_Controller
             xmlResponse('error', "Waktu selesai harus lebih besar dari waktu mulai!");
         }
 
-        if (countHour($startDate, $endDate, 'h') > 12) {
-            xmlResponse('error', 'Maksimum jam lembur adalah 12 jam!');
+        if (countHour($startDate, $endDate, 'h') > 18) {
+            xmlResponse('error', 'Maksimum jam lembur adalah 18 jam!');
         }
 
         $this->Hr->update('employee_overtimes_detail', [

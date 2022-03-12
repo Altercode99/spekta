@@ -564,17 +564,13 @@ function checkTime(startCombo, endCombo, button, form) {
   }
 
   if (newEnd - newStart < 1) {
-    eaAlert(
-      "Kesalahan Waktu Lembur",
-      "Waktu lembur minimal adalah 1 jam! <br/><b>TOMBOL DISABLED</>"
-    );
+    eAlert("Waktu lembur minimal adalah 1 jam! <br/><b>TOMBOL DISABLED</>");
     setDisable(button, form);
     return false;
   }
 
   if (newEnd === newStart) {
-    eaAlert(
-      "Kesalahan Waktu Lembur",
+    eAlert(
       "Waktu selesai harus lebih besar dari waktu mulai! <br/><b>TOMBOL DISABLED</>"
     );
     setDisable(button, form);

@@ -28,13 +28,13 @@ $script = <<< "JS"
         
         if(process) {
             var inputTabItems = [
-                {id: "a", text: "Form Lembur", active: true},
-                {id: "b", text: "Proses Personil"},
+                {id: "a", text: "Form Lembur"},
+                {id: "b", text: "Proses Personil", active: true},
             ];
         } else {
             var inputTabItems = [
-                {id: "a", text: "Form Lembur"},
-                {id: "b", text: "Proses Personil" , active: true},
+                {id: "a", text: "Form Lembur", active: true},
+                {id: "b", text: "Proses Personil"},
             ];
         }
 
