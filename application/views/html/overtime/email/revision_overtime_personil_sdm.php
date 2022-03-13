@@ -56,7 +56,7 @@
         </tr>
         <tr>
             <td style="<?= $style['td'] ?>">Catatan Revisi</td>
-            <td style="<?= $style['td'] ?>;color:green"><b><?= $revision->description ?></b></td>
+            <td style="<?= $style['td'] ?>"><b><?= $revision->description ?></b></td>
         </tr>
         <tr>
             <td style="<?= $style['td'] ?>">Tanggapan SDM</td>
@@ -103,7 +103,7 @@
         </tr>
         <tr>
             <td style="<?= $style['td'] ?>;" width="30%">Status Awal</td>
-            <td style="<?= $style['td'] ?>;color:red;" width="70%"><?= $ovt->status_before ?></td>
+            <td style="<?= $style['td'] ?>;color:green;" width="70%"><?= $ovt->status_before ?></td>
         </tr>
         <tr>
             <td style="<?= $style['td'] ?>;" width="30%">Status Akhir</td>

@@ -74,7 +74,7 @@ class PDF extends PDF_MC_Table
         $this->setFillColor(164, 213, 180);
         $this->Cell(35, 10, $ovt->apv_spv_date != '0000-00-00 00:00:00' ? toIndoDateTime5($ovt->apv_spv_date) : '', 1, 0, 'C', $ovt->apv_spv_date != '0000-00-00 00:00:00' ? 1 : 0);
         $this->Cell(22, 10, '', 1, 0, 'L');
-        $this->Cell(128, 70, $ovt->overtime_review, 1, 0, 'L');
+        $this->Cell(128, 90, $ovt->overtime_review, 1, 0, 'L');
 
         $this->Ln(10);
         $this->SetFont('Times', '', $fontSize2);
@@ -85,6 +85,17 @@ class PDF extends PDF_MC_Table
         $this->Ln(5);
         $this->SetFont('Times', 'B', 8);
         $this->Cell(35, 10, $ovt->apv_asman_date != '0000-00-00 00:00:00' ? toIndoDateTime5($ovt->apv_asman_date) : '', 1, 0, 'C', $ovt->apv_asman_date != '0000-00-00 00:00:00' ? 1 : 0);
+        $this->Cell(22, 10, '', 1, 0, 'L');
+
+        $this->Ln(10);
+        $this->SetFont('Times', '', $fontSize2);
+        $this->Cell(57, 5, 'Approval Asman PP Produksi', 1, 0, 'C');
+        $this->Ln(5);
+        $this->Cell(35, 5, 'Instruksi', 1, 0, 'L');
+        $this->Cell(22, 5, 'Evaluasi', 1, 0, 'L');
+        $this->Ln(5);
+        $this->SetFont('Times', 'B', 8);
+        $this->Cell(35, 10, $ovt->apv_ppic_date != '0000-00-00 00:00:00' ? toIndoDateTime5($ovt->apv_ppic_date) : '', 1, 0, 'C', $ovt->apv_ppic_date != '0000-00-00 00:00:00' ? 1 : 0);
         $this->Cell(22, 10, '', 1, 0, 'L');
 
         $this->Ln(10);

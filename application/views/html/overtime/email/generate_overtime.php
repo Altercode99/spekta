@@ -142,6 +142,18 @@
                     <td style="<?= $style['td'] ?>;" width="70%"><?= $personil->employee_name ?></td>
                 </tr>
                 <tr>
+                    <td style="<?= $style['td'] ?>;" width="30%">Sub Unit</td>
+                    <td style="<?= $style['td'] ?>;" width="70%"><?= $personil->department ?></td>
+                </tr>
+                <tr>
+                    <td style="<?= $style['td'] ?>;" width="30%">Bagian</td>
+                    <td style="<?= $style['td'] ?>;" width="70%"><?= $personil->sub_department ?></td>
+                </tr>
+                <tr>
+                    <td style="<?= $style['td'] ?>;" width="30%">Sub Bagian</td>
+                    <td style="<?= $style['td'] ?>;" width="70%"><?= $personil->division ?></td>
+                </tr>
+                <tr>
                     <td style="<?= $style['td'] ?>;" width="30%">Jam Lembur</td>
                     <td style="<?= $style['td'] ?>;" width="70%"><b><?= "$start - $end" ?></b></td>
                 </tr>

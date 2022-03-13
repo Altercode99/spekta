@@ -643,7 +643,8 @@ class OvertimeController extends Erp_Controller
                 'total_meal' => $overtimeHour['total_meal'],
                 'notes' => $post['notes'],
                 'status' => isset($post['status']) ? $post['status'] : 'CREATED',
-                'revision_status' => isset($post['status']) ? $post['status'] : 'NONE',
+                'revision_status' => isset($post['revision_status']) ? $post['revision_status'] : 'NONE',
+                'status_before' => isset($post['status_before']) ? $post['status_before'] : 'CLOSED',
                 'created_by' => empId(),
                 'updated_by' => empId(),
                 'updated_at' => date('Y-m-d H:i:s'),
@@ -2546,7 +2547,7 @@ class OvertimeController extends Erp_Controller
             $meal = $overtime->meal > 0 ? "✓ ($overtime->total_meal x)" : '-';
 
             $isRevision = $this->Hr->getOne('overtime_revision_requests_detail', ['emp_task_id' => $overtime->emp_task_id], 'emp_task_id', ['status' => ['CREATED', 'PROCESS']]);
-            if(!$isRevision && $overtime->payment_status != 'VERIFIED') {
+            if(!$isRevision && $overtime->payment_status != 'VERIFIED' || ($overtime->revision_status != 'NONE' && $overtime->revision_status != 'CLOSED')) {
                 $xml .= "<row id='$overtime->id'>";
                 $xml .= "<cell $statusColor>" . cleanSC($no) . "</cell>";
                 if(isset($params['check'])) {
