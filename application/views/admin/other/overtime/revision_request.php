@@ -133,6 +133,7 @@ $script = <<< "JS"
                     case "inserted":
                         sAlert(message);
                         clearAllForm(revForm, comboUrl);
+                        revForm.setItemValue("description", "");
                         clearUploader(revForm, "file_uploader");
                         setEnable(["add", "clear"], revForm, reqRevTabs.cells("a"));
                         rRevListGrid();
@@ -176,7 +177,7 @@ $script = <<< "JS"
             cells: [
                 {id: "a", text: "Daftar Lemburan (1 Minggu Terakhir)"},
                 {id: "b", text: "Form Revisi Lembur", width: 450},
-                {id: "c", text: "Detail Lembur", collapse: true},
+                {id: "c", text: "Detail Revisi Lembur", collapse: true},
             ]
         });
 
@@ -725,7 +726,7 @@ $script = <<< "JS"
             cells: [
                 {id: "a", text: "Daftar Pengajuan Revisi Personil"},
                 {id: "b", text: "Catatan Revisi Lembur", collapse: true, width: 450},
-                {id: "c", text: "Detail Lembur", collapse: true},
+                {id: "c", text: "Detail Revisi Lembur", collapse: true},
             ]
         });
 
@@ -845,9 +846,16 @@ $script = <<< "JS"
         function rSubListDetailGrid(rId = null) {
             if(rId) {
                 let taskId = revSubListbGrid.cells(rId, 2).getValue();
+                let status = revSubListbGrid.cells(rId, 15).getValue();
                 revSubListLayout.cells("c").progressOn();
                 revSubListLayout.cells("c").expand();
-                revSubListDetailGrid.clearAndLoad(Overtime("getOvertimeDetailGridRev", {equal_task_id: taskId}), revSubListDetailCount);
+
+                if(status == 'CREATED' || status == 'PROCESS') {
+                    revSubListDetailGrid.clearAndLoad(Overtime("getOvertimeDetailGridRev", {equal_task_id: taskId}), revSubListDetailCount);
+                } else {
+                    revSubListDetailGrid.clearAndLoad(Overtime("getOvertimeDetailGridRevHistory", {equal_task_id: taskId}), revSubListDetailCount);
+                }
+                
                 revSubListLayout.cells("b").expand();
                 reqJson(Overtime("getPersonilRevision"), "POST", {taskId: rId}, (err, res) => {
                     var revForm = revSubListLayout.cells("b").attachForm([

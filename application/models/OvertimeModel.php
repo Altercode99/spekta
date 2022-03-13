@@ -334,6 +334,7 @@ class OvertimeModel extends CI_Model
         $where = advanceSearch($params);
         $where .= isset($params['status']) ? queryIn('e.status', $params['status']) : "";
         $sql = "SELECT a.*,b.name AS department,c.name AS sub_department,d.name AS division,e.rev_task_id,e.status AS rev_status,
+                       e.description,e.response,
                        (SELECT employee_name FROM employees WHERE id = a.created_by) AS emp1,
                        (SELECT employee_name FROM employees WHERE id = a.updated_by) AS emp2
                        FROM employee_overtimes a, departments b, sub_departments c, divisions d, overtime_revision_requests_personil e
@@ -344,6 +345,69 @@ class OvertimeModel extends CI_Model
                        AND a.location = '$this->empLoc'
                        $where";
         $sql .= " ORDER BY a.id DESC";
+        return $this->db->query($sql);
+    }
+
+    public function getRevPersonil($taskId)
+    {
+        return $this->db->select("a.rev_task_id,a.description,a.response,a.status,b.task_id,b.personil,b.overtime_date,b.start_date,b.end_date,b.notes,c.name AS department,d.name AS sub_department,e.name AS division")
+                        ->from('overtime_revision_requests_personil a')
+                        ->join('employee_overtimes b', 'a.task_id = b.task_id')
+                        ->join('departments c', 'b.department_id = c.id')
+                        ->join('sub_departments d', 'b.sub_department_id = d.id')
+                        ->join('divisions e', 'b.division_id = e.id')
+                        ->where('a.rev_task_id', $taskId)
+                        ->get()
+                        ->row();
+    }
+
+    public function getRevPersonilOvertime($taskId)
+    {
+        return $this->db->select("a.status AS his_status,a.revision_status AS rev_his_status,a.status_before AS his_status_before,
+                                  b.*,c.name AS department,d.name AS sub_department,e.name AS division,f.employee_name")
+                        ->from('overtime_revision_requests_personil_history a')
+                        ->join('employee_overtimes_detail b', 'a.emp_task_id = b.emp_task_id')
+                        ->join('departments c', 'b.department_id = c.id')
+                        ->join('sub_departments d', 'b.sub_department_id = d.id')
+                        ->join('divisions e', 'b.division_id = e.id')
+                        ->join('employees f', 'b.emp_id = f.id')
+                        ->where('a.rev_task_id', $taskId)
+                        ->get();
+    }
+
+    public function getOvertimeDetailHistory($get)
+    {
+        $where = advanceSearch($get);
+        $location = $this->auth->isLogin() ? "AND a.location = '$this->empLoc'" : null;
+        $sql = "SELECT a.*,b.name AS department,c.name AS sub_department,d.name AS division,e.employee_name,
+                       f.status AS his_status, f.revision_status AS his_rev_status, f.status_before AS his_status_before,
+                       (SELECT employee_name FROM employees WHERE id = a.created_by) AS emp1,
+                       (SELECT employee_name FROM employees WHERE id = a.updated_by) AS emp2,
+                       (SELECT employee_name FROM employees WHERE nip = a.status_by) AS status_updater,
+                       (SELECT name FROM $this->kf_mtn.production_machines WHERE id = a.machine_1) AS machine_1,
+                       (SELECT name FROM $this->kf_mtn.production_machines WHERE id = a.machine_2) AS machine_2
+                       FROM $this->kf_hr.employee_overtimes_detail a, $this->kf_hr.departments b, $this->kf_hr.sub_departments c, 
+                            $this->kf_hr.divisions d, $this->kf_hr.employees e, $this->kf_hr.overtime_revision_requests_personil_history f
+                       WHERE a.department_id = b.id
+                       AND a.sub_department_id = c.id
+                       AND a.division_id = d.id
+                       AND a.emp_id = e.id
+                       AND a.emp_task_id = f.emp_task_id
+                       $location
+                       $where";
+                    
+        if (isset($get['search']) && $get['search'] !== "") {
+            $sql .= "AND (
+                        a.task_id LIKE '%$get[search]%' OR 
+                        (SELECT employee_name FROM employees WHERE id = a.created_by) LIKE '%$get[search]%' OR
+                        (SELECT employee_name FROM employees WHERE id = a.updated_by) LIKE '%$get[search]%' OR
+                        b.name LIKE '%$get[search]%' OR
+                        c.name LIKE '%$get[search]%' OR
+                        d.name LIKE '%$get[search]%' OR
+                        e.employee_name LIKE '%$get[search]%'
+                    )";
+        } 
+        $sql .= " ORDER BY a.overtime_date ASC";
         return $this->db->query($sql);
     }
 }

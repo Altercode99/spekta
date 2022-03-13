@@ -262,6 +262,7 @@ $script = <<< "JS"
                         {type: "fieldset", offsetLeft: 30, offsetTop: 30, label: "Jam Lembur", list:[	
                             {type: "block", list: [
                                 {type: "input", name: "task_id", label: "Task ID", labelWidth: 130, inputWidth: 250, readonly: true, value: revDetailGrid.getSelectedRowId()},                               
+                                {type: "hidden", name: "revision_status", label: "Revision Status", labelWidth: 130, inputWidth: 250, value: 'CHANGE_TIME'},                               
                                 {type: "hidden", name: "labelStartDetail", label: "Start Date", labelWidth: 130, inputWidth: 250, value: labelStartDetail},                               
                                 {type: "combo", name: "start_date", label: "<span id='labelStartDetail'>"+labelStartDetail+"</span>", labelWidth: 130, inputWidth: 250, required: true,
                                     validate: "NotEmpty", 

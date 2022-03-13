@@ -19,41 +19,48 @@
         <p><b><?= $location ?></b></p>
     </div>
 
-    <p>Dear Team<b> SDM</b>,</p>
-    <p>Berikut ini adalah <b>Permintaan Revisi Lembur</b> dari Bagian <b><?= $overtime->sub_department ?></b> dengan Task ID: <b><?= $overtime->task_id ?></b></p>
-    <p>Instruksi Revisi:</p>
+    <p>Dear <b> <?= $requestor->employee_name ?></b>,</p>
+    <p><b>Permintaan Revisi Personil Lembur</b> dengan Nomor: <b><?= $revision->rev_task_id ?></b> sudah di proses oleh <b>SDM</b> dengan status:</p>
     <br />
-    <p style="text-align:center"><?= $revision['description'] ?></p>
+    <p style="text-align:center"><?= $revision->status ?></p>
     <br />
   
     <p>Adapun lemburan yang hendak di revisi adalah sebagai berikut:</p>
     <table style="<?= $style['table']  ?>">
         <tr>
-            <th style="<?= $style['th'] ?>" colspan="2">Detail Lembur</th>
+            <th style="<?= $style['th'] ?>" colspan="2">Data Revisi</th>
         </tr>
         <tr>
             <td style="<?= $style['td'] ?>">Task ID</td>
-            <td style="<?= $style['td'] ?>"><b><?= $overtime->task_id  ?></b></td>
+            <td style="<?= $style['td'] ?>"><b><?= $revision->rev_task_id  ?></b></td>
+        </tr>
+        <tr>
+            <td style="<?= $style['td'] ?>">Task ID Lembur</td>
+            <td style="<?= $style['td'] ?>"><b><?= $revision->task_id  ?></b></td>
         </tr>
         <tr>
             <td style="<?= $style['td'] ?>">Sub Unit</td>
-            <td style="<?= $style['td'] ?>"><?= $overtime->department  ?></td>
+            <td style="<?= $style['td'] ?>"><?= $revision->department  ?></td>
         </tr>
         <tr>
             <td style="<?= $style['td'] ?>">Bagian</td>
-            <td style="<?= $style['td'] ?>"><?= $overtime->sub_department  ?></td>
+            <td style="<?= $style['td'] ?>"><?= $revision->sub_department  ?></td>
         </tr>
         <tr>
             <td style="<?= $style['td'] ?>">Sub Unit</td>
-            <td style="<?= $style['td'] ?>"><?= $overtime->division  ?></td>
+            <td style="<?= $style['td'] ?>"><?= $revision->division  ?></td>
         </tr>
         <tr>
             <td style="<?= $style['td'] ?>">Waktu Lembur</td>
-            <td style="<?= $style['td'] ?>"><?= toIndoDateTime2($overtime->start_date) .' - '.toIndoDateTime2($overtime->end_date)  ?></td>
+            <td style="<?= $style['td'] ?>"><?= toIndoDateTime2($revision->start_date) .' - '.toIndoDateTime2($revision->end_date)  ?></td>
         </tr>
         <tr>
             <td style="<?= $style['td'] ?>">Catatan Revisi</td>
-            <td style="<?= $style['td'] ?>"><b><?= $revision['description'] ?></b></td>
+            <td style="<?= $style['td'] ?>;color:green"><b><?= $revision->description ?></b></td>
+        </tr>
+        <tr>
+            <td style="<?= $style['td'] ?>">Tanggapan SDM</td>
+            <td style="<?= $style['td'] ?>"><b><?= $revision->response ?></b></td>
         </tr>
     </table>
 
@@ -63,7 +70,7 @@
         </tr>
         <?php 
             $no = 1;
-            foreach ($overtimeDetail as $ovt) {
+            foreach ($overtimes as $ovt) {
                 $start = toIndoDateTime2($ovt->start_date);
                 $end = toIndoDateTime2($ovt->end_date);
         ?>
@@ -96,15 +103,11 @@
         </tr>
         <tr>
             <td style="<?= $style['td'] ?>;" width="30%">Status Awal</td>
-            <td style="<?= $style['td'] ?>;color:green;" width="70%"><?= $ovt->status ?></td>
+            <td style="<?= $style['td'] ?>;color:red;" width="70%"><?= $ovt->status_before ?></td>
         </tr>
         <tr>
-            <td style="<?= $style['td'] ?>;" width="30%">Status Revisi</td>
-            <?php if($ovt->revision_status == 'NONE') { ?>
-                <td style="<?= $style['td'] ?>;color:black;" width="70%">-</td>
-            <?php } else { ?>
-                <td style="<?= $style['td'] ?>;color:red;" width="70%"><?= $ovt->revision_status ?></td>
-            <?php } ?>
+            <td style="<?= $style['td'] ?>;" width="30%">Status Akhir</td>
+            <td style="<?= $style['td'] ?>;color:red;" width="70%"><?= $ovt->status ?></td>
         </tr>
         <?php $no++; } ?>
     </table>

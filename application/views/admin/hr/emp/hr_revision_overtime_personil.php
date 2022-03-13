@@ -126,6 +126,13 @@ $script = <<< "JS"
         function revOvtPrsDetailGridCount() {
             let revOvtPrsDetailGridRows = revOvtPrsDetailGrid.getRowsNum();
             revOvrPrsDetailStatusBar.setText("Total baris: " + revOvtPrsDetailGridRows + " (" + legend.revision_overtime_personil + ")");
+            for (let i = 0; i < revOvtPrsDetailGridRows; i++) {
+                let status = revOvtPrsDetailGrid.cells2(i, 4).getValue();
+                if(status == 'NONE') {
+                    revOvtPrsDetailGrid.cells2(i, 1).setDisabled(true);
+                    revOvtPrsDetailGrid.cells2(i, 2).setDisabled(true);
+                }
+            }
         }
 
         var revOvtPrsDetailGrid = revOvtPrsLayout.cells("c").attachGrid();
@@ -173,9 +180,14 @@ $script = <<< "JS"
         function rRevOvtPrsDetailGrid(rId = null) {
             if(rId) {
                 let taskId = revOvtPrsGrid.cells(rId, 2).getValue();
+                let status =  revOvtPrsGrid.cells(rId, 15).getValue();
                 revOvtPrsLayout.cells("c").progressOn();
                 revOvtPrsLayout.cells("c").expand();
-                revOvtPrsDetailGrid.clearAndLoad(Overtime("getOvertimeDetailGridRev", {equal_task_id: taskId, check: true}), revOvtPrsDetailGridCount);
+                if(status == 'CREATED' || status == 'PROCESS') {
+                    revOvtPrsDetailGrid.clearAndLoad(Overtime("getOvertimeDetailGridRev", {equal_task_id: taskId, check: true}), revOvtPrsDetailGridCount);
+                } else {
+                    revOvtPrsDetailGrid.clearAndLoad(Overtime("getOvertimeDetailGridRevHistory", {equal_task_id: taskId, check: true}), revOvtPrsDetailGridCount);
+                }
                 revOvtPrsLayout.cells("b").expand();
                 reqJson(Overtime("getPersonilRevision"), "POST", {taskId: rId}, (err, res) => {
                     revOvtPrsForm = revOvtPrsLayout.cells("b").attachForm([
@@ -329,11 +341,7 @@ $script = <<< "JS"
                     if(!revOvtPrsGrid.getSelectedRowId()) {
                         return eAlert("Pilih baris yang akan di tutup!");
                     }
-
-                    if(revOvtPrsForm.getItemValue("response") == "") {
-                        return eAlert("Silahkan isi Response / Tanggapan SDM!")
-                    }
-
+                    
                     dhtmlx.modalbox({
                         type: "alert-warning",
                         title: "Konfirmasi Tutup Revisi",

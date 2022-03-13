@@ -27,13 +27,13 @@
         <p style="text-align:center"><?= $revision->description ?></p>
         <br />
     <?php } else if($status == 'OVERTIME_REVISION_REJECTION') { ?>
-        <p>Dear Team <b>ASMAN <?= $revision->sub_department ?></b>,</p>
+        <p>Dear <b><?= $requestor->employee_name  ?></b>,</p>
         <p><b>Permintaan Revisi Lembur</b> dengan Nomor: <b><?= $revision->task_id ?></b> sudah di proses oleh <b>SDM</b> dengan status:</p>
         <br />
         <p style="text-align:center"><b>REJECTED (DI TOLAK)</b></p>
         <br />
     <?php } else if($status == 'OVERTIME_REVISION_CLOSED') { ?>
-        <p>Dear Team <b>ASMAN <?= $revision->sub_department ?></b>,</p>
+        <p>Dear <b><?= $requestor->employee_name  ?></b>,</p>
         <p><b>Permintaan Revisi Lembur</b> dengan Nomor: <b><?= $revision->task_id ?></b> sudah di proses oleh <b>SDM</b> dengan status:</p>
         <br />
         <p style="text-align:center"><b>CLOSED</b></p>

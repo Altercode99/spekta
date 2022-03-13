@@ -53,8 +53,12 @@
                 <td style="<?= $style['td'] ?>"><b><?= $overtime->task_id ?></b></td>
             </tr>
             <tr>
-                <td style="<?= $style['td'] ?>">Bagian</td>
+                <td style="<?= $style['td'] ?>">Sub Unit</td>
                 <td style="<?= $style['td'] ?>"><?= $overtime->department ?></td>
+            </tr>
+            <tr>
+                <td style="<?= $style['td'] ?>">Bagian</td>
+                <td style="<?= $style['td'] ?>"><?= $overtime->sub_department ?></td>
             </tr>
             <tr>
                 <td style="<?= $style['td'] ?>">Sub Bagian</td>
@@ -131,6 +135,14 @@
             <tr>
                 <td style="<?= $style['td'] ?>;" width="30%">Nama Personil</td>
                 <td style="<?= $style['td'] ?>;" width="70%"><?= $personil->employee_name ?></td>
+            </tr>
+            <tr>
+                <td style="<?= $style['td'] ?>;" width="30%">Bagian</td>
+                <td style="<?= $style['td'] ?>;" width="70%"><?= $personil->sub_department ?></td>
+            </tr>
+            <tr>
+                <td style="<?= $style['td'] ?>;" width="30%">Sub Bagian</td>
+                <td style="<?= $style['td'] ?>;" width="70%"><?= $personil->division ?></td>
             </tr>
             <tr>
                 <td style="<?= $style['td'] ?>;" width="30%">Jam Lembur</td>

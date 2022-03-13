@@ -1863,8 +1863,8 @@ class OvertimeController extends Erp_Controller
         }
 
         $reqDetail = $this->Hr->createMultiple('overtime_revision_requests_detail', $dataDetail);
-
-        $this->sendRevisionEmail($revTaskId, $post['task_ids'], 'OVERTIME_REVISION_REQUEST');
+        $requestor = $this->Hr->getDataById('employees', empId());
+        $this->sendRevisionEmail($revTaskId, $post['task_ids'], 'OVERTIME_REVISION_REQUEST', $requestor);
         xmlResponse('inserted', 'Berhasil membuat form pengajuan revisi lembur');
     }
 
@@ -2126,17 +2126,33 @@ class OvertimeController extends Erp_Controller
     public function cancelRevOvtSub()
     {
         $post = fileGetContent();
-        $revision = $this->Hr->getOne('employee_overtimes', ['task_id' => $post->taskId]);
-        if ($revision->on_revision == 1) {
+        $revTaskId = $post->taskId;
+        $revision = $this->Hr->getOne('overtime_revision_requests_personil', ['rev_task_id' => $revTaskId]);
+        if($revision->status == 'CREATED') {
             $this->Hr->update('overtime_revision_requests_personil', [
                 'status' => 'CANCELED', 
                 'updated_by' => empId(), 
                 'updated_at' => date('Y-m-d H:i:s')
-            ], ['task_id' => $post->taskId]);
-
-            $this->Hr->update('employee_overtimes', ['on_revision' => 0], ['task_id' => $post->taskId]);
-            $this->Hr->update('employee_overtimes_detail', ['revision_status' => 'NONE'], ['task_id' => $post->taskId]);
+            ], ['rev_task_id' => $revTaskId]);
+            $this->Overtime->backStatusBefore($revision->task_id);
+            $empOvts = $this->Hr->getWhere('employee_overtimes_detail', ['task_id' => $revision->task_id, 'status' => 'CLOSED', 'revision_status !=' => 'NONE'])->result();
+            $dataHistory =[];
+            foreach ($empOvts as $ovt) {
+                $dataHistory[] = [
+                    'rev_task_id' => $revision->rev_task_id,
+                    'task_id' => $revision->task_id,
+                    'emp_task_id' => $ovt->emp_task_id,
+                    'status' => $ovt->status,
+                    'revision_status' => $ovt->revision_status,
+                    'status_before' => $ovt->status_before,
+                ];
+            }
+            $this->Hr->createMultiple('overtime_revision_requests_personil_history', $dataHistory);
+            $this->Hr->update('employee_overtimes', ['on_revision' => 0], ['task_id' => $revision->task_id]);
+            $this->Hr->update('employee_overtimes_detail', ['revision_status' => 'NONE'], ['task_id' => $revision->task_id]);
             response(['status' => 'success', 'message' => 'Berhasil membatalkan pengajuan revisi lembur']);
+        } else if ($revision->status == 'PROCESS') {
+            response(['status' => 'error', 'message' => 'Gagal membatalkan pengajuan revisi lembur, status revisi sudah di proses oleh SDM!']);
         } else {
             response(['status' => 'error', 'message' => 'Gagal membatalkan pengajuan revisi lembur!']);
         }
@@ -2220,7 +2236,8 @@ class OvertimeController extends Erp_Controller
                         $empTaskIds = $empTaskIds . "," . $rev->emp_task_id;
                     }
                 }
-                $this->sendRevisionEmail($data->id, $empTaskIds, 'OVERTIME_REVISION_REJECTION');
+                $requestor = $this->Hr->getDataById('employees', $revision->created_by);
+                $this->sendRevisionEmail($data->id, $empTaskIds, 'OVERTIME_REVISION_REJECTION', $requestor);
             } else {
                 $mError .= "- Gagal mengubah status revisi $data->field <br>";
             }
@@ -2238,24 +2255,29 @@ class OvertimeController extends Erp_Controller
         foreach ($datas as $id => $data) {
             $revision = $this->Hr->getOne('overtime_revision_requests_personil', ['rev_task_id' => $data->id]);
             if ($revision->status == 'CREATED' || $revision->status == 'PROCESS') {
-                $this->Overtime->backStatusBefore($revision->task_id);
-                $empOvts = $this->Hr->getWhere('employee_overtimes_detail', ['task_id' => $revision->task_id, 'status' => 'CLOSED', 'revision_status !=' => 'NONE'])->result();
-                $dataHistory =[];
-                foreach ($empOvts as $ovt) {
-                    $dataHistory[] = [
-                        'rev_task_id' => $revision->rev_task_id,
-                        'task_id' => $revision->task_id,
-                        'emp_task_id' => $ovt->emp_task_id,
-                        'status' => $ovt->status,
-                        'revision_status' => $ovt->revision_status,
-                        'status_before' => $ovt->status_before,
-                    ];
+                if($revision->response != '') {
+                    $this->Overtime->backStatusBefore($revision->task_id);
+                    $empOvts = $this->Hr->getWhere('employee_overtimes_detail', ['task_id' => $revision->task_id, 'status' => 'CLOSED', 'revision_status !=' => 'NONE'])->result();
+                    $dataHistory =[];
+                    foreach ($empOvts as $ovt) {
+                        $dataHistory[] = [
+                            'rev_task_id' => $revision->rev_task_id,
+                            'task_id' => $revision->task_id,
+                            'emp_task_id' => $ovt->emp_task_id,
+                            'status' => $ovt->status,
+                            'revision_status' => $ovt->revision_status,
+                            'status_before' => $ovt->status_before,
+                        ];
+                    }
+                    $this->Hr->update('employee_overtimes', ['on_revision' => 0], ['task_id' => $revision->task_id]);
+                    $this->Hr->update('overtime_revision_requests_personil', ['status' => 'REJECTED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['rev_task_id' => $data->id]);
+                    $this->Hr->createMultiple('overtime_revision_requests_personil_history', $dataHistory);
+                    $requestor = $this->Hr->getDataById('employees', $revision->created_by);
+                    $this->sendRevisionPersonilEmail($revision, 'OVERTIME_PERSONIL_REVISION_REJECTION', $requestor);
+                    $mSuccess .= "- $data->field berhasil ditolak <br>";
+                } else {
+                    $mError .= "- Gagal mengubah status revisi $data->field, Tanggapan SDM masih kosong! <br>";
                 }
-                $this->Hr->update('overtime_revision_requests_personil', ['status' => 'REJECTED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['rev_task_id' => $data->id]);
-                $this->Hr->createMultiple('overtime_revision_requests_personil_history', $dataHistory);
-                // $this->sendRevisionEmail($data->id, $empTaskIds, 'OVERTIME_PERSONIL_REVISION_REJECTION');
-                //HISTORY REVISI PERSONIL ------------------------------------------------------------------
-                $mSuccess .= "- $data->field berhasil ditolak <br>";
             } else {
                 $mError .= "- Gagal mengubah status revisi $data->field <br>";
             }
@@ -2309,8 +2331,8 @@ class OvertimeController extends Erp_Controller
     public function closeRevision()
     {
         $post = fileGetContent();
-        $response = $this->Hr->getOne("overtime_revision_requests", ['task_id' => $post->taskId])->response;
-        if(!$response) {
+        $revision = $this->Hr->getOne("overtime_revision_requests", ['task_id' => $post->taskId]);
+        if(!$revision->response) {
             return response(['error' => 'success', 'message' => 'Tanggapan SDM masih kosong!']);
         }
         $this->Hr->update('overtime_revision_requests', ['status' => 'CLOSED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['task_id' => $post->taskId]);
@@ -2324,37 +2346,50 @@ class OvertimeController extends Erp_Controller
                 $empTaskIds = $empTaskIds . "," . $rev->emp_task_id;
             }
         }
-        $this->sendRevisionEmail($post->taskId, $empTaskIds, 'OVERTIME_REVISION_CLOSED');
+        $requestor = $this->Hr->getDataById('employees', $revision->created_by);
+        $this->sendRevisionEmail($post->taskId, $empTaskIds, 'OVERTIME_REVISION_CLOSED', $requestor);
         response(['status' => 'success', 'message' => 'Berhasil menutup revisi!']);
     }
 
     public function closeRevisionPersonil()
     {
         $post = fileGetContent();
-        $response = $this->Hr->getOne("overtime_revision_requests_personil", ['rev_task_id' => $post->taskId])->response;
-        if(!$response) {
+        $revision = $this->Hr->getOne("overtime_revision_requests_personil", ['rev_task_id' => $post->taskId]);
+        if(!$revision->response) {
             return response(['error' => 'success', 'message' => 'Tanggapan SDM masih kosong!']);
         }
+
+        $empOvts = $this->Hr->getWhere('employee_overtimes_detail', ['task_id' => $revision->task_id, 'revision_status !=' => 'NONE'])->result();
+        $dataHistory =[];
+        foreach ($empOvts as $ovt) {
+            $dataHistory[] = [
+                'rev_task_id' => $revision->rev_task_id,
+                'task_id' => $revision->task_id,
+                'emp_task_id' => $ovt->emp_task_id,
+                'status' => $ovt->status,
+                'revision_status' => $ovt->revision_status,
+                'status_before' => $ovt->status_before,
+            ];
+        }
+        $this->Hr->createMultiple('overtime_revision_requests_personil_history', $dataHistory);
         $this->Hr->update('overtime_revision_requests_personil', ['status' => 'CLOSED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['rev_task_id' => $post->taskId]);
-        // $this->sendRevisionEmail($post->taskId, $empTaskIds, 'OVERTIME_PERSONIL_REVISION_CLOSED');
+        $requestor = $this->Hr->getDataById('employees', $revision->created_by);
+        $this->sendRevisionPersonilEmail($revision, 'OVERTIME_PERSONIL_REVISION_CLOSED', $requestor);
         response(['status' => 'success', 'message' => 'Berhasil menutup revisi!']);
     }
 
 
-    public function sendRevisionEmail($taskId, $empTaskIds, $alertName)
+    public function sendRevisionEmail($taskId, $empTaskIds, $alertName, $requestor)
     {
-        $email = '';
+        $email = $requestor->email;
         $sdms = $this->Hr->getWhere('employees', ['division_id' => 38])->result();
         foreach ($sdms as $sdm) {
-            if ($email == '') {
-                $email = $sdm->email;
-            } else {
-                $email = $email . ',' . $sdm->email;
-            }
+            $email = $email . ',' . $sdm->email;
         }
         $overtimes = $this->Overtime->getOvertimeDetail(['in_emp_task_id' => $empTaskIds])->result();
         $revision = $this->Overtime->getRevOvtGrid(['in_task_id' => $taskId])->row();
         $message = $this->load->view('html/overtime/email/revision_overtime', [
+            'requestor' => $requestor,
             'overtimes' => $overtimes,
             'revision' => $revision,
             'location' => $this->auth->locName,
@@ -2372,6 +2407,42 @@ class OvertimeController extends Erp_Controller
             'email_to' => $email,
             'subject' => "$prefix Revisi Lembur $revision->department (Task ID: $taskId)",
             'subject_name' => "Spekta Alert: $prefix Revisi Lembur $revision->department (Task ID: $taskId)",
+            'message' => $message,
+        ];
+        $insert = $this->Main->create('email', $data);
+    }
+
+    public function sendRevisionPersonilEmail($revision, $alertName, $requestor)
+    {
+        $email = $requestor->email;
+        $sdms = $this->Hr->getWhere('employees', ['division_id' => 38])->result();
+        foreach ($sdms as $sdm) {
+            $email = $email . ',' . $sdm->email;
+        }
+        
+        $fullRev = $this->Overtime->getRevPersonil($revision->rev_task_id);
+        $overtimes = $this->Overtime->getRevPersonilOvertime($revision->rev_task_id)->result();
+        $message = $this->load->view('html/overtime/email/revision_overtime_personil_sdm', [
+            'requestor' => $requestor,
+            'revision' => $fullRev,
+            'overtimes' => $overtimes,
+            'location' => $this->auth->locName,
+            'status' => $alertName,
+        ], true);
+
+        // dd($message);
+
+        $prefix = 'Request';
+        if ($alertName == 'OVERTIME_PERSONIL_REVISION_REJECTION') {
+            $prefix = 'Rejection';
+        } else if ($alertName == 'OVERTIME_PERSONIL_REVISION_CLOSED') {
+            $prefix = 'Closed';
+        }
+        $data = [
+            'alert_name' => $alertName,
+            'email_to' => $email,
+            'subject' => "$prefix Revisi Personil Lembur $fullRev->department (Task ID: $revision->rev_task_id)",
+            'subject_name' => "Spekta Alert: $prefix Revisi Personil Lembur $fullRev->department (Task ID: $revision->rev_task_id)",
             'message' => $message,
         ];
         $insert = $this->Main->create('email', $data);
@@ -2473,15 +2544,100 @@ class OvertimeController extends Erp_Controller
             $machine1 = $overtime->machine_1 ? $overtime->machine_1 : '-';
             $machine2 = $overtime->machine_2 ? $overtime->machine_2 : '-';
             $meal = $overtime->meal > 0 ? "✓ ($overtime->total_meal x)" : '-';
+
+            $isRevision = $this->Hr->getOne('overtime_revision_requests_detail', ['emp_task_id' => $overtime->emp_task_id], 'emp_task_id', ['status' => ['CREATED', 'PROCESS']]);
+            if(!$isRevision && $overtime->payment_status != 'VERIFIED') {
+                $xml .= "<row id='$overtime->id'>";
+                $xml .= "<cell $statusColor>" . cleanSC($no) . "</cell>";
+                if(isset($params['check'])) {
+                    $xml .= "<cell $color>0</cell>";
+                    $xml .= "<cell $color>0</cell>";
+                }
+                $xml .= "<cell $color>" . cleanSC($overtime->status) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($overtime->revision_status) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($overtime->status_before) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($overtime->emp_task_id) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($overtime->employee_name) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($overtime->department) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($overtime->sub_department) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($overtime->division) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($machine1) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($machine2) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($overtime->requirements) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC(toIndoDateDay($overtime->overtime_date)) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->start_date)) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->end_date)) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($overtime->status_day) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($overtime->effective_hour) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($overtime->break_hour) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($overtime->real_hour) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($overtime->overtime_hour) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC(toNumber($overtime->premi_overtime)) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC(toNumber($overtime->overtime_value)) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($meal) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($overtime->notes) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($overtime->status) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($status_updater) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($overtime->emp1) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($overtime->emp2) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC(toIndoDateTime($overtime->created_at)) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC($overtime->emp_id) . "</cell>";
+                $xml .= "</row>";
+                $no++;
+            }
+        }
+        gridXmlHeader($xml);
+    }
+
+    public function getOvertimeDetailGridRevHistory()
+    {
+        $params = getParam();
+        $overtimes = $this->Overtime->getOvertimeDetailHistory($params)->result();
+        $xml = "";
+        $no = 1;
+        foreach ($overtimes as $overtime) {
+
+            $color = null;
+            if ($overtime->status_day === 'Hari Libur') {
+                $color = "bgColor='#efd898'";
+            } else if ($overtime->status_day === 'Libur Nasional') {
+                $color = "bgColor='#7ecbf1'";
+            }
+
+            $status_updater = '-';
+            if ($overtime->change_time == 1) {
+                $status_updater = 'Revisi Jam Lembur By ' . $overtime->status_updater;
+            } else if ($overtime->status_by !== '') {
+                $status_updater = $overtime->status . ' By ' . $overtime->status_updater;
+            }
+
+            if($overtime->his_rev_status == "CANCELED") {
+                $color = "bgColor='#ed9a9a'";
+            } else if($overtime->his_rev_status == "CLOSED") {
+                $color = "bgColor='#75b175'";
+            }
+
+            $statusColor = $color;
+            if(isset($params['check'])) {
+               if($overtime->status == $overtime->revision_status) {
+                $statusColor = "bgColor='#df6be1'";
+               } else {
+                $statusColor = "bgColor='#ccc'";
+               }
+            }
+
+            $machine1 = $overtime->machine_1 ? $overtime->machine_1 : '-';
+            $machine2 = $overtime->machine_2 ? $overtime->machine_2 : '-';
+            $meal = $overtime->meal > 0 ? "✓ ($overtime->total_meal x)" : '-';
             $xml .= "<row id='$overtime->id'>";
             $xml .= "<cell $statusColor>" . cleanSC($no) . "</cell>";
             if(isset($params['check'])) {
                 $xml .= "<cell $color>0</cell>";
                 $xml .= "<cell $color>0</cell>";
             }
-            $xml .= "<cell $color>" . cleanSC($overtime->status) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC($overtime->revision_status) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC($overtime->status_before) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->his_status) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->his_rev_status) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->his_status_before) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->emp_task_id) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->employee_name) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->department) . "</cell>";
@@ -2513,6 +2669,7 @@ class OvertimeController extends Erp_Controller
         }
         gridXmlHeader($xml);
     }
+
 
     public function cancelOvtRev()
     {

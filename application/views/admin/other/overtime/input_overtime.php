@@ -311,7 +311,7 @@ $script = <<< "JS"
                                             closeWindow("input_change_personil");
                                             break;
                                         case "error":
-                                            eaAlert(message);
+                                            eaAlert("Kesalahan Jumlah Personil", message);
                                             setEnable(["update", "cancel"], cpForm, cpWindow);
                                             break;
                                     }
