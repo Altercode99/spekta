@@ -51,11 +51,11 @@ $script = <<< "JS"
             {type: "combo", name: "division_id", label: "Sub Bagian", labelWidth: 130, inputWidth: 250, readonly: true,required: true},
             {type: "input", name: "personil", label: "Kebutuhan Orang", labelWidth: 130, inputWidth: 250, required: true, validate:"ValidNumeric"},
             {type: "calendar", name: "overtime_date", label: "Tanggal Lembur", labelWidth: 130, inputWidth: 250, readonly: true, required: true},
-            {type: "combo", name: "start_date", label: "Waktu Mulai", labelWidth: 130, inputWidth: 250, required: true,
+            {type: "combo", name: "start_date", label: "Waktu Mulai", labelWidth: 130, inputWidth: 250, required: true, readonly: true,
                 validate: "NotEmpty", 
                 options: times.startTimes
             },
-            {type: "combo", name: "end_date", label: "Waktu Selesai", labelWidth: 130, inputWidth: 250, required: true, 
+            {type: "combo", name: "end_date", label: "Waktu Selesai", labelWidth: 130, inputWidth: 250, required: true, readonly: true,
                 validate: "NotEmpty", 
                 options: times.endTimes,
             },
@@ -108,7 +108,7 @@ $script = <<< "JS"
         });
 
         addSubCombo.attachEvent("onChange", function(value, text){
-            clearComboReload(initialForm, "division_id", Emp("getDivision", {subDeptId: value}));
+            clearComboReload(initialForm, "division_id", Overtime("getDivision", {subDeptId: value}));
         });
 
         isFormNumeric(initialForm, ['personil']);
@@ -286,11 +286,11 @@ $script = <<< "JS"
                         {type: "fieldset", offsetLeft: 30, offsetTop: 30, label: "Jam Lembur", list:[	
                             {type: "block", list: [
                                 {type: "hidden", name: "id", label: "ID", labelWidth: 130, inputWidth: 250, value: formOvtGridTnp.getSelectedRowId()},                               
-                                {type: "combo", name: "start_date", label: labelStart, labelWidth: 130, inputWidth: 250, required: true,
+                                {type: "combo", name: "start_date", label: labelStart, labelWidth: 130, inputWidth: 250, required: true, readonly: true,
                                     validate: "NotEmpty", 
                                     options: times.startTimes
                                 },
-                                {type: "combo", name: "end_date", label: labelEnd, labelWidth: 130, inputWidth: 250, required: true, 
+                                {type: "combo", name: "end_date", label: labelEnd, labelWidth: 130, inputWidth: 250, required: true, readonly: true,
                                     validate: "NotEmpty", 
                                     options: times.endTimes,
                                 }
@@ -522,11 +522,11 @@ $script = <<< "JS"
                         {type: "fieldset", offsetLeft: 30, offsetTop: 30, label: "Data Lembur", list:[	
                             {type: "block", list: [
                                 {type: "hidden", name: "overtime_id", label: "Overtime ID", labelWidth: 130, inputWidth: 250, value: formOvtGridTnp.getSelectedRowId()},                               
-                                {type: "combo", name: "start_date", label: "Waktu Mulai", labelWidth: 130, inputWidth: 250, required: true,
+                                {type: "combo", name: "start_date", label: "Waktu Mulai", labelWidth: 130, inputWidth: 250, required: true, readonly: true,
                                     validate: "NotEmpty", 
                                     options: workTime.newStartTime
                                 },
-                                {type: "combo", name: "end_date", label: "Waktu Selesai", labelWidth: 130, inputWidth: 250, required: true, 
+                                {type: "combo", name: "end_date", label: "Waktu Selesai", labelWidth: 130, inputWidth: 250, required: true, readonly: true,
                                     validate: "NotEmpty", 
                                     options: workTime.newEndTime,
                                 },
@@ -729,11 +729,8 @@ $script = <<< "JS"
                         var params;
                         if(divIds) {
                             params = {in_division_id: divIds};
-                        } else {
-                            params = {equal_sub_department_id: detailOvertime.overtime.sub_department_id};
                         }
                         addPersonilGrid.clearAndLoad(Overtime("getEmployees", params), disabledBookedPersonil);
-
                         function disabledBookedPersonil() {
                             bookedPersonil.map(empId => addPersonilGrid.cells(empId, 1).setDisabled(true));
                         }
@@ -809,12 +806,12 @@ $script = <<< "JS"
                             {type: "block", list: [
                                 {type: "hidden", name: "id", label: "ID", labelWidth: 130, inputWidth: 250, value: formOvtDetailGridTnp.getSelectedRowId()},                               
                                 {type: "hidden", name: "labelStartDetail", label: "Start Date", labelWidth: 130, inputWidth: 250, value: labelStartDetail},                               
-                                {type: "combo", name: "start_date", label: "<span id='labelStartDetail'>"+labelStartDetail+"</span>", labelWidth: 130, inputWidth: 250, required: true,
+                                {type: "combo", name: "start_date", label: "<span id='labelStartDetail'>"+labelStartDetail+"</span>", labelWidth: 130, inputWidth: 250, required: true, readonly: true,
                                     validate: "NotEmpty", 
                                     options: workTime.newStartTime
                                 },
                                 {type: "hidden", name: "labelEndDetail", label: "End Date", labelWidth: 130, inputWidth: 250, value: labelEndDetail},                               
-                                {type: "combo", name: "end_date", label: "<span id='labelEndDetail'>"+labelEndDetail+"</span>", labelWidth: 130, inputWidth: 250, required: true, 
+                                {type: "combo", name: "end_date", label: "<span id='labelEndDetail'>"+labelEndDetail+"</span>", labelWidth: 130, inputWidth: 250, required: true, readonly: true,
                                     validate: "NotEmpty", 
                                     options: workTime.newEndTime
                                 }

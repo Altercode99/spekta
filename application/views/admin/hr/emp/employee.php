@@ -151,8 +151,8 @@ $script = <<< "JS"
             {type: "input", name: "nik", label: "No. KTP", labelWidth: 130, inputWidth: 250, required: true},
             {type: "input", name: "npwp", label: "NPWP", labelWidth: 130, inputWidth: 250},
             {type: "input", name: "employee_name", label: "Nama Karyawan", labelWidth: 130, inputWidth: 250, required: true},	
-            {type: "input", name: "birth_place", label: "Tempat Lahir", labelWidth: 130, inputWidth: 250, required: true},
-            {type: "calendar", name: "birth_date", label: "Tanggal Lahir", labelWidth: 130, inputWidth: 250, required: true}
+            {type: "input", name: "birth_place", label: "Tempat Lahir", labelWidth: 130, inputWidth: 250},
+            {type: "calendar", name: "birth_date", label: "Tanggal Lahir", labelWidth: 130, inputWidth: 250}
         ];
 
         empDataFormRight =  [
@@ -182,8 +182,8 @@ $script = <<< "JS"
                 ]
             },
             {type: "input", name: "age", label: "Usia", labelWidth: 130, inputWidth: 250, required: true, validate:"ValidNumeric"},
-            {type: "input", name: "address", label: "Alamat", labelWidth: 130, inputWidth: 250, rows: 3, required: true},
-            {type: "input", name: "mobile", label: "No. Hp", labelWidth: 130, inputWidth: 250, required: true, validate:"ValidNumeric"},
+            {type: "input", name: "address", label: "Alamat", labelWidth: 130, inputWidth: 250, rows: 3},
+            {type: "input", name: "mobile", label: "No. Hp", labelWidth: 130, inputWidth: 250, validate:"ValidNumeric"},
             {type: "input", name: "phone", label: "No. Telpon", labelWidth: 130, inputWidth: 250, validate:"ValidNumeric"},
             {type: "input", name: "email", label: "Email", labelWidth: 130, inputWidth: 250, required: true, validate:"ValidEmail"},
         ];

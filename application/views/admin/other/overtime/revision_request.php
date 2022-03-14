@@ -377,11 +377,11 @@ $script = <<< "JS"
                         {type: "fieldset", offsetLeft: 30, offsetTop: 30, label: "Data Lembur", list:[	
                             {type: "block", list: [
                                 {type: "hidden", name: "overtime_id", label: "Overtime ID", labelWidth: 130, inputWidth: 250, value: revSubGrid.getSelectedRowId()},                               
-                                {type: "combo", name: "start_date", label: "Waktu Mulai", labelWidth: 130, inputWidth: 250, required: true,
+                                {type: "combo", name: "start_date", label: "Waktu Mulai", labelWidth: 130, inputWidth: 250, required: true, readonly: true,
                                     validate: "NotEmpty", 
                                     options: workTime.newStartTime
                                 },
-                                {type: "combo", name: "end_date", label: "Waktu Selesai", labelWidth: 130, inputWidth: 250, required: true, 
+                                {type: "combo", name: "end_date", label: "Waktu Selesai", labelWidth: 130, inputWidth: 250, required: true, readonly: true,
                                     validate: "NotEmpty", 
                                     options: workTime.newEndTime,
                                 },
@@ -573,12 +573,12 @@ $script = <<< "JS"
                             {type: "block", list: [
                                 {type: "input", name: "task_id", label: "Task ID", labelWidth: 130, inputWidth: 250, readonly: true, value: revSubDetailGrid.cells(revSubDetailGrid.getSelectedRowId(), 4).getValue()},                               
                                 {type: "hidden", name: "labelStartDetail", label: "Start Date", labelWidth: 130, inputWidth: 250, value: labelStartDetail},                               
-                                {type: "combo", name: "start_date", label: "<span id='labelStartDetail'>"+labelStartDetail+"</span>", labelWidth: 130, inputWidth: 250, required: true,
+                                {type: "combo", name: "start_date", label: "<span id='labelStartDetail'>"+labelStartDetail+"</span>", labelWidth: 130, inputWidth: 250, required: true, readonly: true,
                                     validate: "NotEmpty", 
                                     options: workTime1.newStartTime
                                 },
                                 {type: "hidden", name: "labelEndDetail", label: "End Date", labelWidth: 130, inputWidth: 250, value: labelEndDetail},                               
-                                {type: "combo", name: "end_date", label: "<span id='labelEndDetail'>"+labelEndDetail+"</span>", labelWidth: 130, inputWidth: 250, required: true, 
+                                {type: "combo", name: "end_date", label: "<span id='labelEndDetail'>"+labelEndDetail+"</span>", labelWidth: 130, inputWidth: 250, required: true, readonly: true,
                                     validate: "NotEmpty", 
                                     options: workTime1.newEndTime,
                                 }

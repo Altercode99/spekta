@@ -217,11 +217,11 @@ $script = <<< "JS"
                         {type: "fieldset", offsetLeft: 30, offsetTop: 30, label: "Jam Lembur", list:[	
                             {type: "block", list: [
                                 {type: "hidden", name: "id", label: "ID", labelWidth: 130, inputWidth: 250, value: ovtGrid.getSelectedRowId()},                               
-                                {type: "combo", name: "start_date", label: labelStart, labelWidth: 130, inputWidth: 250, required: true,
+                                {type: "combo", name: "start_date", label: labelStart, labelWidth: 130, inputWidth: 250, required: true, readonly: true,
                                     validate: "NotEmpty", 
                                     options: times.startTimes
                                 },
-                                {type: "combo", name: "end_date", label: labelEnd, labelWidth: 130, inputWidth: 250, required: true, 
+                                {type: "combo", name: "end_date", label: labelEnd, labelWidth: 130, inputWidth: 250, required: true, readonly: true,
                                     validate: "NotEmpty", 
                                     options: times.endTimes,
                                 }
@@ -488,7 +488,7 @@ $script = <<< "JS"
                 }else if(userLogged.rankId > 2 || userLogged.pltRankId > 2) {
                     if(userLogged.rankId == 3 || userLogged.pltRankId == 3 || userLogged.rankId == 4 || userLogged.pltRankId == 4) {
                         if(userLogged.subId == 9) {
-                            params.in_sub_department_id = userLogged.subId+","+userLogged.pltSubId+",1,2,3,13";
+                            params.in_sub_department_id = userLogged.subId+","+userLogged.pltSubId+",1,2,3,4,13";
                         }
                     } else {
                         params.in_sub_department_id = userLogged.subId+","+userLogged.pltSubId;
@@ -575,12 +575,12 @@ $script = <<< "JS"
                             {type: "block", list: [
                                 {type: "hidden", name: "id", label: "ID", labelWidth: 130, inputWidth: 250, value: ovtDetailGrid.getSelectedRowId()},                               
                                 {type: "hidden", name: "labelStartDetail", label: "Start Date", labelWidth: 130, inputWidth: 250, value: labelStartDetail},                               
-                                {type: "combo", name: "start_date", label: "<span id='labelStartDetail'>"+labelStartDetail+"</span>", labelWidth: 130, inputWidth: 250, required: true,
+                                {type: "combo", name: "start_date", label: "<span id='labelStartDetail'>"+labelStartDetail+"</span>", labelWidth: 130, inputWidth: 250, required: true, readonly: true,
                                     validate: "NotEmpty", 
                                     options: workTime.newStartTime
                                 },
                                 {type: "hidden", name: "labelEndDetail", label: "End Date", labelWidth: 130, inputWidth: 250, value: labelEndDetail},                               
-                                {type: "combo", name: "end_date", label: "<span id='labelEndDetail'>"+labelEndDetail+"</span>", labelWidth: 130, inputWidth: 250, required: true, 
+                                {type: "combo", name: "end_date", label: "<span id='labelEndDetail'>"+labelEndDetail+"</span>", labelWidth: 130, inputWidth: 250, required: true, readonly: true,
                                     validate: "NotEmpty", 
                                     options: workTime.newEndTime
                                 }

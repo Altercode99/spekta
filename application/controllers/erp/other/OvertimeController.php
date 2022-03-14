@@ -15,6 +15,42 @@ class OvertimeController extends Erp_Controller
         $this->auth->isAuth();
     }
 
+    public function getDivision()
+    {
+        $params = getParam();
+        $divList = [];
+        if(isset($params['select']) && $params['select'] == 0) {
+            $divList['options'][] = [
+                'value' => 0,
+                'text' => "-",
+                'selected' => 1,
+            ];
+        } else {
+            $divs = $this->Hr->getWhere('divisions', ['sub_department_id' => $params['subDeptId']], "*", null, ['name' => 'ASC'])->result();
+            if($divs) {
+                $divList['options'][] = [
+                    'value' => 0,
+                    'text' => '-',
+                    'selected' => isset($params['select']) && $params['select'] == $div->id ? 1 : 0,
+                ]; 
+                foreach ($divs as $div) {
+                    $divList['options'][] = [
+                        'value' => $div->id,
+                        'text' => $div->name,
+                        'selected' => isset($params['select']) && $params['select'] == $div->id ? 1 : 0,
+                    ];
+                }
+            } else {
+                $divList['options'][] = [
+                    'value' => 0,
+                    'text' => '-',
+                    'selected' => 1,
+                ]; 
+            }
+        }
+        echo json_encode($divList);
+    }
+
     public function getDepartment()
     {
         $depts = $this->Overtime->getDepartment(getParam());
@@ -731,7 +767,7 @@ class OvertimeController extends Erp_Controller
 
         $isHavePPIC = $this->Hr->getOne('employees', ['sub_department_id' => 9], '*', ['rank_id' => ['3', '4']]);
         $isHavePPICPLT = $this->Hr->getOne('employee_ranks', ['sub_department_id' => 9, 'status' => 'ACTIVE'], '*', ['rank_id' => ['3', '4']]);
-        if ($overtime->sub_department_id == 0 || ($overtime->sub_department_id != 1 && $overtime->sub_department_id != 2 && $overtime->sub_department_id != 3 && $overtime->sub_department_id != 13) || (!$isHavePPIC && !$isHavePPICPLT)) {
+        if ($overtime->sub_department_id == 0 || ($overtime->sub_department_id != 1 && $overtime->sub_department_id != 2 && $overtime->sub_department_id != 3 && $overtime->sub_department_id != 4 && $overtime->sub_department_id != 13) || (!$isHavePPIC && !$isHavePPICPLT)) {
             $data['apv_ppic'] = 'BY PASS';
             $data['apv_ppic_nip'] = '-';
             $data['apv_ppic_date'] = date('Y-m-d H:i:s');
