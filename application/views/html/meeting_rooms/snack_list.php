@@ -1,7 +1,11 @@
 <?php foreach ($snacks as $snack) { ?>
 <div class="snack_container <?= $rev->snack_id == $snack->id ? 'snack_selected' : null ?>" id="snack-<?= $snack->id ?>" onclick="selectSnack('<?= $snack->id ?>')">
     <div class="left">
-        <img class="snack_img" src="<?= base_url('assets/images/meeting_snacks/' . $snack->filename) ?>" />
+        <?php if($snack->filename) { ?>
+            <img class="snack_img" src="<?= base_url('assets/images/meeting_snacks/' . $snack->filename) ?>" />
+        <?php } else { ?>
+            <img class="snack_img" src="<?= base_url('public/img/no-image.png') ?>" />
+        <?php } ?>
     </div>
 
     <div class="right">

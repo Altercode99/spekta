@@ -32,10 +32,10 @@ class CronController extends Erp_Controller
     {
         $updateVehicle = $this->General->update('vehicles_reservation', [
             'status' => 'CLOSED',
-        ], ['status' => 'APPROVED', 'DATE(start_date) <' => date('2022-02-05')]);
+        ], ['status' => 'APPROVED', 'DATE(start_date) <' => date('Y-m-d')]);
 
         $updatMRoom = $this->General->update('meeting_rooms_reservation', [
             'status' => 'CLOSED',
-        ], ['status' => 'APPROVED', 'DATE(start_date) <' => date('2022-02-05')]);
+        ], ['status' => 'APPROVED', 'DATE(start_date) <' => date('Y-m-d')]);
     }
 }
