@@ -592,6 +592,8 @@ class OvertimeController extends Erp_Controller
         $curentClockStart = clockToFloat($post['start_date']);
         $curentClockEnd = clockToFloat($post['end_date']);
 
+
+
         if($ovtDateStart == $ovtDateEnd) {
             $start = genOvtDate($overtime->overtime_date, $post['start_date']);
             $end = genOvtDate($overtime->overtime_date, $post['end_date']);
@@ -649,6 +651,40 @@ class OvertimeController extends Erp_Controller
         $no = 1;
         foreach ($personils as $key => $id) {
             $emp = $this->Hr->getDataById('employees', $id);
+
+            $empOvt = $this->Hr->getWhere('employee_overtimes_detail', [
+                'emp_id' => $emp->id, 
+                'overtime_date' => date('Y-m-d', strtotime($start)), 
+                'status !=' => 'REJECTED',
+                'status !=' => 'CANCELED',
+            ])->result();
+
+            $dateExist = 0;
+            $dt1 = "";
+            $dt2 = "";
+            foreach ($empOvt as $evt) {
+                if (checkDateExist($start, $evt->start_date, $evt->end_date)) {
+                   $dateExist++;
+                   $dt1 = $start;
+                }
+                if (checkDateExist($end, $evt->start_date, $evt->end_date)) {
+                    $dateExist++;
+                    $dt2 = $end;
+                 }
+            }
+
+            if ($dateExist > 0) {
+                $message = "";
+                if ($dt1 != '' && $dt2 != '') {
+                    $message = "Lembur $emp->employee_name Tanggal " . toIndoDateTime($dt1) . " dan " . toIndoDateTime($dt2) . " sudah dibuat!";
+                } else if ($dt1 != '' && $dt2 == '') {
+                    $message = "Lembur $emp->employee_name Tanggal " . toIndoDateTime($dt1) . " sudah dibuat!";
+                } else if ($dt1 == '' && $dt2 != '') {
+                    $message = "Lembur $emp->employee_name Tanggal " . toIndoDateTime($dt2) . " sudah dibuat!";
+                }
+                xmlResponse('error', $message);
+            }
+
             $taskId = sprintf('%03d', ($lastId + $no)) . '/OT-EMP/' . empLoc() . '/' . toRomawi($expDate[1]) . '/' . $expDate[0];
             $overtimeHour = totalHour($id, $start, $end, $post['start_date'], $post['end_date']);
 
@@ -721,6 +757,7 @@ class OvertimeController extends Erp_Controller
         $overtime = $this->Overtime->getOvertime(['equal_task_id' => $post->taskId])->row();
         $makan = $this->Hr->countWhere('employee_overtimes_detail', ['task_id' => $post->taskId]);
         $sendEmail = false;
+        $spvEmail = null;
 
         $data = [
             'status' => 'PROCESS',
@@ -1725,7 +1762,7 @@ class OvertimeController extends Erp_Controller
 
     public function getReportOvertimeEmpGridRev()
     {
-        $overtimes = $this->Overtime->getReportOvertimeEmp(getParam())->result();
+        $overtimes = $this->Overtime->getReportOvertimeEmpGridRev(getParam())->result();
         $xml = "";
         $no = 1;
         foreach ($overtimes as $overtime) {

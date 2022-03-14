@@ -17,6 +17,7 @@ $script = <<< "JS"
         var bookedPersonil = [];
         let currentDate = filterForMonth(new Date());
         var times = createTime();
+        var countPerson;
 
         var comboUrl = {
             department_id: {
@@ -256,6 +257,7 @@ $script = <<< "JS"
         });
         revSubDetailGrid.attachEvent("onRowSelect", function(rId, cIdn) {
             let revStatus = revSubDetailGrid.cells(rId, 2).getValue();
+            let beforeStatus = revSubDetailGrid.cells(rId, 3).getValue();
             console.log(revStatus);
             if(revStatus == 'NONE' || revStatus == 'CLOSED') {
                 ovtListDetailToolbar.enableItem("cancel");
@@ -265,7 +267,7 @@ $script = <<< "JS"
                 ovtListDetailToolbar.enableItem("rollback");
             }
 
-            if(revStatus == "ADD") {
+            if(revStatus == "CLOSED" && beforeStatus == "ADD") {
                 ovtListDetailToolbar.enableItem("hour_revision");
             } else {
                 ovtListDetailToolbar.disableItem("hour_revision");
@@ -517,16 +519,23 @@ $script = <<< "JS"
                                 case "save":
                                     personils = [];
                                     personilNames = [];
+                                    let total = 0;
                                     for (let i = 0; i < addPersonilGrid.getRowsNum(); i++) {
                                         let id = addPersonilGrid.getRowId(i);
                                         if(addPersonilGrid.cells(id, 1).getValue() == 1) {
                                             personils.push(id);
                                             personilNames.push(addPersonilGrid.cells(id, 2).getValue());
                                         }
+                                        total++;
                                     }
-                                    personilForm.setItemValue('personil_id', personils);
-                                    personilForm.setItemValue('personil_name', personilNames);
-                                    closeWindow("add_personil_win");
+
+                                    if(countPerson == total) {
+                                        personilForm.setItemValue('personil_id', personils);
+                                        personilForm.setItemValue('personil_name', personilNames);
+                                        closeWindow("add_personil_win");
+                                    } else {
+                                        eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
+                                    }
                                     break;
                             }
                         });
@@ -545,10 +554,11 @@ $script = <<< "JS"
                             addPersonilWin.progressOff();
                         });
                         addPersonilGrid.init();
-                        addPersonilGrid.clearAndLoad(Overtime("getEmployees", {equal_department_id: detailOvertime.overtime.department_id, notequal_sub_department_id: 5}), disabledBookedPersonil);
+                        addPersonilGrid.clearAndLoad(Overtime("getEmployees"), disabledBookedPersonil);
 
                         function disabledBookedPersonil() {
                             bookedPersonil.map(empId => addPersonilGrid.cells(empId, 1).setDisabled(true));
+                            countPerson = addPersonilGrid.getRowsNum();
                         }
                     }
                     break;

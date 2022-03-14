@@ -13,6 +13,9 @@ $script = <<< "JS"
         var personilNames = [];
         var bookedPersonil = [];
         var formOvtGrid;
+        //@Modal Variabel
+        var countMachine;
+        var countPerson;
 
         var comboUrl = {
             department_id: {
@@ -22,9 +25,9 @@ $script = <<< "JS"
             sub_department_id: {
                 reload: false
             },
-            division_id: {
-                reload: false
-            },
+            // division_id: {
+            //     reload: false
+            // },
         }
         
         var inputTabs = mainTab.cells("other_input_overtime").attachTabbar({
@@ -39,7 +42,7 @@ $script = <<< "JS"
         var initialLeft = [
             {type: "combo", name: "department_id", label: "Sub Unit", labelWidth: 130, inputWidth: 250, readonly: true, required: true},
             {type: "combo", name: "sub_department_id", label: "Bagian", labelWidth: 130, inputWidth: 250, readonly: true, required: true},
-            {type: "combo", name: "division_id", label: "Sub Bagian", labelWidth: 130, inputWidth: 250, readonly: true,required: true},
+            {type: "hidden", name: "division_id", label: "Sub Bagian", labelWidth: 130, inputWidth: 250, readonly: true, value: 0},
             {type: "input", name: "personil", label: "Kebutuhan Orang", labelWidth: 130, inputWidth: 250, required: true, validate:"ValidNumeric"},
             {type: "calendar", name: "overtime_date", label: "Tanggal Lembur", labelWidth: 130, inputWidth: 250, readonly: true, required: true},
             {type: "combo", name: "start_date", label: "Waktu Mulai", labelWidth: 130, inputWidth: 250, required: true, readonly: true,
@@ -92,9 +95,9 @@ $script = <<< "JS"
         addDeptCombo.attachEvent("onChange", function(value, text){
             clearComboReload(initialForm, "sub_department_id", Overtime("getSubDepartment", {equal_department_id: value, equal_id: userLogged.subId, notequal_id: 5}));
         });
-        addSubDeptCombo.attachEvent("onChange", function(value, text){
-            clearComboReload(initialForm, "division_id", Overtime("getDivision", {subDeptId: value}));
-        });
+        // addSubDeptCombo.attachEvent("onChange", function(value, text){
+        //     clearComboReload(initialForm, "division_id", Overtime("getDivision", {subDeptId: value}));
+        // });
 
         var startCombo = initialForm.getCombo("start_date");
         var endCombo = initialForm.getCombo("end_date");
@@ -137,16 +140,22 @@ $script = <<< "JS"
                         case "save":
                             machineId = [];
                             machineName = [];
+                            let total = 0;
                             for (let i = 0; i < machineGrid.getRowsNum(); i++) {
                                 let id = machineGrid.getRowId(i);
                                 if(machineGrid.cells(id, 1).getValue() == 1) {
                                     machineId.push(id);
                                     machineName.push(machineGrid.cells(id, 2).getValue());
                                 }
+                                total++;
                             }
-                            initialForm.setItemValue('machine_id', machineId);
-                            initialForm.setItemValue('machine_name', machineName);
-                            closeWindow("machine_window");
+                            if(countMachine != total) {
+                                eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
+                            } else {
+                                initialForm.setItemValue('machine_id', machineId);
+                                initialForm.setItemValue('machine_name', machineName);
+                                closeWindow("machine_window");
+                            }
                             break;
                     }
                 });
@@ -154,8 +163,10 @@ $script = <<< "JS"
                 let mStatusBar = macineWindow.attachStatusBar();
                 function machineDetailGridCount() {
                     var machineDetailGridRows = machineGrid.getRowsNum();
+                    countMachine = machineDetailGridRows;
                     mStatusBar.setText("Total baris: " + machineDetailGridRows);
                     machineId.length > 0 && machineId.map(id => machineGrid.cells(id, 1).setValue(1));
+                    
                 }
 
                 macineWindow.progressOn();
@@ -409,12 +420,12 @@ $script = <<< "JS"
         processlayout.cells("a").progressOn();
         formOvtGrid = processlayout.cells("a").attachGrid();
         formOvtGrid.setImagePath("./public/codebase/imgs/");
-        formOvtGrid.setHeader("No,Task ID,Sub Unit,Bagian,Disivi,Kebutuhan Orang,Status Hari,Tanggal Overtime,Waktu Mulai, Waktu Selesai,Catatan,Makan,Steam,AHU,Compressor,PW,Jemputan,Dust Collector,Mekanik,Listrik,H&N,QC,QA,Penandaan,GBK,GBB,Status Overtime, Revisi Jam Lembur,Revisi User Approval,Rejection User Approval,Created By,Updated By,Created At");
+        formOvtGrid.setHeader("No,Task ID,Sub Unit,Bagian,,Kebutuhan Orang,Status Hari,Tanggal Overtime,Waktu Mulai, Waktu Selesai,Catatan,Makan,Steam,AHU,Compressor,PW,Jemputan,Dust Collector,Mekanik,Listrik,H&N,QC,QA,Penandaan,GBK,GBB,Status Overtime, Revisi Jam Lembur,Revisi User Approval,Rejection User Approval,Created By,Updated By,Created At");
         formOvtGrid.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
         formOvtGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
         formOvtGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
         formOvtGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        formOvtGrid.setInitWidthsP("5,20,20,20,20,15,15,15,20,20,20,7,7,7,7,7,7,10,7,7,7,7,7,7,7,7,10,30,30,30,15,15,25");
+        formOvtGrid.setInitWidthsP("5,20,20,20,0,15,15,15,20,20,20,7,7,7,7,7,7,10,7,7,7,7,7,7,7,7,10,30,30,30,15,15,25");
         formOvtGrid.enableSmartRendering(true);
         formOvtGrid.attachEvent("onXLE", function() {
             processlayout.cells("a").progressOff();
@@ -658,23 +669,29 @@ $script = <<< "JS"
                                 case "save":
                                     personils = [];
                                     personilNames = [];
+                                    let total = 0;
                                     for (let i = 0; i < addPersonilGrid.getRowsNum(); i++) {
                                         let id = addPersonilGrid.getRowId(i);
                                         if(addPersonilGrid.cells(id, 1).getValue() == 1) {
                                             personils.push(id);
                                             personilNames.push(addPersonilGrid.cells(id, 2).getValue());
                                         }
+                                        total++;
                                     }
-                                    personilForm.setItemValue('personil_id', personils);
-                                    personilForm.setItemValue('personil_name', personilNames);
-                                    closeWindow("add_personil_win");
+                                    if(countPerson != total) {
+                                        eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
+                                    } else {
+                                        personilForm.setItemValue('personil_id', personils);
+                                        personilForm.setItemValue('personil_name', personilNames);
+                                        closeWindow("add_personil_win");
+                                    }
                                     break;
                             }
                         });
 
                         var addPersonilGrid = addPersonilWin.attachGrid();
                         addPersonilGrid.setImagePath("./public/codebase/imgs/");
-                        addPersonilGrid.setHeader("No,Check,Nama Personil,Sub Unit,Bagian,Divisi");
+                        addPersonilGrid.setHeader("No,Check,Nama Personil,Sub Unit,Bagian,Sub Bagian");
                         addPersonilGrid.attachHeader("#rspan,#master_checkbox,#text_filter,#select_filter,#select_filter,#select_filter")
                         addPersonilGrid.setColAlign("center,left,left,left,left,left");
                         addPersonilGrid.setColSorting("str,na,str,str,str,str");
@@ -690,6 +707,7 @@ $script = <<< "JS"
 
                         function disabledBookedPersonil() {
                             bookedPersonil.map(empId => addPersonilGrid.cells(empId, 1).setDisabled(true));
+                            countPerson = addPersonilGrid.getRowsNum();
                         }
                     }
                     break;

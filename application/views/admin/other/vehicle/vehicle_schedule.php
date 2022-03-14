@@ -10,6 +10,11 @@ $script = <<< "JS"
         var driverGrid;
         var empGrid;
         var vehicleData = [];
+        var persons = [];
+        var drivers = [];
+        //@Modal Variable
+        var countPerson;
+        var countDriver;
 
         var scheduleLayout = mainTab.cells("vehicle_schedule").attachLayout({
             pattern: "1C",
@@ -67,10 +72,14 @@ $script = <<< "JS"
 
         scheduler2.attachEvent("onLightboxButton", function(button_id, node, e){
             if(button_id == "driver_button"){
+                drivers = [];
                 var driverWindow = createWindow("driver", "Daftar Driver", 900, 400);
                 myWins.window("driver").skipMyCloseEvent = true;
 
-                var driver = scheduler2.formSection('driver').getValue().split(",");
+                if(scheduler2.formSection('driver').getValue() !== "") {
+                    let driver = scheduler2.formSection('driver').getValue().split(",");
+                    driver.map(email => email !== "" && drivers.push(email));
+                } 
 
                 var driverToolbar = driverWindow.attachToolbar({
                     icon_path: "./public/codebase/icons/",
@@ -82,9 +91,22 @@ $script = <<< "JS"
                 driverToolbar.attachEvent("onClick", function(id) {
                     switch (id) {
                         case "save":
-                            const newDriver = driver.filter(id => id !== "");
-                            scheduler2.formSection('driver').setValue(newDriver);
-                            closeWindow("driver");
+                            let total = 0;
+                            for (let i = 0; i < driverGrid.getRowsNum(); i++) {
+                                total++;
+                            }
+
+                            if(countDriver == total) {
+                                const newDriver = drivers.filter(id => id !== "");
+                                scheduler2.formSection('driver').setValue(newDriver);
+                                closeWindow("driver");
+                            } else {
+                                if(driverGrid.getRowsNum() == 0) {
+                                    eaAlert("Bersihkan Filter", "Data grid kosong, silahkan tutup window, klik X dibagian kanan atas!");
+                                } else {
+                                    eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
+                                }
+                            }
                             break;
                     }
                 });
@@ -94,7 +116,8 @@ $script = <<< "JS"
                 function driverGridCount() {
                     var driverGridRows = driverGrid.getRowsNum();
                     driverStatusBar.setText("Total baris: " + driverGridRows);
-                    driver.length > 0 && driver.map(id => id !== '' && driverGrid.cells(id, 1).setValue(1));
+                    drivers.length > 0 && drivers.map(id => id !== '' && driverGrid.cells(id, 1).setValue(1));
+                    countDriver = driverGridRows;
                 }
 
                 function loadVehicle() {
@@ -115,14 +138,14 @@ $script = <<< "JS"
                     driverGrid.init();
                     driverGrid.attachEvent("onCheckbox", function(rId,cIdn, state) {
                         if(state) {
-                            if(driver.length > 1) {
+                            if(drivers.length > 1) {
                                 eAlert("Hanya bisa memilih 1 Driver");
                                 driverGrid.cells(rId, 1).setValue(0);
                             } else {
-                                driver.push(rId);
+                                drivers.push(rId);
                             }
                         } else {
-                            driver.splice(driver.indexOf(rId), 1);
+                            drivers.splice(drivers.indexOf(rId), 1);
                         }
                     });
                     driverGrid.clearAndLoad(RoomRev("getEmployees", {equal_rank_id: "10", equal_status: "ACTIVE", notequal_email: ""}), driverGridCount);
@@ -130,10 +153,10 @@ $script = <<< "JS"
 
                 loadVehicle();
             } else if(button_id === 'emp_button'){
+                persons = [];
                 var empWindow = createWindow("emp_vehicle", "Penumpang", 900, 400);
                 myWins.window("emp_vehicle").skipMyCloseEvent = true;
 
-                var persons = [];
                 if(scheduler2.formSection('passenger').getValue() !== "") {
                     let person = scheduler2.formSection('passenger').getValue().split(",");
                     person.map(email => email !== "" && persons.push(email));
@@ -149,8 +172,21 @@ $script = <<< "JS"
                 empToolbar.attachEvent("onClick", function(id) {
                     switch (id) {
                         case "save":
-                            scheduler2.formSection('passenger').setValue(persons);
-                            closeWindow("emp_vehicle");
+                            let total = 0;
+                            for (let i = 0; i < empGrid.getRowsNum(); i++) {
+                               total++;
+                            }
+
+                            if(countPerson == total && persons.length > 0) {
+                                scheduler2.formSection('passenger').setValue(persons);
+                                closeWindow("emp_vehicle");
+                            } else {
+                                if(persons.length == 0) {
+                                    eaAlert("Bersihkan Filter", "Belum ada penumpang yang dipilih!");
+                                } else {
+                                    eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
+                                }
+                            }
                             break;
                     }
                 });
@@ -161,6 +197,7 @@ $script = <<< "JS"
                     var empGridRows = empGrid.getRowsNum();
                     empStatusBar.setText("Total baris: " + empGridRows);
                     persons.length > 0 && persons.map(id => empGrid.cells(id, 1).setValue(1));
+                    countPerson = empGridRows;
                 }
 
                 var max = vehicleData[scheduler2.formSection("vehicle").getValue()].passenger_capacity;

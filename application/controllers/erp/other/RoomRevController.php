@@ -183,6 +183,10 @@ class RoomRevController extends Erp_Controller
         $startDate = date('Y-m-d H:i:s', strtotime($data->start_date));
         $endDate = date('Y-m-d H:i:s', strtotime($data->end_date));
 
+        if(new DateTime($start) < new DateTime()) {
+            xmlResponse('error', "Tidak bisa membuat reservasi Back Date!");
+        }
+
         if (countHour($start, $end, 'd') > 0) {
             xmlResponse('error', "Waktu mulai dan selesai meeting harus di hari yang sama!");
         }

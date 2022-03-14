@@ -210,6 +210,22 @@ class OvertimeModel extends CI_Model
         return $this->db->query($sql);
     }
 
+    public function getReportOvertimeEmpGridRev($get)
+    {
+        $where = advanceSearch($get);
+        $sql = "SELECT a.id,a.notes,a.effective_hour,a.break_hour,a.real_hour,a.overtime_hour,a.meal,
+                       b.employee_name AS emp_name,c.name AS dept_name,d.name AS sub_name,e.name AS div_name
+                       FROM employee_overtimes_detail a, employees b, departments c, sub_departments d, divisions e
+                       WHERE a.emp_id = b.id
+                       AND a.department_id = c.id
+                       AND a.sub_department_id = d.id
+                       AND a.division_id = e.id
+                       AND a.location = '$this->empLoc'
+                       $where";
+        $sql .= " ORDER BY b.employee_name ASC";
+        return $this->db->query($sql);
+    }
+
     public function getOvertimeMachine($get)
     {
         $ids = explode(',', $get['ids']);

@@ -12,6 +12,8 @@ $script = <<< "JS"
         var requireName = [];
         var bookedPersonil = [];
         var formOvtGridTnp;
+        //@Modal Variabel
+        var countPerson;
 
         var comboUrl = {
             department_id: {
@@ -21,9 +23,9 @@ $script = <<< "JS"
             sub_department_id: {
                 reload: false
             },
-            division_id: {
-                reload: false
-            },
+            // division_id: {
+            //     reload: false
+            // },
         }
         
         if(process) {
@@ -48,7 +50,7 @@ $script = <<< "JS"
             {type: "hidden", name: "ref", value: "-", readonly: true, required: true},
             {type: "combo", name: "department_id", label: "Sub Unit", labelWidth: 130, inputWidth: 250, readonly: true, required: true},
             {type: "combo", name: "sub_department_id", label: "Bagian", labelWidth: 130, inputWidth: 250, readonly: true, required: true},
-            {type: "combo", name: "division_id", label: "Sub Bagian", labelWidth: 130, inputWidth: 250, readonly: true,required: true},
+            {type: "hidden", name: "division_id", label: "Sub Bagian", labelWidth: 130, inputWidth: 250, readonly: true, value: 0},
             {type: "input", name: "personil", label: "Kebutuhan Orang", labelWidth: 130, inputWidth: 250, required: true, validate:"ValidNumeric"},
             {type: "calendar", name: "overtime_date", label: "Tanggal Lembur", labelWidth: 130, inputWidth: 250, readonly: true, required: true},
             {type: "combo", name: "start_date", label: "Waktu Mulai", labelWidth: 130, inputWidth: 250, required: true, readonly: true,
@@ -107,9 +109,9 @@ $script = <<< "JS"
             clearComboReload(initialForm, "sub_department_id", Overtime("getSubDepartment", {equal_id: userLogged.subId}));
         });
 
-        addSubCombo.attachEvent("onChange", function(value, text){
-            clearComboReload(initialForm, "division_id", Overtime("getDivision", {subDeptId: value}));
-        });
+        // addSubCombo.attachEvent("onChange", function(value, text){
+        //     clearComboReload(initialForm, "division_id", Overtime("getDivision", {subDeptId: value}));
+        // });
 
         isFormNumeric(initialForm, ['personil']);
 
@@ -365,12 +367,12 @@ $script = <<< "JS"
                         detailLayout.cells("b").progressOn();
                         detailGrid = detailLayout.cells("b").attachGrid();
                         detailGrid.setImagePath("./public/codebase/imgs/");
-                        detailGrid.setHeader("No,Task ID,Nama Karyawan,Sub Unit,Bagian,Disivi,,,Pelayanan Produksi,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Premi,Nominal Overtime,Makan,Tugas,Status Overtime,Status Terakhir,Created By,Updated By,Created At,,");
+                        detailGrid.setHeader("No,Task ID,Nama Karyawan,Sub Unit,Bagian,,,,Pelayanan Produksi,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Premi,Nominal Overtime,Makan,Tugas,Status Overtime,Status Terakhir,Created By,Updated By,Created At,,");
                         detailGrid.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
                         detailGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
                         detailGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
                         detailGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-                        detailGrid.setInitWidthsP("5,20,20,20,20,20,0,0,25,15,15,15,10,10,10,10,10,10,10,5,25,10,30,15,15,22,0,0");
+                        detailGrid.setInitWidthsP("5,20,20,20,20,0,0,0,25,15,15,15,10,10,10,10,10,10,10,5,25,10,30,15,15,22,0,0");
                         detailGrid.attachFooter("Total,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#stat_total,#stat_total,#stat_total,#stat_total,,<div id='tnp_total_ovt_prod_detail_"+formOvtGridTnp.getSelectedRowId()+"'></div>,,,,,,,,,");
                         detailGrid.enableSmartRendering(true);
                         detailGrid.attachEvent("onXLE", function() {
@@ -697,16 +699,22 @@ $script = <<< "JS"
                                 case "save":
                                     personils = [];
                                     personilNames = [];
+                                    let total = 0;
                                     for (let i = 0; i < addPersonilGrid.getRowsNum(); i++) {
                                         let id = addPersonilGrid.getRowId(i);
                                         if(addPersonilGrid.cells(id, 1).getValue() == 1) {
                                             personils.push(id);
                                             personilNames.push(addPersonilGrid.cells(id, 2).getValue());
                                         }
+                                        total++;
                                     }
-                                    personilForm.setItemValue('personil_id', personils);
-                                    personilForm.setItemValue('personil_name', personilNames);
-                                    closeWindow("add_personil_win");
+                                    if(countPerson != total) {
+                                        eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
+                                    } else {
+                                        personilForm.setItemValue('personil_id', personils);
+                                        personilForm.setItemValue('personil_name', personilNames);
+                                        closeWindow("add_personil_win");
+                                    }
                                     break;
                             }
                         });
@@ -733,6 +741,7 @@ $script = <<< "JS"
                         addPersonilGrid.clearAndLoad(Overtime("getEmployees", params), disabledBookedPersonil);
                         function disabledBookedPersonil() {
                             bookedPersonil.map(empId => addPersonilGrid.cells(empId, 1).setDisabled(true));
+                            countPerson = addPersonilGrid.getRowsNum();
                         }
                     }
                     break;

@@ -18,6 +18,12 @@ $script = <<< "JS"
             var otherSubItems = [];
             var roomSubItems = [];
             var vehicleItems = [];
+            var overtimeItems = [];
+
+             //LEMBUR
+             if(isHaveTrees("ga_lembur_katering")) {
+                overtimeItems.push({id: "ga_lembur_katering", text: "Kebutuhan Katering", icons: {file: "menu_icon"}});
+            }
 
             //KATERING
             if(isHaveTrees("ga_vendor_katering")) {
@@ -55,6 +61,10 @@ $script = <<< "JS"
             }
 
             //TREES
+            if(isHaveTrees("ga_lembur")) {
+                otherItems.push({id: "ga_lembur", text: "Lembur", open: 1, icons: {folder_opened: "arrow_down", folder_closed: "arrow_right"}, items: overtimeItems});
+            }
+
             if(isHaveTrees("ga_katering")) {
                 otherItems.push({id: "ga_katering", text: "Katering", open: 1, icons: {folder_opened: "arrow_down", folder_closed: "arrow_right"}, items: otherSubItems});
             }
@@ -72,7 +82,9 @@ $script = <<< "JS"
             });
 
             otherTree.attachEvent("onClick", function(id) {
-                if(id == "ga_vendor_katering") {
+                if(id == "ga_lembur_katering") {
+                    showOvertimeCatheringTab();
+                } else if(id == "ga_vendor_katering") {
                     showCatheringTab();
                 } else if(id == "ga_snack_meeting") {
                     showMeetingSnackTab();

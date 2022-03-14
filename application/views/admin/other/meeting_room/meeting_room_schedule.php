@@ -11,6 +11,9 @@ $script = <<< "JS"
         var persons = [];
         var guests = [];
         var timeLightbox;
+        //@Modal Variabel
+        var countPersonil;
+        var countGuest;
 
         var scheduleLayout = mainTab.cells("meeting_room_schedule").attachLayout({
             pattern: "1C",
@@ -131,6 +134,7 @@ $script = <<< "JS"
 
         scheduler1.attachEvent("onLightboxButton", function(button_id, node, e){
             if(button_id == "participant_button"){
+                persons = [];
                 var participantWindow = createWindow("rm_participant", "Peserta Meeting", 900, 400);
                 myWins.window("rm_participant").skipMyCloseEvent = true;
 
@@ -149,9 +153,20 @@ $script = <<< "JS"
                 participantToolbar.attachEvent("onClick", function(id) {
                     switch (id) {
                         case "save":
-                            scheduler1.formSection('participant').setValue(persons);
-                            closeWindow("rm_participant");
-                            persons = [];
+                            let total = 0;
+                            for (let i = 0; i < participantGrid.getRowsNum(); i++) {
+                               total++;
+                            }
+                            if(countPerson == total) {
+                                scheduler1.formSection('participant').setValue(persons);
+                                closeWindow("rm_participant");
+                            } else {
+                                if(participantGrid.getRowsNum() == 0) {
+                                    eaAlert("Bersihkan Filter", "Data grid kosong, silahkan tutup window, klik X dibagian kanan atas!");
+                                } else {
+                                    eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
+                                }
+                            }
                             break;
                     }
                 });
@@ -162,6 +177,7 @@ $script = <<< "JS"
                     var partGridRows = participantGrid.getRowsNum();
                     partStatusBar.setText("Total baris: " + partGridRows);
                     persons.length > 0 && persons.map(id => id !== '' && participantGrid.cells(id, 1).setValue(1));
+                    countPerson = partGridRows;
                 }
 
                 var max = roomData[scheduler1.formSection("room").getValue()].capacity;
@@ -199,6 +215,7 @@ $script = <<< "JS"
 
                 loadParticipant();
             } else if(button_id == "guest_button") {
+                guests = [];
                 var guestWindow = createWindow("rm_guest", "Daftar Tamu", 900, 400);
                 myWins.window("rm_guest").skipMyCloseEvent = true;
 
@@ -219,9 +236,20 @@ $script = <<< "JS"
                 guestToolbar.attachEvent("onClick", function(id) {
                     switch (id) {
                         case "save":
-                            scheduler1.formSection('guest').setValue(guests);
-                            closeWindow("rm_guest");
-                            guests = [];
+                            let total = 0;
+                            for (let i = 0; i < guestGrid.getRowsNum(); i++) {
+                               total++;
+                            }
+                            if(countGuest == total) {
+                                scheduler1.formSection('guest').setValue(guests);
+                                closeWindow("rm_guest");
+                            } else {
+                                if(guestGrid.getRowsNum() == 0) {
+                                    eaAlert("Bersihkan Filter", "Data grid kosong, silahkan tutup window, klik X dibagian kanan atas!");
+                                } else {
+                                    eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
+                                }
+                            }
                             break;
                         case "add":
                             let newId = (new Date()).valueOf();
@@ -259,6 +287,7 @@ $script = <<< "JS"
                     var guestGridRows = guestGrid.getRowsNum();
                     guestStatusBar.setText("Total baris: " + guestGridRows);
                     guests.length > 0 && guests.map(id => id !== '' && guestGrid.cells(id, 1).setValue(1));
+                    countGuest = guestGridRows;
                 }
 
                 var max = roomData[scheduler1.formSection("room").getValue()].capacity;

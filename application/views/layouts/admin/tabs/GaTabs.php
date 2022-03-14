@@ -59,6 +59,15 @@ $script = <<< "JS"
         }
     }
 
+    function showOvertimeCatheringTab() {
+        if (!mainTab.tabs("ga_lembur_katering")){
+            mainTab.addTab("ga_lembur_katering", tabsStyle("food.png", "Kebutuhan Katering", "background-size: 16px 16px"), null, null, true, true);
+            showOvertimeCathering();
+        } else {
+            mainTab.tabs("ga_lembur_katering").setActive();
+        }
+    }
+
 JS;
 
 echo $script;
