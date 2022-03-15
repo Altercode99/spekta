@@ -538,7 +538,7 @@ $script = <<< "JS"
                                         } else {
                                             eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
                                         }
-                                    }, 500)
+                                    }, 200)
                                     break;
                             }
                         });

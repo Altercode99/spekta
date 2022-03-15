@@ -135,7 +135,7 @@ class OvertimeController extends Erp_Controller
                 foreach ($reqs as $req) {
                     if ($req->id != 12) {
                         if ($params['split'] == 'teknik') {
-                            if ($req->id >= 2 && $req->id <= 11) {
+                            if ($req->id > 2 && $req->id <= 11) {
                                 $data[] = [
                                     'type' => 'checkbox',
                                     'name' => $req->table_code,
@@ -144,7 +144,7 @@ class OvertimeController extends Erp_Controller
                                 ];
                             }
                         } else {
-                            if ($req->id >= 12 && $req->id <= 16) {
+                            if ($req->id == 2 || ($req->id >= 12 && $req->id <= 16)) {
                                 $data[] = [
                                     'type' => 'checkbox',
                                     'name' => $req->table_code,
@@ -159,7 +159,7 @@ class OvertimeController extends Erp_Controller
                 foreach ($reqs as $req) {
                     if ($req->id != 13) {
                         if ($params['split'] == 'teknik') {
-                            if ($req->id >= 2 && $req->id <= 11) {
+                            if ($req->id > 2 && $req->id <= 11) {
                                 $data[] = [
                                     'type' => 'checkbox',
                                     'name' => $req->table_code,
@@ -168,7 +168,7 @@ class OvertimeController extends Erp_Controller
                                 ];
                             }
                         } else {
-                            if ($req->id >= 12 && $req->id <= 16) {
+                            if ($req->id == 2 || ($req->id >= 12 && $req->id <= 16)) {
                                 $data[] = [
                                     'type' => 'checkbox',
                                     'name' => $req->table_code,
@@ -183,7 +183,7 @@ class OvertimeController extends Erp_Controller
                 foreach ($reqs as $req) {
                     if ($req->id != 14 && $req->id != 15 && $req->id != 16) {
                         if ($params['split'] == 'teknik') {
-                            if ($req->id >= 2 && $req->id <= 11) {
+                            if ($req->id > 2 && $req->id <= 11) {
                                 $data[] = [
                                     'type' => 'checkbox',
                                     'name' => $req->table_code,
@@ -192,7 +192,7 @@ class OvertimeController extends Erp_Controller
                                 ];
                             }
                         } else {
-                            if ($req->id >= 12 && $req->id <= 16) {
+                            if ($req->id == 2 || ($req->id >= 12 && $req->id <= 16)) {
                                 $data[] = [
                                     'type' => 'checkbox',
                                     'name' => $req->table_code,
@@ -207,7 +207,7 @@ class OvertimeController extends Erp_Controller
         } else {
             if ($params['split'] == 'teknik') {
                 foreach ($reqs as $req) {
-                    if ($req->id >= 2 && $req->id <= 11) {
+                    if ($req->id > 2 && $req->id <= 11) {
                         $data[] = [
                             'type' => 'checkbox',
                             'name' => $req->table_code,
@@ -218,7 +218,7 @@ class OvertimeController extends Erp_Controller
                 }
             } else if ($params['split'] == 'support') {
                 foreach ($reqs as $req) {
-                    if ($req->id >= 12 && $req->id <= 16) {
+                    if ($req->id == 2 || ($req->id >= 12 && $req->id <= 16)) {
                         $data[] = [
                             'type' => 'checkbox',
                             'name' => $req->table_code,

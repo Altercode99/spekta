@@ -169,7 +169,7 @@ $script = <<< "JS"
                                         eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
                                     }
                                 }
-                            }, 500);
+                            }, 200);
                             break;
                     }
                 });
@@ -255,7 +255,7 @@ $script = <<< "JS"
                                         eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
                                     }
                                 }
-                            }, 500);
+                            }, 200);
                             break;
                         case "add":
                             let newId = (new Date()).valueOf();

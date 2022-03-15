@@ -158,7 +158,7 @@ $script = <<< "JS"
                                     initialForm.setItemValue('machine_name', machineName);
                                     closeWindow("machine_window");
                                 }
-                            }, 500)
+                            }, 200)
                             break;
                     }
                 });
@@ -210,6 +210,7 @@ $script = <<< "JS"
                                 machineId = [];
                                 machineName = [];
                                 clearAllForm(initialForm, comboUrl, null, ['start_date', 'end_date']);
+                                initialForm.hideItem("machine_name");
                                 rProcGrid();
                                 setEnable(["add", "clear"], initialForm, inputTabs.cells("a"));
                                 break;
@@ -695,7 +696,7 @@ $script = <<< "JS"
                                             personilForm.setItemValue('personil_name', personilNames);
                                             closeWindow("add_personil_win");
                                         }
-                                    }, 500)
+                                    }, 200)
                                     break;
                             }
                         });

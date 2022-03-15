@@ -722,7 +722,7 @@ $script = <<< "JS"
                                             personilForm.setItemValue('personil_name', personilNames);
                                             closeWindow("add_personil_win");
                                         }
-                                    }, 500)
+                                    }, 200)
                                     break;
                             }
                         });
