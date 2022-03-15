@@ -163,26 +163,26 @@ class EmpController extends Erp_Controller
 
         $emp = $this->Hr->getDataById('employees', $post['id']);
 
-        if ($emp && $emp->nip !== $post['nip']) {
+        if ($emp && $emp->nip != $post['nip']) {
             $nip = $this->Hr->getOne('employees', ['nip' => $post['nip']]);
         }
-        if ($emp && $emp->sap_id !== $post['sap_id']) {
+        if ($emp && $emp->sap_id != $post['sap_id']) {
             $card = $this->Hr->getOne('employees', ['sap_id' => $post['sap_id']]);
         }
-        if ($emp && $emp->parent_nik !== $post['parent_nik']) {
+        if ($emp && $emp->parent_nik != $post['parent_nik']) {
             $parent_nik = $this->Hr->getOne('employees', ['parent_nik' => $post['parent_nik']]);
         }
-        if ($emp && $emp->nik !== $post['nik']) {
+        if ($emp && $emp->nik != $post['nik']) {
             $nik = $this->Hr->getOne('employees', ['nik' => $post['nik']]);
         }
-        if ($emp && $emp->npwp !== $post['npwp']) {
+        if ($emp && $emp->npwp != $post['npwp']) {
             if ($npwp === '-') {
                 $npwp = false;
             } else {
                 $npwp = $this->Hr->getOne('employees', ['npwp' => $post['npwp']]);
             }
         }
-        if ($emp && $emp->email !== $post['email']) {
+        if ($emp && $emp->email != $post['email']) {
             $email = $this->Hr->getOne('employees', ['email' => $post['email']]);
         }
 
@@ -215,7 +215,7 @@ class EmpController extends Erp_Controller
         $message = $status == 'ACTIVE' ? 'Aktifkan' : 'Non Aktifkan';
         foreach ($datas as $id => $data) {
             $emp = $this->Hr->getDataById('employees', $data->id);
-            if ($emp->status !== $status) {
+            if ($emp->status != $status) {
                 $mSuccess .= "- $data->field berhasil di $message<br />";
                 $this->Hr->setStatus('employees', $data->id, $status);
             } else {
@@ -417,7 +417,7 @@ class EmpController extends Erp_Controller
         $family = $this->Hr->getDataById('employee_families', $post['id']);
         isDelete(["$post[family_name] sebagai $post[relation]" => $family]);
 
-        if ($family->family_name !== $post['family_name'] || $family->relation !== $post['relation']) {
+        if ($family->family_name != $post['family_name'] || $family->relation != $post['relation']) {
             $isExist = $this->Hr->getOne('employee_families', ['emp_id' => $post['emp_id'], 'family_name' => $post['family_name'], 'relation' => $post['relation']]);
             isExist(["$post[family_name] sebagai $post[relation]" => $isExist]);
         }
@@ -666,7 +666,7 @@ class EmpController extends Erp_Controller
         $edu = $this->Hr->getDataById('employee_educations', $post['id']);
         isDelete(["Pendidikan $post[level] $post[school_name]" => $edu]);
 
-        if ($edu->level !== $post['level'] || $edu->school_name !== $post['school_name']) {
+        if ($edu->level != $post['level'] || $edu->school_name != $post['school_name']) {
             $isExist = $this->Hr->getOne('employee_educations', ['emp_id' => $post['emp_id'], 'level' => $post['level'], 'school_name' => $post['school_name']]);
             isExist(["Pendidikan $post[level] $post[school_name]" => $isExist]);
         }
@@ -750,7 +750,7 @@ class EmpController extends Erp_Controller
         $tryName = $this->Hr->getDataById('trainings', $post['training_id'], 'name')->name;
         isDelete(["Pelatihan $tryName di lokasi $post[location]" => $try]);
         
-        if ($try->training_id !== $post['training_id'] || $try->location !== $post['location']) {
+        if ($try->training_id != $post['training_id'] || $try->location != $post['location']) {
             $isExist = $this->Hr->getOne('employee_trainings', ['emp_id' => $post['emp_id'], 'training_id' => $post['training_id'], 'location' => $post['location']]);
             isExist(["Pelatihan $tryName di lokasi $post[location]" => $try]);
         }

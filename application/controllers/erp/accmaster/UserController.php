@@ -47,7 +47,7 @@ class UserController extends Erp_Controller
         $datas = $post->datas;
         foreach ($datas as $id => $data) {
             $user = $this->Main->getDataById('users', $data->id);
-            if ($user->status !== 'INACTIVE') {
+            if ($user->status != 'INACTIVE') {
                 $mSuccess .= "- $data->field berhasil di Non Aktifkan<br />";
                 $this->Main->setStatus('users', $data->id);
             } else {
@@ -124,7 +124,7 @@ class UserController extends Erp_Controller
         $user = $this->Main->getWhere('users', ['id' => $post['id']])->row();
         isDelete(['Username' => $user]);
 
-        if ($user->username !== $post['username']) {
+        if ($user->username != $post['username']) {
             $checkUser = $this->Main->getWhere('users', ['username' => $username])->row();
             isExist([$post['username'] => $checkUser]);
         }
@@ -203,8 +203,8 @@ class UserController extends Erp_Controller
         $post = getPost();
         $loc = $this->Main->getDataById('locations', $post['location']);
         $dept = $this->Hr->getDataById('departments', $post['department_id']);
-        $sub = $this->Hr->getDataById('sub_departments', $post['sub_department_id'] !== '-' ? $post['sub_department_id'] : 0);
-        $div = $this->Hr->getDataById('divisions', $post['division_id'] !== '' ? $post['division_id'] : 0);
+        $sub = $this->Hr->getDataById('sub_departments', $post['sub_department_id'] != '-' ? $post['sub_department_id'] : 0);
+        $div = $this->Hr->getDataById('divisions', $post['division_id'] != '' ? $post['division_id'] : 0);
         $rank = $this->Hr->getDataById('ranks', $post['rank_id']);
         $role = $this->Main->getDataById('roles', $post['role_id']);
         if($loc) {

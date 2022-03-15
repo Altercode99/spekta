@@ -379,11 +379,11 @@ class RoomRevController extends Erp_Controller
             xmlResponse($action, "Reservsi ruang meeting berhasil dibuat", $id);
         } else if ($action === 'updated') {
             $checkOwner = $this->General->getDataById('meeting_rooms_reservation', $id);
-            if ($checkOwner->status !== 'CREATED') {
+            if ($checkOwner->status != 'CREATED') {
                 xmlResponse('error', "Update reservasi meeting gagal, data sudah di process!");
             }
 
-            if ($checkOwner->created_by !== empId()) {
+            if ($checkOwner->created_by != empId()) {
                 xmlResponse('error', "Hanya bisa diupdate oleh PIC meeting tersebut!");
             }
 
@@ -477,10 +477,10 @@ class RoomRevController extends Erp_Controller
             xmlResponse($action, "Reservsi ruang meeting berhasil diupdate", $id);
         } else if ($action === 'deleted') {
             $checkOwner = $this->General->getDataById('meeting_rooms_reservation', $id);
-            if ($checkOwner->created_by !== empId()) {
+            if ($checkOwner->created_by != empId()) {
                 xmlResponse('error', "Hanya bisa dihapus oleh PIC meeting tersebut!");
             }
-            if ($checkOwner->status !== 'CREATED') {
+            if ($checkOwner->status != 'CREATED') {
                 xmlResponse('error', "Jadwal sudah di proses!");
             }
             $this->General->deleteById('meeting_rooms_reservation', $id);

@@ -40,7 +40,7 @@ class AppController extends Erp_Controller
         $typePath = $type == 'layout' ? '/views/layouts/admin' : '/views/admin';
         $path = APPPATH . $typePath;
         $dh = opendir($path);
-        while (false !== ($filename = readdir($dh))) {
+        while (false != ($filename = readdir($dh))) {
             $files[] = $filename;
         }
         $allviews = preg_grep('/\.php$/i', $files);
@@ -128,7 +128,7 @@ class AppController extends Erp_Controller
         }
 
         $treeFiles = [];
-        if ($this->auth->role !== "admin") {
+        if ($this->auth->role != "admin") {
             if (count($listview['trees']) > 0) {
                 $trees = $this->Main->getWhereIn('acc_trees', ['code' => $listview['trees']])->result();
                 foreach ($trees as $tree) {
@@ -152,7 +152,7 @@ class AppController extends Erp_Controller
                             $loadedFolder[$folder] = true;
                             $views = $this->loadPrivView($folder);
                             foreach ($views as $key => $view) {
-                                if ($this->auth->role !== "admin") {
+                                if ($this->auth->role != "admin") {
                                     if ($view['filename'] == 'document.php') {
                                         $listview['files'][] = 'admin/' . $view['folder'];
                                     } else if ($view['filename'] == 'project_management.php') {
@@ -176,7 +176,7 @@ class AppController extends Erp_Controller
                             $loadedFolder[$folder] = true;
                             $views = $this->loadPrivView(str_replace(':', '/', $folder));
                             foreach ($views as $key => $view) {
-                                if ($this->auth->role !== "admin") {
+                                if ($this->auth->role != "admin") {
                                     if (array_key_exists($view['filename'], $treeFiles)) {
                                         $listview['files'][] = 'admin/' . $view['folder'];
                                     }
@@ -194,7 +194,7 @@ class AppController extends Erp_Controller
                         if (!array_key_exists($folder, $loadedFolder)) {
                             $loadedFolder[$folder] = true;
                             foreach ($views as $key => $view) {
-                                if ($this->auth->role !== "admin") {
+                                if ($this->auth->role != "admin") {
                                     if (array_key_exists($view['filename'], $treeFiles)) {
                                         $listview['files'][] = 'admin/' . $view['folder'];
                                     }
@@ -221,7 +221,7 @@ class AppController extends Erp_Controller
         $typePath = '/views/admin/' . $folder;
         $path = APPPATH . $typePath;
         $dh = opendir($path);
-        while (false !== ($filename = readdir($dh))) {
+        while (false != ($filename = readdir($dh))) {
             $files[] = $filename;
         }
         $allviews = preg_grep('/\.php$/i', $files);

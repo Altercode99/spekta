@@ -455,7 +455,7 @@ class OvertimeController extends Erp_Controller
                 $status_updater = $overtime->status . ' By ' . $overtime->status_updater;
             } else if ($overtime->change_time == 1) {
                 $status_updater = 'Revisi Jam Lembur By ' . $overtime->status_updater;
-            } else if ($overtime->status_by !== '') {
+            } else if ($overtime->status_by != '') {
                 $status_updater = $overtime->status . ' By ' . $overtime->status_updater;
             }
 
@@ -650,7 +650,7 @@ class OvertimeController extends Erp_Controller
         $machine = isset($post['machine_id']) ? explode(',', $post['machine_id']) : [];
         $machine_1 = isset($machine[0]) ? $machine[0] : 0;
         $machine_2 = isset($machine[1]) ? $machine[1] : 0;
-        $requirements = isset($post['requirements']) && $post['requirements'] !== '' ? $post['requirements'] : '-';
+        $requirements = isset($post['requirements']) && $post['requirements'] != '' ? $post['requirements'] : '-';
 
         $catheringPrice = $this->General->getOne('catherings', ['status' => 'ACTIVE']);
         $catPrice = $catheringPrice ? $catheringPrice->price : 0;
@@ -923,12 +923,12 @@ class OvertimeController extends Erp_Controller
             $appvStatus = "bgColor='#ccc'";
 
             $headAppv = '-';
-            if ($overtime->apv_head_nip && $overtime->apv_head_nip !== '-') {
+            if ($overtime->apv_head_nip && $overtime->apv_head_nip != '-') {
                 $headAppv = "$overtime->apv_head By $overtime->head @" . toIndoDateTime3($overtime->apv_head_date);
             }
 
             $mgrAppv = '-';
-            if ($overtime->apv_mgr_nip && $overtime->apv_mgr_nip !== '-') {
+            if ($overtime->apv_mgr_nip && $overtime->apv_mgr_nip != '-') {
                 $mgrAppv = "$overtime->apv_mgr By $overtime->mgr @" . toIndoDateTime3($overtime->apv_mgr_date);
             } else if ($overtime->apv_mgr_nip && $overtime->apv_mgr_nip === '-') {
                 $mgrAppv = "$overtime->apv_mgr By Sistem @" . toIndoDateTime3($overtime->apv_mgr_date);
@@ -936,21 +936,21 @@ class OvertimeController extends Erp_Controller
             }
 
             $asmanAppv = '-';
-            if ($overtime->apv_asman_nip && $overtime->apv_asman_nip !== '-') {
+            if ($overtime->apv_asman_nip && $overtime->apv_asman_nip != '-') {
                 $asmanAppv = "$overtime->apv_asman By $overtime->asman @" . toIndoDateTime3($overtime->apv_asman_date);
             } else if ($overtime->apv_asman_nip && $overtime->apv_asman_nip === '-') {
                 $asmanAppv = "$overtime->apv_asman By Sistem @" . toIndoDateTime3($overtime->apv_asman_date);
             }
 
             $ppicAppv = '-';
-            if ($overtime->apv_ppic_nip && $overtime->apv_ppic_nip !== '-') {
+            if ($overtime->apv_ppic_nip && $overtime->apv_ppic_nip != '-') {
                 $ppicAppv = "$overtime->apv_ppic By $overtime->ppic @" . toIndoDateTime3($overtime->apv_ppic_date);
             } else if ($overtime->apv_ppic_nip && $overtime->apv_ppic_nip === '-') {
                 $ppicAppv = "$overtime->apv_ppic By Sistem @" . toIndoDateTime3($overtime->apv_ppic_date);
             }
 
             $spvAppv = '-';
-            if ($overtime->apv_spv_nip && $overtime->apv_spv_nip !== '-') {
+            if ($overtime->apv_spv_nip && $overtime->apv_spv_nip != '-') {
                 $spvAppv = "$overtime->apv_spv By $overtime->spv @" . toIndoDateTime3($overtime->apv_spv_date);
             } else if ($overtime->apv_spv_nip && $overtime->apv_spv_nip === '-') {
                 $spvAppv = "$overtime->apv_spv By Sistem @" . toIndoDateTime3($overtime->apv_spv_date);
@@ -1003,8 +1003,8 @@ class OvertimeController extends Erp_Controller
                 $appvStatus = "bgColor='#cedb10'"; //spv
             }
 
-            $changeTime = $overtime->change_time !== '' ? $overtime->change_time : '-';
-            $rejectionNote = $overtime->rejection_note !== '' ? $overtime->rejection_note : '-';
+            $changeTime = $overtime->change_time != '' ? $overtime->change_time : '-';
+            $rejectionNote = $overtime->rejection_note != '' ? $overtime->rejection_note : '-';
 
             $xml .= "<row id='$overtime->id'>";
             $xml .= "<cell $appvStatus>" . cleanSC($no) . "</cell>";
@@ -2610,7 +2610,7 @@ class OvertimeController extends Erp_Controller
             $status_updater = '-';
             if ($overtime->change_time == 1) {
                 $status_updater = 'Revisi Jam Lembur By ' . $overtime->status_updater;
-            } else if ($overtime->status_by !== '') {
+            } else if ($overtime->status_by != '') {
                 $status_updater = $overtime->status . ' By ' . $overtime->status_updater;
             }
 
@@ -2695,7 +2695,7 @@ class OvertimeController extends Erp_Controller
             $status_updater = '-';
             if ($overtime->change_time == 1) {
                 $status_updater = 'Revisi Jam Lembur By ' . $overtime->status_updater;
-            } else if ($overtime->status_by !== '') {
+            } else if ($overtime->status_by != '') {
                 $status_updater = $overtime->status . ' By ' . $overtime->status_updater;
             }
 

@@ -149,7 +149,7 @@ class VehicleRevController extends Erp_Controller
         } else if ($action === 'updated') {
 
             $checkOwner = $this->General->getDataById('vehicles_reservation', $id)->created_by;
-            if ($checkOwner !== empId()) {
+            if ($checkOwner != empId()) {
                 xmlResponse('error', "Hanya bisa diupdate oleh PIC reservasi tersebut!");
             }
 
@@ -173,10 +173,10 @@ class VehicleRevController extends Erp_Controller
             xmlResponse($action, "Reservsi kendaraan berhasil diupdate", $id);
         } else if ($action === 'deleted') {
             $checkOwner = $this->General->getDataById('vehicles_reservation', $id);
-            if ($checkOwner->created_by !== empId()) {
+            if ($checkOwner->created_by != empId()) {
                 xmlResponse('error', "Hanya bisa dihapus oleh PIC reservasi tersebut!");
             }
-            if($checkOwner->status !== 'CREATED') {
+            if($checkOwner->status != 'CREATED') {
                 xmlResponse('error', "Jadwal sudah di proses!");
             }
             $this->General->deleteById('vehicles_reservation', $id);

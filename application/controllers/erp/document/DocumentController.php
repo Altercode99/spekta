@@ -411,7 +411,7 @@ class DocumentController extends Erp_Controller
         $post = fileGetContent();
         $id = explode('-', $post->id)[1];
         $file = $this->Qhse->getDataById('files', $id);
-        if ($file->name !== $post->name) {
+        if ($file->name != $post->name) {
             $column = $file->parent_id === 1 ? 'parent_id' : 'sub_id';
             $value = $file->parent_id === 1 ? $file->parent_id : $file->sub_id;
             $isExist = $this->Qhse->getOne('files', [$column => $value, 'name' => $post->name]);
@@ -564,7 +564,7 @@ class DocumentController extends Erp_Controller
         $table = $path === 'main' ? 'main_folders' : 'sub_folders';
 
         $folder = $this->Qhse->getDataById($table, $id);
-        if ($folder->name !== $post['name']) {
+        if ($folder->name != $post['name']) {
             $isExist = $this->Qhse->getOne($table, ['name' => $post['name']]);
             isExist(["Nama folder $post[name]" => $isExist]);
         }

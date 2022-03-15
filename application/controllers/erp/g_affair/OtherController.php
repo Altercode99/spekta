@@ -78,7 +78,7 @@ class OtherController extends Erp_Controller
         $catheting = $this->General->getDataById('catherings', $post['id']);
         isDelete(["Vendor katering $post[vendor_name]" => $catheting]);
 
-        if ($catheting && $catheting->vendor_name !== $post['vendor_name']) {
+        if ($catheting && $catheting->vendor_name != $post['vendor_name']) {
             $checkCath = $this->General->getOne('catherings', ['vendor_name' => $post['vendor_name']]);
             isExist(["Vendor katering $post[vendor_name]" => $checkCath]);
         }
@@ -98,7 +98,7 @@ class OtherController extends Erp_Controller
         $datas = $post->datas;
         foreach ($datas as $id => $data) {
             $status = $this->General->getDataById('catherings', $data->id)->status;
-            if ($status !== 'ACTIVE') {
+            if ($status != 'ACTIVE') {
                 $mSuccess .= "- $data->field berhasil dihapus <br>";
                 $this->General->delete('catherings', ['id' => $data->id]);
             } else {
@@ -156,7 +156,7 @@ class OtherController extends Erp_Controller
         } else {
             $snack = $this->General->getDataById('snacks', $id);
             if ($snack) {
-                if ($snack->name !== $post->name) {
+                if ($snack->name != $post->name) {
                     $checkSnack = $this->General->getOne('snacks', [
                         'name' => $post->name,
                     ]);
@@ -214,7 +214,7 @@ class OtherController extends Erp_Controller
         $snack = $this->General->getDataById('snacks', $post['id']);
         isDelete(["Meeting snack $post[name]" => $snack]);
 
-        if ($snack->name !== $post['name']) {
+        if ($snack->name != $post['name']) {
             $checkSnack = $this->General->getOne('snacks', [
                 'name' => $post['name'],
             ]);
@@ -527,7 +527,7 @@ class OtherController extends Erp_Controller
             'updated_at' => date('Y-m-d H:i:s'),
         ];
         $status = $this->General->getDataById('meeting_rooms_reservation', $id)->status;
-        if ($status !== 'CLOSED') {
+        if ($status != 'CLOSED') {
             $this->General->updateById('meeting_rooms_reservation', $data, $id);
             response(['status' => 'success', 'message' => 'Berhasil menutup meeting']);
         } else {
@@ -722,7 +722,7 @@ class OtherController extends Erp_Controller
             'updated_at' => date('Y-m-d H:i:s'),
         ];
         $status = $this->General->getDataById('vehicles_reservation', $id)->status;
-        if ($status !== 'CLOSED') {
+        if ($status != 'CLOSED') {
             $this->General->updateById('vehicles_reservation', $data, $id);
             response(['status' => 'success', 'message' => 'Berhasil menutup perjalanan']);
         } else {
@@ -930,7 +930,7 @@ class OtherController extends Erp_Controller
                 $status_updater = $overtime->status . ' By ' . $overtime->status_updater;
             } else if ($overtime->change_time == 1) {
                 $status_updater = 'Revisi Jam Lembur By ' . $overtime->status_updater;
-            } else if ($overtime->status_by !== '') {
+            } else if ($overtime->status_by != '') {
                 $status_updater = $overtime->status . ' By ' . $overtime->status_updater;
             }
 

@@ -29,7 +29,7 @@ class AppMaster2Controller extends Erp_Controller
                 $status = 'Belum Terkirim';
             }
 
-            if ($email->send_date !== '0000-00-00 00:00:00') {
+            if ($email->send_date != '0000-00-00 00:00:00') {
                 $send = toIndoDateTime($email->send_date);
             } else {
                 $send = '-';
@@ -143,8 +143,8 @@ class AppMaster2Controller extends Erp_Controller
         $overtime = $this->Hr->getDataById('overtime_requirement', $post['id']);
         isDelete(["Data kebutuhan lembur $post[name]" => $overtime]);
 
-        if ($overtime->name !== $post['name'] || $overtime->department_id !== $post['department_id'] ||
-            $overtime->sub_department_id !== $post['sub_department_id'] || $overtime->division_id !== $post['division_id']) {
+        if ($overtime->name != $post['name'] || $overtime->department_id != $post['department_id'] ||
+            $overtime->sub_department_id != $post['sub_department_id'] || $overtime->division_id != $post['division_id']) {
             $checkOvertime = $this->Hr->getOne('overtime_requirement', [
                 'name' => $post['name'],
                 'department_id' => $post['department_id'],
@@ -230,7 +230,7 @@ class AppMaster2Controller extends Erp_Controller
         $pic = $this->Main->getDataById('pics', $post['id']);
         isDelete(["Data pic $post[name]" => $pic]);
 
-        if ($pic->code !== $post['code'] || $pic->department_id !== $post['department_id'] || $pic->sub_department_id !== $post['sub_department_id']) {
+        if ($pic->code != $post['code'] || $pic->department_id != $post['department_id'] || $pic->sub_department_id != $post['sub_department_id']) {
             $checkPic = $this->Main->getOne('pics', [
                 'code' => $post['code'],
                 'department_id' => $post['department_id'],
@@ -396,7 +396,7 @@ class AppMaster2Controller extends Erp_Controller
         $category = $this->Main->getDataById('video_categories', $post['id']);
         isDelete(["Kategori video $post[name]" => $category]);
 
-        if ($category->name !== $post['name']) {
+        if ($category->name != $post['name']) {
             $checkCategory = $this->Main->getOne('video_categories', ['name' => $post['name']]);
             isExist(["Kategori video $post[name]" => $checkCategory]);
         }

@@ -22,7 +22,7 @@ class SallaryController extends Erp_Controller
         $xml = "";
         $no = 1;
         foreach ($emps as $emp) {
-            $grade = $emp->grade !== "0-0" ? "($emp->grade)" : null;
+            $grade = $emp->grade != "0-0" ? "($emp->grade)" : null;
             $xml .= "<row id='$emp->id'>";
             $xml .= "<cell>". cleanSC($no) ."</cell>";
             $xml .= "<cell>". cleanSC($emp->employee_name) ."</cell>";
@@ -96,7 +96,7 @@ class SallaryController extends Erp_Controller
         $xml = "";
         $no = 1;
         foreach ($emps as $emp) {
-            $grade = $emp->grade !== "0-0" ? "($emp->grade)" : null;
+            $grade = $emp->grade != "0-0" ? "($emp->grade)" : null;
             $xml .= "<row id='$emp->id'>";
             $xml .= "<cell>". cleanSC($no) ."</cell>";
             $xml .= "<cell>". cleanSC($emp->employee_name) ."</cell>";

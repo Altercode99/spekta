@@ -127,7 +127,7 @@ class AppMaster1Controller extends Erp_Controller
         isDelete(["Lokasi $post[name]" => $location]);
 
         $checkLoc = $this->AppMaster->checkLocations($post);
-        if ($checkLoc && $checkLoc->name !== $post['name']) {
+        if ($checkLoc && $checkLoc->name != $post['name']) {
             $checkName = $this->Main->getWhere('locations', ['name' => $post['name']])->row();
             isExist(["Lokasi $post[name]" => $checkName]);
         }
@@ -213,7 +213,7 @@ class AppMaster1Controller extends Erp_Controller
         $department = $this->Hr->getDataById('departments', $post['id']);
         isDelete(["Departemen $post[name]" => $department]);
 
-        if ($department->name !== $post['name']) {
+        if ($department->name != $post['name']) {
             $checkDept = $this->Hr->getWhere('departments', ['name' => $post['name'], 'location' => empLoc()])->row();
             isExist(["Departemen $post[name]" => $checkDept]);
         }
@@ -312,7 +312,7 @@ class AppMaster1Controller extends Erp_Controller
         $subDepartment = $this->Hr->getDataById('sub_departments', $post['id']);
         isDelete(["Sub Departemen $post[name]" => $subDepartment]);
 
-        if ($subDepartment->name !== $post['name']) {
+        if ($subDepartment->name != $post['name']) {
             $checkSubDept = $this->Hr->getWhere('sub_departments', ['name' => $post['name'], 'department_id' => $post['department_id']])->row();
             isExist(["Sub Departemen $post[name]" => $checkSubDept]);
         }
@@ -368,7 +368,7 @@ class AppMaster1Controller extends Erp_Controller
         $xml = "";
         $no = 1;
         foreach ($ranks as $rank) {
-            $name = $rank->grade !== '0-0' ? "$rank->name ($rank->grade)" : $rank->name;
+            $name = $rank->grade != '0-0' ? "$rank->name ($rank->grade)" : $rank->name;
             $xml .= "<row id='$rank->id'>";
             $xml .= "<cell>". cleanSC($no) ."</cell>";
             $xml .= "<cell>". cleanSC($name) ."</cell>";
@@ -418,7 +418,7 @@ class AppMaster1Controller extends Erp_Controller
         $rank = $this->Hr->getDataById('ranks', $post['id']);
         isDelete(["Jabatan $post[name]" => $rank]);
 
-        if ($rank->name !== $post['name'] || $rank->grade !== $post['grade']) {
+        if ($rank->name != $post['name'] || $rank->grade != $post['grade']) {
             $checkRank = $this->Hr->getWhere('ranks', ['name' => $post['name'], 'grade' => $post['grade'], 'location' => empLoc()])->row();
             isExist(["Jabatan $post[name]" => $checkRank]);
         }
@@ -529,7 +529,7 @@ class AppMaster1Controller extends Erp_Controller
         $div = $this->Hr->getDataById('divisions', $post['id']);
         isDelete(["Divisi $post[name]" => $div]);
 
-        if ($div->name !== $post['name'] || $div->sub_department_id !== $post['sub_department_id']) {
+        if ($div->name != $post['name'] || $div->sub_department_id != $post['sub_department_id']) {
             $checkdiv = $this->Hr->getWhere('divisions', ['name' => $post['name'], 'sub_department_id' => $post['sub_department_id']])->row();
             isExist(["Divisi $post[name]" => $checkdiv]);
         }
@@ -614,7 +614,7 @@ class AppMaster1Controller extends Erp_Controller
         $div = $this->Hr->getDataById('trainings', $post['id']);
         isDelete(["Pelatihan $post[name]" => $div]);
 
-        if ($div->name !== $post['name']) {
+        if ($div->name != $post['name']) {
             $checkdiv = $this->Hr->getWhere('trainings', ['name' => $post['name'], 'location' => empLoc()])->row();
             isExist(["Pelatihan $post[name]" => $checkdiv]);
         }
@@ -682,7 +682,7 @@ class AppMaster1Controller extends Erp_Controller
         } else {
             $room = $this->General->getDataById('meeting_rooms', $id);
             if ($room) {
-                if ($room->name !== $post->name) {
+                if ($room->name != $post->name) {
                     $checkRoom = $this->General->getOne('meeting_rooms', ['name' => $post->name, 'location' => empLoc()]);
                     if ($checkRoom) {
                         $isExist = true;
@@ -715,7 +715,7 @@ class AppMaster1Controller extends Erp_Controller
         }
         $fexp = explode(".", $folder)[1];
         $this->Main->updateById($folder, ['filename' => $filename], $id);
-        if ($oldFile !== '' && file_exists('./assets/images/' . $fexp . '/' . $oldFile)) {
+        if ($oldFile != '' && file_exists('./assets/images/' . $fexp . '/' . $oldFile)) {
             unlink('./assets/images/' . $fexp . '/' . $oldFile);
         }
 
@@ -764,7 +764,7 @@ class AppMaster1Controller extends Erp_Controller
         $room = $this->General->getDataById('meeting_rooms', $post['id']);
         isDelete(["Ruang meeting $post[name]" => $room]);
 
-        if ($room->name !== $post['name']) {
+        if ($room->name != $post['name']) {
             $room = $this->General->getWhere('meeting_rooms', ['name' => $post['name'], 'location' => empLoc()])->row();
             isExist(["Ruang meeting $post[name]" => $room]);
         }
@@ -867,7 +867,7 @@ class AppMaster1Controller extends Erp_Controller
         } else {
             $vehicle = $this->General->getDataById('vehicles', $id);
             if ($vehicle) {
-                if ($vehicle->police_no !== $post->police_no) {
+                if ($vehicle->police_no != $post->police_no) {
                     $checkVehicle = $this->General->getOne('vehicles', ['police_no' => $post->police_no, 'location' => empLoc()]);
                     if ($checkVehicle) {
                         $isExist = true;
@@ -937,19 +937,19 @@ class AppMaster1Controller extends Erp_Controller
         $stnk_no = null;
         $machine_no = null;
 
-        if ($room && $room->name !== $post['name']) {
+        if ($room && $room->name != $post['name']) {
             $name = $this->General->getOne('vehicles', ['name' => $post['name'], 'location' => empLoc()]);
         }
-        if ($room && $room->police_no !== $post['police_no']) {
+        if ($room && $room->police_no != $post['police_no']) {
             $police_no = $this->General->getOne('vehicles', ['police_no' => $post['police_no']]);
         }
-        if ($room && $room->bpkb_no !== $post['bpkb_no']) {
+        if ($room && $room->bpkb_no != $post['bpkb_no']) {
             $bpkb_no = $this->General->getOne('vehicles', ['bpkb_no' => $post['bpkb_no']]);
         }
-        if ($room && $room->stnk_no !== $post['stnk_no']) {
+        if ($room && $room->stnk_no != $post['stnk_no']) {
             $stnk_no = $this->General->getOne('vehicles', ['stnk_no' => $post['stnk_no']]);
         }
-        if ($room && $room->machine_no !== $post['machine_no']) {
+        if ($room && $room->machine_no != $post['machine_no']) {
             $machine_no = $this->General->getOne('vehicles', ['machine_no' => $post['machine_no']]);
         }
 
@@ -1073,7 +1073,7 @@ class AppMaster1Controller extends Erp_Controller
         $div = $this->General->getDataById('buildings', $post['id']);
         isDelete(["Gedung $post[name]" => $div]);
 
-        if ($div->name !== $post['name']) {
+        if ($div->name != $post['name']) {
             $checkdiv = $this->General->getWhere('buildings', ['name' => $post['name'], 'location' => empLoc()])->row();
             isExist(["Gedung $post[name]" => $checkdiv]);
         }
@@ -1159,7 +1159,7 @@ class AppMaster1Controller extends Erp_Controller
         $div = $this->General->getDataById('building_rooms', $post['id']);
         isDelete(["Gedung $post[name]" => $div]);
 
-        if ($div->name !== $post['name'] || $div->building_id !== $post['building_id']) {
+        if ($div->name != $post['name'] || $div->building_id != $post['building_id']) {
             $checkdiv = $this->General->getWhere('building_rooms', ['name' => $post['name'], 'building_id' => $post['building_id']])->row();
             isExist(["Gedung $post[name]" => $checkdiv]);
         }
@@ -1235,8 +1235,8 @@ class AppMaster1Controller extends Erp_Controller
         } else {
             $machine = $this->Mtn->getDataById('production_machines', $id);
             if ($machine) {
-                if ($machine->name !== $post->name || $machine->building_id !== $post->building_id || $machine->room_id !== $post->room_id ||
-                    $machine->department_id !== $post->department_id || $machine->sub_department_id !== $post->sub_department_id || $machine->division_id !== $post->division_id) {
+                if ($machine->name != $post->name || $machine->building_id != $post->building_id || $machine->room_id != $post->room_id ||
+                    $machine->department_id != $post->department_id || $machine->sub_department_id != $post->sub_department_id || $machine->division_id != $post->division_id) {
                     $checkMachine = $this->Mtn->getOne('production_machines', [
                         'name' => $post->name,
                         'building_id' => $post->building_id,
@@ -1304,8 +1304,8 @@ class AppMaster1Controller extends Erp_Controller
         $machine = $this->Mtn->getDataById('production_machines', $post['id']);
         isDelete(["Mesin produksi $post[name]" => $machine]);
 
-        if ($machine->name !== $post['name'] || $machine->building_id !== $post['building_id'] || $machine->room_id !== $post['room_id'] ||
-            $machine->department_id !== $post['department_id'] || $machine->sub_department_id !== $post['sub_department_id'] || $machine->division_id !== $post['division_id']) {
+        if ($machine->name != $post['name'] || $machine->building_id != $post['building_id'] || $machine->room_id != $post['room_id'] ||
+            $machine->department_id != $post['department_id'] || $machine->sub_department_id != $post['sub_department_id'] || $machine->division_id != $post['division_id']) {
             $checkMachine = $this->Mtn->getOne('production_machines', [
                 'name' => $post['name'],
                 'building_id' => $post['building_id'],
