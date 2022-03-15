@@ -138,24 +138,27 @@ $script = <<< "JS"
                 machineToolbar.attachEvent("onClick", function(id) {
                     switch (id) {
                         case "save":
+                            machineGrid.filterBy(0,"");
                             machineId = [];
                             machineName = [];
-                            let total = 0;
-                            for (let i = 0; i < machineGrid.getRowsNum(); i++) {
-                                let id = machineGrid.getRowId(i);
-                                if(machineGrid.cells(id, 1).getValue() == 1) {
-                                    machineId.push(id);
-                                    machineName.push(machineGrid.cells(id, 2).getValue());
+                            setTimeout(() => {
+                                let total = 0;
+                                for (let i = 0; i < machineGrid.getRowsNum(); i++) {
+                                    let id = machineGrid.getRowId(i);
+                                    if(machineGrid.cells(id, 1).getValue() == 1) {
+                                        machineId.push(id);
+                                        machineName.push(machineGrid.cells(id, 2).getValue());
+                                    }
+                                    total++;
                                 }
-                                total++;
-                            }
-                            if(countMachine != total) {
-                                eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
-                            } else {
-                                initialForm.setItemValue('machine_id', machineId);
-                                initialForm.setItemValue('machine_name', machineName);
-                                closeWindow("machine_window");
-                            }
+                                if(countMachine != total) {
+                                    eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
+                                } else {
+                                    initialForm.setItemValue('machine_id', machineId);
+                                    initialForm.setItemValue('machine_name', machineName);
+                                    closeWindow("machine_window");
+                                }
+                            }, 500)
                             break;
                     }
                 });
@@ -440,6 +443,11 @@ $script = <<< "JS"
         function rProcGrid() {
             processlayout.cells("a").progressOn();
             let params = {equal_status: "CREATED", equal_ref: ""};
+            if(userLogged.rankId >= 3 && userLogged.pltRankId >= 3) {
+                params.in_sub_department_id = userLogged.subId+","+userLogged.pltSubId;
+            } else if(userLogged.rankId == 2 && userLogged.pltRankId == 2) {
+                params.in_department_id = userLogged.deptId+","+userLogged.pltDeptId;
+            }
             formOvtGrid.clearAndLoad(Overtime("getOvertimeGrid", params), procGridCount);
         }
 
@@ -667,24 +675,27 @@ $script = <<< "JS"
                         personilToolbar.attachEvent("onClick", function(id) {
                             switch (id) {
                                 case "save":
+                                    addPersonilGrid.filterBy(0,"");
                                     personils = [];
                                     personilNames = [];
-                                    let total = 0;
-                                    for (let i = 0; i < addPersonilGrid.getRowsNum(); i++) {
-                                        let id = addPersonilGrid.getRowId(i);
-                                        if(addPersonilGrid.cells(id, 1).getValue() == 1) {
-                                            personils.push(id);
-                                            personilNames.push(addPersonilGrid.cells(id, 2).getValue());
+                                    setTimeout(() => {
+                                        let total = 0;
+                                        for (let i = 0; i < addPersonilGrid.getRowsNum(); i++) {
+                                            let id = addPersonilGrid.getRowId(i);
+                                            if(addPersonilGrid.cells(id, 1).getValue() == 1) {
+                                                personils.push(id);
+                                                personilNames.push(addPersonilGrid.cells(id, 2).getValue());
+                                            }
+                                            total++;
                                         }
-                                        total++;
-                                    }
-                                    if(countPerson != total) {
-                                        eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
-                                    } else {
-                                        personilForm.setItemValue('personil_id', personils);
-                                        personilForm.setItemValue('personil_name', personilNames);
-                                        closeWindow("add_personil_win");
-                                    }
+                                        if(countPerson != total) {
+                                            eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
+                                        } else {
+                                            personilForm.setItemValue('personil_id', personils);
+                                            personilForm.setItemValue('personil_name', personilNames);
+                                            closeWindow("add_personil_win");
+                                        }
+                                    }, 500)
                                     break;
                             }
                         });
@@ -706,7 +717,7 @@ $script = <<< "JS"
                         addPersonilGrid.clearAndLoad(Overtime("getEmployees"), disabledBookedPersonil);
 
                         function disabledBookedPersonil() {
-                            bookedPersonil.map(empId => addPersonilGrid.cells(empId, 1).setDisabled(true));
+                            bookedPersonil.map(empId => addPersonilGrid.setRowColor(empId, "#f7ed74"));
                             countPerson = addPersonilGrid.getRowsNum();
                         }
                     }

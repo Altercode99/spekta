@@ -13,6 +13,8 @@ class OtherController extends Erp_Controller
         $this->Other->myConstruct('main');
         $this->load->model('HrModel');
         $this->HrModel->myConstruct('hr');
+        $this->load->model('OvertimeModel', 'Overtime');
+        $this->Overtime->myConstruct('hr');
 
         $this->auth->isAuth();
     }
@@ -906,5 +908,57 @@ class OtherController extends Erp_Controller
         } else {
             xmlResponse(['error', 'Gagal mengubah kendaraan']);
         }
+    }
+
+    public function getCatheringOvertime()
+    {
+        $overtimes = $this->Overtime->getOvertimeDetail(getParam())->result();
+        $xml = "";
+        $no = 1;
+        foreach ($overtimes as $overtime) {
+
+            $color = null;
+            if ($overtime->status_day === 'Hari Libur') {
+                $color = "bgColor='#efd898'";
+            } else if ($overtime->status_day === 'Libur Nasional') {
+                $color = "bgColor='#7ecbf1'";
+            }
+
+            $status_updater = '-';
+            if ($overtime->status === 'REJECTED') {
+                $color = "bgColor='#ed9a9a'";
+                $status_updater = $overtime->status . ' By ' . $overtime->status_updater;
+            } else if ($overtime->change_time == 1) {
+                $status_updater = 'Revisi Jam Lembur By ' . $overtime->status_updater;
+            } else if ($overtime->status_by !== '') {
+                $status_updater = $overtime->status . ' By ' . $overtime->status_updater;
+            }
+
+            $meal = $overtime->meal > 0 ? "✓ ($overtime->total_meal x)" : '-';
+            $xml .= "<row id='$overtime->id'>";
+            $xml .= "<cell $color>" . cleanSC($no) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->emp_task_id) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->employee_name) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->department) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->sub_department) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->division) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateDay($overtime->overtime_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->start_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->end_date)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->status_day) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($meal) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->total_meal) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->notes) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->status) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($status_updater) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->emp1) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->emp2) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toIndoDateTime($overtime->created_at)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->status_by) . "</cell>";
+
+            $xml .= "</row>";
+            $no++;
+        }
+        gridXmlHeader($xml);
     }
 }

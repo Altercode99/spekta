@@ -213,7 +213,7 @@ class OvertimeModel extends CI_Model
     public function getReportOvertimeEmpGridRev($get)
     {
         $where = advanceSearch($get);
-        $sql = "SELECT a.id,a.notes,a.effective_hour,a.break_hour,a.real_hour,a.overtime_hour,a.meal,
+        $sql = "SELECT a.id,a.notes,a.effective_hour,a.break_hour,a.real_hour,a.overtime_hour,a.overtime_value,a.meal,
                        b.employee_name AS emp_name,c.name AS dept_name,d.name AS sub_name,e.name AS div_name
                        FROM employee_overtimes_detail a, employees b, departments c, sub_departments d, divisions e
                        WHERE a.emp_id = b.id

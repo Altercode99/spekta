@@ -153,20 +153,23 @@ $script = <<< "JS"
                 participantToolbar.attachEvent("onClick", function(id) {
                     switch (id) {
                         case "save":
-                            let total = 0;
-                            for (let i = 0; i < participantGrid.getRowsNum(); i++) {
-                               total++;
-                            }
-                            if(countPerson == total) {
-                                scheduler1.formSection('participant').setValue(persons);
-                                closeWindow("rm_participant");
-                            } else {
-                                if(participantGrid.getRowsNum() == 0) {
-                                    eaAlert("Bersihkan Filter", "Data grid kosong, silahkan tutup window, klik X dibagian kanan atas!");
-                                } else {
-                                    eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
+                            participantGrid.filterBy(0,"");
+                            setTimeout(() => {
+                                let total = 0;
+                                for (let i = 0; i < participantGrid.getRowsNum(); i++) {
+                                total++;
                                 }
-                            }
+                                if(countPerson == total) {
+                                    scheduler1.formSection('participant').setValue(persons);
+                                    closeWindow("rm_participant");
+                                } else {
+                                    if(participantGrid.getRowsNum() == 0) {
+                                        eaAlert("Bersihkan Filter", "Data grid kosong, silahkan tutup window, klik X dibagian kanan atas!");
+                                    } else {
+                                        eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
+                                    }
+                                }
+                            }, 500);
                             break;
                     }
                 });
@@ -236,20 +239,23 @@ $script = <<< "JS"
                 guestToolbar.attachEvent("onClick", function(id) {
                     switch (id) {
                         case "save":
-                            let total = 0;
-                            for (let i = 0; i < guestGrid.getRowsNum(); i++) {
-                               total++;
-                            }
-                            if(countGuest == total) {
-                                scheduler1.formSection('guest').setValue(guests);
-                                closeWindow("rm_guest");
-                            } else {
-                                if(guestGrid.getRowsNum() == 0) {
-                                    eaAlert("Bersihkan Filter", "Data grid kosong, silahkan tutup window, klik X dibagian kanan atas!");
-                                } else {
-                                    eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
+                            guestGrid.filterBy(0,"");
+                            setTimeout(() => {
+                                let total = 0;
+                                for (let i = 0; i < guestGrid.getRowsNum(); i++) {
+                                total++;
                                 }
-                            }
+                                if(countGuest == total) {
+                                    scheduler1.formSection('guest').setValue(guests);
+                                    closeWindow("rm_guest");
+                                } else {
+                                    if(guestGrid.getRowsNum() == 0) {
+                                        eaAlert("Bersihkan Filter", "Data grid kosong, silahkan tutup window, klik X dibagian kanan atas!");
+                                    } else {
+                                        eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
+                                    }
+                                }
+                            }, 500);
                             break;
                         case "add":
                             let newId = (new Date()).valueOf();

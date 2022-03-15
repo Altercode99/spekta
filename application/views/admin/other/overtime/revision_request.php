@@ -517,25 +517,28 @@ $script = <<< "JS"
                         personilToolbar.attachEvent("onClick", function(id) {
                             switch (id) {
                                 case "save":
+                                    addPersonilGrid.filterBy(0,"");
                                     personils = [];
                                     personilNames = [];
-                                    let total = 0;
-                                    for (let i = 0; i < addPersonilGrid.getRowsNum(); i++) {
-                                        let id = addPersonilGrid.getRowId(i);
-                                        if(addPersonilGrid.cells(id, 1).getValue() == 1) {
-                                            personils.push(id);
-                                            personilNames.push(addPersonilGrid.cells(id, 2).getValue());
+                                    setTimeout(() => {
+                                        let total = 0;
+                                        for (let i = 0; i < addPersonilGrid.getRowsNum(); i++) {
+                                            let id = addPersonilGrid.getRowId(i);
+                                            if(addPersonilGrid.cells(id, 1).getValue() == 1) {
+                                                personils.push(id);
+                                                personilNames.push(addPersonilGrid.cells(id, 2).getValue());
+                                            }
+                                            total++;
                                         }
-                                        total++;
-                                    }
 
-                                    if(countPerson == total) {
-                                        personilForm.setItemValue('personil_id', personils);
-                                        personilForm.setItemValue('personil_name', personilNames);
-                                        closeWindow("add_personil_win");
-                                    } else {
-                                        eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
-                                    }
+                                        if(countPerson == total) {
+                                            personilForm.setItemValue('personil_id', personils);
+                                            personilForm.setItemValue('personil_name', personilNames);
+                                            closeWindow("add_personil_win");
+                                        } else {
+                                            eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
+                                        }
+                                    }, 500)
                                     break;
                             }
                         });
@@ -557,7 +560,7 @@ $script = <<< "JS"
                         addPersonilGrid.clearAndLoad(Overtime("getEmployees"), disabledBookedPersonil);
 
                         function disabledBookedPersonil() {
-                            bookedPersonil.map(empId => addPersonilGrid.cells(empId, 1).setDisabled(true));
+                            bookedPersonil.map(empId => addPersonilGrid.setRowColor(empId, "#f7ed74"));
                             countPerson = addPersonilGrid.getRowsNum();
                         }
                     }

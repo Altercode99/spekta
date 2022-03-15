@@ -79,7 +79,7 @@ class VehicleRevController extends Erp_Controller
         $startDate = date('Y-m-d H:i:s', strtotime($data->start_date));
         $endDate = date('Y-m-d H:i:s', strtotime($data->end_date));
 
-        if(new DateTime($start) < new DateTime()) {
+        if(new DateTime($start) < new DateTime(date('Y-m-d'))) {
             xmlResponse('error', "Tidak bisa membuat reservasi Back Date!");
         }
 

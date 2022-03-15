@@ -111,7 +111,16 @@ class OvertimeController extends Erp_Controller
         if (isset($params['support'])) {
             if ($params['support'] == 'mtn') {
                 foreach ($reqs as $req) {
-                    if($params['split'] == 'support'){
+                    if ($params['split'] == 'teknik') {
+                        if ($req->id > 2 && $req->id <= 11) {
+                            $data[] = [
+                                'type' => 'checkbox',
+                                'name' => $req->table_code,
+                                'value' => $req->id,
+                                'label' => $req->name,
+                            ];
+                        }
+                    } else {
                         if ($req->id == 2) {
                             $data[] = [
                                 'type' => 'checkbox',
@@ -592,8 +601,6 @@ class OvertimeController extends Erp_Controller
         $curentClockStart = clockToFloat($post['start_date']);
         $curentClockEnd = clockToFloat($post['end_date']);
 
-
-
         if($ovtDateStart == $ovtDateEnd) {
             $start = genOvtDate($overtime->overtime_date, $post['start_date']);
             $end = genOvtDate($overtime->overtime_date, $post['end_date']);
@@ -765,6 +772,13 @@ class OvertimeController extends Erp_Controller
             'updated_at' => date('Y-m-d H:i:s'),
             'makan' => $makan > 0 ? 1 : 0,
         ];
+
+        // $dataEmpOvt = [];
+        // $empOvertimes = $this->Hr->getWhere('employee_overtimes_detail', ['task_id' => $overtime->task_id])->result();
+        // foreach ($empOvertimes as $empOvt) {
+        //     $isHaveSpv = $this->Hr->getOne('employees', ['division_id' => $empOvt->division_id], '*', ['rank_id' => ['5', '6']]);
+        //     $isHaveSpvPLT = $this->Hr->getOne('employee_ranks', ['division_id' => $overtime->division_id, 'status' => 'ACTIVE'], '*', ['rank_id' => ['5', '6']]);
+        // }
 
         $isHaveSpv = $this->Hr->getOne('employees', ['division_id' => $overtime->division_id], '*', ['rank_id' => ['5', '6']]);
         $isHaveSpvPLT = $this->Hr->getOne('employee_ranks', ['division_id' => $overtime->division_id, 'status' => 'ACTIVE'], '*', ['rank_id' => ['5', '6']]);
@@ -2926,4 +2940,13 @@ class OvertimeController extends Erp_Controller
             xmlResponse('error', 'Gagal mengubah status!');
         }
     }
+
+    public function getOvtReview()
+    {
+        $post = fileGetContent();
+        $taskId = $post->taskId;
+        $review = $this->Hr->getOne('employee_overtimes', ['task_id' => $taskId])->overtime_review;
+        response(['comment' => $review]);
+    }
 }
+

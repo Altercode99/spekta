@@ -617,6 +617,17 @@ function filterForMonth(date) {
   };
 }
 
+function getCurrentDate(date) {
+  let d = new Date(date);
+  let newDate = [
+    d.getFullYear(),
+    ("0" + (d.getMonth() + 1)).slice(-2),
+    ("0" + d.getDate()).slice(-2),
+  ];
+
+  return newDate[0] + "-" + newDate[1] + "-" + newDate[2];
+}
+
 function checkFilterDate(start, end) {
   if (start == "" || end == "") {
     eAlert("Tanggal tidak lengkap!");

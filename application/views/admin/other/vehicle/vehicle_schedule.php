@@ -91,22 +91,25 @@ $script = <<< "JS"
                 driverToolbar.attachEvent("onClick", function(id) {
                     switch (id) {
                         case "save":
-                            let total = 0;
-                            for (let i = 0; i < driverGrid.getRowsNum(); i++) {
-                                total++;
-                            }
-
-                            if(countDriver == total) {
-                                const newDriver = drivers.filter(id => id !== "");
-                                scheduler2.formSection('driver').setValue(newDriver);
-                                closeWindow("driver");
-                            } else {
-                                if(driverGrid.getRowsNum() == 0) {
-                                    eaAlert("Bersihkan Filter", "Data grid kosong, silahkan tutup window, klik X dibagian kanan atas!");
-                                } else {
-                                    eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
+                            driverGrid.filterBy(0,"");
+                            setTimeout(() => {
+                                let total = 0;
+                                for (let i = 0; i < driverGrid.getRowsNum(); i++) {
+                                    total++;
                                 }
-                            }
+
+                                if(countDriver == total) {
+                                    const newDriver = drivers.filter(id => id !== "");
+                                    scheduler2.formSection('driver').setValue(newDriver);
+                                    closeWindow("driver");
+                                } else {
+                                    if(driverGrid.getRowsNum() == 0) {
+                                        eaAlert("Bersihkan Filter", "Data grid kosong, silahkan tutup window, klik X dibagian kanan atas!");
+                                    } else {
+                                        eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
+                                    }
+                                }
+                            }, 500);
                             break;
                     }
                 });
@@ -172,21 +175,24 @@ $script = <<< "JS"
                 empToolbar.attachEvent("onClick", function(id) {
                     switch (id) {
                         case "save":
-                            let total = 0;
-                            for (let i = 0; i < empGrid.getRowsNum(); i++) {
-                               total++;
-                            }
-
-                            if(countPerson == total && persons.length > 0) {
-                                scheduler2.formSection('passenger').setValue(persons);
-                                closeWindow("emp_vehicle");
-                            } else {
-                                if(persons.length == 0) {
-                                    eaAlert("Bersihkan Filter", "Belum ada penumpang yang dipilih!");
-                                } else {
-                                    eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
+                            empGrid.filterBy(0,"");
+                            setTimeout(() => {
+                                let total = 0;
+                                for (let i = 0; i < empGrid.getRowsNum(); i++) {
+                                    total++;
                                 }
-                            }
+
+                                if(countPerson == total) {
+                                    scheduler2.formSection('passenger').setValue(persons);
+                                    closeWindow("emp_vehicle");
+                                } else {
+                                    if(empGrid.getRowsNum() == 0) {
+                                        eaAlert("Bersihkan Filter", "Data grid kosong, silahkan tutup window, klik X dibagian kanan atas!");
+                                    } else {
+                                        eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
+                                    }
+                                }
+                            }, 500);
                             break;
                     }
                 });

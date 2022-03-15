@@ -19,8 +19,7 @@ $script = <<< "JS"
             tabs: [
                 {id: "a", text: "Report Lembur Semua Bagian", active: true},
                 {id: "b", text: "Report Lembur Bagian"},
-                {id: "c", text: "Report Lembur Sub Bagian"},
-                {id: "d", text: "Report Lembur Karyawan"},
+                {id: "c", text: "Report Lembur Karyawan"},
             ]
         });
 
@@ -56,23 +55,7 @@ $script = <<< "JS"
             }
         });
 
-        var sumOvtDivMenu = sumOvtProTabs.cells("c").attachMenu({
-            icon_path: "./public/codebase/icons/",
-            items: [
-                {id: "export", text: "Export To Excel", img: "excel.png"},
-            ]
-        });
-
-        sumOvtDivMenu.attachEvent("onClick", function(id) {
-            switch (id) {
-                case "export":
-                    sumOvtProDivGrid.toExcel("./public/codebase/grid-to-excel-php/generate.php");
-                    sAlert("Export Data Dimulai");
-                    break;
-            }
-        });
-
-        var sumOvtProEmpMenu = sumOvtProTabs.cells("d").attachMenu({
+        var sumOvtProEmpMenu = sumOvtProTabs.cells("c").attachMenu({
             icon_path: "./public/codebase/icons/",
             items: [
                 {id: "export", text: "Export To Excel", img: "excel.png"},
@@ -173,59 +156,13 @@ $script = <<< "JS"
 
         rSumOvtProDeptGrid();
 
-        var total_sum_overtime_provider_div = "total_sum_overtime_provider_div_" + unique; 
-        var grand_sum_overtime_provider_div = "grand_sum_overtime_provider_div_" + unique; 
-        var total_meal_sum_overtime_provider_div = "total_meal_sum_overtime_provider_div_" + unique; 
-        var grand_meal_sum_overtime_provider_div = "grand_meal_sum_overtime_provider_div_" + unique; 
-        var sum_grand_total_provider_div = "sum_grand_total_provider_div_" + unique; 
-
-        let sumOvtDivStatusBar = sumOvtProTabs.cells("c").attachStatusBar();
-        function sumOvtProDivGridCount() {
-            var sumOvtProDivGridRows = sumOvtProDivGrid.getRowsNum();
-            sumOvtDivStatusBar.setText("Total baris: " + sumOvtProDivGridRows);
-            let totalOvertimeDiv = sumGridToElement(sumOvtProDivGrid, 7, total_sum_overtime_provider_div, grand_sum_overtime_provider_div);
-            let totalMealDiv = sumGridToElement(sumOvtProDivGrid, 8, total_meal_sum_overtime_provider_div, grand_meal_sum_overtime_provider_div);
-            $("#"+sum_grand_total_provider_div).html("Rp. " + numberFormat(totalOvertimeDiv+totalMealDiv));
-        }
-
-        var sumOvtProDivGrid = sumOvtProTabs.cells("c").attachGrid();
-        sumOvtProDivGrid.setImagePath("./public/codebase/imgs/");
-        sumOvtProDivGrid.setHeader("No,Sub Bagian,Bagian,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Nominal Overtime,Biaya Makan");
-        sumOvtProDivGrid.attachHeader("#rspan,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
-        sumOvtProDivGrid.setColSorting("int,str,str,str,str,str,str,str,str");
-        sumOvtProDivGrid.setColAlign("center,left,left,left,left,left,left,left,left");
-        sumOvtProDivGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        sumOvtProDivGrid.setInitWidthsP("5,20,20,10,10,10,10,15,15");
-        sumOvtProDivGrid.attachFooter(",Total Summary,#cspan,#stat_total,#stat_total,#stat_total,#stat_total,<div id='"+total_sum_overtime_provider_div+"'>0</div>,<div id='"+total_meal_sum_overtime_provider_div+"'>0</div>");
-        sumOvtProDivGrid.attachFooter(",Total Biaya Lembur,<div id='"+grand_sum_overtime_provider_div+"'>0</div>");
-        sumOvtProDivGrid.attachFooter(",Total Biaya Makan,<div id='"+grand_meal_sum_overtime_provider_div+"'>0</div>");
-        sumOvtProDivGrid.attachFooter(",Grand Total,<div id='"+sum_grand_total_provider_div+"'>0</div>");
-        sumOvtProDivGrid.enableSmartRendering(true);
-        sumOvtProDivGrid.attachEvent("onXLE", function() {
-            sumOvtProTabs.cells("c").progressOff();
-        });
-        sumOvtProDivGrid.init();
-        
-        function rSumOvtProDivGrid() {
-            sumOvtProTabs.cells("c").progressOn();
-            let params = {
-                equal_status: "CLOSED",
-                year_overtime_date: year,
-                month_overtime_date: month,
-                groupby_division_id: true
-            };
-            sumOvtProDivGrid.clearAndLoad(Dashboard("getSumDivGrid", params), sumOvtProDivGridCount);
-        }
-
-        rSumOvtProDivGrid();
-
         var total_sum_overtime_provider_emp = "total_sum_overtime_provider_emp_" + unique; 
         var grand_sum_overtime_provider_emp = "grand_sum_overtime_provider_emp_" + unique; 
         var total_meal_sum_overtime_provider_emp = "total_meal_sum_overtime_provider_emp_" + unique; 
         var grand_meal_sum_overtime_provider_emp = "grand_meal_sum_overtime_provider_emp_" + unique; 
         var sum_grand_total_provider_emp = "sum_grand_total_provider_emp_" + unique; 
 
-        let sumOvtEmpStatusBar = sumOvtProTabs.cells("d").attachStatusBar();
+        let sumOvtEmpStatusBar = sumOvtProTabs.cells("c").attachStatusBar();
         function sumOvtProEmpGridCount() {
             var sumOvtProDivGridRows = sumOvtProEmpGrid.getRowsNum();
             sumOvtEmpStatusBar.setText("Total baris: " + sumOvtProDivGridRows);
@@ -234,7 +171,7 @@ $script = <<< "JS"
             $("#"+sum_grand_total_provider_emp).html("Rp. " + numberFormat(totalOvertimeEmp+totalMealEmp));
         }
 
-        var sumOvtProEmpGrid = sumOvtProTabs.cells("d").attachGrid();
+        var sumOvtProEmpGrid = sumOvtProTabs.cells("c").attachGrid();
         sumOvtProEmpGrid.setImagePath("./public/codebase/imgs/");
         sumOvtProEmpGrid.setHeader("No,Nama Karyawan,Sub Bagian,Bagian,Sub Unit,Jam Efektif,Jam Istirahat,Jam Ril,Jam Lembur,Nominal Overtime,Biaya Makan");
         sumOvtProEmpGrid.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
@@ -248,12 +185,12 @@ $script = <<< "JS"
         sumOvtProEmpGrid.attachFooter(",Grand Total,<div id='"+sum_grand_total_provider_emp+"'>0</div>");
         sumOvtProEmpGrid.enableSmartRendering(true);
         sumOvtProEmpGrid.attachEvent("onXLE", function() {
-            sumOvtProTabs.cells("d").progressOff();
+            sumOvtProTabs.cells("c").progressOff();
         });
         sumOvtProEmpGrid.init();
         
         function rSumOvtProEmpGrid() {
-            sumOvtProTabs.cells("d").progressOn();
+            sumOvtProTabs.cells("c").progressOn();
             let params = {
                 equal_status: "CLOSED",
                 year_overtime_date: year,

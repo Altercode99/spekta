@@ -435,7 +435,12 @@ $script = <<< "JS"
         
         function rProcGrid() {
             processlayoutTnp.cells("a").progressOn();
-            let params = {in_status: "CREATED", notequal_ref: "", equal_sub_department_id: userLogged.subId, position: "tnp"};
+            let params = {in_status: "CREATED", notequal_ref: "", position: "tnp"};
+            if(userLogged.rankId >= 3 && userLogged.pltRankId >= 3) {
+                params.in_sub_department_id = userLogged.subId+","+userLogged.pltSubId;
+            } else if(userLogged.rankId == 2 && userLogged.pltRankId == 2) {
+                params.in_department_id = userLogged.deptId+","+userLogged.pltDeptId;
+            }
             formOvtGridTnp.clearAndLoad(Overtime("getOvertimeGrid", params), procGridCount);
         }
 
@@ -697,24 +702,27 @@ $script = <<< "JS"
                         personilToolbar.attachEvent("onClick", function(id) {
                             switch (id) {
                                 case "save":
+                                    addPersonilGrid.filterBy(0,"");
                                     personils = [];
                                     personilNames = [];
-                                    let total = 0;
-                                    for (let i = 0; i < addPersonilGrid.getRowsNum(); i++) {
-                                        let id = addPersonilGrid.getRowId(i);
-                                        if(addPersonilGrid.cells(id, 1).getValue() == 1) {
-                                            personils.push(id);
-                                            personilNames.push(addPersonilGrid.cells(id, 2).getValue());
+                                    setTimeout(() => {
+                                        let total = 0;
+                                        for (let i = 0; i < addPersonilGrid.getRowsNum(); i++) {
+                                            let id = addPersonilGrid.getRowId(i);
+                                            if(addPersonilGrid.cells(id, 1).getValue() == 1) {
+                                                personils.push(id);
+                                                personilNames.push(addPersonilGrid.cells(id, 2).getValue());
+                                            }
+                                            total++;
                                         }
-                                        total++;
-                                    }
-                                    if(countPerson != total) {
-                                        eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
-                                    } else {
-                                        personilForm.setItemValue('personil_id', personils);
-                                        personilForm.setItemValue('personil_name', personilNames);
-                                        closeWindow("add_personil_win");
-                                    }
+                                        if(countPerson != total) {
+                                            eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
+                                        } else {
+                                            personilForm.setItemValue('personil_id', personils);
+                                            personilForm.setItemValue('personil_name', personilNames);
+                                            closeWindow("add_personil_win");
+                                        }
+                                    }, 500)
                                     break;
                             }
                         });
@@ -740,7 +748,7 @@ $script = <<< "JS"
                         }
                         addPersonilGrid.clearAndLoad(Overtime("getEmployees", params), disabledBookedPersonil);
                         function disabledBookedPersonil() {
-                            bookedPersonil.map(empId => addPersonilGrid.cells(empId, 1).setDisabled(true));
+                            bookedPersonil.map(empId => addPersonilGrid.setRowColor(empId, "#f7ed74"));
                             countPerson = addPersonilGrid.getRowsNum();
                         }
                     }

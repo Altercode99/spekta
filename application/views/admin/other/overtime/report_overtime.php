@@ -107,52 +107,54 @@ $script = <<< "JS"
                         sumGridToElement(personGrid, 11, "other_total_meal_ovt_rev");
                     }
 
-                    var revForm = revLayout.cells("b").attachForm([
-                        {type: "fieldset", offsetTop: 30, offsetLeft: 30, label: "Ulasan ASMAN Terkait", list: [
-                            {type: "hidden", name: "task_id", labelWidth: 130, inputWidth:250, required: true, value: taskId},
-                            {type: "input", name: "overtime_review", label: "Komentar", labelWidth: 130, inputWidth:250, required: true, rows: 4},
-                            {type: "block", offsetTop: 30, list: [
-                                {type: "button", name: "update", className: "button_update", offsetLeft: 15, value: "Simpan"},
-                                {type: "newcolumn"},
-                                {type: "button", name: "cancel", className: "button_no", offsetLeft: 30, value: "Cancel"}
+                    reqJson(Overtime("getOvtReview"), "POST", {taskId}, (err, res) => {
+                        var revForm = revLayout.cells("b").attachForm([
+                            {type: "fieldset", offsetTop: 30, offsetLeft: 30, label: "Ulasan ASMAN Terkait", list: [
+                                {type: "hidden", name: "task_id", labelWidth: 130, inputWidth:250, required: true, value: taskId},
+                                {type: "input", name: "overtime_review", label: "Komentar", labelWidth: 130, inputWidth:250, required: true, rows: 4, value: res.comment},
+                                {type: "block", offsetTop: 30, list: [
+                                    {type: "button", name: "update", className: "button_update", offsetLeft: 15, value: "Simpan"},
+                                    {type: "newcolumn"},
+                                    {type: "button", name: "cancel", className: "button_no", offsetLeft: 30, value: "Cancel"}
+                                ]}
                             ]}
-                        ]}
-                    ]);
+                        ]);
 
-                    revForm.attachEvent("onButtonClick", function(name) {
-                        switch (name) {
-                            case "update":
-                                if (!revForm.validate()) {
-                                    return eAlert("Input error!");
-                                }
-
-                                setDisable(["update", "clear"], revForm, revLayout.cells("b"));
-                                let revFormDP = new dataProcessor(Overtime("updateOvertimeReview"));
-                                revFormDP.init(revForm);
-                                revForm.save();
-
-                                revFormDP.attachEvent("onAfterUpdate", function (id, action, tid, tag) {
-                                    let message = tag.getAttribute("message");
-                                    switch (action) {
-                                        case "updated":
-                                            sAlert(message);
-                                            rReportOvtGrid();
-                                            clearAllForm(revForm);
-                                            setEnable(["update", "clear"], revForm, revLayout.cells("b"));
-                                            closeWindow("review_overtime_win");
-                                            break;
-                                        case "error":
-                                            eAlert(message);
-                                            setEnable(["update", "clear"], revForm, revLayout.cells("b"));
-                                            break;
+                        revForm.attachEvent("onButtonClick", function(name) {
+                            switch (name) {
+                                case "update":
+                                    if (!revForm.validate()) {
+                                        return eAlert("Input error!");
                                     }
-                                });
-                                break;
-                            case "cancel":
-                                closeWindow("review_overtime_win");
-                                break;
-                        }
-                    })
+
+                                    setDisable(["update", "clear"], revForm, revLayout.cells("b"));
+                                    let revFormDP = new dataProcessor(Overtime("updateOvertimeReview"));
+                                    revFormDP.init(revForm);
+                                    revForm.save();
+
+                                    revFormDP.attachEvent("onAfterUpdate", function (id, action, tid, tag) {
+                                        let message = tag.getAttribute("message");
+                                        switch (action) {
+                                            case "updated":
+                                                sAlert(message);
+                                                rReportOvtGrid();
+                                                clearAllForm(revForm);
+                                                setEnable(["update", "clear"], revForm, revLayout.cells("b"));
+                                                closeWindow("review_overtime_win");
+                                                break;
+                                            case "error":
+                                                eAlert(message);
+                                                setEnable(["update", "clear"], revForm, revLayout.cells("b"));
+                                                break;
+                                        }
+                                    });
+                                    break;
+                                case "cancel":
+                                    closeWindow("review_overtime_win");
+                                    break;
+                            }
+                        })
+                    });
                     break;
             }
         });
@@ -231,8 +233,14 @@ $script = <<< "JS"
             reportTabs.cells("a").progressOff();
         });
         reportOvtGrid.attachEvent("onRowSelect", function(rId, cIdn) {
-            if((userLogged.rankId == 3 || userLogged.rankId == 4) && userLogged.subDepartment == reportOvtGrid.cells(rId, 4).getValue()) {
-                reportToolbar.enableItem("review");
+            if(userLogged.rankId == 3 || userLogged.rankId == 4 || userLogged.rankId == 5 || userLogged.rankId == 6 ||
+               userLogged.pltRankId == 3 || userLogged.pltRankId == 4 || userLogged.pltRankId == 5 || userLogged.pltRankId == 6
+            ){
+                if(userLogged.subDepartment == reportOvtGrid.cells(rId, 4).getValue()) {
+                    reportToolbar.enableItem("review");
+                } else {
+                    reportToolbar.disableItem("review");
+                }
             } else {
                 reportToolbar.disableItem("review");
             }
