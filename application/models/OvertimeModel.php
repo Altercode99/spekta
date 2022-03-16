@@ -252,25 +252,19 @@ class OvertimeModel extends CI_Model
         return $this->db->query($sql)->result();
     }
 
-    public function getRequestOvertimeGrid($taskIds)
+    public function getRequestOvertimeGrid($subId)
     {
-        $sql = "SELECT a.*,b.name AS department,c.name AS sub_department,d.name AS division,
-                       (SELECT employee_name FROM employees WHERE id = a.created_by) AS emp1,
-                       (SELECT employee_name FROM employees WHERE id = a.updated_by) AS emp2
-                       FROM employee_overtimes a, departments b, sub_departments c, divisions d
-                       WHERE a.department_id = b.id
-                       AND a.sub_department_id = c.id
-                       AND a.division_id = d.id
-                       AND a.task_id IN($taskIds)
-                       AND a.location = '$this->empLoc'
+        $sql = "SELECT a.task_id,a.task_id_support,b.*,c.name AS department,d.name AS sub_department,e.name AS division,
+                       (SELECT employee_name FROM employees WHERE a.created_by = id) AS emp1
+                       FROM employee_overtimes_ref a, employee_overtimes b, departments c, sub_departments d, divisions e
+                       WHERE a.sub_department_id = $subId
+                       AND b.task_id = a.task_id
+                       AND b.department_id = c.id
+                       AND b.sub_department_id = d.id
+                       AND b.division_id = e.id
                        ORDER BY a.id DESC";
-        return $this->db->query($sql);
-    }
 
-    public function getTechnicOvertime($subId)
-    {
-        $sql = "SELECT task_id,ref FROM employee_overtimes WHERE ref != '-' AND ref != '' AND status = 'CREATED' AND sub_department_id = '$subId'";
-        return $this->db->query($sql)->result();
+        return $this->db->query($sql);
     }
 
     public function getWindowOvertimeGrid($get)

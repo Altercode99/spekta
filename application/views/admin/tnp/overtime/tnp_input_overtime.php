@@ -5,7 +5,7 @@ if ((strpos(strtolower($_SERVER['SCRIPT_NAME']), strtolower(basename(__FILE__)))
 }
 
 $script = <<< "JS"
-	function showInputOvertimeTNP(process = null) {	
+	function showInputOvertimeTNP(process) {	
         var legend = legendGrid();
         var personils = [];
         var personilNames = [];
@@ -23,20 +23,19 @@ $script = <<< "JS"
             sub_department_id: {
                 reload: false
             },
-            // division_id: {
-            //     reload: false
-            // },
         }
         
         if(process) {
             var inputTabItems = [
                 {id: "a", text: "Form Lembur"},
-                {id: "b", text: "Proses Personil", active: true},
+                {id: "b", text: "Proses Personil"},
+                {id: "c", text: "Referensi Lembur", active: true},
             ];
         } else {
             var inputTabItems = [
                 {id: "a", text: "Form Lembur", active: true},
                 {id: "b", text: "Proses Personil"},
+                {id: "c", text: "Referensi Lembur"},
             ];
         }
 
@@ -47,7 +46,6 @@ $script = <<< "JS"
         var times = createTime();
 
         var initialLeft = [
-            {type: "hidden", name: "ref", value: "-", readonly: true, required: true},
             {type: "combo", name: "department_id", label: "Sub Unit", labelWidth: 130, inputWidth: 250, readonly: true, required: true},
             {type: "combo", name: "sub_department_id", label: "Bagian", labelWidth: 130, inputWidth: 250, readonly: true, required: true},
             {type: "hidden", name: "division_id", label: "Sub Bagian", labelWidth: 130, inputWidth: 250, readonly: true, value: 0},
@@ -62,32 +60,22 @@ $script = <<< "JS"
                 options: times.endTimes,
             },
             {type: "input", name: "notes", label: "Catatan", labelWidth: 130, inputWidth: 250, rows: 3},
+            {type: "input", name: "taskIds", label: "Referensi Lembur", labelWidth: 130, inputWidth: 250, readonly: true, rows: 5},
         ];
 
-        let support;
-        if(userLogged.subId == 5) {
-            support = 'mtn';
-        } else if(userLogged.subId == 7) {
-            support = 'qa';
-        } else if(userLogged.subId == 8) {
-            support = 'qc';
-        } else if(userLogged.subId == 13) {
-            support = 'whs';
-        }
-
-        const reqs = reqJsonResponse(Overtime("getOTRequirement", {support, split: 'teknik'}), "GET", null);
-        const reqs2 = reqJsonResponse(Overtime("getOTRequirement", {support, split: 'support'}), "GET", null);
+        const reqs = reqJsonResponse(Overtime("getOTRequirement", {split: 'teknik'}), "GET", null);
+        const reqs2 = reqJsonResponse(Overtime("getOTRequirement", {split: 'support'}), "GET", null);
 
         var initialRight = reqs.data;
         var initialRight2 = reqs2.data;
 
         var initialForm = inputTabs.cells("a").attachForm([
-            {type: "fieldset", offsetLeft: 30, offsetTop: 30, label: "Data Lembur", list:[	
+            {type: "fieldset", offsetLeft: 30, offsetTop: 30, label: "<span id='data_lembur'>Data Lembur (Normal)</span>", list:[	
                 {type: "block", list: initialLeft},
                 {type: "newcolumn"},
-                {type: "fieldset", offsetLeft: 30, label: "Kebutuhan Teknik", list: initialRight},
+                {type: "fieldset", offsetLeft: 30, label: "<span id='kebutuhan_teknik'>Kebutuhan Teknik</span>", list: initialRight},
                 {type: "newcolumn"},
-                {type: "fieldset", offsetLeft: 30, label: "Kebutuhan Support", list: initialRight2},
+                {type: "fieldset", offsetLeft: 30, label: "<span id='kebutuhan_support'>Kebutuhan Support</span>", list: initialRight2},
             ]},
             {type: "block", offsetLeft: 30, offsetTop: 10, list: [
                 {type: "button", name: "add", className: "button_add", offsetLeft: 15, value: "Tambah"},
@@ -108,10 +96,6 @@ $script = <<< "JS"
         addDeptCombo.attachEvent("onChange", function(value, text){
             clearComboReload(initialForm, "sub_department_id", Overtime("getSubDepartment", {equal_id: userLogged.subId}));
         });
-
-        // addSubCombo.attachEvent("onChange", function(value, text){
-        //     clearComboReload(initialForm, "division_id", Overtime("getDivision", {subDeptId: value}));
-        // });
 
         isFormNumeric(initialForm, ['personil']);
 
@@ -135,7 +119,7 @@ $script = <<< "JS"
                     }
 
                     setDisable(["add", "clear"], initialForm, inputTabs.cells("a"));
-                    let initialFormDP = new dataProcessor(Overtime("createInitialOvertime", {ref: "-"}));
+                    let initialFormDP = new dataProcessor(Overtime("createInitialOvertime"));
                     initialFormDP.init(initialForm);
                     initialForm.save();
 
@@ -148,6 +132,7 @@ $script = <<< "JS"
                                 clearAllForm(initialForm, comboUrl, null, ['start_date', 'end_date']);
                                 rProcGrid();
                                 setEnable(["add", "clear"], initialForm, inputTabs.cells("a"));
+                                rReqOvtGrid();
                                 break;
                             case "error":
                                 eaAlert("Kesalahan Waktu Lembur", message);
@@ -158,6 +143,25 @@ $script = <<< "JS"
                     break;
                 case "clear":
                     clearAllForm(initialForm, comboUrl, null, ['start_date', 'end_date']);
+                    initialForm.uncheckItem("jemputan");
+                    initialForm.uncheckItem("ahu");
+                    initialForm.uncheckItem("compressor");
+                    initialForm.uncheckItem("pw");
+                    initialForm.uncheckItem("steam");
+                    initialForm.uncheckItem("wfi");
+                    initialForm.uncheckItem("mechanic");
+                    initialForm.uncheckItem("electric");
+                    initialForm.uncheckItem("hnn");
+                    initialForm.uncheckItem("qc");
+                    initialForm.uncheckItem("qa");
+                    initialForm.uncheckItem("penandaan");
+                    initialForm.uncheckItem("gbb");
+                    initialForm.uncheckItem("gbk");
+                    $("#data_lembur").html("Data Lembur (Umum)");
+                    $("#kebutuhan_teknik").html("Kebutuhan Teknik");
+                    $("#kebutuhan_support").html("Kebutuhan Support");
+                    initialForm.hideItem("taskIds");
+                    disableRequest();
                     break;
             }
         });
@@ -177,7 +181,6 @@ $script = <<< "JS"
                 {id: "cancel", text: "Batalkan", type: "button", img: "messagebox_critical.png"},
                 {id: "personil", text: "Update Kebutuhan Personil", type: "button", img: "person_16.png"},
                 {id: "hour_revision", text: "Update Waktu Lembur", type: "button", img: "clock.png"},
-                {id: "production_detail", text: "Detail Lembur Produksi", type: "button", img: "edit.png"},
             ]
         });
 
@@ -345,58 +348,6 @@ $script = <<< "JS"
                         }
                     });
                     break;
-                case "production_detail":
-                    if(!formOvtGridTnp.getSelectedRowId()) {
-                        return eAlert("Silahkan pilih lemburan!");
-                    } else {
-                        let tabName = "tnp_production_detail_" + formOvtGridTnp.getSelectedRowId();
-                        if(!inputTabs.tabs(tabName)) {
-                            inputTabs.addTab(tabName, "Detail Lembur Produksi " + formOvtGridTnp.cells(formOvtGridTnp.getSelectedRowId(), 1).getValue(), null, null, true, true);
-                        } else {
-                            inputTabs.tabs(tabName).setActive();
-                        }
-
-                        var detailLayout = inputTabs.tabs(tabName).attachLayout({
-                            pattern: "2E",
-                            cells: [
-                                {id: "a", text: "Detail Lembur Produksi", height: 260},
-                                {id: "b", text: "Daftar Personil Lembur"}
-                            ]
-                        });
-
-                        detailLayout.cells("b").progressOn();
-                        detailGrid = detailLayout.cells("b").attachGrid();
-                        detailGrid.setImagePath("./public/codebase/imgs/");
-                        detailGrid.setHeader("No,Task ID,Nama Karyawan,Sub Unit,Bagian,,,,Pelayanan Produksi,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Premi,Nominal Overtime,Makan,Tugas,Status Overtime,Status Terakhir,Created By,Updated By,Created At,,");
-                        detailGrid.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
-                        detailGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
-                        detailGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
-                        detailGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-                        detailGrid.setInitWidthsP("5,20,20,20,20,0,0,0,25,15,15,15,10,10,10,10,10,10,10,5,25,10,30,15,15,22,0,0");
-                        detailGrid.attachFooter("Total,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#stat_total,#stat_total,#stat_total,#stat_total,,<div id='tnp_total_ovt_prod_detail_"+formOvtGridTnp.getSelectedRowId()+"'></div>,,,,,,,,,");
-                        detailGrid.enableSmartRendering(true);
-                        detailGrid.attachEvent("onXLE", function() {
-                            detailLayout.cells("b").progressOff();
-                        });
-                        detailGrid.init();
-                        
-                        function rDetailGrid(taskId) {
-                            detailLayout.cells("b").progressOn();
-                            detailGrid.clearAndLoad(Overtime("getOvertimeDetailGrid", {notin_status: "CANCELED,REJECTED,ADD", equal_task_id: taskId}), countDetailOvertime);
-                        }
-
-                        function countDetailOvertime() {
-                            sumGridToElement(detailGrid, 18, "tnp_total_ovt_prod_detail_" + formOvtGridTnp.getSelectedRowId());
-                        }
-
-                        reqJson(Overtime("getOvertimeDetailView"), "POST", {id: formOvtGridTnp.getSelectedRowId()}, (err, res) => {
-                            if(res.status === "success") {
-                                detailLayout.cells("a").attachHTMLString(res.template);
-                                rDetailGrid(res.ref);
-                            }
-                        });
-                    }
-                    break
             }
         });
 
@@ -419,13 +370,6 @@ $script = <<< "JS"
         formOvtGridTnp.attachEvent("onXLE", function() {
             processlayoutTnp.cells("a").progressOff();
         });
-        formOvtGridTnp.attachEvent("onRowSelect", function(rId, cIdn) {
-            if(formOvtGridTnp.cells(rId, 33).getValue() == "" || formOvtGridTnp.cells(rId, 33).getValue() == "-") {
-                procToolbar.disableItem("production_detail");
-            } else {
-                procToolbar.enableItem("production_detail");
-            }
-        });
         formOvtGridTnp.attachEvent("onRowDblClicked", function(rId,cInd){
             rProcPersonGrid(rId);
             processlayoutTnp.cells("b").setText("Proses Personil Lembur : " + formOvtGridTnp.cells(rId, 1).getValue());
@@ -435,10 +379,14 @@ $script = <<< "JS"
         
         function rProcGrid() {
             processlayoutTnp.cells("a").progressOn();
-            let params = {in_status: "CREATED", notequal_ref: "", position: "tnp"};
-            if(userLogged.rankId >= 3 && userLogged.pltRankId >= 3) {
-                params.in_sub_department_id = userLogged.subId+","+userLogged.pltSubId;
-            } else if(userLogged.rankId == 2 && userLogged.pltRankId == 2) {
+            let params = {in_status: "CREATED"};
+            if(userLogged.rankId >= 3 || userLogged.pltRankId >= 3) {
+                if(userLogged.rankId >= 6 || userLogged.pltRankId >= 6) {
+                    params.in_sub_department_id = userLogged.subId+","+userLogged.pltSubId;
+                } else {
+                    params.equal_created_by = userLogged.empId;;
+                }
+            } else if(userLogged.rankId == 2 || userLogged.pltRankId == 2) {
                 params.in_department_id = userLogged.deptId+","+userLogged.pltDeptId;
             }
             formOvtGridTnp.clearAndLoad(Overtime("getOvertimeGrid", params), procGridCount);
@@ -907,10 +855,336 @@ $script = <<< "JS"
                                 closeWindow("hour_revision_detail_input_tnp");
                                 break;
                         }
-                    })
+                    });
+                    break;
+            }
+        });
+
+        var refProdLayout = inputTabs.cells("c").attachLayout({
+            pattern: "1C",
+            cells: [
+                {id: "a", text: "Daftar Referensi Lembur"}
+            ]
+        });
+
+        var refProdToolbar = refProdLayout.cells("a").attachToolbar({
+            icon_path: "./public/codebase/icons/",
+            items: [
+                {id: "refresh", text: "Refresh", type: "button", img: "refresh.png"},
+                {id: "del_ref", text: "Hapus Referensi", type: "button", img: "delete.png"},
+                {id: "production_detail", text: "Detail Referensi Lembur", type: "button", img: "edit.png"},
+                {id: "process_support", text: "Proses Support", type: "button", img: "undo.gif"},
+            ]
+        });
+
+        let currentDateRef = filterForMonth(new Date());
+        var refProdMenu =  refProdLayout.cells("a").attachMenu({
+            icon_path: "./public/codebase/icons/",
+            items: [
+                {id: "search", text: "<div style='width:100%'>Search: <input type='text' id='tnp_ref_start_date' readonly value='"+currentDateRef.start+"' /> - <input type='text' id='tnp_ref_end_date' readonly value='"+currentDateRef.end+"' /> <button id='tnp_ref_process'>Proses</button>"}
+            ]
+        });
+
+        var filterCalendar = new dhtmlXCalendarObject(["tnp_ref_start_date","tnp_ref_end_date"]);
+        $("#tnp_ref_process").on("click", function() {
+            if(checkFilterDate($("#tnp_ref_start_date").val(), $("#tnp_ref_end_date").val())) {
+                rReqOvtGrid();
+            }
+        });
+
+        let refStatusBar = refProdLayout.cells("a").attachStatusBar();
+        function refGridCount() {
+            var refGridRows = refProdGrid.getRowsNum();
+            refStatusBar.setText("Total baris: " + refGridRows);
+            for (let i = 0; i < refGridRows; i++) {
+                if(refProdGrid.cells2(i, 3).getValue() != "-") {
+                    refProdGrid.cells2(i, 1).setDisabled(true);
+                }
+            }
+        }
+
+        refProdLayout.cells("a").progressOn();
+        var refProdGrid = refProdLayout.cells("a").attachGrid();
+        refProdGrid.setImagePath("./public/codebase/imgs/");
+        refProdGrid.setHeader("No,Check,Task ID Produksi,Task ID Suport,Sub Unit,Bagian,Disivi,Kebutuhan Orang,Status Hari,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Catatan,Makan,Steam,AHU,Compressor,PW,Jemputan,Dust Collector,Mekanik,Listrik,H&N,QC,QA,Penandaan,GBK,GBB,Created By,Created At");
+        refProdGrid.attachHeader("#rspan,#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter")
+        refProdGrid.setColSorting("int,na,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
+        refProdGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
+        refProdGrid.setColTypes("rotxt,ch,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
+        refProdGrid.setInitWidthsP("5,5,20,20,20,20,20,15,15,15,20,20,20,7,7,7,7,7,7,10,7,7,7,7,7,7,7,7,15,25");
+        refProdGrid.enableSmartRendering(true);
+        refProdGrid.attachEvent("onXLE", function() {
+            refProdLayout.cells("a").progressOff();
+        });
+        refProdGrid.attachEvent("onRowSelect", function(rId, cIdn) {
+            if(refProdGrid.cells(rId, 3).getValue() != "-") {
+                refProdToolbar.disableItem("del_ref");
+                refProdToolbar.disableItem("process_support");
+            } else {
+                refProdToolbar.enableItem("del_ref");
+                refProdToolbar.enableItem("process_support");
+            }
+        });
+        refProdGrid.init();
+        
+        function rReqOvtGrid() {
+            refProdLayout.cells("a").progressOn();
+            let start = $("#other_start_ovt_report").val();
+            let end = $("#other_end_ovt_report").val();
+            let params = {sub_department_id: userLogged.subId, betweendate_created_at: start+","+end};
+            refProdToolbar.enableItem("del_ref");
+            refProdToolbar.enableItem("process_support");
+            refProdGrid.clearAndLoad(Overtime("getRequestOvertimeGrid", params), refGridCount);
+        }
+
+        rReqOvtGrid();
+
+        refProdToolbar.attachEvent("onClick", function(id) {
+            switch (id) {
+                case "refresh":
+                    rReqOvtGrid();
+                    break;
+                case "production_detail":
+                    if(!refProdGrid.getSelectedRowId()) {
+                        return eAlert("Silahkan pilih lemburan!");
+                    } else {
+                        let tabName = "tnp_production_detail_" + refProdGrid.getSelectedRowId();
+                        if(!inputTabs.tabs(tabName)) {
+                            inputTabs.addTab(tabName, "Detail Lembur Produksi " + refProdGrid.cells(refProdGrid.getSelectedRowId(), 1).getValue(), null, null, true, true);
+                        } else {
+                            inputTabs.tabs(tabName).setActive();
+                        }
+
+                        var detailLayout = inputTabs.tabs(tabName).attachLayout({
+                            pattern: "2E",
+                            cells: [
+                                {id: "a", text: "Detail Lembur Produksi", height: 260},
+                                {id: "b", text: "Daftar Personil Lembur"}
+                            ]
+                        });
+
+                        detailLayout.cells("b").progressOn();
+                        detailGrid = detailLayout.cells("b").attachGrid();
+                        detailGrid.setImagePath("./public/codebase/imgs/");
+                        detailGrid.setHeader("No,Task ID,Nama Karyawan,Sub Unit,Bagian,,,,Pelayanan Produksi,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Premi,Nominal Overtime,Makan,Tugas,Status Overtime,Status Terakhir,Created By,Updated By,Created At,,");
+                        detailGrid.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
+                        detailGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
+                        detailGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
+                        detailGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
+                        detailGrid.setInitWidthsP("5,20,20,20,20,0,0,0,25,15,15,15,10,10,10,10,10,10,10,5,25,10,30,15,15,22,0,0");
+                        detailGrid.attachFooter("Total,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#stat_total,#stat_total,#stat_total,#stat_total,,<div id='tnp_total_ovt_prod_detail_"+refProdGrid.getSelectedRowId()+"'></div>,,,,,,,,,");
+                        detailGrid.enableSmartRendering(true);
+                        detailGrid.attachEvent("onXLE", function() {
+                            detailLayout.cells("b").progressOff();
+                        });
+                        detailGrid.init();
+                        
+                        function rDetailGrid(taskId) {
+                            detailLayout.cells("b").progressOn();
+                            detailGrid.clearAndLoad(Overtime("getOvertimeDetailGrid", {notin_status: "CANCELED,REJECTED,ADD", equal_task_id: taskId}), countDetailOvertime);
+                        }
+
+                        function countDetailOvertime() {
+                            sumGridToElement(detailGrid, 18, "tnp_total_ovt_prod_detail_" + refProdGrid.getSelectedRowId());
+                        }
+
+                        reqJson(Overtime("getOvertimeDetailView"), "POST", {taskId: refProdGrid.getSelectedRowId()}, (err, res) => {
+                            if(res.status === "success") {
+                                detailLayout.cells("a").attachHTMLString(res.template);
+                                rDetailGrid(refProdGrid.getSelectedRowId());
+                            }
+                        });
+                    }
+                    break;
+                case "process_support":
+                    let taskId = [];
+                    for (let i = 0; i < refProdGrid.getRowsNum(); i++) {
+                        let id = refProdGrid.getRowId(i);
+                        if(refProdGrid.cells(id, 1).getValue() == 1) {
+                            taskId.push(id);
+                        }
+                    }
+
+                    if(taskId.length > 0) {
+                        enableRequest();
+                        initialForm.uncheckItem("jemputan");
+                        initialForm.uncheckItem("ahu");
+                        initialForm.uncheckItem("compressor");
+                        initialForm.uncheckItem("pw");
+                        initialForm.uncheckItem("steam");
+                        initialForm.uncheckItem("wfi");
+                        initialForm.uncheckItem("mechanic");
+                        initialForm.uncheckItem("electric");
+                        initialForm.uncheckItem("hnn");
+                        initialForm.uncheckItem("qc");
+                        initialForm.uncheckItem("qa");
+                        initialForm.uncheckItem("penandaan");
+                        initialForm.uncheckItem("gbb");
+                        initialForm.uncheckItem("gbk");
+                        $("#data_lembur").html("Data Lembur <b style='color:green'>(Support)</b>");
+                        $("#kebutuhan_teknik").html("Pelayanan Teknik");
+                        $("#kebutuhan_support").html("Pelayanan Support");
+                        setTimeout(() => {
+                            initialForm.showItem("taskIds");
+                            initialForm.setItemValue("taskIds", taskId.join(","));
+                            reqJson(Overtime("getOvtReqByTaskId"), "POST", {taskId}, (err, res) => {
+                                if(res.status === "success") {
+                                    if(res.reqs.length > 0) {
+                                        res.reqs.map(id => {
+                                            if(userLogged.subId == 5) {
+                                                if(id == "ahu" || id == "compressor" || id == "pw" || id == "steam" ||
+                                                id == "dust_collector" || id == "wfi" || id == "mechanic" || id == "electric" || id == "hnn") 
+                                                {
+                                                    initialForm.checkItem(id);
+                                                }
+                                            } else if(userLogged.subId == 7) {
+                                                if(id == "qa") {
+                                                    initialForm.checkItem(id);
+                                                }
+                                            } else if(userLogged.subId == 8) {
+                                                if(id == "qc") {
+                                                    initialForm.checkItem(id);
+                                                }
+                                            } else if(userLogged.subId == 13) {
+                                                if(id == "penandaan" || id == "gbb" || id == "gbk") {
+                                                    initialForm.checkItem(id);
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                            inputTabs.tabs("a").setActive();
+                        }, 200);
+                    } else {
+                        eAlert("Silahkan pilih referensi lembur terlebih dahulu!");
+                    }
+                    break;
+                case "del_ref":
+                    if(!refProdGrid.getSelectedRowId()) {
+                        return eAlert("Silahkan pilih referensi lembur terlebih dahulu!");
+                    }
+                    dhtmlx.modalbox({
+                        type: "alert-error",
+                        title: "Konfirmasi Hapus Referensi",
+                        text: "Anda yakin akan menghapus Referensi Lembur?",
+                        buttons: ["Ya", "Tidak"],
+                        callback: function (index) {
+                            if (index == 0) {
+                                reqJson(Overtime("deleteRef"), "POST", {taskId: refProdGrid.cells(refProdGrid.getSelectedRowId(), 2).getValue()}, (err, res) => {
+                                    if(res.status === "success") {
+                                        rReqOvtGrid();
+                                        sAlert(res.message);
+                                    } else {
+                                        eAlert(res.message);
+                                    }
+                                });
+                            }
+                        },
+                    });
                     break;
             }
         })
+
+        initialForm.hideItem("taskIds");
+
+        function disableRequest() {
+            let subId = userLogged.subId;
+            if(subId == 5) {
+                reqTeknik("disable");
+                
+                reqWhs("enable");
+                initialForm.enableItem("qa");
+                initialForm.enableItem("qc");
+            } else if(subId == 7) {
+                initialForm.disableItem("qa");
+
+                reqTeknik("enable");
+                reqWhs("enable");
+                initialForm.enableItem("qc");
+            } else if(subId == 8) {
+                initialForm.disableItem("qc");
+
+                reqTeknik("enable");
+                reqWhs("enable");
+                initialForm.enableItem("qa");
+            } else if(subId == 13) {
+                reqWhs("disable");
+
+                reqTeknik("enable");
+                initialForm.enableItem("qc");
+                initialForm.enableItem("qa");
+            }
+        } 
+
+        function enableRequest() {
+            let subId = userLogged.subId;
+            if(subId == 5) {
+                reqTeknik("enable");
+
+                initialForm.disableItem("qa");
+                initialForm.disableItem("qc");
+                initialForm.disableItem("penandaan");
+                initialForm.disableItem("gbb");
+                initialForm.disableItem("gbk");
+            } else if(subId == 7) {
+                initialForm.enableItem("qa");
+
+                reqTeknik("disable");
+                reqWhs("disable");
+                initialForm.disableItem("qc");
+            } else if(subId == 8) {
+                initialForm.enableItem("qc");
+
+                reqTeknik("disable");
+                reqWhs("disable");
+                initialForm.disableItem("qa");
+            } else if(subId == 13) {
+                reqWhs("enable");
+
+                reqTeknik("disable");
+                initialForm.disableItem("qc");
+                initialForm.disableItem("qa");
+            }
+        }
+
+        function reqTeknik(type) {
+            if(type == "disable") {
+                initialForm.disableItem("ahu");
+                initialForm.disableItem("compressor");
+                initialForm.disableItem("pw");
+                initialForm.disableItem("steam");
+                initialForm.disableItem("dust_collector");
+                initialForm.disableItem("wfi");
+                initialForm.disableItem("mechanic");
+                initialForm.disableItem("electric");
+                initialForm.disableItem("hnn");
+            } else {
+                initialForm.enableItem("ahu");
+                initialForm.enableItem("compressor");
+                initialForm.enableItem("pw");
+                initialForm.enableItem("steam");
+                initialForm.enableItem("dust_collector");
+                initialForm.enableItem("wfi");
+                initialForm.enableItem("mechanic");
+                initialForm.enableItem("electric");
+                initialForm.enableItem("hnn");
+            }
+        }
+
+        function reqWhs(type) {
+            if(type == "disable") {
+                initialForm.disableItem("penandaan");
+                initialForm.disableItem("gbb");
+                initialForm.disableItem("gbk");
+            } else {
+                initialForm.enableItem("penandaan");
+                initialForm.enableItem("gbb");
+                initialForm.enableItem("gbk");
+            }
+        }
+
+        disableRequest();
     }
 JS;
 

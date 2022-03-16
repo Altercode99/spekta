@@ -231,7 +231,7 @@ $script = <<< "JS"
                     icon_path: "./public/codebase/icons/",
                     items: [
                         {id: "add", text: "Tambah", type: "button", img: "add.png"},
-                        {id: "update", text: "Simpan Tamu Baru", type: "button", img: "update.png"},
+                        {id: "update", text: "Simpan & Update Tamu", type: "button", img: "update.png"},
                         {id: "save", text: "Simpan", type: "button", img: "ok.png"},
                     ]
                 });

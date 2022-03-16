@@ -25,9 +25,6 @@ $script = <<< "JS"
             sub_department_id: {
                 reload: false
             },
-            // division_id: {
-            //     reload: false
-            // },
         }
         
         var inputTabs = mainTab.cells("other_input_overtime").attachTabbar({
@@ -95,9 +92,6 @@ $script = <<< "JS"
         addDeptCombo.attachEvent("onChange", function(value, text){
             clearComboReload(initialForm, "sub_department_id", Overtime("getSubDepartment", {equal_department_id: value, equal_id: userLogged.subId, notequal_id: 5}));
         });
-        // addSubDeptCombo.attachEvent("onChange", function(value, text){
-        //     clearComboReload(initialForm, "division_id", Overtime("getDivision", {subDeptId: value}));
-        // });
 
         var startCombo = initialForm.getCombo("start_date");
         var endCombo = initialForm.getCombo("end_date");
@@ -443,10 +437,15 @@ $script = <<< "JS"
         
         function rProcGrid() {
             processlayout.cells("a").progressOn();
-            let params = {equal_status: "CREATED", equal_ref: ""};
-            if(userLogged.rankId >= 3 && userLogged.pltRankId >= 3) {
-                params.in_sub_department_id = userLogged.subId+","+userLogged.pltSubId;
-            } else if(userLogged.rankId == 2 && userLogged.pltRankId == 2) {
+            let params = {equal_status: "CREATED"};
+            if(userLogged.rankId >= 3 || userLogged.pltRankId >= 3) {
+                if(userLogged.rankId >= 6 || userLogged.pltRankId >= 6) {
+                    params.in_sub_department_id = userLogged.subId+","+userLogged.pltSubId;
+                    params.equal_created_by = userLogged.empId;
+                } else {
+                    params.in_sub_department_id = userLogged.subId+","+userLogged.pltSubId;
+                }
+            } else if(userLogged.rankId == 2 || userLogged.pltRankId == 2) {
                 params.in_department_id = userLogged.deptId+","+userLogged.pltDeptId;
             }
             formOvtGrid.clearAndLoad(Overtime("getOvertimeGrid", params), procGridCount);

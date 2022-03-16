@@ -5,25 +5,13 @@ if ((strpos(strtolower($_SERVER['SCRIPT_NAME']), strtolower(basename(__FILE__)))
 }
 $script = <<< "JS"
 
-    function requestOvertimeTab() {
-        if (!mainTab.tabs("tnp_overtime_request")){
-            if(!userLogged.picOvertime) {
-                return eaAlert("Kesalahan Hak Akses", "Anda tidak memiliki hak akses sebagai Admin lemburan!");
-            }
-            mainTab.addTab("tnp_overtime_request", tabsStyle("clock.png", "Request Lembur (Support)"), null, null, true, true);
-            showRequestOvertime();
-        } else {
-            mainTab.tabs("tnp_overtime_request").setActive();
-        }
-    }
-
-    function inputOvertimeTNPTab() {
+    function inputOvertimeTNPTab(process = null) {
         if (!mainTab.tabs("tnp_input_overtime")){
             if(!userLogged.picOvertime) {
                 return eaAlert("Kesalahan Hak Akses", "Anda tidak memiliki hak akses sebagai Admin lemburan!");
             }
             mainTab.addTab("tnp_input_overtime", tabsStyle("clock.png", "Input Lembur (Support)"), null, null, true, true);
-            showInputOvertimeTNP();
+            showInputOvertimeTNP(process);
         } else {
             mainTab.tabs("tnp_input_overtime").setActive();
         }

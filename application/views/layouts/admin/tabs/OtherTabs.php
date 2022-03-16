@@ -55,6 +55,9 @@ $script = <<< "JS"
 
     function appvOvertimeTab() {
         if (!mainTab.tabs("other_approval_overtime")){
+            if(!userLogged.picOvertime) {
+                return eaAlert("Kesalahan Hak Akses", "Anda tidak memiliki hak akses sebagai Admin lemburan!");
+            }
             mainTab.addTab("other_approval_overtime", tabsStyle("ok.png", "Approval Lembur", "background-size: 16px 16px"), null, null, true, true);
             showAppvOvertime();
         } else {
@@ -64,6 +67,9 @@ $script = <<< "JS"
 
     function reportOvertimeTab() {
         if (!mainTab.tabs("other_report_overtime")){
+            if(!userLogged.picOvertime) {
+                return eaAlert("Kesalahan Hak Akses", "Anda tidak memiliki hak akses sebagai Admin lemburan!");
+            }
             mainTab.addTab("other_report_overtime", tabsStyle("app18.png", "Report Lembur", "background-size: 16px 16px"), null, null, true, true);
             showReportOvertime();
         } else {
@@ -73,6 +79,9 @@ $script = <<< "JS"
 
     function reqRevOvertimeTab() {
         if (!mainTab.tabs("other_pengajuan_revisi_lembur")){
+            if(!userLogged.picOvertime) {
+                return eaAlert("Kesalahan Hak Akses", "Anda tidak memiliki hak akses sebagai Admin lemburan!");
+            }
             mainTab.addTab("other_pengajuan_revisi_lembur", tabsStyle("clock.png", "Pengajuan Revisi Lembur", "background-size: 16px 16px"), null, null, true, true);
             showReqRevOvertime();
         } else {

@@ -73,56 +73,17 @@ class PublicController extends Erp_Controller
                 $this->load->view('html/invalid_response', ['message' => "Tidak ada kebutuhan Support bagian <b>$name</b>!"]);
             }
 
-            $checkIsGenerated = $this->Hr->getOne('employee_overtimes', ['ref' => $taskId, 'sub_department_id' => $emp->sub_department_id]);
-            if (!$checkIsGenerated) {
-                $lastId = $this->Overtime->lastOt('employee_overtimes', 'overtime_date', $overtime->overtime_date, $overtime->location);
-                $expDate = explode('-', $overtime->overtime_date);
-                $newTaskId = sprintf('%03d', $lastId + 1) . '/OT/' . $overtime->location . '/' . toRomawi($expDate[1]) . '/' . $expDate[0];
-                $tnpData = [
-                    'location' => $overtime->location,
-                    'task_id' => $newTaskId,
-                    'ref' => $overtime->task_id,
-                    'department_id' => $emp->department_id,
+            $checkRef = $this->Hr->getOne('employee_overtimes_ref', ['task_id' => $overtime->task_id, 'sub_department_id' => $emp->sub_department_id]);
+            if(!$checkRef) {
+                $data = [
+                    'task_id' => $overtime->task_id,
                     'sub_department_id' => $emp->sub_department_id,
-                    'division_id' => 0,
-                    'personil' => 0,
-                    'overtime_date' => $overtime->overtime_date,
-                    'start_date' => $overtime->start_date,
-                    'end_date' => $overtime->end_date,
-                    'status_day' => $overtime->status_day,
-                    'notes' => $overtime->notes,
-                    'makan' => 0,
-                    'steam' => $overtime->steam,
-                    'ahu' => $overtime->ahu,
-                    'compressor' => $overtime->compressor,
-                    'pw' => $overtime->pw,
-                    'jemputan' => $overtime->jemputan,
-                    'dust_collector' => $overtime->dust_collector,
-                    'mechanic' => $overtime->mechanic,
-                    'electric' => $overtime->electric,
-                    'hnn' => $overtime->hnn,
-                    'qc' => $overtime->qc,
-                    'qa' => $overtime->qa,
-                    'penandaan' => $overtime->penandaan,
-                    'gbk' => $overtime->gbk,
-                    'gbb' => $overtime->gbb,
-                    'status' => 'CREATED',
-                    'apv_spv' => 'CREATED',
-                    'apv_asman' => 'CREATED',
-                    'apv_mgr' => 'CREATED',
-                    'apv_head' => 'CREATED',
-                    'created_by' => $params['emp_id'],
-                    'updated_by' => $params['emp_id'],
-                    'updated_at' => date('Y-m-d H:i:s'),
+                    'created_by' => $emp->id,
                 ];
-                $newOvertime = $this->Hr->create('employee_overtimes', $tnpData);
-                if ($newOvertime) {
-                    $this->load->view('html/valid_response', ['message' => " <p>Berhasil membuat lembur <b>$name</b> dengan Task ID: <b>$overtime->task_id</b><br/> Segera lakukan <b>pemilihan personil</b> untuk lemburan tersebut!</p>"]);
-                } else {
-                    $this->load->view('html/invalid_response', ['message' => "<p>Gagal membuat lembur <b>$name</b><br/> Lembur dengan No. Referensi: <b>$overtime->task_id</b> sudah dibuat sebelumnya</p>"]);
-                }
+                $this->Hr->create('employee_overtimes_ref', $data);
+                $this->load->view('html/valid_response', ['message' => "Berhasil menyimpan <b>Referensi Lembur Produksi</b>"]);
             } else {
-                $this->load->view('html/invalid_response', ['message' => "<p>Gagal membuat lembur <b>$name</b><br/> Lembur dengan No. Referensi: <b>$overtime->task_id</b> sudah dibuat sebelumnya</p>"]);
+                $this->load->view('html/invalid_response', ['message' => "<b>Referensi Lembur Produksi</b> sudah disimpan!"]);
             }
         } else {
             $this->load->view('html/invalid_response', ['message' => 'Token tidak valid!']);

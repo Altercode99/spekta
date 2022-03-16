@@ -18,10 +18,6 @@ $script = <<< "JS"
             var subOvertimeItems = [];
 
             //@LEMBURAN
-            if(isHaveTrees("other_request_lembur_support")) {
-                subOvertimeItems.push({id: "other_request_lembur_support", text: "Request Lembur", icons: {file: "menu_icon"}});
-            }
-
             if(isHaveTrees("other_input_lembur_support")) {
                 subOvertimeItems.push({id: "other_input_lembur_support", text: "Input Lembur (B)", icons: {file: "menu_icon"}});
             }
@@ -56,9 +52,7 @@ $script = <<< "JS"
                     inputOvertimeTab();
                 } else if(id == "other_input_lembur_support") {
                     inputOvertimeTNPTab();
-                } else if(id == "other_request_lembur_support") {
-                    requestOvertimeTab();
-                } else if(id == "other_approval_lembur") {
+                } if(id == "other_approval_lembur") {
                     appvOvertimeTab();
                 } else if(id == "other_report_lembur") {
                     reportOvertimeTab();

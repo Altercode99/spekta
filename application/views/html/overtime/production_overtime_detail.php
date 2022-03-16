@@ -1,4 +1,4 @@
-<div style='padding:10px;display:flex;flex-direction:row;justify-content:space-between;width:100%;overflow:auto;height:250px'>
+<div style='padding:10px;display:flex;flex-direction:row;justify-content:space-between;width:100%;overflow-y:scroll;height:85%;background:#fff'>
     <div style='width: 50%'>
         <table>
             <tr>

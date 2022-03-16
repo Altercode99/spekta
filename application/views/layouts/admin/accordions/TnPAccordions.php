@@ -17,11 +17,6 @@ $script = <<< "JS"
             var overtimeItems = [];
             var overtimeSubItems = [];
 
-            //OVERTIME
-            if(isHaveTrees("tnp_request_lembur")) {
-                overtimeSubItems.push({id: "tnp_request_lembur", text: "Request Lembur", icons: {file: "menu_icon"}});
-            }
-
             if(isHaveTrees("tnp_input_lembur")) {
                 overtimeSubItems.push({id: "tnp_input_lembur", text: "Input Lembur (B)", icons: {file: "menu_icon"}});
             }
@@ -36,9 +31,7 @@ $script = <<< "JS"
             });
 
             overtimeTree.attachEvent("onClick", function(id) {
-                if(id == "tnp_request_lembur") {
-                    requestOvertimeTab();
-                } else if(id == "tnp_input_lembur") {
+                if(id == "tnp_input_lembur") {
                     inputOvertimeTNPTab();
                 }
             });

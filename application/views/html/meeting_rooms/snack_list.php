@@ -1,29 +1,31 @@
-<?php foreach ($snacks as $snack) { ?>
-<div class="snack_container <?= $rev->snack_id == $snack->id ? 'snack_selected' : null ?>" id="snack-<?= $snack->id ?>" onclick="selectSnack('<?= $snack->id ?>')">
-    <div class="left">
-        <?php if($snack->filename) { ?>
-            <img class="snack_img" src="<?= base_url('assets/images/meeting_snacks/' . $snack->filename) ?>" />
-        <?php } else { ?>
-            <img class="snack_img" src="<?= base_url('public/img/no-image.png') ?>" />
-        <?php } ?>
-    </div>
+<div style="width:100%;height:100%;overflow-y:scroll">
+    <?php foreach ($snacks as $snack) { ?>
+    <div class="snack_container <?= $rev->snack_id == $snack->id ? 'snack_selected' : null ?>" id="snack-<?= $snack->id ?>" onclick="selectSnack('<?= $snack->id ?>')">
+        <div class="left">
+            <?php if($snack->filename) { ?>
+                <img class="snack_img" src="<?= base_url('assets/images/meeting_snacks/' . $snack->filename) ?>" />
+            <?php } else { ?>
+                <img class="snack_img" src="<?= base_url('public/img/no-image.png') ?>" />
+            <?php } ?>
+        </div>
 
-    <div class="right">
-        <table class="snack_table">
-            <tr>
-                <td>Nama Snack</td>
-                <td>:</td>
-                <td><?= $snack->name ?></td>
-            </tr>
-            <tr>
-                <td>Harga</td>
-                <td>:</td>
-                <td>Rp. <?= toNumber($snack->price) ?></td>
-            </tr>
-        </table>
+        <div class="right">
+            <table class="snack_table">
+                <tr>
+                    <td>Nama Snack</td>
+                    <td>:</td>
+                    <td><?= $snack->name ?></td>
+                </tr>
+                <tr>
+                    <td>Harga</td>
+                    <td>:</td>
+                    <td>Rp. <?= toNumber($snack->price) ?></td>
+                </tr>
+            </table>
+        </div>
     </div>
+    <?php } ?>
 </div>
-<?php } ?>
 
 <style>
     .snack_container {

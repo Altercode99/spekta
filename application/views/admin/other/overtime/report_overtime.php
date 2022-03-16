@@ -109,9 +109,9 @@ $script = <<< "JS"
 
                     reqJson(Overtime("getOvtReview"), "POST", {taskId}, (err, res) => {
                         var revForm = revLayout.cells("b").attachForm([
-                            {type: "fieldset", offsetTop: 30, offsetLeft: 30, label: "Ulasan ASMAN Terkait", list: [
-                                {type: "hidden", name: "task_id", labelWidth: 130, inputWidth:250, required: true, value: taskId},
-                                {type: "input", name: "overtime_review", label: "Komentar", labelWidth: 130, inputWidth:250, required: true, rows: 4, value: res.comment},
+                            {type: "fieldset", offsetTop: 30, offsetLeft: 30, label: "Ulasan Atasan Terkait", list: [
+                                {type: "hidden", name: "task_id", labelWidth: 130, inputWidth:280, required: true, value: taskId},
+                                {type: "input", name: "overtime_review", label: "Komentar", labelWidth: 130, inputWidth:280, required: true, rows: 8, value: res.comment},
                                 {type: "block", offsetTop: 30, list: [
                                     {type: "button", name: "update", className: "button_update", offsetLeft: 15, value: "Simpan"},
                                     {type: "newcolumn"},
