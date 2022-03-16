@@ -8,6 +8,7 @@ $script = <<< "JS"
 	var homeLayout;
 	
 	function showHome() {
+		eaAlert("INFORMASI", "Berhubung S.P.E.K.T.A masih dalam status BETA Test, kami akan melakukan update secara berkala terkait masukan-masukan yang teman-teman berikan. Oleh karena itu dimohon agar <b>Clear History</b> browser kalian saat awal masuk kerja / sebelum membuka S.P.E.K.T.A pertama kali. Terimakasih");
 		homeLayout = mainTab.cells("home").attachLayout({
 			pattern : "3T",		
 			cells : [
@@ -56,15 +57,15 @@ $script = <<< "JS"
 			});
 		}
 
-		if(isHaveMenu("Human Resource")) {
+		if(isHaveMenu("SDM & Akuntansi")) {
 			dataView.add({
 				path:"./public/codebase/icons/hrd.png",
-				title: "SDM & Akutansi",
+				title: "SDM & Akuntansi",
 				id:"hr"
 			});
 		}
 
-		if(isHaveMenu("General Affair")) {
+		if(isHaveMenu("Umum & K3L")) {
 			dataView.add({
 				path:"./public/codebase/icons/building.png",
 				title: "Umum & K3L",
@@ -72,7 +73,7 @@ $script = <<< "JS"
 			});
 		}
 
-		// if(isHaveMenu("Production")) {
+		// if(isHaveMenu("Produksi")) {
 		// 	dataView.add({
 		// 		path:"./public/codebase/icons/production.png",
 		// 		title: "Produksi",
@@ -80,7 +81,7 @@ $script = <<< "JS"
 		// 	});
 		// }
 
-		// if(isHaveMenu("Warehouse")) {
+		// if(isHaveMenu("Penyimpanan")) {
 		// 	dataView.add({
 		// 		path:"./public/codebase/icons/warehouse.png",
 		// 		title: "Penyimpanan",

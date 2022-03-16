@@ -252,16 +252,17 @@ class OvertimeModel extends CI_Model
         return $this->db->query($sql)->result();
     }
 
-    public function getRequestOvertimeGrid($subId)
+    public function getRequestOvertimeGrid($params)
     {
+        $where = advanceSearch($params);
         $sql = "SELECT a.task_id,a.task_id_support,b.*,c.name AS department,d.name AS sub_department,e.name AS division,
                        (SELECT employee_name FROM employees WHERE a.created_by = id) AS emp1
                        FROM employee_overtimes_ref a, employee_overtimes b, departments c, sub_departments d, divisions e
-                       WHERE a.sub_department_id = $subId
-                       AND b.task_id = a.task_id
+                       WHERE b.task_id = a.task_id
                        AND b.department_id = c.id
                        AND b.sub_department_id = d.id
                        AND b.division_id = e.id
+                       $where
                        ORDER BY a.id DESC";
 
         return $this->db->query($sql);

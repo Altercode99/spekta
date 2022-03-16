@@ -360,12 +360,12 @@ $script = <<< "JS"
         processlayoutTnp.cells("a").progressOn();
         formOvtGridTnp = processlayoutTnp.cells("a").attachGrid();
         formOvtGridTnp.setImagePath("./public/codebase/imgs/");
-        formOvtGridTnp.setHeader("No,Task ID,Sub Unit,Bagian,Disivi,Kebutuhan Orang,Status Hari,Tanggal Overtime,Waktu Mulai, Waktu Selesai,Catatan,Makan,Steam,AHU,Compressor,PW,Jemputan,Dust Collector,Mekanik,Listrik,H&N,QC,QA,Penandaan,GBK,GBB,Status Overtime, Revisi Jam Lembur,Revisi User Approval,Rejection User Approval,Created By,Updated By,Created At,");
-        formOvtGridTnp.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter");
-        formOvtGridTnp.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
-        formOvtGridTnp.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
-        formOvtGridTnp.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        formOvtGridTnp.setInitWidthsP("5,20,20,20,20,15,15,15,20,20,20,7,7,7,7,7,7,10,7,7,7,7,7,7,7,7,10,30,30,30,15,15,25,0");
+        formOvtGridTnp.setHeader("No,Task ID,Sub Unit,Bagian,Disivi,Kebutuhan Orang,Status Hari,Tanggal Overtime,Waktu Mulai, Waktu Selesai,Catatan,Makan,Steam,AHU,Compressor,PW,Jemputan,Dust Collector,WFI,Mekanik,Listrik,H&N,QC,QA,Penandaan,GBK,GBB,Status Overtime, Revisi Jam Lembur,Revisi User Approval,Rejection User Approval,Created By,Updated By,Created At,");
+        formOvtGridTnp.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter");
+        formOvtGridTnp.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
+        formOvtGridTnp.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
+        formOvtGridTnp.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
+        formOvtGridTnp.setInitWidthsP("5,20,20,20,20,15,15,15,20,20,20,7,7,7,7,7,7,10,7,7,7,7,7,7,7,7,7,10,30,30,30,15,15,25,0");
         formOvtGridTnp.enableSmartRendering(true);
         formOvtGridTnp.attachEvent("onXLE", function() {
             processlayoutTnp.cells("a").progressOff();
@@ -573,19 +573,7 @@ $script = <<< "JS"
 
                     personilForm.attachEvent("onFocus", function(name, value) {
                         if(name === 'personil_name') {
-                            if(!isReqGrid) {
-                                if(reqGrid.getSelectedRowId()) {
-                                    let splitId = reqGrid.getSelectedRowId().split(",");
-                                    let divIds = [];
-                                    splitId.map(id => divIds.push(reqGrid.cells(id, 3).getValue()));
-                                    let stringDiv = divIds.join(",");
-                                    loadPersonil(stringDiv);
-                                } else {
-                                    loadPersonil();
-                                }
-                            } else {
-                                loadPersonil();
-                            }
+                            loadPersonil();
                         }
                     });
 
@@ -636,7 +624,7 @@ $script = <<< "JS"
                         }
                     });
 
-                    function loadPersonil(divIds = null) {
+                    function loadPersonil() {
                         var addPersonilWin = createWindow("add_personil_win", "Daftar Personil", 900, 500);
                         myWins.window("add_personil_win").skipMyCloseEvent = true;
 
@@ -689,15 +677,16 @@ $script = <<< "JS"
                             addPersonilWin.progressOff();
                         });
                         addPersonilGrid.init();
-
-                        var params;
-                        if(divIds) {
-                            params = {in_division_id: divIds};
+                        let params;
+                        if(userLogged.subId == 5) {
+                            params = {equal_sub_department_id: userLogged.subId};
                         }
                         addPersonilGrid.clearAndLoad(Overtime("getEmployees", params), disabledBookedPersonil);
+                        
                         function disabledBookedPersonil() {
                             bookedPersonil.map(empId => addPersonilGrid.setRowColor(empId, "#f7ed74"));
                             countPerson = addPersonilGrid.getRowsNum();
+                            console.log(countPerson);
                         }
                     }
                     break;
@@ -874,6 +863,7 @@ $script = <<< "JS"
                 {id: "del_ref", text: "Hapus Referensi", type: "button", img: "delete.png"},
                 {id: "production_detail", text: "Detail Referensi Lembur", type: "button", img: "edit.png"},
                 {id: "process_support", text: "Proses Support", type: "button", img: "undo.gif"},
+                {id: "asign", text: "Assign To", type: "button", img: "update.png"},
             ]
         });
 
@@ -906,12 +896,12 @@ $script = <<< "JS"
         refProdLayout.cells("a").progressOn();
         var refProdGrid = refProdLayout.cells("a").attachGrid();
         refProdGrid.setImagePath("./public/codebase/imgs/");
-        refProdGrid.setHeader("No,Check,Task ID Produksi,Task ID Suport,Sub Unit,Bagian,Disivi,Kebutuhan Orang,Status Hari,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Catatan,Makan,Steam,AHU,Compressor,PW,Jemputan,Dust Collector,Mekanik,Listrik,H&N,QC,QA,Penandaan,GBK,GBB,Created By,Created At");
-        refProdGrid.attachHeader("#rspan,#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter")
-        refProdGrid.setColSorting("int,na,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
-        refProdGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
-        refProdGrid.setColTypes("rotxt,ch,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        refProdGrid.setInitWidthsP("5,5,20,20,20,20,20,15,15,15,20,20,20,7,7,7,7,7,7,10,7,7,7,7,7,7,7,7,15,25");
+        refProdGrid.setHeader("No,Check,Task ID Produksi,Task ID Suport,Sub Unit,Bagian,Disivi,Kebutuhan Orang,Status Hari,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Catatan,Makan,Steam,AHU,Compressor,PW,Jemputan,Dust Collector,WFI,Mekanik,Listrik,H&N,QC,QA,Penandaan,GBK,GBB,Created By,Created At");
+        refProdGrid.attachHeader("#rspan,#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter")
+        refProdGrid.setColSorting("int,na,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
+        refProdGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
+        refProdGrid.setColTypes("rotxt,ch,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
+        refProdGrid.setInitWidthsP("5,5,20,20,20,20,20,15,15,15,20,20,20,7,7,7,7,7,7,10,7,7,7,7,7,7,7,7,7,15,25");
         refProdGrid.enableSmartRendering(true);
         refProdGrid.attachEvent("onXLE", function() {
             refProdLayout.cells("a").progressOff();
@@ -920,18 +910,23 @@ $script = <<< "JS"
             if(refProdGrid.cells(rId, 3).getValue() != "-") {
                 refProdToolbar.disableItem("del_ref");
                 refProdToolbar.disableItem("process_support");
+                refProdToolbar.disableItem("asign");
             } else {
                 refProdToolbar.enableItem("del_ref");
                 refProdToolbar.enableItem("process_support");
+                refProdToolbar.enableItem("asign");
             }
         });
         refProdGrid.init();
         
         function rReqOvtGrid() {
             refProdLayout.cells("a").progressOn();
-            let start = $("#other_start_ovt_report").val();
-            let end = $("#other_end_ovt_report").val();
-            let params = {sub_department_id: userLogged.subId, betweendate_created_at: start+","+end};
+            let start = $("#tnp_ref_start_date").val();
+            let end = $("#tnp_ref_end_date").val();
+            let params = {betweendate_created_at: start+","+end};
+            if(userLogged.subId) {
+                params.sub_department_id = userLogged.subId;
+            }
             refProdToolbar.enableItem("del_ref");
             refProdToolbar.enableItem("process_support");
             refProdGrid.clearAndLoad(Overtime("getRequestOvertimeGrid", params), refGridCount);
@@ -1082,6 +1077,77 @@ $script = <<< "JS"
                             }
                         },
                     });
+                    break;
+                case "asign":
+                    if(!refProdGrid.getSelectedRowId()) {
+                        return eAlert("Silahkan pilih referensi lembur terlebih dahulu!");
+                    }
+                    
+                    var ovtTaskWin = createWindow("ovt_task_win", "Daftar Lembur Support", 900, 400);
+                    myWins.window("ovt_task_win").skipMyCloseEvent = true;
+
+                    var ovtTaskToolbar = ovtTaskWin.attachToolbar({
+                        icon_path: "./public/codebase/icons/",
+                        items: [
+                            {id: "asign_to", text: "Simpan", type: "button", img: "ok.png"},
+                        ]
+                    });
+
+                    var ovtTaskGrid = ovtTaskWin.attachGrid();
+                    ovtTaskGrid.setImagePath("./public/codebase/imgs/");
+                    ovtTaskGrid.setImagePath("./public/codebase/imgs/");
+                    ovtTaskGrid.setHeader("No,Task ID,Sub Unit,Bagian,Disivi,Kebutuhan Orang,Status Hari,Tanggal Overtime,Waktu Mulai, Waktu Selesai,Catatan,Makan,Steam,AHU,Compressor,PW,Jemputan,Dust Collector,Mekanik,Listrik,H&N,QC,QA,Penandaan,GBK,GBB,Status Overtime, Revisi Jam Lembur,Revisi User Approval,Rejection User Approval,Created By,Updated By,Created At,");
+                    ovtTaskGrid.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter");
+                    ovtTaskGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
+                    ovtTaskGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
+                    ovtTaskGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
+                    ovtTaskGrid.setInitWidthsP("5,20,20,20,20,15,15,15,20,20,20,7,7,7,7,7,7,10,7,7,7,7,7,7,7,7,10,30,30,30,15,15,25,0");
+                    ovtTaskGrid.enableSmartRendering(true);
+                    ovtTaskGrid.attachEvent("onXLE", function() {
+                        ovtTaskWin.progressOff();
+                    });
+                    ovtTaskGrid.init();
+
+                    function rOvtTaskGrid() {
+                        ovtTaskWin.progressOn();
+                        let params = {in_status: "CREATED"};
+                        if(userLogged.rankId >= 3 || userLogged.pltRankId >= 3) {
+                            if(userLogged.rankId >= 6 || userLogged.pltRankId >= 6) {
+                                params.in_sub_department_id = userLogged.subId+","+userLogged.pltSubId;
+                            } else {
+                                params.equal_created_by = userLogged.empId;;
+                            }
+                        } else if(userLogged.rankId == 2 || userLogged.pltRankId == 2) {
+                            params.in_department_id = userLogged.deptId+","+userLogged.pltDeptId;
+                        }
+                        ovtTaskGrid.clearAndLoad(Overtime("getOvertimeGrid", params));
+                    }
+
+                    rOvtTaskGrid();
+
+                    ovtTaskToolbar.attachEvent("onClick", function(id) {
+                        switch (id) {
+                            case "asign_to":
+                                if(!ovtTaskGrid.getSelectedRowId()) {
+                                    return eAlert("Belum ada lemburan yang di pilih!");
+                                }
+
+                                reqJson(Overtime("asignToOvertime"), "POST", {
+                                    taskId: refProdGrid.getSelectedRowId(), 
+                                    taskIdSupport: ovtTaskGrid.cells(ovtTaskGrid.getSelectedRowId(), 1).getValue()
+                                }, (err, res) => {
+                                    if(res.status === "success") {
+                                        sAlert(res.message);
+                                        rProcGrid();
+                                        rReqOvtGrid();
+                                        closeWindow("ovt_task_win");
+                                    } else {
+                                        eAlert(res.message);
+                                    }
+                                });
+                                break;
+                        }
+                    })
                     break;
             }
         })

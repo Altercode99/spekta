@@ -175,7 +175,7 @@ class OvtLib
 
     public function getSupportEmail($email, $taskId)
     {
-        $refs = $this->Hr->getWhere('employee_overtimes', ['ref' => $taskId])->result();
+        $refs = $this->Hr->getWhere('employee_overtimes_ref', ['task_id' => $taskId])->result();
         foreach ($refs as $ref) {
             $pics = $this->Main->getOne('pics', ['sub_department_id' => $ref->sub_department_id, 'code' => 'overtime'], 'pic_emails');
             if($pics) {

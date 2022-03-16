@@ -18,7 +18,7 @@ class TestController extends CI_Controller
 
     // public function testPage()
     // {
-    //     if ($xlsx = SimpleXLSX::parse('./assets/file_to_import/gaji_2.xlsx')) {
+    //     if ($xlsx = SimpleXLSX::parse('./assets/file_to_import/employee.xlsx')) {
     //         $header_values = $rows = [];
     //         foreach ($xlsx->rows() as $k => $r) {
     //             if ($k === 0) {
@@ -28,14 +28,43 @@ class TestController extends CI_Controller
     //             $rows[] = array_combine($header_values, $r);
     //         }
 
-    //         $dataSallary = [];
+    //         $dataInsert = [];
+    //         $dataUpdate = [];
     //         foreach ($rows as $key => $value) {
-    //             $dataSallary[] = [
-    //                 'sap_id' => $value['sap_id'],
-    //                 'overtime' => $value['overtime']
-    //             ];
+    //             $exist = $this->Hr->getOne('employees', ['sap_id' => $value['sap_id']]);
+    //             if($exist) {
+    //                 $dataUpdate[] = [
+    //                     'sap_id' => $value['sap_id'],
+    //                     'email' => $value['email'],
+    //                 ];
+    //             } else {
+    //                 $dataInsert[] = [
+    //                     'npp' => $value['npp'],
+    //                     'sap_id' => $value['sap_id'],
+    //                     'nik' => $value['nik'],
+    //                     'employee_name' => $value['employee_name'],
+    //                     'birth_date' => date('Y-m-d', strtotime($value['birth_date'])),
+    //                     'gender' => $value['gender'],
+    //                     'religion' => $value['religion'],
+    //                     'age' => intval($value['age']),
+    //                     'employee_status' => $value['employee_status'],
+    //                     'os_name' => $value['os_name'],
+    //                     'email' => $value['email'],
+    //                     'department_id' => $value['department_id'],
+    //                     'sub_department_id' => $value['sub_department_id'],
+    //                     'division_id' => $value['division_id'],
+    //                     'rank_id' => $value['rank_id'],
+    //                     'overtime' => $value['overtime'],
+    //                 ];
+    //             }
     //         }
-    //         dd($this->Hr->updateMultiple('employees', $dataSallary, 'sap_id'));
+    //         if(count($dataInsert) > 0) {
+    //             $this->Hr->createMultiple('employees', $dataInsert);
+    //         }
+    //         if(count($dataUpdate) > 0) {
+    //             $this->Hr->updateMultiple('employees', $dataUpdate, 'sap_id');
+    //         }
+    //         echo "Oke";
     //     } else {
     //         echo SimpleXLSX::parseError();
     //     }

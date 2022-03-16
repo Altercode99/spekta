@@ -310,12 +310,12 @@ $script = <<< "JS"
         appvTabs.cells("a").progressOn();
         var ovtGrid = appvTabs.cells("a").attachGrid();
         ovtGrid.setImagePath("./public/codebase/imgs/");
-        ovtGrid.setHeader("No,Task ID,Sub Unit,Bagian,Sub Bagian,Kebutuhan Orang,Status Hari,Tanggal Overtime,Waktu Mulai, Waktu Selesai,Catatan,Makan,Steam,AHU,Compressor,PW,Jemputan,Dust Collector,Mekanik,Listrik,H&N,QC,QA,Penandaan,GBK,GBB,Status Overtime,,Approval ASMAN,Approval PPIC,Approval MANAGER,Approval PLANT MANAGER,Revisi Jam Lembur,Rejection User Approval,Created By,Updated By,Created At,NIPSPV,NIPASMAN,NIPPPIC,NIPMGR");
-        ovtGrid.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
-        ovtGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
-        ovtGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
-        ovtGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        ovtGrid.setInitWidthsP("5,20,20,20,20,15,15,15,20,20,20,7,7,7,7,7,7,10,7,7,7,7,7,7,7,7,10,0,35,35,35,35,30,30,15,15,25,0,0,0,0");
+        ovtGrid.setHeader("No,Task ID,Sub Unit,Bagian,Sub Bagian,Kebutuhan Orang,Status Hari,Tanggal Overtime,Waktu Mulai, Waktu Selesai,Catatan,Makan,Steam,AHU,Compressor,PW,Jemputan,Dust Collector,WFI,Mekanik,Listrik,H&N,QC,QA,Penandaan,GBK,GBB,Status Overtime,,Approval ASMAN,Approval PPIC,Approval MANAGER,Approval PLANT MANAGER,Revisi Jam Lembur,Rejection User Approval,Created By,Updated By,Created At,NIPSPV,NIPASMAN,NIPPPIC,NIPMGR");
+        ovtGrid.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
+        ovtGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
+        ovtGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
+        ovtGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
+        ovtGrid.setInitWidthsP("5,20,20,20,20,15,15,15,20,20,20,7,7,7,7,7,7,10,7,7,7,7,7,7,7,7,7,10,0,35,35,35,35,30,30,15,15,25,0,0,0,0");
         ovtGrid.enableSmartRendering(true);
         ovtGrid.attachEvent("onXLE", function() {
             appvTabs.cells("a").progressOff();
@@ -326,16 +326,16 @@ $script = <<< "JS"
             rOvtDetailGrid(rId);
         });
         ovtGrid.attachEvent("onRowSelect", function(rId, cIdn) {
-            if(ovtGrid.cells(rId, 21).getValue() === 'REJECTED') {
+            if(ovtGrid.cells(rId, 22).getValue() === 'REJECTED') {
                 disableAppvToolbar();
             } else {
                 let ovtDepartment = cleanSC(ovtGrid.cells(rId, 2).getValue());
                 let ovtSubDepartment = cleanSC(ovtGrid.cells(rId, 3).getValue());
                 let ovtDivision = cleanSC(ovtGrid.cells(rId, 4).getValue());
                 if((userLogged.picOvertime && userLogged.rankId <= 6) || userLogged.pltRankId <= 6) {
-                    if(ovtGrid.cells(rId, 30).getValue() !== "-" || ovtGrid.cells(rId, 40).getValue() === "-") {  //Approval MGR
-                        if(ovtGrid.cells(rId, 40).getValue() === "-") {
-                            if(ovtGrid.cells(rId, 27).getValue() === "-") {
+                    if(ovtGrid.cells(rId, 31).getValue() !== "-" || ovtGrid.cells(rId, 41).getValue() === "-") {  //Approval MGR
+                        if(ovtGrid.cells(rId, 41).getValue() === "-") {
+                            if(ovtGrid.cells(rId, 28).getValue() === "-") {
                                 //Approval SPV
                                 if(userLogged.rankId == 5 && userLogged.division == ovtDivision || userLogged.rankId == 6 && userLogged.division == ovtDivision ||
                                   userLogged.pltRankId == 5 && userLogged.pltDivision == ovtDivision || userLogged.pltRankId == 6 && userLogged.pltDivision == ovtDivision) {
@@ -343,7 +343,7 @@ $script = <<< "JS"
                                 } else {
                                     disableAppvToolbar();
                                 }
-                            } else if(ovtGrid.cells(rId, 28).getValue() === "-" || ovtGrid.cells(rId, 29).getValue() === "-") {
+                            } else if(ovtGrid.cells(rId, 29).getValue() === "-" || ovtGrid.cells(rId, 30).getValue() === "-") {
                                 //Approval ASMAN / PPIC
                                 if(userLogged.rankId == 3 && userLogged.subDepartment == ovtSubDepartment || userLogged.rankId == 4 && userLogged.subDepartment == ovtSubDepartment ||
                                    userLogged.pltRankId == 3 && userLogged.pltSubDepartment == ovtSubDepartment || userLogged.pltRankId == 4 && userLogged.pltSubDepartment == ovtSubDepartment){
@@ -361,10 +361,10 @@ $script = <<< "JS"
                                 disableAppvToolbar();
                             }
                         }
-                    } else if(ovtGrid.cells(rId, 29).getValue() !== "-" || ovtGrid.cells(rId, 39).getValue() === "-") {  //Approval PPIC
+                    } else if(ovtGrid.cells(rId, 30).getValue() !== "-" || ovtGrid.cells(rId, 40).getValue() === "-") {  //Approval PPIC
                         console.log();
-                        if(ovtGrid.cells(rId, 39).getValue() === "-") {
-                            if(ovtGrid.cells(rId, 27).getValue() === "-") {
+                        if(ovtGrid.cells(rId, 40).getValue() === "-") {
+                            if(ovtGrid.cells(rId, 28).getValue() === "-") {
                                 //Approval SPV
                                 if(userLogged.rankId == 5 && userLogged.division == ovtDivision || userLogged.rankId == 6 && userLogged.division == ovtDivision ||
                                    userLogged.pltRankId == 5 && userLogged.pltDivision == ovtDivision || userLogged.pltRankId == 6 && userLogged.pltDivision == ovtDivision) {
@@ -372,7 +372,7 @@ $script = <<< "JS"
                                 } else {
                                     disableAppvToolbar();
                                 }
-                            } else if(ovtGrid.cells(rId, 28).getValue() === "-") {
+                            } else if(ovtGrid.cells(rId, 29).getValue() === "-") {
                                 //Approval ASMAN
                                 if(userLogged.rankId == 3 && userLogged.subDepartment == ovtSubDepartment || userLogged.rankId == 4 && userLogged.subDepartment == ovtSubDepartment ||
                                    userLogged.pltRankId == 3 && userLogged.pltSubDepartment == ovtSubDepartment || userLogged.pltRankId == 4 && userLogged.pltSubDepartment == ovtSubDepartment){
@@ -380,7 +380,7 @@ $script = <<< "JS"
                                 } else {
                                     disableAppvToolbar();
                                 }
-                            } else if(ovtGrid.cells(rId, 30).getValue() === "-") {
+                            } else if(ovtGrid.cells(rId, 31).getValue() === "-") {
                                 //Approval Manager
                                 if((userLogged.rankId == 2 && userLogged.department == ovtDepartment) || (userLogged.pltRankId == 2 && userLogged.pltDepartment == ovtDepartment)){
                                     enableAppvToolbar();
@@ -397,9 +397,9 @@ $script = <<< "JS"
                                 disableAppvToolbar();
                             }
                         }
-                    }else if(ovtGrid.cells(rId, 28).getValue() !== "-" || ovtGrid.cells(rId, 38).getValue() === "-") {  //Approval ASMAN
-                        if(ovtGrid.cells(rId, 38).getValue() === "-") {
-                            if(ovtGrid.cells(rId, 27).getValue() === "-") {
+                    }else if(ovtGrid.cells(rId, 29).getValue() !== "-" || ovtGrid.cells(rId, 39).getValue() === "-") {  //Approval ASMAN
+                        if(ovtGrid.cells(rId, 39).getValue() === "-") {
+                            if(ovtGrid.cells(rId, 28).getValue() === "-") {
                                 //Approval SPV
                                 if(userLogged.rankId == 5 && userLogged.division == ovtDivision || userLogged.rankId == 6 && userLogged.division == ovtDivision ||
                                    userLogged.pltRankId == 5 && userLogged.pltDivision == ovtDivision || userLogged.pltRankId == 6 && userLogged.pltDivision == ovtDivision) {
@@ -412,18 +412,18 @@ $script = <<< "JS"
                             }
                         } else {
                             if((userLogged.rankId == 2 && userLogged.department == ovtDepartment) || (userLogged.pltRankId == 2 && userLogged.pltDepartment == ovtDepartment)) {
-                                if(ovtGrid.cells(rId, 39).getValue() === "-") {
+                                if(ovtGrid.cells(rId, 40).getValue() === "-") {
                                     enableAppvToolbar();
                                 } else {
                                     disableAppvToolbar();
                                 }
-                            } else if((userLogged.rankId == 3 || userLogged.rankId == 4) && userLogged.subId == 9 && ovtGrid.cells(rId, 39).getValue() === ""){
+                            } else if((userLogged.rankId == 3 || userLogged.rankId == 4) && userLogged.subId == 9 && ovtGrid.cells(rId, 40).getValue() === ""){
                                 enableLimitAppvToolbar();
                             } else {
                                 disableAppvToolbar();
                             }
                         }
-                    } else if(ovtGrid.cells(rId, 27).getValue() !== "-" || ovtGrid.cells(rId, 37).getValue() === "-") { //Approval SPV
+                    } else if(ovtGrid.cells(rId, 28).getValue() !== "-" || ovtGrid.cells(rId, 38).getValue() === "-") { //Approval SPV
                         if(userLogged.rankId == 3 && userLogged.subDepartment == ovtSubDepartment || userLogged.rankId == 4 && userLogged.subDepartment == ovtSubDepartment ||
                            userLogged.pltRankId == 3 && userLogged.pltSubDepartment == ovtSubDepartment || userLogged.pltRankId == 4 && userLogged.pltSubDepartment == ovtSubDepartment){
                             enableAppvToolbar();
@@ -681,7 +681,7 @@ $script = <<< "JS"
         ovtDetailGrid.attachEvent("onRowSelect", function(rId, cIdn){
             if(ovtDetailGrid.cells(rId, 21).getValue() === "REJECTED") {
                 if(ovtDetailGrid.cells(rId, 26).getValue() == userLogged.empNip) {
-                    if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 26).getValue() === "REJECTED") {
+                    if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 27).getValue() === "REJECTED") {
                         disableAppvDetailToolbar();
                     } else {
                         appvDetailToolbar.disableItem("reject");
@@ -692,21 +692,16 @@ $script = <<< "JS"
                     disableAppvDetailToolbar();
                 }
             } else {
-                ovtGrid.cells(ovtGrid.getSelectedRowId(), 40).getValue();
-                ovtGrid.cells(ovtGrid.getSelectedRowId(), 39).getValue();
-                ovtGrid.cells(ovtGrid.getSelectedRowId(), 38).getValue();
-                ovtGrid.cells(ovtGrid.getSelectedRowId(), 37).getValue();
-
                 if((userLogged.picOvertime && userLogged.rankId <= 6) || userLogged.pltRankId <= 6) {
-                    if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 30).getValue() !== "-" || ovtGrid.cells(ovtGrid.getSelectedRowId(), 40).getValue() === "-") { //Approval MGR
-                        if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 40).getValue() === "-") {
-                            if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 27).getValue() === "-") {
+                    if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 31).getValue() !== "-" || ovtGrid.cells(ovtGrid.getSelectedRowId(), 41).getValue() === "-") { //Approval MGR
+                        if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 41).getValue() === "-") {
+                            if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 28).getValue() === "-") {
                                 if(userLogged.rankId == 5 || userLogged.rankId == 6 || userLogged.pltRankId == 5 || userLogged.pltRankId == 6) {
                                     enableAppvDetailToolbar();
                                 } else {
                                     disableAppvDetailToolbar();
                                 }
-                            } else if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 28).getValue() === "-" || ovtGrid.cells(ovtGrid.getSelectedRowId(), 29).getValue() === "-") {
+                            } else if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 29).getValue() === "-" || ovtGrid.cells(ovtGrid.getSelectedRowId(), 30).getValue() === "-") {
                                 if(userLogged.rankId == 3 || userLogged.rankId == 4 || userLogged.pltRankId == 3 || userLogged.pltRankId == 4){
                                     enableAppvDetailToolbar();
                                 } else {
@@ -720,21 +715,21 @@ $script = <<< "JS"
                                 disableAppvDetailToolbar();
                             }
                         }
-                    } else if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 29).getValue() !== "-" || ovtGrid.cells(ovtGrid.getSelectedRowId(), 39).getValue() === "-") { //Approval PPIC
-                        if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 39).getValue() === "-") {
-                            if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 27).getValue() === "-") {
+                    } else if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 30).getValue() !== "-" || ovtGrid.cells(ovtGrid.getSelectedRowId(), 40).getValue() === "-") { //Approval PPIC
+                        if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 40).getValue() === "-") {
+                            if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 28).getValue() === "-") {
                                 if(userLogged.rankId == 5 || userLogged.rankId == 6 || userLogged.pltRankId == 5 || userLogged.pltRankId == 6) {
                                     enableAppvDetailToolbar();
                                 } else {
                                     disableAppvDetailToolbar();
                                 }
-                            } else if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 28).getValue() === "-") {
+                            } else if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 29).getValue() === "-") {
                                 if(userLogged.rankId == 3 || userLogged.rankId == 4 || userLogged.pltRankId == 3 || userLogged.pltRankId == 4){
                                     enableAppvDetailToolbar();
                                 } else {
                                     disableAppvDetailToolbar();
                                 }
-                            } else if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 30).getValue() === "-") {
+                            } else if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 31).getValue() === "-") {
                                 if(userLogged.rankId == 2 || userLogged.pltRankId == 2){
                                     enableAppvDetailToolbar();
                                 } else {
@@ -748,9 +743,9 @@ $script = <<< "JS"
                                 disableAppvDetailToolbar();
                             }
                         }
-                    } else if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 28).getValue() !== "-" || ovtGrid.cells(ovtGrid.getSelectedRowId(), 38).getValue() === "-") { //Approval ASMAN
-                        if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 38).getValue() === "-") {
-                            if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 27).getValue() === "-") {
+                    } else if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 29).getValue() !== "-" || ovtGrid.cells(ovtGrid.getSelectedRowId(), 39).getValue() === "-") { //Approval ASMAN
+                        if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 39).getValue() === "-") {
+                            if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 28).getValue() === "-") {
                                 if(userLogged.rankId == 5 || userLogged.rankId == 6 || userLogged.pltRankId == 5 || userLogged.pltRankId == 6) {
                                     enableAppvDetailToolbar();
                                 } else {
@@ -759,14 +754,14 @@ $script = <<< "JS"
                             }
                         } else {
                             if(userLogged.rankId == 2 || userLogged.pltRankId == 2) {
-                                if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 39).getValue() === "-") {
+                                if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 40).getValue() === "-") {
                                     enableAppvDetailToolbar();
                                 } else {
                                     disableAppvDetailToolbar();
                                 }
                             }
                         }
-                    } else if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 27).getValue() !== "-" || ovtGrid.cells(ovtGrid.getSelectedRowId(), 37).getValue() === "-") { //Approval SPV
+                    } else if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 28).getValue() !== "-" || ovtGrid.cells(ovtGrid.getSelectedRowId(), 38).getValue() === "-") { //Approval SPV
                         if(userLogged.rankId == 3 || userLogged.rankId == 4 || userLogged.pltRankId == 3 || userLogged.pltRankId == 4){
                             enableAppvDetailToolbar();
                         } else {

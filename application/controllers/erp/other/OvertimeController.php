@@ -279,6 +279,7 @@ class OvertimeController extends Erp_Controller
             $pw = $overtime->pw > 0 ? '✓' : '-';
             $jemputan = $overtime->jemputan > 0 ? '✓' : '-';
             $dust_collector = $overtime->dust_collector > 0 ? '✓' : '-';
+            $wfi = $overtime->wfi > 0 ? '✓' : '-';
             $mechanic = $overtime->mechanic > 0 ? '✓' : '-';
             $electric = $overtime->electric > 0 ? '✓' : '-';
             $hnn = $overtime->hnn > 0 ? '✓' : '-';
@@ -322,6 +323,7 @@ class OvertimeController extends Erp_Controller
             $xml .= "<cell $color>" . cleanSC($pw) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($jemputan) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($dust_collector) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($wfi) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($mechanic) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($electric) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($hnn) . "</cell>";
@@ -773,6 +775,7 @@ class OvertimeController extends Erp_Controller
     public function cancelOvertime()
     {
         $post = fileGetContent();
+        $this->Hr->update('employee_overtimes_red', ['task_id_support' => ''], ['task_id' => $post->taskId]);
         $this->Hr->update('employee_overtimes', ['status' => 'CANCELED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['task_id' => $post->taskId]);
         $this->Hr->update('employee_overtimes_detail', ['status' => 'CANCELED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['task_id' => $post->taskId]);
         response(['status' => 'success', 'message' => 'Lemburan berhasil di batalkan']);
@@ -781,6 +784,7 @@ class OvertimeController extends Erp_Controller
     public function cancelOvertimeMtn()
     {
         $post = fileGetContent();
+        $this->Hr->update('employee_overtimes_red', ['task_id_support' => ''], ['task_id' => $post->taskId]);
         $this->Hr->update('employee_overtimes', ['status' => 'CANCELED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['task_id' => $post->taskId]);
         $this->Hr->update('employee_overtimes_detail', ['status' => 'CANCELED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['task_id' => $post->taskId]);
         response(['status' => 'success', 'message' => 'Lemburan berhasil di batalkan']);
@@ -800,6 +804,7 @@ class OvertimeController extends Erp_Controller
             $pw = $overtime->pw > 0 ? '✓' : '-';
             $jemputan = $overtime->jemputan > 0 ? '✓' : '-';
             $dust_collector = $overtime->dust_collector > 0 ? '✓' : '-';
+            $wfi = $overtime->wfi > 0 ? '✓' : '-';
             $mechanic = $overtime->mechanic > 0 ? '✓' : '-';
             $electric = $overtime->electric > 0 ? '✓' : '-';
             $hnn = $overtime->hnn > 0 ? '✓' : '-';
@@ -925,6 +930,7 @@ class OvertimeController extends Erp_Controller
             $xml .= "<cell $color>" . cleanSC($pw) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($jemputan) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($dust_collector) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($wfi) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($mechanic) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($electric) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($hnn) . "</cell>";
@@ -1726,7 +1732,7 @@ class OvertimeController extends Erp_Controller
 
     public function getRequestOvertimeGrid()
     {
-        $overtimes = $this->Overtime->getRequestOvertimeGrid(empSub())->result();
+        $overtimes = $this->Overtime->getRequestOvertimeGrid(getParam())->result();
         $xml = "";
         $no = 1;
         foreach ($overtimes as $overtime) {
@@ -1737,6 +1743,7 @@ class OvertimeController extends Erp_Controller
             $pw = $overtime->pw > 0 ? '✓' : '-';
             $jemputan = $overtime->jemputan > 0 ? '✓' : '-';
             $dust_collector = $overtime->dust_collector > 0 ? '✓' : '-';
+            $wfi = $overtime->wfi > 0 ? '✓' : '-';
             $mechanic = $overtime->mechanic > 0 ? '✓' : '-';
             $electric = $overtime->electric > 0 ? '✓' : '-';
             $hnn = $overtime->hnn > 0 ? '✓' : '-';
@@ -1774,6 +1781,7 @@ class OvertimeController extends Erp_Controller
             $xml .= "<cell $color>" . cleanSC($pw) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($jemputan) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($dust_collector) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($wfi) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($mechanic) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($electric) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($hnn) . "</cell>";
@@ -2885,6 +2893,73 @@ class OvertimeController extends Erp_Controller
         $post = fileGetContent();
         $this->Hr->delete("employee_overtimes_ref", ['task_id' => $post->taskId]);
         response(['status' => 'success', 'message' => 'Berhasil menghapus referensi lembur']);
+    }
+
+    public function asignToOvertime()
+    {
+        $post = fileGetContent();
+        $ovt = $this->Hr->getOne('employee_overtimes', ['task_id' => $post->taskId]);
+        $data = [];
+        if($ovt->jemputan > 0) {
+            $data['jemputan'] = $ovt->jemputan;
+        }
+
+        if(empSub() == 5) {
+            if($ovt->ahu > 0) {
+                $data['ahu'] = intval($ovt->ahu);
+            }
+            if($ovt->compressor > 0) {
+                $data['compressor'] = intval($ovt->compressor);
+            }
+            if($ovt->pw > 0) {
+                $data['pw'] = intval($ovt->pw);
+            }
+            if($ovt->steam > 0) {
+                $data['steam'] = intval($ovt->steam);
+            }
+            if($ovt->dust_collector > 0) {
+                $data['dust_collector'] = intval($ovt->dust_collector);
+            }
+            if($ovt->wfi > 0) {
+                $data['wfi'] = intval($ovt->wfi);
+            }
+            if($ovt->mechanic > 0) {
+                $data['mechanic'] = intval($ovt->mechanic);
+            }
+            if($ovt->electric > 0) {
+                $data['electric'] = intval($ovt->electric);
+            }
+            if($ovt->hnn > 0) {
+                $data['hnn'] = intval($ovt->hnn);
+            }
+        }
+
+        if(empSub() == 7) {
+            if($ovt->qa > 0) {
+                $data['qa'] = intval($ovt->qa);
+            }
+        }
+
+        if(empSub() == 8) {
+            if($ovt->qc > 0) {
+                $data['qc'] = intval($ovt->qc);
+            }
+        }
+
+        if(empSub() == 13) {
+            if($ovt->penandaan > 0) {
+                $data['penandaan'] = intval($ovt->penandaan);
+            }
+            if($ovt->gbb > 0) {
+                $data['gbb'] = intval($ovt->gbb);
+            }
+            if($ovt->gbk > 0) {
+                $data['gbk'] = intval($ovt->gbk);
+            }
+        }
+        $this->Hr->update('employee_overtimes', $data, ['task_id' => $post->taskIdSupport]);
+        $this->Hr->update('employee_overtimes_ref', ['task_id_support' => $post->taskIdSupport], ['task_id' => $post->taskId]);
+        response(['status' => 'success', 'message' => 'Berhasil asign referensi lembur ke lemburan support']);
     }
 }
 

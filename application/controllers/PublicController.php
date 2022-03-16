@@ -253,24 +253,22 @@ class PublicController extends Erp_Controller
             } else if ($appvType == 'asman' || $appvType == 'ppic') {
                 if ($status == 'APPROVED') {
                     if($appvType == 'asman') {
-                        if($overtime->sub_department_id != 5 && $overtime->sub_department_id != 7 && $overtime->sub_department_id != 8 && 
-                           $overtime->sub_department_id != 13 && $overtime->ref == "") {
-                            if(isMtnSupport($overtime)) {
-                                $this->requestOvertime($overtime, 5);
-                            }
-
-                            if(isQaSupport($overtime)) {//@QA
-                                $this->requestOvertime($overtime, 7);
-                            }
-
-                            if(isQcSupport($overtime)) {//@QC
-                                $this->requestOvertime($overtime, 8);
-                            }
-
-                            if(isWhsSupport($overtime)) {
-                                $this->requestOvertime($overtime, 13);
-                            }
+                        if($overtime->sub_department_id != 5 && isMtnSupport($overtime)) {
+                            $this->requestOvertime($overtime, 5);
                         }
+    
+                        if($overtime->sub_department_id != 7 && isQaSupport($overtime)) {
+                            $this->requestOvertime($overtime, 7);
+                        }
+    
+                        if($overtime->sub_department_id != 8 && isQcSupport($overtime)) {
+                            $this->requestOvertime($overtime, 8);
+                        }
+    
+                        if($overtime->sub_department_id != 13 && isWhsSupport($overtime)) {
+                            $this->requestOvertime($overtime, 13);
+                        }
+
                         if($overtime->sub_department_id == 1 || $overtime->sub_department_id == 2 || $overtime->sub_department_id == 3 || $overtime->sub_department_id == 13) {
                             $isHavePPIC = $this->isHavePPIC($overtime, $taskId);
                             if(!$isHavePPIC) {
