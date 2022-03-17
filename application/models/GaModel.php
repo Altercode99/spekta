@@ -109,8 +109,8 @@ class GaModel extends CI_Model
     {
         $where = advanceSearch($get);
         $sql = "SELECT a.room_id,COUNT(a.id) AS total_rev, SUM(a.participant_confirmed) AS total_person, SUM(a.duration) AS total_hour,
-                    SUM(c.price * a.participant_confirmed) AS total_snack, b.name AS room_name,b.color
-                    FROM meeting_rooms_reservation a, meeting_rooms b, snacks c
+                    SUM(a.snack_price * a.participant_confirmed) AS total_snack, b.name AS room_name,b.color
+                    FROM meeting_rooms_reservation a, meeting_rooms b
                     WHERE a.room_id = b.id
                     AND a.location = '$this->empLoc'
                     $where

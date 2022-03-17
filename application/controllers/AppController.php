@@ -320,4 +320,16 @@ class AppController extends Erp_Controller
         $template = $this->load->view('html/profile', $data, true);
         response(['status' => 'success', 'profile' => $template]);
     }
+
+    public function checkVersion()
+    {
+        $data = [
+            'version' => 'v.1.0.1',
+            'message' => "<b>v.1.0.1</b> <br />
+                          Oops.. ada update nih, <b>Clear History</b> dulu yuk!.. Supaya Aplikasi S.P.E.K.T.A kamu berfungsi maksimal :)<br /> <br />
+                          <a target='_blank' href='https://support.google.com/chrome/answer/95589?hl=id&co=GENIE.Platform%3DDesktop'>Clear History Google Chrome</a> <br />
+                          <a target='_blank' href='https://support.mozilla.org/id/kb/Membersihkan%20Riwayat%20Terakhir'>Clear History Mozila Firefox</a>"
+        ];
+        response(['status' => 'success', 'data' => $data]);
+    }
 }

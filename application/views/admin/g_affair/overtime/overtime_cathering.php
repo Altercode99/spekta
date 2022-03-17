@@ -18,8 +18,17 @@ $script = <<< "JS"
         var ovtGridMenu =  ovtCathLayout.cells("a").attachMenu({
             icon_path: "./public/codebase/icons/",
             items: [
+                {id: "refresh", text: "Refresh", img: "refresh.png"},
                 {id: "search", text: "<div style='width:100%'>Search: <input type='text' id='ga_ovtcat_start' readonly value='"+currentDate+"' /> - <input type='text' id='ga_ovtcat_end' readonly value='"+currentDate+"' /> <button id='ga_ovtcat_process'>Proses</button>"}
             ]
+        });
+
+        ovtGridMenu.attachEvent("onClick", function(id) {
+            switch (id) {
+                case "refresh":
+                    rOvtGrid();
+                    break;
+            }
         });
 
         var filterCalendar = new dhtmlXCalendarObject(["ga_ovtcat_start","ga_ovtcat_end"]);

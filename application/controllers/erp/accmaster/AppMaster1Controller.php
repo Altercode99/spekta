@@ -844,7 +844,7 @@ class AppMaster1Controller extends Erp_Controller
             $xml .= "<cell>". cleanSC($room->machine_no) ."</cell>";
             $xml .= "<cell>". cleanSC($room->machine_capacity) ."</cell>";
             $xml .= "<cell>". cleanSC($room->last_km) ."</cell>";
-            $xml .= "<cell>". cleanSC(toIndoSlash($room->last_service_date)) ."</cell>";
+            $xml .= "<cell>". cleanSC($room->last_service_date != '' && $room->last_service_date !== '0000-00-00' ? toIndoSlash($room->last_service_date) : '') ."</cell>";
             $xml .= "<cell>". cleanSC($room->emp1) ."</cell>";
             $xml .= "<cell>". cleanSC($room->emp2) ."</cell>";
             $xml .= "<cell>". cleanSC(toIndoDateTime($room->created_at)) ."</cell>";

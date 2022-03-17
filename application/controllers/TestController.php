@@ -75,15 +75,18 @@ class TestController extends CI_Controller
     //     $emps = $this->Hr->getWhere('employees', ['id >' => 1])->result();
     //     $sallary = [];
     //     foreach ($emps as $emp) {
-    //         $sallary[] = [
-    //             'emp_id' => intval($emp->id),
-    //             'sap_id' => $emp->sap_id,
-    //             'basic_sallary' => 0,
-    //             'premi_overtime' => 0,
-    //             'created_by' => 1,
-    //             'updated_by' => 1,
-    //             'updated_at' => date('Y-m-d H:i:s'),
-    //         ];
+    //         $isEmp = $this->Hr->getOne('employee_sallary', ['emp_id' => $emp->id]);
+    //         if(!$isEmp) {
+    //             $sallary[] = [
+    //                 'emp_id' => intval($emp->id),
+    //                 'sap_id' => $emp->sap_id,
+    //                 'basic_sallary' => 4641854,
+    //                 'premi_overtime' => 4641854 / 173,
+    //                 'created_by' => 1,
+    //                 'updated_by' => 1,
+    //                 'updated_at' => date('Y-m-d H:i:s'),
+    //             ];
+    //         }
     //     }
     //     $create = $this->Hr->createMultiple('employee_sallary', $sallary);
     //     dd($create);

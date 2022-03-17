@@ -67,7 +67,7 @@ $script = <<< "JS"
         reportMRoomGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,edtxt,rotxt,rotxt,rotxt,ron,ron,rotxt,rotxt,rotxt,rotxt,rotxt");
         reportMRoomGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
         reportMRoomGrid.setInitWidthsP("5,15,15,25,15,15,20,20,10,10,10,10,10,10,15,15,15,15,30,15,15,25");
-        reportMRoomGrid.attachFooter(",Total,,,,,,<span id='ga_rm_report_total_hour'>0</span> Jam,,,<span id='ga_rm_report_total_person'>0</span> Orang,,,,,<div id='ga_rm_report_total_snack'>0</div>,,,,,,");
+        reportMRoomGrid.attachFooter(",Total,,,,,,,<span id='ga_rm_report_total_hour'>0</span> Jam,,,,<span id='ga_rm_report_total_person'>0</span> Orang,,,,<div id='ga_rm_report_total_snack'>0</div>,,,,");
         reportMRoomGrid.attachFooter(",Total Peserta,<span id='ga_rm_report_total_person_grand'>0</span> Orang");
         reportMRoomGrid.attachFooter(",Total Jam Reservasi,<span id='ga_rm_report_total_hour_grand'>0</span> Jam");
         reportMRoomGrid.attachFooter(",Total Biaya Snack,<div id='ga_rm_report_total_snack_grand'>0</div>");

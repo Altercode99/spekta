@@ -235,16 +235,15 @@ class OtherController extends Erp_Controller
         $mSuccess = '';
         $datas = $post->datas;
         foreach ($datas as $id => $data) {
-            $checkSnack = $this->General->getOne('meeting_rooms_reservation', ['snack_id' => $data->id]);
-            if (!$checkSnack) {
-                $snack = $this->General->getDataById('snacks', $data->id);
+            $snack = $this->General->getDataById('snacks', $data->id);
+            if ($snack->is_used == 0) {
                 $this->General->delete('snacks', ['id' => $data->id]);
                 if (file_exists('./assets/images/meeting_snacks/' . $snack->filename)) {
                     unlink('./assets/images/meeting_snacks/' . $snack->filename);
                 }
                 $mSuccess .= "- $data->field berhasil dihapus <br>";
             } else {
-                $mSuccess .= "- $data->field sudah digunakan! <br>";
+                $mError .= "- $data->field sudah digunakan! <br>";
             }
         }
 
@@ -365,6 +364,7 @@ class OtherController extends Erp_Controller
             'updated_at' => date('Y-m-d H:i:s'),
         ];
 
+        $dataSnack = [];
         if (isset($post->snackId)) {
             $snackIds = '';
             $snackName = '';
@@ -378,11 +378,19 @@ class OtherController extends Erp_Controller
                     $snackIds = $snackIds.','.$snack->id;
                     $snackName = $snackName.','.$snack->name;
                 }
+                $dataSnack[] = [
+                    'id' => $snack->id,
+                    'is_used' => 1
+                ];
                 $price += floatval($snack->price);
             }
             $data['snack_ids'] = $snackIds;
             $data['snacks'] = $snackName;
             $data['snack_price'] = $price;
+        }
+
+        if(count($dataSnack) > 0) {
+            $this->General->updateMultiple('snacks', $dataSnack, 'id');
         }
 
         $rev = $this->General->getDataById('meeting_rooms_reservation', $revId);
@@ -407,6 +415,7 @@ class OtherController extends Erp_Controller
         $snackName = '';
         $price = 0;
         $snacks = $this->General->getWhereIn('snacks', ['id' => $post->snackId])->result();
+        $dataSnack = [];
         foreach ($snacks as $snack) {
             if($snackName == '') {
                 $snackIds = $snack->id;
@@ -416,10 +425,18 @@ class OtherController extends Erp_Controller
                 $snackName = $snackName.','.$snack->name;
             }
             $price += floatval($snack->price);
+            $dataSnack[] = [
+                'id' => $snack->id,
+                'is_used' => 1
+            ];
         }
         $data['snack_ids'] = $snackIds;
         $data['snacks'] = $snackName;
         $data['snack_price'] = $price;
+
+        if(count($dataSnack) > 0) {
+            $this->General->updateMultiple('snacks', $dataSnack, 'id');
+        }
         
         $rev = $this->General->getDataById('meeting_rooms_reservation', $revId);
         if ($rev->status == 'APPROVED') {
@@ -988,7 +1005,7 @@ class OtherController extends Erp_Controller
             $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->end_date)) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->status_day) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($meal) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC($overtime->meal > 0 || $time >= 2.5 ? 1 : 0) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->meal > 0 || $time >= 2.5 && $time <= 8 ? 1 : 0) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->notes) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->status) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($status_updater) . "</cell>";

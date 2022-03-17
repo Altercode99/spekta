@@ -67,7 +67,9 @@ $script = <<< "JS"
 
         scheduler2.attachEvent("onLightbox", function(){
             var section = scheduler2.formSection("driver");
+            var section1 = scheduler2.formSection("passenger");
             section.control.disabled = true;
+            section1.control.disabled = true;
         });
 
         scheduler2.attachEvent("onLightboxButton", function(button_id, node, e){

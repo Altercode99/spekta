@@ -565,13 +565,10 @@ class OvertimeController extends Erp_Controller
         $no = 1;
         foreach ($personils as $key => $id) {
             $emp = $this->Hr->getDataById('employees', $id);
-
             $empOvt = $this->Hr->getWhere('employee_overtimes_detail', [
                 'emp_id' => $emp->id, 
-                'overtime_date' => date('Y-m-d', strtotime($start)), 
-                'status !=' => 'REJECTED',
-                'status !=' => 'CANCELED',
-            ])->result();
+                'overtime_date' => date('Y-m-d', strtotime($start))
+            ], '*', null, null, null, ['status' => ['CANCELED', 'REJECTED']])->result();
 
             $dateExist = 0;
             $dt1 = "";
