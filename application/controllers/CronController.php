@@ -30,12 +30,36 @@ class CronController extends Erp_Controller
     //@URL: http://localhost/spekta/index.php?c=AppController&m=updateStatusReservasi
     public function updateStatusReservasi()
     {
-        $updateVehicle = $this->General->update('vehicles_reservation', [
-            'status' => 'CLOSED',
-        ], ['status' => 'APPROVED', 'DATE(start_date) <' => date('Y-m-d')]);
+        $vehicles = $this->General->getWhere('vehicles_reservation', ['status' => 'APPROVED'])->result();
+        $vhcData = [];
+        foreach ($vehicles as $vhc) {
+            $now = new DateTime(date('Y-m-d'));
+            $exp = new DateTime(addDayToDate(date('Y-m-d', strtotime($vhc->start_date)), 1));
+            if($exp < $now) {
+                $vhcData[] = [
+                    'id' => $vhc->id,
+                    'status' => 'CLOSED'
+                ];
+            }
+        }
+        if(count($vhcData) > 0) {
+            $this->General->updateMultiple('vehicles_reservation', $vhcData, 'id');
+        }
 
-        $updatMRoom = $this->General->update('meeting_rooms_reservation', [
-            'status' => 'CLOSED',
-        ], ['status' => 'APPROVED', 'DATE(start_date) <' => date('Y-m-d')]);
+        $mrooms = $this->General->getWhere('meeting_rooms_reservation', ['status' => 'APPROVED'])->result();
+        $rmData = [];
+        foreach ($mrooms as $mroom) {
+            $now = new DateTime(date('Y-m-d'));
+            $exp = new DateTime(addDayToDate(date('Y-m-d', strtotime($mroom->start_date)), 1));
+            if($exp < $now) {
+                $rmData[] = [
+                    'id' => $mroom->id,
+                    'status' => 'CLOSED'
+                ];
+            }
+        }
+        if(count($rmData) > 0) {
+            $this->General->updateMultiple('meeting_rooms_reservation', $rmData, 'id');
+        }
     }
 }
