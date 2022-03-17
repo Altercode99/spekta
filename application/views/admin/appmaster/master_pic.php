@@ -10,6 +10,7 @@ $script = <<< "JS"
         var addPicForm;
         var editPicForm;
         var persons = [];
+        var countPerson;
 
         var comboUrl = {
             department_id: {
@@ -278,28 +279,36 @@ $script = <<< "JS"
             masterPicToolbar.attachEvent("onClick", function(id) {
                 switch (id) {
                     case "save":
+                        wPicGrid.filterBy(0,"");
                         persons = [];
+                        let total = 0;
                         for (let i = 0; i < wPicGrid.getRowsNum(); i++) {
                            let id = wPicGrid.getRowId(i);
                            if(wPicGrid.cells(id, 1).getValue() == 1) {
                                persons.push(id);
                            } 
+                           total++;
                         }
-                        form.setItemValue('pic_emails', persons);
-                        closeWindow("master_pic_window");
+                        if(countPerson == total) {
+                            form.setItemValue('pic_emails', persons);
+                            closeWindow("master_pic_window");
+                        } else {
+                            eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
+                        }
                         break;
                 }
             });
 
             let mPicStatusBar = masterPicWindow.attachStatusBar();
             function mPicGridCount() {
-                var mPicGridRows = picGrid.getRowsNum();
+                var mPicGridRows = wPicGrid.getRowsNum();
                 mPicStatusBar.setText("Total baris: " + mPicGridRows);
                 persons.length > 0 && persons.map(id => {
                     if(wPicGrid.doesRowExist(id)) {
                         wPicGrid.cells(id, 1).setValue(1);
                     }
                 });
+                countPerson = mPicGridRows;
             }
 
             masterPicWindow.progressOn();
