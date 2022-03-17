@@ -288,7 +288,7 @@ class OtherController extends Erp_Controller
             $xml .= "<cell $color>" . cleanSC($rev->participant_confirmed) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($rev->participant_rejected) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($notConfirm) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC($rev->snack_name) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($rev->snacks) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($rev->snack_price) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($rev->snack_price * $rev->participant_confirmed) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($rev->status) . "</cell>";
@@ -350,9 +350,9 @@ class OtherController extends Erp_Controller
     {
         $post = fileGetContent();
         $rev = $this->General->getDataById('meeting_rooms_reservation', $post->id);
-        $snacks = $this->General->getWhere('snacks', ['id !=' => 0])->result();
+        $snacks = $this->General->getAll('snacks')->result();
         $template = $this->load->view('html/meeting_rooms/snack_list', ['rev' => $rev, 'snacks' => $snacks], true);
-        response(['status' => 'success', 'template' => $template, 'snack_id' => $rev->snack_id]);
+        response(['status' => 'success', 'template' => $template, 'snack_ids' => explode(',', $rev->snack_ids)]);
     }
 
     public function appvReservation()
@@ -366,7 +366,23 @@ class OtherController extends Erp_Controller
         ];
 
         if (isset($post->snackId)) {
-            $data['snack_id'] = $post->snackId;
+            $snackIds = '';
+            $snackName = '';
+            $price = 0;
+            $snacks = $this->General->getWhereIn('snacks', ['id' => $post->snackId])->result();
+            foreach ($snacks as $snack) {
+                if($snackName == '') {
+                    $snackIds = $snack->id;
+                    $snackName = $snack->name;
+                } else {
+                    $snackIds = $snackIds.','.$snack->id;
+                    $snackName = $snackName.','.$snack->name;
+                }
+                $price += floatval($snack->price);
+            }
+            $data['snack_ids'] = $snackIds;
+            $data['snacks'] = $snackName;
+            $data['snack_price'] = $price;
         }
 
         $rev = $this->General->getDataById('meeting_rooms_reservation', $revId);
@@ -387,10 +403,24 @@ class OtherController extends Erp_Controller
     {
         $post = fileGetContent();
         $revId = $post->id;
-        $data = [
-            'snack_id' => $post->snackId,
-        ];
-
+        $snackIds = '';
+        $snackName = '';
+        $price = 0;
+        $snacks = $this->General->getWhereIn('snacks', ['id' => $post->snackId])->result();
+        foreach ($snacks as $snack) {
+            if($snackName == '') {
+                $snackIds = $snack->id;
+                $snackName = $snack->name;
+            } else {
+                $snackIds = $snackIds.','.$snack->id;
+                $snackName = $snackName.','.$snack->name;
+            }
+            $price += floatval($snack->price);
+        }
+        $data['snack_ids'] = $snackIds;
+        $data['snacks'] = $snackName;
+        $data['snack_price'] = $price;
+        
         $rev = $this->General->getDataById('meeting_rooms_reservation', $revId);
         if ($rev->status == 'APPROVED') {
             $this->General->updateById('meeting_rooms_reservation', $data, $revId);
@@ -934,7 +964,18 @@ class OtherController extends Erp_Controller
                 $status_updater = $overtime->status . ' By ' . $overtime->status_updater;
             }
 
-            $meal = $overtime->meal > 0 ? "✓ ($overtime->total_meal x)" : '-';
+            $time = dtToFloat($overtime->start_date);
+
+            if($overtime->meal > 0 || $time >= 2.5 && $time <= 8) {
+                if($overtime->meal > 0) {
+                    $meal = "✓ ($overtime->total_meal x)";
+                } else {
+                    $meal = "✓ (1 x)";
+                }
+            } else {
+                $meal = '-';   
+            }
+
             $xml .= "<row id='$overtime->id'>";
             $xml .= "<cell $color>" . cleanSC($no) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->emp_task_id) . "</cell>";
@@ -947,7 +988,7 @@ class OtherController extends Erp_Controller
             $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->end_date)) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->status_day) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($meal) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC($overtime->total_meal) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->meal > 0 || $time >= 2.5 ? 1 : 0) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->notes) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->status) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($status_updater) . "</cell>";

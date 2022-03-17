@@ -5,7 +5,7 @@ if ((strpos(strtolower($_SERVER['SCRIPT_NAME']), strtolower(basename(__FILE__)))
 }
 
 $script = <<< "JS"
-    var currSnack;
+    var currSnack = [];
 	function showMeetingRev() {	
         var legend = legendGrid();
         var revMRoomToolbar = mainTab.cells("ga_meeting_rooms_reservation").attachToolbar({
@@ -61,8 +61,9 @@ $script = <<< "JS"
                         }
 
                         reqJson(GAOther("getSnacks"), "POST", {id: revMRoomGrid.getSelectedRowId()}, (err, res) => {
-                            currSnack = res.snack_id;
+                            currSnack = [];
                             if(res.status === "success") {
+                                currSnack = res.snack_ids;
                                 appvWin.attachHTMLString(res.template);
                             }
                         });
@@ -70,19 +71,19 @@ $script = <<< "JS"
                         appvWinToolbar.attachEvent("onClick", function(id) {
                             switch (id) {
                                 case "approve":
-                                    if(!currSnack) {
-                                        return eaAlert("Pilih Snack", "Silahkan pilih snack yang akan diberikan ke peserta meeting!");
+                                    if(currSnack.length > 0) {
+                                        reqJson(GAOther("appvReservation"), "POST", {id: revMRoomGrid.getSelectedRowId(), snackId: currSnack}, (err, res) => {
+                                            if(res.status === "success") {
+                                                rRevGrid();
+                                                sAlert(res.message);
+                                                closeWindow("ga_appv_mroom");
+                                            } else {
+                                                eaAlert("Error", res.message);
+                                            }
+                                        });
+                                    } else {
+                                        eaAlert("Pilih Snack", "Silahkan pilih snack yang akan diberikan ke peserta meeting!");
                                     }
-
-                                    reqJson(GAOther("appvReservation"), "POST", {id: revMRoomGrid.getSelectedRowId(), snackId: currSnack}, (err, res) => {
-                                        if(res.status === "success") {
-                                            rRevGrid();
-                                            sAlert(res.message);
-                                            closeWindow("ga_appv_mroom");
-                                        } else {
-                                            eaAlert("Error", res.message);
-                                        }
-                                    });
                                     break;
                                 case "snack":
                                     reqJson(GAOther("changeRevSnack"), "POST", {id: revMRoomGrid.getSelectedRowId(), snackId: currSnack}, (err, res) => {
@@ -448,9 +449,13 @@ $script = <<< "JS"
     }
 
     function selectSnack(snackId) {
-        currSnack = snackId;
-        $(".snack_selected").removeClass("snack_selected");
-        $("#snack-" + snackId).addClass("snack_selected");
+        if(currSnack.indexOf(snackId) > -1) {
+            currSnack.splice(currSnack.indexOf(snackId), 1);
+            $("#snack-" + snackId).removeClass("snack_selected");
+        } else {
+            currSnack.push(snackId);
+            $("#snack-" + snackId).addClass("snack_selected");
+        }
     }
 
 JS;

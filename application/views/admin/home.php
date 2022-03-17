@@ -8,7 +8,7 @@ $script = <<< "JS"
 	var homeLayout;
 	
 	function showHome() {
-		eaAlert("INFORMASI", "Berhubung S.P.E.K.T.A masih dalam status BETA Test, kami akan melakukan update secara berkala terkait masukan-masukan yang teman-teman berikan. Oleh karena itu dimohon agar <b>Clear History</b> browser kalian saat awal masuk kerja / sebelum membuka S.P.E.K.T.A pertama kali. Terimakasih");
+		// eaAlert("INFORMASI", "Berhubung S.P.E.K.T.A masih dalam status BETA Test, kami akan melakukan update secara berkala terkait masukan-masukan yang teman-teman berikan. Oleh karena itu dimohon agar <b>Clear History</b> browser kalian saat awal masuk kerja / sebelum membuka S.P.E.K.T.A pertama kali. Terimakasih");
 		homeLayout = mainTab.cells("home").attachLayout({
 			pattern : "3T",		
 			cells : [

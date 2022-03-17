@@ -775,7 +775,7 @@ class OvertimeController extends Erp_Controller
     public function cancelOvertime()
     {
         $post = fileGetContent();
-        $this->Hr->update('employee_overtimes_red', ['task_id_support' => ''], ['task_id' => $post->taskId]);
+        $this->Hr->update('employee_overtimes_ref', ['task_id_support' => ''], ['task_id' => $post->taskId]);
         $this->Hr->update('employee_overtimes', ['status' => 'CANCELED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['task_id' => $post->taskId]);
         $this->Hr->update('employee_overtimes_detail', ['status' => 'CANCELED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['task_id' => $post->taskId]);
         response(['status' => 'success', 'message' => 'Lemburan berhasil di batalkan']);
@@ -784,7 +784,7 @@ class OvertimeController extends Erp_Controller
     public function cancelOvertimeMtn()
     {
         $post = fileGetContent();
-        $this->Hr->update('employee_overtimes_red', ['task_id_support' => ''], ['task_id' => $post->taskId]);
+        $this->Hr->update('employee_overtimes_ref', ['task_id_support' => ''], ['task_id' => $post->taskId]);
         $this->Hr->update('employee_overtimes', ['status' => 'CANCELED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['task_id' => $post->taskId]);
         $this->Hr->update('employee_overtimes_detail', ['status' => 'CANCELED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['task_id' => $post->taskId]);
         response(['status' => 'success', 'message' => 'Lemburan berhasil di batalkan']);
@@ -1220,7 +1220,7 @@ class OvertimeController extends Erp_Controller
             $columnApvNip = 'apv_spv_nip';
             $columnApvDate = 'apv_spv_date';
         } else if ($rankId == 3 || $rankId == 4 || $pltRankId == 3 || $pltRankId == 4) {
-            if ($subId == 9 && ($overtime->sub_department_id == 1 || $overtime->sub_department_id == 2 || $overtime->sub_department_id == 3 || $overtime->sub_department_id == 13)) {
+            if ($subId == 9 && ($overtime->sub_department_id == 1 || $overtime->sub_department_id == 2 || $overtime->sub_department_id == 3 || $overtime->sub_department_id == 4 || $overtime->sub_department_id == 13)) {
                 $columnApv = 'apv_ppic';
                 $columnApvNip = 'apv_ppic_nip';
                 $columnApvDate = 'apv_ppic_date';

@@ -35,12 +35,14 @@ class ChatModel extends CI_Model
 
         $users = [];
         foreach ($emps as $emp) {
-            $users[] = [
-                'id' => $ids[$emp->email],
-                'name' => $emp->employee_name,
-                'email' => $emp->email,
-                'sap_id' => $emp->sap_id
-            ];
+            if(array_key_exists($emp->email, $ids)) {
+                $users[] = [
+                    'id' => $ids[$emp->email],
+                    'name' => $emp->employee_name,
+                    'email' => $emp->email,
+                    'sap_id' => $emp->sap_id
+                ];
+            }
         }
 
         return $users;

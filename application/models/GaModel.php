@@ -61,12 +61,11 @@ class GaModel extends CI_Model
     public function getMeetingRevGrid($get)
     {
         $where = advanceSearch($get);
-        $sql = "SELECT a.*,b.name AS room_name,c.name AS snack_name,c.price AS snack_price,
+        $sql = "SELECT a.*,b.name AS room_name,
                     (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.created_by) AS emp1,
                     (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.updated_by) AS emp2
-                    FROM meeting_rooms_reservation a, meeting_rooms b, snacks c
+                    FROM meeting_rooms_reservation a, meeting_rooms b
                     WHERE a.room_id = b.id
-                    AND a.snack_id = c.id
                     AND a.location = '$this->empLoc'
                     $where";
 
@@ -113,7 +112,6 @@ class GaModel extends CI_Model
                     SUM(c.price * a.participant_confirmed) AS total_snack, b.name AS room_name,b.color
                     FROM meeting_rooms_reservation a, meeting_rooms b, snacks c
                     WHERE a.room_id = b.id
-                    AND a.snack_id = c.id
                     AND a.location = '$this->empLoc'
                     $where
                     GROUP BY a.room_id

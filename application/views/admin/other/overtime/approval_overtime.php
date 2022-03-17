@@ -333,7 +333,7 @@ $script = <<< "JS"
                 let ovtSubDepartment = cleanSC(ovtGrid.cells(rId, 3).getValue());
                 let ovtDivision = cleanSC(ovtGrid.cells(rId, 4).getValue());
                 if((userLogged.picOvertime && userLogged.rankId <= 6) || userLogged.pltRankId <= 6) {
-                    if(ovtGrid.cells(rId, 31).getValue() !== "-" || ovtGrid.cells(rId, 41).getValue() === "-") {  //Approval MGR
+                    if((ovtGrid.cells(rId, 31).getValue() !== "-" || ovtGrid.cells(rId, 41).getValue() === "-") && ovtGrid.cells(rId, 30).getValue() !== "-") {  //Approval MGR
                         if(ovtGrid.cells(rId, 41).getValue() === "-") {
                             if(ovtGrid.cells(rId, 28).getValue() === "-") {
                                 //Approval SPV
@@ -352,7 +352,11 @@ $script = <<< "JS"
                                     disableAppvToolbar();
                                 }
                             } else {
-                                disableAppvToolbar();
+                                if(userLogged.rankId == 1 || userLogged.pltRankId == 1) {
+                                    enableAppvToolbar();
+                                } else {
+                                    disableAppvToolbar();
+                                }
                             }
                         } else {
                             if(userLogged.rankId == 1 || userLogged.pltRankId == 1) {
@@ -362,7 +366,6 @@ $script = <<< "JS"
                             }
                         }
                     } else if(ovtGrid.cells(rId, 30).getValue() !== "-" || ovtGrid.cells(rId, 40).getValue() === "-") {  //Approval PPIC
-                        console.log();
                         if(ovtGrid.cells(rId, 40).getValue() === "-") {
                             if(ovtGrid.cells(rId, 28).getValue() === "-") {
                                 //Approval SPV
@@ -417,7 +420,7 @@ $script = <<< "JS"
                                 } else {
                                     disableAppvToolbar();
                                 }
-                            } else if((userLogged.rankId == 3 || userLogged.rankId == 4) && userLogged.subId == 9 && ovtGrid.cells(rId, 40).getValue() === ""){
+                            } else if((userLogged.rankId == 3 || userLogged.rankId == 4) && userLogged.subId == 9 && ovtGrid.cells(rId, 30).getValue() === "-"){
                                 enableLimitAppvToolbar();
                             } else {
                                 disableAppvToolbar();

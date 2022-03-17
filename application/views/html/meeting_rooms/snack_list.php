@@ -1,6 +1,12 @@
 <div style="width:100%;height:100%;overflow-y:scroll">
-    <?php foreach ($snacks as $snack) { ?>
-    <div class="snack_container <?= $rev->snack_id == $snack->id ? 'snack_selected' : null ?>" id="snack-<?= $snack->id ?>" onclick="selectSnack('<?= $snack->id ?>')">
+    <?php
+    $snackIds = explode(',', $rev->snack_ids);
+    $snackList = [];
+    foreach ($snackIds as $key => $value) {
+        $snackList[$value] = true;
+    }
+    foreach ($snacks as $snack) { ?>
+    <div class="snack_container <?= count($snackList) > 0 && array_key_exists($snack->id, $snackList) ? 'snack_selected' : null ?>" id="snack-<?= $snack->id ?>" onclick="selectSnack('<?= $snack->id ?>')">
         <div class="left">
             <?php if($snack->filename) { ?>
                 <img class="snack_img" src="<?= base_url('assets/images/meeting_snacks/' . $snack->filename) ?>" />
