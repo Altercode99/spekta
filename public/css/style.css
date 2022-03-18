@@ -399,13 +399,18 @@ div.dhxform_item_label_left.button_refresh div.dhxform_btn_txt {
     background-size: 16px 16px;
 }
 
+.icon_excel {
+    background-image: url(../img/excel.png) !important;
+    background-size: 16px 16px;
+}
+
 .icon_pdf {
     background-image: url(../codebase/icons/pdf.png) !important;
     background-size: 16px 16px;
 }
 
 .icon_word {
-    background-image: url(../codebase/icons/word.png) !important;
+    background-image: url(../img/word.png) !important;
     background-size: 16px 16px;
 }
 

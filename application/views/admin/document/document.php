@@ -366,9 +366,9 @@ $script = <<< "JS"
             }
 
 			var ext = filename.split(".").pop();
-			if (ext == "pdf" || ext == "doc" || ext == "docx") {
-				if (size > 5000000) {
-					eAlert("Tidak boleh melebihi 5 MB!");
+			if (ext == "pdf" || ext == "doc" || ext == "docx" || ext == "xls" || ext == "xlsx") {
+				if (size > 15000000) {
+					eAlert("Tidak boleh melebihi 15 MB!");
 				} else {
 					if(totalFile > 0) {
 						eAlert("Maksimal 1 file!");
@@ -378,7 +378,7 @@ $script = <<< "JS"
 					}
 				}					    	
 			} else {
-				eAlert("Hanya file pdf, doc, docx saja yang bisa diupload!");	
+				eAlert("Hanya file pdf, doc, docx, xls, xlsx saja yang bisa diupload!");	
 			}		
 		});
 
@@ -391,7 +391,14 @@ $script = <<< "JS"
             reqJson(Document("tempFile", {action: "document_control"}), "GET", null, (err, res) => {
                 if(res.status === "exist") {
                     addFileForm.setItemValue("filename", res.file.filename);
-                    let type = res.file.type == "pdf" ? "pdf.png" : "word.png";
+                    let type = "no-image.png";
+                    if(res.file.type == "pdf") {
+                        type = "pdf.png";
+                    } else if(res.file.type == "doc" || res.file.type == "docx") {
+                        type = "word.png";
+                    } else if(res.file.type == "xls" || res.file.type == "xlsx") {
+                        type = "excel.png";
+                    } 
                     addFileForm.setItemLabel("file_display", "<img src='./public/img/"+type+"' height='120' width='120'>");
                     addFileForm.setItemLabel("file_description", "<table><tr><td>Nama File</td><td>:</td><td>"+res.file.doc_name+"</td></tr><tr><td>Tipe</td><td>:</td><td>"+res.file.type+"</td></tr><tr><td>Ukuran</td><td>:</td><td>"+res.file.size+"</td></tr></table>");
                     clearUploader(addFileForm, "file_uploader");
@@ -472,7 +479,14 @@ $script = <<< "JS"
                     enableMenu();
                     selectedFilename = detail.filename;
                     selectedDocId = detail.id;
-                    let icon = detail.type === "pdf" ? "pdf.png" : "word.png";
+                    let icon = "no-image.png";
+                    if(detail.type == "pdf") {
+                        icon = "pdf.png";
+                    } else if(detail.type == "doc" || detail.type == "docx") {
+                        icon = "word.png";
+                    } else if(detail.type == "xls" || detail.type == "xlsx") {
+                        icon = "excel.png";
+                    } 
                     treeLayout.cells("b").attachHTMLString("<div class='fwm_container' style='height:100%;overflow-x:hidden;overflow-y:scroll'><div class='fwu_container'><div class='fw_img'><img width='70' height='70' src='./public/img/"+icon+"' /></div><div class='fw_desc'><table><tr><td>Nama</td><td>:</td><td>"+detail.name+"</td></tr><tr><td>Tipe</td><td>:</td><td>"+detail.type+"</td></tr><tr><td>Ukuran</td><td>:</td><td>"+detail.size+"</td></tr><tr><td>Revisi</td><td>:</td><td>"+detail.revision+"</td></tr><tr><td>Edisi</td><td>:</td><td>"+detail.edition+"</td></tr><tr><td>Efektif</td><td>:</td><td>"+detail.effective_date+"</td></tr><tr><td>Created By</td><td>:</td><td>"+detail.created_by+"</td></tr><tr><td>Updated By</td><td>:</td><td>"+detail.updated_by+"</td></tr></table></div></div><div class='fwd_container'><div class='fwd_desc_2'><table><tr><td>Dibuat Tanggal</td><td>:</td><td>"+detail.created_at+"</td></tr><tr><td>Diupdate Tanggal</td><td>:</td><td>"+detail.updated_at+"</td></tr></table></div></div></div>");
                 }
             } else {
@@ -618,10 +632,10 @@ $script = <<< "JS"
                             addRevisionForm.attachEvent("onBeforeFileAdd", async function (filename, size) {
                                 if(addRevisionForm.validate()) {
                                     var ext = filename.split(".").pop();
-                                    if (ext == "pdf" || ext == "doc" || ext == "docx") {
-                                        if (size > 5000000) {
+                                    if (ext == "pdf" || ext == "doc" || ext == "docx" || ext == "xls" || ext == "xlsx") {
+                                        if (size > 15000000) {
                                             fileError = true;
-                                            eAlert("Tidak boleh melebihi 5 MB!");
+                                            eAlert("Tidak boleh melebihi 15 MB!");
                                         } else {
                                             if(totalFile > 0) {
                                                 eAlert("Maksimal 1 file");
@@ -644,7 +658,7 @@ $script = <<< "JS"
                                             }
                                         }		    
                                     } else {
-                                        eAlert("Hanya pdf, doc & docx saja yang bisa diupload!");
+                                        eAlert("Hanya pdf, doc, docx, xls, xlsx saja yang bisa diupload!");
                                         fileError = true;
                                     }
                                 } else {
@@ -669,7 +683,6 @@ $script = <<< "JS"
                             addRevisionForm.attachEvent("onButtonClick", function(id) {
                                 switch (id) {
                                     case "save":
-                                        
                                         const uploader = addRevisionForm.getUploader("file_uploader");
                                         if(uploader.getStatus() === -1) {
                                             if(!fileError) {

@@ -190,7 +190,13 @@ class DocumentController extends Erp_Controller
 
             if (array_key_exists($folder->id, $mainFileList)) {
                 foreach ($mainFileList[$folder->id] as $key => $mValue) {
-                    $type = $mValue['type'] == 'pdf' ? 'icon_pdf' : 'icon_word';
+                    if($mValue['type'] == 'pdf') {
+                        $type = 'icon_pdf';
+                    } else if($mValue['type'] == 'doc' || $mValue['type'] == 'docx') {
+                        $type = 'icon_word';
+                    } else if($mValue['type'] == 'xls' || $mValue['type'] == 'xlsx') {
+                        $type = 'icon_excel';
+                    }
                     $items[] = [
                         'id' => $mValue['id'],
                         'text' => $mValue['text'],
@@ -210,7 +216,13 @@ class DocumentController extends Erp_Controller
                 foreach ($subList[$folder->id] as $key => $value) {
                     if (array_key_exists($value['id'], $subFileList)) {
                         foreach ($subFileList[$value['id']] as $key => $sValue) {
-                            $type = $sValue['type'] == 'pdf' ? 'icon_pdf' : 'icon_word';
+                            if($sValue['type'] == 'pdf') {
+                                $type = 'icon_pdf';
+                            } else if($sValue['type'] == 'doc' || $sValue['type'] == 'docx') {
+                                $type = 'icon_word';
+                            } else if($sValue['type'] == 'xls' || $sValue['type'] == 'xlsx') {
+                                $type = 'icon_excel';
+                            }
                             $subItems[] = [
                                 'id' => $sValue['id'],
                                 'text' => $sValue['text'],

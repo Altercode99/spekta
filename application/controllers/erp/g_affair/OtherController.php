@@ -1004,7 +1004,7 @@ class OtherController extends Erp_Controller
                     $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->end_date)) . "</cell>";
                     $xml .= "<cell $color>" . cleanSC($overtime->status_day) . "</cell>";
                     $xml .= "<cell $color>" . cleanSC($meal) . "</cell>";
-                    $xml .= "<cell $color>" . cleanSC($overtime->meal) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($overtime->total_meal + 1) . "</cell>";
                     $xml .= "<cell $color>" . cleanSC($overtime->notes) . "</cell>";
                     $xml .= "<cell $color>" . cleanSC($overtime->status) . "</cell>";
                     $xml .= "<cell $color>" . cleanSC($status_updater) . "</cell>";
@@ -1012,9 +1012,13 @@ class OtherController extends Erp_Controller
                     $xml .= "<cell $color>" . cleanSC($overtime->emp2) . "</cell>";
                     $xml .= "<cell $color>" . cleanSC(toIndoDateTime($overtime->created_at)) . "</cell>";
                     $xml .= "<cell $color>" . cleanSC($overtime->status_by) . "</cell>";
+                    $xml .= "</row>";
+                    $no++;
                 }
             } else {    
-                if(!($time >= 2.5 && $time <= 8)) {
+                if($time >= 2.5 && $time <= 8) {
+
+                } else {
                     $meal = $overtime->meal > 0 ? "✓ ($overtime->total_meal x)" : '-';
                     $xml .= "<row id='$overtime->id'>";
                     $xml .= "<cell $color>" . cleanSC($no) . "</cell>";
@@ -1028,7 +1032,7 @@ class OtherController extends Erp_Controller
                     $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->end_date)) . "</cell>";
                     $xml .= "<cell $color>" . cleanSC($overtime->status_day) . "</cell>";
                     $xml .= "<cell $color>" . cleanSC($meal) . "</cell>";
-                    $xml .= "<cell $color>" . cleanSC($overtime->meal) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($overtime->total_meal) . "</cell>";
                     $xml .= "<cell $color>" . cleanSC($overtime->notes) . "</cell>";
                     $xml .= "<cell $color>" . cleanSC($overtime->status) . "</cell>";
                     $xml .= "<cell $color>" . cleanSC($status_updater) . "</cell>";
@@ -1036,12 +1040,10 @@ class OtherController extends Erp_Controller
                     $xml .= "<cell $color>" . cleanSC($overtime->emp2) . "</cell>";
                     $xml .= "<cell $color>" . cleanSC(toIndoDateTime($overtime->created_at)) . "</cell>";
                     $xml .= "<cell $color>" . cleanSC($overtime->status_by) . "</cell>";
+                    $xml .= "</row>";
+                    $no++;
                 } 
-               
             }
-
-            $xml .= "</row>";
-            $no++;
         }
         gridXmlHeader($xml);
     }

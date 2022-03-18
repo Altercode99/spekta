@@ -20,7 +20,7 @@ $script = <<< "JS"
             items: [
                 {id: "refresh", text: "Refresh", img: "refresh.png"},
                 {id: "search", text: "<div style='width:100%'>Search: <input type='text' id='ga_ovtcat_start' readonly value='"+currentDate+"' /> - <input type='text' id='ga_ovtcat_end' readonly value='"+currentDate+"' /> <button id='ga_ovtcat_process'>Proses</button>"},
-                {id: "shift", text: "<div style='width:100%'><select id='change_shift'><option value='1'>Lembur Shift 1</option><option value='2'>Lembur Shift 2</option></select></div>"},
+                {id: "shift", text: "<div style='width:100%'><select id='change_shift' style='height:20px'><option value='1'>Lembur Shift 1</option><option value='2'>Lembur Shift 2</option></select></div>"},
             ]
         });
 
