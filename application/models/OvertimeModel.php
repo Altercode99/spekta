@@ -228,14 +228,23 @@ class OvertimeModel extends CI_Model
 
     public function getOvertimeMachine($get)
     {
-        $ids = explode(',', $get['ids']);
-        return $this->db->select('a.id,a.name,b.name AS building,c.name AS room')
-                        ->from("$this->kf_mtn.production_machines a")
-                        ->join("$this->kf_general.buildings b", 'a.building_id = b.id')
-                        ->join("$this->kf_general.building_rooms c", 'a.room_id = c.id')
-                        ->where_in('a.id', $ids)
-                        ->get()
-                        ->result();
+        if(isset($get['ids'])) {
+            $ids = explode(',', $get['ids']);
+            return $this->db->select('a.id,a.name,b.name AS building,c.name AS room')
+                            ->from("$this->kf_mtn.production_machines a")
+                            ->join("$this->kf_general.buildings b", 'a.building_id = b.id')
+                            ->join("$this->kf_general.building_rooms c", 'a.room_id = c.id')
+                            ->where_in('a.id', $ids)
+                            ->get()
+                            ->result();
+        } else {
+            return $this->db->select('a.id,a.name,b.name AS building,c.name AS room')
+            ->from("$this->kf_mtn.production_machines a")
+            ->join("$this->kf_general.buildings b", 'a.building_id = b.id')
+            ->join("$this->kf_general.building_rooms c", 'a.room_id = c.id')
+            ->get()
+            ->result();
+        }
     }
 
     public function getDepartment($get)

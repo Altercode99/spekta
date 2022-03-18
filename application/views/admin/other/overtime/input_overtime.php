@@ -460,6 +460,8 @@ $script = <<< "JS"
                 {id: "delete", text: "Hapus Personil", type: "button", img: "delete.png"},
                 {id: "final", text: "Final Submit", type: "button", img: "update.png"},
                 {id: "hour_revision", text: "Revisi Waktu Lembur", type: "button", img: "clock.png"},
+                {id: "task_revision", text: "Revisi Tugas Lembur", type: "button", img: "edit.png"},
+                {id: "change_machine", text: "Revisi Mesin Lembur", type: "button", img: "building_16.png"},
             ]
         });
 
@@ -880,6 +882,120 @@ $script = <<< "JS"
 
                         }
                     })
+                    break;
+                case "task_revision":
+                    if(!formOvtDetailGrid.getSelectedRowId()) {
+                        return eAlert("Pilih baris yang akan di revisi!");
+                    }
+                    var taskDetailRevWin = createWindow("task_revision_detail_input", "Revisi Tugas Lembur", 510, 320);
+                    myWins.window("task_revision_detail_input").skipMyCloseEvent = true;
+
+                    var taskDetailRevForm = taskDetailRevWin.attachForm([
+                        {type: "fieldset", offsetLeft: 30, offsetTop: 30, label: "Jam Lembur", list:[	
+                            {type: "block", list: [
+                                {type: "hidden", name: "id", label: "ID", labelWidth: 130, inputWidth: 250, value: formOvtDetailGrid.getSelectedRowId()},                               
+                                {type: "input", name: "empTask", label: "Task ID", labelWidth: 130, inputWidth: 250, readonly: true, value: formOvtDetailGrid.cells(formOvtDetailGrid.getSelectedRowId(), 1).getValue()},                               
+                                {type: "input", name: "notes", label: "Tugas Lembur", labelWidth: 130, inputWidth: 250, rows: 3},                               
+                            ]},
+                        ]},
+                        {type: "newcolumn"},
+                        {type: "block", offsetLeft: 30, offsetTop: 10, list: [
+                            {type: "button", name: "update", className: "button_update", offsetLeft: 15, value: "Update"},
+                            {type: "newcolumn"},
+                            {type: "button", name: "cancel", className: "button_no", offsetLeft: 30, value: "Clear"}
+                        ]},
+                    ]);
+
+                    taskDetailRevForm.attachEvent("onButtonClick", function(id) {
+                        switch (id) {
+                            case "update":
+                                setDisable(["update", "cancel"], taskDetailRevForm, taskDetailRevWin);
+                                let taskDetailRevFormDP = new dataProcessor(Overtime("updateOvertimeDetailNotes"));
+                                taskDetailRevFormDP.init(taskDetailRevForm);
+                                taskDetailRevForm.save();
+
+                                taskDetailRevFormDP.attachEvent("onAfterUpdate", function (id, action, tid, tag) {
+                                    let message = tag.getAttribute("message");
+                                    switch (action) {
+                                        case "updated":
+                                            rProcPersonGrid(formOvtGrid.getSelectedRowId());
+                                            sAlert(message);
+                                            setEnable(["update", "cancel"], taskDetailRevForm, taskDetailRevWin);
+                                            closeWindow("task_revision_detail_input");
+                                            break;
+                                        case "error":
+                                            eaAlert("Kesalahan Waktu Lembur", message);
+                                            setEnable(["update", "cancel"], taskDetailRevForm, taskDetailRevWin);
+                                            break;
+                                    }
+                                });
+                                break;
+                            case "cancel":
+                                closeWindow("task_revision_detail_input");
+                                break;
+                        }
+                    });
+                case "change_machine":
+                    if(!formOvtDetailGrid.getSelectedRowId()) {
+                        return eAlert("Pilih baris yang akan di revisi!");
+                    }
+
+                    var revMachineWin = createWindow("rev_machine_win", "Revisi Mesin", 710, 320);
+                    myWins.window("rev_machine_win").skipMyCloseEvent = true;
+
+                    var mWinToolbar = revMachineWin.attachToolbar({
+                        icon_path: "./public/codebase/icons/",
+                        items: [
+                            {id: "update", text: "Simpan", type: "button", img: "update.png"},
+                        ]
+                    })
+
+                    var mWinMenu = revMachineWin.attachMenu({
+                        icon_path: "./public/codebase/icons/",
+                        items: [
+                            {id: "a", text: "Tahan CTRL untuk memilih mesin lebih dari 1"}
+                        ]
+                    })
+
+                    const detailOvertimeWin = reqJsonResponse(Overtime("getDetailOvertime"), "POST", {id: formOvtGrid.getSelectedRowId()}, null);
+
+                    if(detailOvertimeWin.overtime.machine_ids) {
+                        revMachineWin.progressOn();
+                        var machineWinGrid = revMachineWin.attachGrid();
+                        machineWinGrid.setImagePath("./public/codebase/imgs/");
+                        machineWinGrid.setHeader("No,Nama Mesin,Lokasi");
+                        machineWinGrid.setColSorting("int,str,str");
+                        machineWinGrid.setColAlign("center,left,left");
+                        machineWinGrid.setColTypes("rotxt,rotxt,rotxt");
+                        machineWinGrid.setInitWidthsP("5,45,50");
+                        machineWinGrid.enableMultiselect(true);
+                        machineWinGrid.enableSmartRendering(true);
+                        machineWinGrid.attachEvent("onXLE", function() {
+                            revMachineWin.progressOff();
+                        });
+                        machineWinGrid.init();
+                        machineWinGrid.clearAndLoad(Overtime("getOvertimeMachine", {equal_sub_department_id: userLogged.subId}));
+                    } else {
+                        revMachineWin.cells("b").attachHTMLString("<div style='width:100%;height:100%;display:flex;flex-direction:center;justify-content:center;align-items:center;font-family:sans-serif'>No Machine</div>");
+                    }
+
+                    mWinToolbar.attachEvent("onClick", function(id) {
+                        switch (id) {
+                            case "update":
+                                let ids = machineWinGrid.getSelectedRowId();
+                                reqJson(Overtime("updatePersonilMachine"), "POST", {ids, id: formOvtDetailGrid.getSelectedRowId()}, (err, res) => {
+                                    if(res.status === "success") {
+                                        rProcPersonGrid(formOvtGrid.getSelectedRowId());
+                                        closeWindow("rev_machine_win");
+                                        sAlert(res.message);
+                                    } else {
+                                        eAlert(res.message);
+                                    }
+                                });
+                                break;
+                        }
+                    });
+
                     break;
             }
         })

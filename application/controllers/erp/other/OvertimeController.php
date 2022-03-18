@@ -1199,6 +1199,13 @@ class OvertimeController extends Erp_Controller
         xmlResponse('updated', "Berhasil update jam lembur $overtime->emp_task_id");
     }
 
+    public function updateOvertimeDetailNotes()
+    {
+        $post = getPost();
+        $this->Hr->updateById('employee_overtimes_detail', ['notes' => $post['notes']], $post['id']);
+        xmlResponse('updated', "Berhasil update tugas lembur $post[empTask]");
+    }
+
     public function approveOvertime()
     {
         $post = fileGetContent();
@@ -1252,6 +1259,21 @@ class OvertimeController extends Erp_Controller
                 $this->Hr->update('employee_overtimes_detail', ['status' => 'CLOSED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['task_id' => $taskId], null, ['status' => ['CANCELED', 'REJECTED']]);
             }
             if ($columnApv == 'apv_spv') {
+                if($overtime->sub_department_id != 5 && isMtnSupport($overtime)) {
+                    $this->requestOvertime($overtime, 5);
+                }
+
+                if($overtime->sub_department_id != 7 && isQaSupport($overtime)) {
+                    $this->requestOvertime($overtime, 7);
+                }
+
+                if($overtime->sub_department_id != 8 && isQcSupport($overtime)) {
+                    $this->requestOvertime($overtime, 8);
+                }
+
+                if($overtime->sub_department_id != 13 && isWhsSupport($overtime)) {
+                    $this->requestOvertime($overtime, 13);
+                }
                 $isHaveAsman = $this->isHaveAsman($overtime, $post);
                 if (!$isHaveAsman) {
                     $isHaveMgr = $this->isHaveMgr($overtime, $post);
@@ -1261,22 +1283,6 @@ class OvertimeController extends Erp_Controller
                 }
             } else if ($columnApv == 'apv_asman' || $columnApv == 'apv_ppic') {
                 if ($columnApv == 'apv_asman') {
-                    if($overtime->sub_department_id != 5 && isMtnSupport($overtime)) {
-                        $this->requestOvertime($overtime, 5);
-                    }
-
-                    if($overtime->sub_department_id != 7 && isQaSupport($overtime)) {
-                        $this->requestOvertime($overtime, 7);
-                    }
-
-                    if($overtime->sub_department_id != 8 && isQcSupport($overtime)) {
-                        $this->requestOvertime($overtime, 8);
-                    }
-
-                    if($overtime->sub_department_id != 13 && isWhsSupport($overtime)) {
-                        $this->requestOvertime($overtime, 13);
-                    }
-
                     if ($overtime->sub_department_id == 1 || $overtime->sub_department_id == 2 || $overtime->sub_department_id == 3 || $overtime->sub_department_id == 13) {
                         $isHavePPIC = $this->isHavePPIC($overtime, $post);
                         if (!$isHavePPIC) {
@@ -1400,33 +1406,36 @@ class OvertimeController extends Erp_Controller
     public function getOvertimeRequirement()
     {
         $params = getParam();
-        $taskId = $params['task_id'];
-        $overtime = $this->Hr->getOne("employee_overtimes", ['task_id' => $taskId]);
-        $reqOvt = [
-            '3' => $overtime->ahu,
-            '4' => $overtime->compressor,
-            '5' => $overtime->pw,
-            '6' => $overtime->steam,
-            '7' => $overtime->dust_collector,
-            '8' => $overtime->wfi,
-            '9' => $overtime->mechanic,
-            '10' => $overtime->electric,
-            '11' => $overtime->hnn,
-            '12' => $overtime->qc,
-            '13' => $overtime->qa,
-            '14' => $overtime->penandaan,
-            '15' => $overtime->gbk,
-            '16' => $overtime->gbb,
-        ];
-        $reqs = $this->HrModel->getRequirement();
-        $xml = "";
-        $no = 1;
-        $subId = empSub();
+        if(isset($params['task_id'])) {
+            $taskId = $params['task_id'];
+            $overtime = $this->Hr->getOne("employee_overtimes", ['task_id' => $taskId]);
+            $reqOvt = [
+                '3' => $overtime->ahu,
+                '4' => $overtime->compressor,
+                '5' => $overtime->pw,
+                '6' => $overtime->steam,
+                '7' => $overtime->dust_collector,
+                '8' => $overtime->wfi,
+                '9' => $overtime->mechanic,
+                '10' => $overtime->electric,
+                '11' => $overtime->hnn,
+                '12' => $overtime->qc,
+                '13' => $overtime->qa,
+                '14' => $overtime->penandaan,
+                '15' => $overtime->gbk,
+                '16' => $overtime->gbb,
+            ];
+        }
+
         $mtn = ['3' => true, '4' => true, '5' => true, '6' => true, '7' => true, '8' => true, '9' => true, '10' => true, '11' => true];
         $qa = ['13' => true];
         $qc = ['12' => true];
         $whs = ['14' => true, '15' => true, '16' => true];
-
+        
+        $reqs = $this->HrModel->getRequirement();
+        $xml = "";
+        $no = 1;
+        $subId = empSub();
         if ($subId == 5) {
             $support = $mtn;
         } else if ($subId == 7) { //@Sistem Mutu
@@ -1441,6 +1450,16 @@ class OvertimeController extends Erp_Controller
 
         foreach ($reqs as $req) {
             if (isset($reqOvt[$req->id]) && $reqOvt[$req->id] > 0) {
+                if (array_key_exists($req->id, $support)) {
+                    $xml .= "<row id='$req->id'>";
+                    $xml .= "<cell>" . cleanSC($no) . "</cell>";
+                    $xml .= "<cell>" . cleanSC($req->name) . "</cell>";
+                    $xml .= "<cell>" . cleanSC($req->division_name) . "</cell>";
+                    $xml .= "<cell>" . cleanSC($req->division_id) . "</cell>";
+                    $xml .= "</row>";
+                    $no++;
+                }
+            } else {
                 if (array_key_exists($req->id, $support)) {
                     $xml .= "<row id='$req->id'>";
                     $xml .= "<cell>" . cleanSC($no) . "</cell>";
@@ -2957,6 +2976,45 @@ class OvertimeController extends Erp_Controller
         $this->Hr->update('employee_overtimes', $data, ['task_id' => $post->taskIdSupport]);
         $this->Hr->update('employee_overtimes_ref', ['task_id_support' => $post->taskIdSupport], ['task_id' => $post->taskId]);
         response(['status' => 'success', 'message' => 'Berhasil asign referensi lembur ke lemburan support']);
+    }
+
+    public function updatePersonilMachine()
+    {
+        $post = fileGetContent();
+        $machines = explode(',', $post->ids);
+        $total = count($machines);
+        if($total > 0) {
+            if($total > 2) {
+                response(['status' => 'error', 'message' => '1 Orang maksimal 2 mesin!']);
+            } else {
+                $no = 1;
+                foreach ($machines as $key => $value) {
+                    $data["machine_$no"] = $value;
+                    $no++;
+                }
+                $this->Hr->UpdateById('employee_overtimes_detail', $data, $post->id);
+                response(['status' => 'success', 'message' => 'Berhasil mengubah mesin']);
+            }
+        } else {
+            response(['status' => 'error', 'message' => 'Tidak ada mesin dipilih!']);
+        }
+    }
+
+    public function updatePersonilRequest()
+    {
+        $post = fileGetContent();
+        $ids = explode(',', $post->ids);
+        $reqs = $this->Hr->getWhereIn('overtime_requirement', ['id' => $ids])->result();
+        $name = '';
+        foreach ($reqs as $req) {
+            if($name == '') {
+                $name = $req->name;
+            } else {
+                $name = $name.','.$req->name;
+            }
+        }
+        $this->Hr->updateById('employee_overtimes_detail', ['requirements' => $name], $post->id);
+        response(['status' => 'success', 'message' => 'Berhasil mengubah kebutuhan lembur personil']);
     }
 }
 

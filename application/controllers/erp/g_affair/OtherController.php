@@ -414,33 +414,39 @@ class OtherController extends Erp_Controller
         $snackIds = '';
         $snackName = '';
         $price = 0;
-        $snacks = $this->General->getWhereIn('snacks', ['id' => $post->snackId])->result();
         $dataSnack = [];
-        foreach ($snacks as $snack) {
-            if($snackName == '') {
-                $snackIds = $snack->id;
-                $snackName = $snack->name;
-            } else {
-                $snackIds = $snackIds.','.$snack->id;
-                $snackName = $snackName.','.$snack->name;
+        if(count($post->snackId) > 0) {
+            $snacks = $this->General->getWhereIn('snacks', ['id' => $post->snackId])->result();
+            foreach ($snacks as $snack) {
+                if($snackName == '') {
+                    $snackIds = $snack->id;
+                    $snackName = $snack->name;
+                } else {
+                    $snackIds = $snackIds.','.$snack->id;
+                    $snackName = $snackName.','.$snack->name;
+                }
+                $price += floatval($snack->price);
+                $dataSnack[] = [
+                    'id' => $snack->id,
+                    'is_used' => 1
+                ];
             }
-            $price += floatval($snack->price);
-            $dataSnack[] = [
-                'id' => $snack->id,
-                'is_used' => 1
-            ];
+            $data['snack_ids'] = $snackIds;
+            $data['snacks'] = $snackName;
+            $data['snack_price'] = $price;
         }
-        $data['snack_ids'] = $snackIds;
-        $data['snacks'] = $snackName;
-        $data['snack_price'] = $price;
-
+        
         if(count($dataSnack) > 0) {
             $this->General->updateMultiple('snacks', $dataSnack, 'id');
         }
-        
+
         $rev = $this->General->getDataById('meeting_rooms_reservation', $revId);
         if ($rev->status == 'APPROVED') {
-            $this->General->updateById('meeting_rooms_reservation', $data, $revId);
+            if(count($dataSnack) > 0) {
+                $this->General->updateById('meeting_rooms_reservation', $data, $revId);
+            } else {
+                $this->General->updateById('meeting_rooms_reservation', ['snack_ids' => '', 'snacks' => '', 'snack_price' => 0], $revId);
+            }
             response(['status' => 'success', 'message' => 'Berhasil mengubah snack meeting']);
         } else {
             response(['status' => 'error', 'message' => 'Status meeting tersebut belum di approve!']);

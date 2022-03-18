@@ -253,21 +253,21 @@ class PublicController extends Erp_Controller
             } else if ($appvType == 'asman' || $appvType == 'ppic') {
                 if ($status == 'APPROVED') {
                     if($appvType == 'asman') {
-                        if($overtime->sub_department_id != 5 && isMtnSupport($overtime)) {
-                            $this->requestOvertime($overtime, 5);
-                        }
+                        // if($overtime->sub_department_id != 5 && isMtnSupport($overtime)) {
+                        //     $this->requestOvertime($overtime, 5);
+                        // }
     
-                        if($overtime->sub_department_id != 7 && isQaSupport($overtime)) {
-                            $this->requestOvertime($overtime, 7);
-                        }
+                        // if($overtime->sub_department_id != 7 && isQaSupport($overtime)) {
+                        //     $this->requestOvertime($overtime, 7);
+                        // }
     
-                        if($overtime->sub_department_id != 8 && isQcSupport($overtime)) {
-                            $this->requestOvertime($overtime, 8);
-                        }
+                        // if($overtime->sub_department_id != 8 && isQcSupport($overtime)) {
+                        //     $this->requestOvertime($overtime, 8);
+                        // }
     
-                        if($overtime->sub_department_id != 13 && isWhsSupport($overtime)) {
-                            $this->requestOvertime($overtime, 13);
-                        }
+                        // if($overtime->sub_department_id != 13 && isWhsSupport($overtime)) {
+                        //     $this->requestOvertime($overtime, 13);
+                        // }
 
                         if($overtime->sub_department_id == 1 || $overtime->sub_department_id == 2 || $overtime->sub_department_id == 3 || $overtime->sub_department_id == 13) {
                             $isHavePPIC = $this->isHavePPIC($overtime, $taskId);
@@ -315,24 +315,24 @@ class PublicController extends Erp_Controller
         }
     }
 
-    public function requestOvertime($overtime, $subId)
-    {
-        $picEmails = $this->Main->getOne('pics', ['code' => 'overtime', 'sub_department_id' => $subId])->pic_emails;
-        $tokenTaskId = simpleEncrypt($overtime->task_id);
-        $linkAction = LIVE_URL . "index.php?c=PublicController&m=generateOvertime&token=$tokenTaskId";
-        $tokenLink = simpleEncrypt($linkAction);
-        $link = LIVE_URL . "index.php?c=PublicController&m=pinVerification&token=$tokenLink";
-        $message = $this->load->view('html/overtime/email/generate_overtime', ['overtime' => $overtime, 'link' => $link, 'subId' => $subId], true);
-        $services = $this->HrModel->getRequestList($overtime);
-        $data = [
-            'alert_name' => 'OVERTIME_REQUEST',
-            'email_to' => $picEmails,
-            'subject' => "Request Lembur (Task ID: $overtime->task_id) Untuk Support Produksi $services[string]",
-            'subject_name' => "Spekta Alert: Request Lembur (Task ID: $overtime->task_id) Untuk Support Produksi $services[string]",
-            'message' => $message,
-        ];
-        $insert = $this->Main->create('email', $data);
-    }
+    // public function requestOvertime($overtime, $subId)
+    // {
+    //     $picEmails = $this->Main->getOne('pics', ['code' => 'overtime', 'sub_department_id' => $subId])->pic_emails;
+    //     $tokenTaskId = simpleEncrypt($overtime->task_id);
+    //     $linkAction = LIVE_URL . "index.php?c=PublicController&m=generateOvertime&token=$tokenTaskId";
+    //     $tokenLink = simpleEncrypt($linkAction);
+    //     $link = LIVE_URL . "index.php?c=PublicController&m=pinVerification&token=$tokenLink";
+    //     $message = $this->load->view('html/overtime/email/generate_overtime', ['overtime' => $overtime, 'link' => $link, 'subId' => $subId], true);
+    //     $services = $this->HrModel->getRequestList($overtime);
+    //     $data = [
+    //         'alert_name' => 'OVERTIME_REQUEST',
+    //         'email_to' => $picEmails,
+    //         'subject' => "Request Lembur (Task ID: $overtime->task_id) Untuk Support Produksi $services[string]",
+    //         'subject_name' => "Spekta Alert: Request Lembur (Task ID: $overtime->task_id) Untuk Support Produksi $services[string]",
+    //         'message' => $message,
+    //     ];
+    //     $insert = $this->Main->create('email', $data);
+    // }
 
     public function isHaveAsman($overtime, $taskId)
     {

@@ -78,7 +78,7 @@ $script = <<< "JS"
                 {type: "fieldset", offsetLeft: 30, label: "<span id='kebutuhan_support'>Kebutuhan Support</span>", list: initialRight2},
             ]},
             {type: "block", offsetLeft: 30, offsetTop: 10, list: [
-                {type: "button", name: "add", className: "button_add", offsetLeft: 15, value: "Tambah"},
+                {type: "button", name: "add", className: "button_add", offsetLeft: 15, value: "<span id='tnp_init_btn'>Tambah</span>"},
                 {type: "newcolumn"},
                 {type: "button", name: "clear", className: "button_clear", offsetLeft: 30, value: "Clear"}
             ]},
@@ -142,6 +142,7 @@ $script = <<< "JS"
                     });
                     break;
                 case "clear":
+                    $("#tnp_init_btn").html("Tambah");
                     clearAllForm(initialForm, comboUrl, null, ['start_date', 'end_date']);
                     initialForm.uncheckItem("jemputan");
                     initialForm.uncheckItem("ahu");
@@ -360,12 +361,12 @@ $script = <<< "JS"
         processlayoutTnp.cells("a").progressOn();
         formOvtGridTnp = processlayoutTnp.cells("a").attachGrid();
         formOvtGridTnp.setImagePath("./public/codebase/imgs/");
-        formOvtGridTnp.setHeader("No,Task ID,Sub Unit,Bagian,Disivi,Kebutuhan Orang,Status Hari,Tanggal Overtime,Waktu Mulai, Waktu Selesai,Catatan,Makan,Steam,AHU,Compressor,PW,Jemputan,Dust Collector,WFI,Mekanik,Listrik,H&N,QC,QA,Penandaan,GBK,GBB,Status Overtime, Revisi Jam Lembur,Revisi User Approval,Rejection User Approval,Created By,Updated By,Created At,");
+        formOvtGridTnp.setHeader("No,Task ID,Sub Unit,Bagian,,Kebutuhan Orang,Status Hari,Tanggal Overtime,Waktu Mulai, Waktu Selesai,Catatan,Makan,Steam,AHU,Compressor,PW,Jemputan,Dust Collector,WFI,Mekanik,Listrik,H&N,QC,QA,Penandaan,GBK,GBB,Status Overtime, Revisi Jam Lembur,Revisi User Approval,Rejection User Approval,Created By,Updated By,Created At,");
         formOvtGridTnp.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter");
         formOvtGridTnp.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
         formOvtGridTnp.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
         formOvtGridTnp.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        formOvtGridTnp.setInitWidthsP("5,20,20,20,20,15,15,15,20,20,20,7,7,7,7,7,7,10,7,7,7,7,7,7,7,7,7,10,30,30,30,15,15,25,0");
+        formOvtGridTnp.setInitWidthsP("5,20,20,20,0,15,15,15,20,20,20,7,7,7,7,7,7,10,7,7,7,7,7,7,7,7,7,10,30,30,30,15,15,25,0");
         formOvtGridTnp.enableSmartRendering(true);
         formOvtGridTnp.attachEvent("onXLE", function() {
             processlayoutTnp.cells("a").progressOff();
@@ -401,17 +402,19 @@ $script = <<< "JS"
                 {id: "delete", text: "Hapus Personil", type: "button", img: "delete.png"},
                 {id: "final", text: "Final Submit", type: "button", img: "update.png"},
                 {id: "hour_revision", text: "Revisi Waktu Lembur", type: "button", img: "clock.png"},
+                {id: "task_revision", text: "Revisi Tugas Lembur", type: "button", img: "edit.png"},
+                {id: "change_req", text: "Revisi Kebutuhan Support", type: "button", img: "tools.png"},
             ]
         });
 
         formOvtDetailGridTnp = processlayoutTnp.cells("b").attachGrid();
         formOvtDetailGridTnp.setImagePath("./public/codebase/imgs/");
-        formOvtDetailGridTnp.setHeader("No,Task ID,Nama Karyawan,Sub Unit,Bagian,Disivi,,,Pelayanan Produksi,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Premi,Nominal Overtime,Makan,Tugas,Status Overtime,Status Terakhir,Created By,Updated By,Created At,,");
+        formOvtDetailGridTnp.setHeader("No,Task ID,Nama Karyawan,Sub Unit,Bagian,,,,Pelayanan Produksi,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Premi,Nominal Overtime,Makan,Tugas,Status Overtime,Status Terakhir,Created By,Updated By,Created At,,");
         formOvtDetailGridTnp.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
         formOvtDetailGridTnp.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
         formOvtDetailGridTnp.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
         formOvtDetailGridTnp.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        formOvtDetailGridTnp.setInitWidthsP("5,20,20,20,20,20,0,0,25,15,15,15,10,10,10,10,10,10,10,5,25,10,30,15,15,22,0,0");
+        formOvtDetailGridTnp.setInitWidthsP("5,20,20,20,0,20,0,0,25,15,15,15,10,10,10,10,10,10,10,5,25,10,30,15,15,22,0,0");
         formOvtDetailGridTnp.attachFooter("Total,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#stat_total,#stat_total,#stat_total,#stat_total,,<div id='tnp_total_ovt_input'></div>,,,,,,,,,");
         formOvtDetailGridTnp.enableMultiselect(true);
         formOvtDetailGridTnp.enableSmartRendering(true);
@@ -846,6 +849,113 @@ $script = <<< "JS"
                         }
                     });
                     break;
+                case "task_revision":
+                    if(!formOvtDetailGridTnp.getSelectedRowId()) {
+                        return eAlert("Pilih baris yang akan di revisi!");
+                    }
+                    var taskDetailRevWin = createWindow("task_revision_detail_input_tnp", "Revisi Tugas Lembur", 510, 320);
+                    myWins.window("task_revision_detail_input_tnp").skipMyCloseEvent = true;
+
+                    var taskDetailRevForm = taskDetailRevWin.attachForm([
+                        {type: "fieldset", offsetLeft: 30, offsetTop: 30, label: "Jam Lembur", list:[	
+                            {type: "block", list: [
+                                {type: "hidden", name: "id", label: "ID", labelWidth: 130, inputWidth: 250, value: formOvtDetailGridTnp.getSelectedRowId()},                               
+                                {type: "input", name: "empTask", label: "Task ID", labelWidth: 130, inputWidth: 250, readonly: true, value: formOvtDetailGridTnp.cells(formOvtDetailGridTnp.getSelectedRowId(), 1).getValue()},                               
+                                {type: "input", name: "notes", label: "Tugas Lembur", labelWidth: 130, inputWidth: 250, rows: 3},                               
+                            ]},
+                        ]},
+                        {type: "newcolumn"},
+                        {type: "block", offsetLeft: 30, offsetTop: 10, list: [
+                            {type: "button", name: "update", className: "button_update", offsetLeft: 15, value: "Update"},
+                            {type: "newcolumn"},
+                            {type: "button", name: "cancel", className: "button_no", offsetLeft: 30, value: "Clear"}
+                        ]},
+                    ]);
+
+                    taskDetailRevForm.attachEvent("onButtonClick", function(id) {
+                        switch (id) {
+                            case "update":
+                                setDisable(["update", "cancel"], taskDetailRevForm, taskDetailRevWin);
+                                let taskDetailRevFormDP = new dataProcessor(Overtime("updateOvertimeDetailNotes"));
+                                taskDetailRevFormDP.init(taskDetailRevForm);
+                                taskDetailRevForm.save();
+
+                                taskDetailRevFormDP.attachEvent("onAfterUpdate", function (id, action, tid, tag) {
+                                    let message = tag.getAttribute("message");
+                                    switch (action) {
+                                        case "updated":
+                                            rProcPersonGrid(formOvtGridTnp.getSelectedRowId());
+                                            sAlert(message);
+                                            setEnable(["update", "cancel"], taskDetailRevForm, taskDetailRevWin);
+                                            closeWindow("task_revision_detail_input_tnp");
+                                            break;
+                                        case "error":
+                                            eaAlert("Kesalahan Waktu Lembur", message);
+                                            setEnable(["update", "cancel"], taskDetailRevForm, taskDetailRevWin);
+                                            break;
+                                    }
+                                });
+                                break;
+                            case "cancel":
+                                closeWindow("task_revision_detail_input_tnp");
+                                break;
+                        }
+                    });
+                    break;
+                case "change_req":
+                    if(!formOvtDetailGridTnp.getSelectedRowId()) {
+                        return eAlert("Pilih baris yang akan di revisi!");
+                    }
+                    var reqDetailRevWin = createWindow("req_revision_detail_input_tnp", "Revisi Kebutuhan Support", 700, 320);
+                    myWins.window("req_revision_detail_input_tnp").skipMyCloseEvent = true;
+
+                    var rWinToolbar = reqDetailRevWin.attachToolbar({
+                        icon_path: "./public/codebase/icons/",
+                        items: [
+                            {id: "update", text: "Simpan", type: "button", img: "update.png"},
+                        ]
+                    })
+
+                    var rWinMenu = reqDetailRevWin.attachMenu({
+                        icon_path: "./public/codebase/icons/",
+                        items: [
+                            {id: "a", text: "Tahan CTRL untuk memilih mesin lebih dari 1"}
+                        ]
+                    })
+
+                    reqDetailRevWin.progressOn();
+                    var reqWinGrid = reqDetailRevWin.attachGrid();
+                    reqWinGrid.setImagePath("./public/codebase/imgs/");
+                    reqWinGrid.setHeader("No,Nama Pelayanan,Sub Bagian,Division ID");
+                    reqWinGrid.setColSorting("int,str,str,str");
+                    reqWinGrid.setColAlign("center,left,left,left");
+                    reqWinGrid.setColTypes("rotxt,rotxt,rotxt,rotxt");
+                    reqWinGrid.setInitWidthsP("5,45,50,0");
+                    reqWinGrid.enableMultiselect(true);
+                    reqWinGrid.enableSmartRendering(true);
+                    reqWinGrid.attachEvent("onXLE", function() {
+                        reqDetailRevWin.progressOff();
+                    });
+                    reqWinGrid.init();
+                    reqWinGrid.clearAndLoad(Overtime("getOvertimeRequirement"));
+
+                    rWinToolbar.attachEvent("onClick", function(id) {
+                        switch (id) {
+                            case "update":
+                                let ids = reqWinGrid.getSelectedRowId();
+                                reqJson(Overtime("updatePersonilRequest"), "POST", {ids, id: formOvtDetailGridTnp.getSelectedRowId()}, (err, res) => {
+                                    if(res.status === "success") {
+                                        rProcPersonGrid(formOvtGridTnp.getSelectedRowId());
+                                        closeWindow("req_revision_detail_input_tnp");
+                                        sAlert(res.message);
+                                    } else {
+                                        eAlert(res.message);
+                                    }
+                                });
+                                break;
+                        }
+                    });
+                    break;
             }
         });
 
@@ -896,12 +1006,12 @@ $script = <<< "JS"
         refProdLayout.cells("a").progressOn();
         var refProdGrid = refProdLayout.cells("a").attachGrid();
         refProdGrid.setImagePath("./public/codebase/imgs/");
-        refProdGrid.setHeader("No,Check,Task ID Produksi,Task ID Suport,Sub Unit,Bagian,Disivi,Kebutuhan Orang,Status Hari,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Catatan,Makan,Steam,AHU,Compressor,PW,Jemputan,Dust Collector,WFI,Mekanik,Listrik,H&N,QC,QA,Penandaan,GBK,GBB,Created By,Created At");
+        refProdGrid.setHeader("No,Check,Task ID Produksi,Task ID Suport,Sub Unit,Bagian,,Kebutuhan Orang,Status Hari,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Catatan,Makan,Steam,AHU,Compressor,PW,Jemputan,Dust Collector,WFI,Mekanik,Listrik,H&N,QC,QA,Penandaan,GBK,GBB,Created By,Created At");
         refProdGrid.attachHeader("#rspan,#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter")
         refProdGrid.setColSorting("int,na,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
         refProdGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
         refProdGrid.setColTypes("rotxt,ch,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        refProdGrid.setInitWidthsP("5,5,20,20,20,20,20,15,15,15,20,20,20,7,7,7,7,7,7,10,7,7,7,7,7,7,7,7,7,15,25");
+        refProdGrid.setInitWidthsP("5,5,20,20,20,20,0,15,15,15,20,20,20,7,7,7,7,7,7,10,7,7,7,7,7,7,7,7,7,15,25");
         refProdGrid.enableSmartRendering(true);
         refProdGrid.attachEvent("onXLE", function() {
             refProdLayout.cells("a").progressOff();
@@ -1001,6 +1111,7 @@ $script = <<< "JS"
                     }
 
                     if(taskId.length > 0) {
+                        $("#tnp_init_btn").html("Tambah Lembur Support");
                         enableRequest();
                         initialForm.uncheckItem("jemputan");
                         initialForm.uncheckItem("ahu");
@@ -1096,12 +1207,12 @@ $script = <<< "JS"
                     var ovtTaskGrid = ovtTaskWin.attachGrid();
                     ovtTaskGrid.setImagePath("./public/codebase/imgs/");
                     ovtTaskGrid.setImagePath("./public/codebase/imgs/");
-                    ovtTaskGrid.setHeader("No,Task ID,Sub Unit,Bagian,Disivi,Kebutuhan Orang,Status Hari,Tanggal Overtime,Waktu Mulai, Waktu Selesai,Catatan,Makan,Steam,AHU,Compressor,PW,Jemputan,Dust Collector,Mekanik,Listrik,H&N,QC,QA,Penandaan,GBK,GBB,Status Overtime, Revisi Jam Lembur,Revisi User Approval,Rejection User Approval,Created By,Updated By,Created At,");
-                    ovtTaskGrid.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter");
-                    ovtTaskGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
-                    ovtTaskGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
-                    ovtTaskGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-                    ovtTaskGrid.setInitWidthsP("5,20,20,20,20,15,15,15,20,20,20,7,7,7,7,7,7,10,7,7,7,7,7,7,7,7,10,30,30,30,15,15,25,0");
+                    ovtTaskGrid.setHeader("No,Task ID,Sub Unit,Bagian,,Kebutuhan Orang,Status Hari,Tanggal Overtime,Waktu Mulai, Waktu Selesai,Catatan,Makan,Steam,AHU,Compressor,PW,Jemputan,Dust Collector,WFI,Mekanik,Listrik,H&N,QC,QA,Penandaan,GBK,GBB,Status Overtime, Revisi Jam Lembur,Revisi User Approval,Rejection User Approval,Created By,Updated By,Created At,");
+                    ovtTaskGrid.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter");
+                    ovtTaskGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
+                    ovtTaskGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
+                    ovtTaskGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
+                    ovtTaskGrid.setInitWidthsP("5,20,20,20,0,15,15,15,20,20,20,7,7,7,7,7,7,10,7,7,7,7,7,7,7,7,7,10,30,30,30,15,15,25,0");
                     ovtTaskGrid.enableSmartRendering(true);
                     ovtTaskGrid.attachEvent("onXLE", function() {
                         ovtTaskWin.progressOff();
