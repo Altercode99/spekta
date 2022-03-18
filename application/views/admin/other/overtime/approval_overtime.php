@@ -5,7 +5,8 @@ if ((strpos(strtolower($_SERVER['SCRIPT_NAME']), strtolower(basename(__FILE__)))
 }
 
 $script = <<< "JS"
-	function showAppvOvertime() {	
+	
+    function showAppvOvertime() {	
         var legend = legendGrid();
         var times = createTime();
 
@@ -697,6 +698,8 @@ $script = <<< "JS"
             } else {
                 if((userLogged.picOvertime && userLogged.rankId <= 6) || userLogged.pltRankId <= 6) {
                     if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 31).getValue() !== "-" || ovtGrid.cells(ovtGrid.getSelectedRowId(), 41).getValue() === "-") { //Approval MGR
+                        console.log("approval mgr");
+
                         if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 41).getValue() === "-") {
                             if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 28).getValue() === "-") {
                                 if(userLogged.rankId == 5 || userLogged.rankId == 6 || userLogged.pltRankId == 5 || userLogged.pltRankId == 6) {
@@ -706,6 +709,12 @@ $script = <<< "JS"
                                 }
                             } else if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 29).getValue() === "-" || ovtGrid.cells(ovtGrid.getSelectedRowId(), 30).getValue() === "-") {
                                 if(userLogged.rankId == 3 || userLogged.rankId == 4 || userLogged.pltRankId == 3 || userLogged.pltRankId == 4){
+                                    enableAppvDetailToolbar();
+                                } else {
+                                    disableAppvDetailToolbar();
+                                }
+                            } else {
+                                if(userLogged.rankId == 1 || userLogged.pltRankId == 1) {
                                     enableAppvDetailToolbar();
                                 } else {
                                     disableAppvDetailToolbar();
@@ -812,7 +821,6 @@ $script = <<< "JS"
         function countTotalOvertime() {
             sumGridToElement(ovtDetailGrid, 18, "other_total_ovt_appv");
         }
-
     }
 
 JS;

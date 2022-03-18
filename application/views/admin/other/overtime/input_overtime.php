@@ -935,6 +935,7 @@ $script = <<< "JS"
                                 break;
                         }
                     });
+                    break;
                 case "change_machine":
                     if(!formOvtDetailGrid.getSelectedRowId()) {
                         return eAlert("Pilih baris yang akan di revisi!");
@@ -976,7 +977,7 @@ $script = <<< "JS"
                         machineWinGrid.init();
                         machineWinGrid.clearAndLoad(Overtime("getOvertimeMachine", {equal_sub_department_id: userLogged.subId}));
                     } else {
-                        revMachineWin.cells("b").attachHTMLString("<div style='width:100%;height:100%;display:flex;flex-direction:center;justify-content:center;align-items:center;font-family:sans-serif'>No Machine</div>");
+                        revMachineWin.attachHTMLString("<div style='width:100%;height:100%;display:flex;flex-direction:center;justify-content:center;align-items:center;font-family:sans-serif'>No Machine</div>");
                     }
 
                     mWinToolbar.attachEvent("onClick", function(id) {
@@ -995,7 +996,6 @@ $script = <<< "JS"
                                 break;
                         }
                     });
-
                     break;
             }
         })

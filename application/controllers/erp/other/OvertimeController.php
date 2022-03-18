@@ -56,11 +56,13 @@ class OvertimeController extends Erp_Controller
         $depts = $this->Overtime->getDepartment(getParam());
         $deptList = [];
         foreach ($depts as $dept) {
-            $deptList['options'][] = [
-                'value' => $dept->id,
-                'text' => $dept->name,
-                'selected' => isset($params['select']) && $params['select'] == $dept->id ? 1 : 0,
-            ];
+            if($dept->id == empDept()) {
+                $deptList['options'][] = [
+                    'value' => $dept->id,
+                    'text' => $dept->name,
+                    'selected' => isset($params['select']) && $params['select'] == $dept->id ? 1 : 0,
+                ];
+            }
         }
         echo json_encode($deptList);
     }
@@ -79,7 +81,7 @@ class OvertimeController extends Erp_Controller
             if ($subs) {
                 $subList['options'][] = [
                     'value' => 0,
-                    'text' => '-',
+                    'text' => '- (By Pass Approval Asman)',
                 ];
                 foreach ($subs as $sub) {
                     $subList['options'][] = [
@@ -91,7 +93,7 @@ class OvertimeController extends Erp_Controller
             } else {
                 $subList['options'][] = [
                     'value' => 0,
-                    'text' => '-',
+                    'text' => '- (By Pass Approval Asman)',
                     'selected' => 1,
                 ];
             }
@@ -539,7 +541,7 @@ class OvertimeController extends Erp_Controller
         $expDate = explode('-', $overtime->overtime_date);
         $lastId = $this->Overtime->lastOt('employee_overtimes_detail', 'overtime_date', $overtime->overtime_date);
 
-        if (countHour($start, $end, 'h') > 18) {
+        if (countHour($start, $end, 'h') > 24) {
             xmlResponse('invalid', 'Maksimum jam lembur adalah 18 jam!');
         }
 
@@ -772,7 +774,7 @@ class OvertimeController extends Erp_Controller
     public function cancelOvertime()
     {
         $post = fileGetContent();
-        $this->Hr->update('employee_overtimes_ref', ['task_id_support' => ''], ['task_id' => $post->taskId]);
+        $this->Hr->update('employee_overtimes_ref', ['task_id_support' => ''], ['task_id_support' => $post->taskId]);
         $this->Hr->update('employee_overtimes', ['status' => 'CANCELED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['task_id' => $post->taskId]);
         $this->Hr->update('employee_overtimes_detail', ['status' => 'CANCELED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['task_id' => $post->taskId]);
         response(['status' => 'success', 'message' => 'Lemburan berhasil di batalkan']);
@@ -781,7 +783,7 @@ class OvertimeController extends Erp_Controller
     public function cancelOvertimeMtn()
     {
         $post = fileGetContent();
-        $this->Hr->update('employee_overtimes_ref', ['task_id_support' => ''], ['task_id' => $post->taskId]);
+        $this->Hr->update('employee_overtimes_ref', ['task_id_support' => ''], ['task_id_support' => $post->taskId]);
         $this->Hr->update('employee_overtimes', ['status' => 'CANCELED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['task_id' => $post->taskId]);
         $this->Hr->update('employee_overtimes_detail', ['status' => 'CANCELED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['task_id' => $post->taskId]);
         response(['status' => 'success', 'message' => 'Lemburan berhasil di batalkan']);
@@ -1283,7 +1285,7 @@ class OvertimeController extends Erp_Controller
                 }
             } else if ($columnApv == 'apv_asman' || $columnApv == 'apv_ppic') {
                 if ($columnApv == 'apv_asman') {
-                    if ($overtime->sub_department_id == 1 || $overtime->sub_department_id == 2 || $overtime->sub_department_id == 3 || $overtime->sub_department_id == 13) {
+                    if ($overtime->sub_department_id == 1 || $overtime->sub_department_id == 2 || $overtime->sub_department_id == 3 || $overtime->sub_department_id == 4 || $overtime->sub_department_id == 13) {
                         $isHavePPIC = $this->isHavePPIC($overtime, $post);
                         if (!$isHavePPIC) {
                             $isHaveMgr = $this->isHaveMgr($overtime, $post);
@@ -2288,7 +2290,7 @@ class OvertimeController extends Erp_Controller
             xmlResponse('error', "Waktu selesai harus lebih besar dari waktu mulai!");
         }
 
-        if (countHour($startDate, $endDate, 'h') > 18) {
+        if (countHour($startDate, $endDate, 'h') > 24) {
             xmlResponse('error', 'Maksimum jam lembur adalah 18 jam!');
         }
 

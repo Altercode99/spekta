@@ -269,7 +269,7 @@ class PublicController extends Erp_Controller
                         //     $this->requestOvertime($overtime, 13);
                         // }
 
-                        if($overtime->sub_department_id == 1 || $overtime->sub_department_id == 2 || $overtime->sub_department_id == 3 || $overtime->sub_department_id == 13) {
+                        if($overtime->sub_department_id == 1 || $overtime->sub_department_id == 2 || $overtime->sub_department_id == 3 || $overtime->sub_department_id == 4 || $overtime->sub_department_id == 13) {
                             $isHavePPIC = $this->isHavePPIC($overtime, $taskId);
                             if(!$isHavePPIC) {
                                 $isHaveMgr = $this->isHaveMgr($overtime, $taskId);

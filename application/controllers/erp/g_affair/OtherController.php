@@ -965,7 +965,8 @@ class OtherController extends Erp_Controller
 
     public function getCatheringOvertime()
     {
-        $overtimes = $this->Overtime->getOvertimeDetail(getParam())->result();
+        $params = getParam();
+        $overtimes = $this->Overtime->getOvertimeDetail($params)->result();
         $xml = "";
         $no = 1;
         foreach ($overtimes as $overtime) {
@@ -988,37 +989,56 @@ class OtherController extends Erp_Controller
             }
 
             $time = dtToFloat($overtime->start_date);
-
-            if($overtime->meal > 0 || $time >= 2.5 && $time <= 8) {
-                if($overtime->meal > 0) {
-                    $meal = "✓ ($overtime->total_meal x)";
-                } else {
-                    $meal = "✓ (1 x)";
+            if($params['change_shift'] == 2) {
+                if($time >= 2.5 && $time <= 8) {
+                    $meal = $overtime->meal > 0 ? "✓ ($overtime->total_meal x)" : '-';
+                    $xml .= "<row id='$overtime->id'>";
+                    $xml .= "<cell $color>" . cleanSC($no) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($overtime->emp_task_id) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($overtime->employee_name) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($overtime->department) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($overtime->sub_department) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($overtime->division) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC(toIndoDateDay($overtime->overtime_date)) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->start_date)) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->end_date)) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($overtime->status_day) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($meal) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($overtime->meal) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($overtime->notes) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($overtime->status) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($status_updater) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($overtime->emp1) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($overtime->emp2) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC(toIndoDateTime($overtime->created_at)) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($overtime->status_by) . "</cell>";
                 }
-            } else {
-                $meal = '-';   
+            } else {    
+                if(!($time >= 2.5 && $time <= 8)) {
+                    $meal = $overtime->meal > 0 ? "✓ ($overtime->total_meal x)" : '-';
+                    $xml .= "<row id='$overtime->id'>";
+                    $xml .= "<cell $color>" . cleanSC($no) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($overtime->emp_task_id) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($overtime->employee_name) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($overtime->department) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($overtime->sub_department) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($overtime->division) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC(toIndoDateDay($overtime->overtime_date)) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->start_date)) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->end_date)) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($overtime->status_day) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($meal) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($overtime->meal) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($overtime->notes) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($overtime->status) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($status_updater) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($overtime->emp1) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($overtime->emp2) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC(toIndoDateTime($overtime->created_at)) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC($overtime->status_by) . "</cell>";
+                } 
+               
             }
-
-            $xml .= "<row id='$overtime->id'>";
-            $xml .= "<cell $color>" . cleanSC($no) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC($overtime->emp_task_id) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC($overtime->employee_name) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC($overtime->department) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC($overtime->sub_department) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC($overtime->division) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC(toIndoDateDay($overtime->overtime_date)) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->start_date)) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($overtime->end_date)) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC($overtime->status_day) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC($meal) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC($overtime->meal > 0 || $time >= 2.5 && $time <= 8 ? 1 : 0) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC($overtime->notes) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC($overtime->status) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC($status_updater) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC($overtime->emp1) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC($overtime->emp2) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC(toIndoDateTime($overtime->created_at)) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC($overtime->status_by) . "</cell>";
 
             $xml .= "</row>";
             $no++;

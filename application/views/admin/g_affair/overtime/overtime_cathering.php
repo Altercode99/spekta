@@ -19,7 +19,8 @@ $script = <<< "JS"
             icon_path: "./public/codebase/icons/",
             items: [
                 {id: "refresh", text: "Refresh", img: "refresh.png"},
-                {id: "search", text: "<div style='width:100%'>Search: <input type='text' id='ga_ovtcat_start' readonly value='"+currentDate+"' /> - <input type='text' id='ga_ovtcat_end' readonly value='"+currentDate+"' /> <button id='ga_ovtcat_process'>Proses</button>"}
+                {id: "search", text: "<div style='width:100%'>Search: <input type='text' id='ga_ovtcat_start' readonly value='"+currentDate+"' /> - <input type='text' id='ga_ovtcat_end' readonly value='"+currentDate+"' /> <button id='ga_ovtcat_process'>Proses</button>"},
+                {id: "shift", text: "<div style='width:100%'><select id='change_shift'><option value='1'>Lembur Shift 1</option><option value='2'>Lembur Shift 2</option></select></div>"},
             ]
         });
 
@@ -37,6 +38,10 @@ $script = <<< "JS"
             if(checkFilterDate($("#ga_ovtcat_start").val(), $("#ga_ovtcat_end").val())) {
                 rOvtGrid();
             }
+        });
+
+        $("#change_shift").on("change", function() {
+            rOvtGrid();
         });
 
         let ovtGridBar = ovtCathLayout.cells("a").attachStatusBar();
@@ -63,11 +68,13 @@ $script = <<< "JS"
 
         function rOvtGrid() {
             ovtCathLayout.cells("a").progressOn();
+            let change_shift = $("#change_shift").val();
             let start = $("#ga_ovtcat_start").val();
             let end = $("#ga_ovtcat_end").val();
             let params = {
                 notin_status: "CANCELED,REJECTED,ADD",
-                betweendate_overtime_date: start+","+end
+                betweendate_overtime_date: start+","+end,
+                change_shift
             };
             ovtGrid.clearAndLoad(GAOther("getCatheringOvertime", params), ovtGridCount);
         }

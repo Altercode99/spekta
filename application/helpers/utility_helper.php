@@ -829,7 +829,7 @@ function countTotalHourWeekend($hour, $minute)
             $fistHour = $hour * 2;
             if ($minute > 0) {
                 $nextHour = $minute * 3;
-                return number_format(floatval($fistHour + $minute), 2);
+                return number_format(floatval($fistHour + $nextHour), 2);
             } else {
                 return number_format($fistHour, 2);
             }
@@ -876,7 +876,7 @@ function countTotalHourNationDay($hour, $minute)
             $fistHour = $hour * 3;
             if ($minute > 0) {
                 $nextHour = $minute * 4;
-                return number_format(floatval($fistHour + $minute), 2);
+                return number_format(floatval($fistHour + $nextHour), 2);
             } else {
                 return number_format($fistHour, 2);
             }
@@ -970,8 +970,10 @@ function totalHour($empId, $start, $end, $startTime, $endTime)
     $rest1 = 12;
     $rest2 = 18;
     $rest3 = 24;
+
     $normalRest4 = 4;
     $rest4 = 28;
+
     $normalRest5 = 5;
     $rest5 = 29;
     $rest6 = 0;
@@ -984,8 +986,8 @@ function totalHour($empId, $start, $end, $startTime, $endTime)
     $meal2 = 0;
     $meal3 = 0;
 
-    if ($endHour < $startHour && intval($endHour) < 12) {
-        $endFixing = intval($endHour) + 28;
+    if ($endHour <= $startHour && intval($endHour) < 12) {
+        $endFixing = intval($endHour) + 24;
     } else {
         $endFixing = intval($endHour);
     }
@@ -1069,6 +1071,7 @@ function totalHour($empId, $start, $end, $startTime, $endTime)
     $premi = $ci->Hr->getOne('employee_sallary', ['emp_id' => $empId])->premi_overtime;
     $emp = $ci->Hr->getDataById('employees', $empId);
     $totalPremi = $emp->rank_id <= 6 || $emp->overtime == 1 ? $totalHour * $premi : $overtimeHour * $premi;
+
     return [
         'status_day' => $statusDay,
         'effective_hour' => ($hour - $divStartMinute + $divEndMinute),

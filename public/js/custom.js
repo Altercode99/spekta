@@ -555,24 +555,14 @@ function checkTime(startCombo, endCombo, button, form) {
 
   setEnable(button, form);
 
-  if (newEnd < newStart) {
+  if (newEnd < newStart || newEnd === newStart) {
     eaWarning(
       "Warning Waktu Lembur",
       "Waktu akhir lebih kecil dari waktu mulai, waktu akhir akan dihitung ke hari berikutnya!"
     );
     return true;
-  }
-
-  if (newEnd - newStart < 1) {
+  } else if (newEnd - newStart < 1) {
     eAlert("Waktu lembur minimal adalah 1 jam! <br/><b>TOMBOL DISABLED</>");
-    setDisable(button, form);
-    return false;
-  }
-
-  if (newEnd === newStart) {
-    eAlert(
-      "Waktu selesai harus lebih besar dari waktu mulai! <br/><b>TOMBOL DISABLED</>"
-    );
     setDisable(button, form);
     return false;
   }
@@ -792,76 +782,57 @@ function genWorkTime(times, startIndex, endIndex, isEndFull = false) {
   var newEndTime = [];
   var filterStart = [];
   var filterEnd = [];
-  if (endIndex < startIndex) {
+  if (endIndex == startIndex) {
     times.map((time, index) => {
-      if (index >= startIndex) {
-        if (
-          time.value !== "12:00" &&
-          time.value !== "12:30" &&
-          time.value !== "18:00" &&
-          time.value !== "00:00" &&
-          time.value !== "00:30" &&
-          time.value !== "04:30" &&
-          time.value !== "05:00"
-        ) {
-          newStartTime.push({
-            text: time.text,
-            value: time.value,
-          });
-          filterStart.push(time.value);
-        }
+      if (
+        time.value !== "12:00" &&
+        time.value !== "12:30" &&
+        time.value !== "18:00" &&
+        time.value !== "00:00" &&
+        time.value !== "00:30" &&
+        time.value !== "04:30" &&
+        time.value !== "05:00"
+      ) {
+        newStartTime.push({
+          text: time.text,
+          value: time.value,
+        });
+        filterStart.push(time.value);
       }
     });
 
     times.map((time, index) => {
-      if (index <= endIndex) {
-        if (
-          time.value !== "12:00" &&
-          time.value !== "12:30" &&
-          time.value !== "18:00" &&
-          time.value !== "00:00" &&
-          time.value !== "00:30" &&
-          time.value !== "04:30" &&
-          time.value !== "05:00"
-        ) {
-          newStartTime.push({
-            text: time.text,
-            value: time.value,
-          });
-          filterStart.push(time.value);
-        }
+      if (
+        time.value !== "12:30" &&
+        time.value !== "18:30" &&
+        time.value !== "00:30" &&
+        time.value !== "05:00"
+      ) {
+        newEndTime.push({
+          text: time.text,
+          value: time.value,
+        });
+        filterEnd.push(time.value);
       }
     });
-
-    if (isEndFull) {
-      times.map((time, index) => {
-        if (
-          time.value !== "12:30" &&
-          time.value !== "18:30" &&
-          time.value !== "00:30" &&
-          time.value !== "05:00"
-        ) {
-          newEndTime.push({
-            text: time.text,
-            value: time.value,
-          });
-          filterEnd.push(time.value);
-        }
-      });
-    } else {
+  } else {
+    if (endIndex < startIndex) {
       times.map((time, index) => {
         if (index >= startIndex) {
           if (
+            time.value !== "12:00" &&
             time.value !== "12:30" &&
-            time.value !== "18:30" &&
+            time.value !== "18:00" &&
+            time.value !== "00:00" &&
             time.value !== "00:30" &&
+            time.value !== "04:30" &&
             time.value !== "05:00"
           ) {
-            newEndTime.push({
+            newStartTime.push({
               text: time.text,
               value: time.value,
             });
-            filterEnd.push(time.value);
+            filterStart.push(time.value);
           }
         }
       });
@@ -869,60 +840,25 @@ function genWorkTime(times, startIndex, endIndex, isEndFull = false) {
       times.map((time, index) => {
         if (index <= endIndex) {
           if (
+            time.value !== "12:00" &&
             time.value !== "12:30" &&
-            time.value !== "18:30" &&
+            time.value !== "18:00" &&
+            time.value !== "00:00" &&
             time.value !== "00:30" &&
+            time.value !== "04:30" &&
             time.value !== "05:00"
           ) {
-            newEndTime.push({
+            newStartTime.push({
               text: time.text,
               value: time.value,
             });
-            filterEnd.push(time.value);
+            filterStart.push(time.value);
           }
         }
       });
-    }
-  } else {
-    times.map((time, index) => {
-      if (index >= startIndex && index <= endIndex) {
-        if (
-          time.value !== "12:00" &&
-          time.value !== "12:30" &&
-          time.value !== "18:00" &&
-          time.value !== "18:30" &&
-          time.value !== "00:00" &&
-          time.value !== "00:30" &&
-          time.value !== "04:30" &&
-          time.value !== "05:00"
-        ) {
-          newStartTime.push({
-            text: time.text,
-            value: time.value,
-          });
-          filterStart.push(time.value);
-        }
-      }
-    });
 
-    if (isEndFull) {
-      times.map((time, index) => {
-        if (
-          time.value !== "12:30" &&
-          time.value !== "18:30" &&
-          time.value !== "00:30" &&
-          time.value !== "05:00"
-        ) {
-          newEndTime.push({
-            text: time.text,
-            value: time.value,
-          });
-          filterEnd.push(time.value);
-        }
-      });
-    } else {
-      times.map((time, index) => {
-        if (index >= startIndex && index <= endIndex) {
+      if (isEndFull) {
+        times.map((time, index) => {
           if (
             time.value !== "12:30" &&
             time.value !== "18:30" &&
@@ -935,8 +871,97 @@ function genWorkTime(times, startIndex, endIndex, isEndFull = false) {
             });
             filterEnd.push(time.value);
           }
+        });
+      } else {
+        times.map((time, index) => {
+          if (index >= startIndex) {
+            if (
+              time.value !== "12:30" &&
+              time.value !== "18:30" &&
+              time.value !== "00:30" &&
+              time.value !== "05:00"
+            ) {
+              newEndTime.push({
+                text: time.text,
+                value: time.value,
+              });
+              filterEnd.push(time.value);
+            }
+          }
+        });
+
+        times.map((time, index) => {
+          if (index <= endIndex) {
+            if (
+              time.value !== "12:30" &&
+              time.value !== "18:30" &&
+              time.value !== "00:30" &&
+              time.value !== "05:00"
+            ) {
+              newEndTime.push({
+                text: time.text,
+                value: time.value,
+              });
+              filterEnd.push(time.value);
+            }
+          }
+        });
+      }
+    } else {
+      times.map((time, index) => {
+        if (index >= startIndex && index <= endIndex) {
+          if (
+            time.value !== "12:00" &&
+            time.value !== "12:30" &&
+            time.value !== "18:00" &&
+            time.value !== "18:30" &&
+            time.value !== "00:00" &&
+            time.value !== "00:30" &&
+            time.value !== "04:30" &&
+            time.value !== "05:00"
+          ) {
+            newStartTime.push({
+              text: time.text,
+              value: time.value,
+            });
+            filterStart.push(time.value);
+          }
         }
       });
+
+      if (isEndFull) {
+        times.map((time, index) => {
+          if (
+            time.value !== "12:30" &&
+            time.value !== "18:30" &&
+            time.value !== "00:30" &&
+            time.value !== "05:00"
+          ) {
+            newEndTime.push({
+              text: time.text,
+              value: time.value,
+            });
+            filterEnd.push(time.value);
+          }
+        });
+      } else {
+        times.map((time, index) => {
+          if (index >= startIndex && index <= endIndex) {
+            if (
+              time.value !== "12:30" &&
+              time.value !== "18:30" &&
+              time.value !== "00:30" &&
+              time.value !== "05:00"
+            ) {
+              newEndTime.push({
+                text: time.text,
+                value: time.value,
+              });
+              filterEnd.push(time.value);
+            }
+          }
+        });
+      }
     }
   }
 
