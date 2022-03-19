@@ -686,6 +686,22 @@ class OvertimeController extends Erp_Controller
         //     $isHaveSpvPLT = $this->Hr->getOne('employee_ranks', ['division_id' => $overtime->division_id, 'status' => 'ACTIVE'], '*', ['rank_id' => ['5', '6']]);
         // }
 
+        if($overtime->sub_department_id != 5 && isMtnSupport($overtime)) {
+            $this->requestOvertime($overtime, 5);
+        }
+
+        if($overtime->sub_department_id != 7 && isQaSupport($overtime)) {
+            $this->requestOvertime($overtime, 7);
+        }
+
+        if($overtime->sub_department_id != 8 && isQcSupport($overtime)) {
+            $this->requestOvertime($overtime, 8);
+        }
+
+        if($overtime->sub_department_id != 13 && isWhsSupport($overtime)) {
+            $this->requestOvertime($overtime, 13);
+        }
+
         $isHaveSpv = $this->Hr->getOne('employees', ['division_id' => $overtime->division_id], '*', ['rank_id' => ['5', '6']]);
         $isHaveSpvPLT = $this->Hr->getOne('employee_ranks', ['division_id' => $overtime->division_id, 'status' => 'ACTIVE'], '*', ['rank_id' => ['5', '6']]);
         if ($overtime->division_id == 0 || (!$isHaveSpv && !$isHaveSpvPLT)) {
@@ -1261,21 +1277,6 @@ class OvertimeController extends Erp_Controller
                 $this->Hr->update('employee_overtimes_detail', ['status' => 'CLOSED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['task_id' => $taskId], null, ['status' => ['CANCELED', 'REJECTED']]);
             }
             if ($columnApv == 'apv_spv') {
-                if($overtime->sub_department_id != 5 && isMtnSupport($overtime)) {
-                    $this->requestOvertime($overtime, 5);
-                }
-
-                if($overtime->sub_department_id != 7 && isQaSupport($overtime)) {
-                    $this->requestOvertime($overtime, 7);
-                }
-
-                if($overtime->sub_department_id != 8 && isQcSupport($overtime)) {
-                    $this->requestOvertime($overtime, 8);
-                }
-
-                if($overtime->sub_department_id != 13 && isWhsSupport($overtime)) {
-                    $this->requestOvertime($overtime, 13);
-                }
                 $isHaveAsman = $this->isHaveAsman($overtime, $post);
                 if (!$isHaveAsman) {
                     $isHaveMgr = $this->isHaveMgr($overtime, $post);

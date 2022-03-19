@@ -207,6 +207,7 @@ $script = <<< "JS"
                                 reqJson(Overtime("cancelOvertimeMtn"), "POST", {taskId}, (err, res) => {
                                     if(res.status === "success") {
                                         rProcGrid();
+                                        rReqOvtGrid();
                                         formOvtDetailGridTnp.clearAll();
                                         processlayoutTnp.cells("b").setText("Proses Personil");
                                         processlayoutTnp.cells("b").collapse();

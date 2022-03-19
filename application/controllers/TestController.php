@@ -7,14 +7,49 @@ class TestController extends CI_Controller
     {
         parent::__construct();
         $this->load->library('SimpleXLSX');
-        $this->load->model('BasicModel', 'Hr');
-        $this->Hr->myConstruct('hr');
-        $this->load->model('BasicModel', 'Chat');
-        $this->Chat->myConstruct('chat');
-        $this->load->model('ChatModel');
-        $this->ChatModel->myConstruct('chat');
+        // $this->load->model('BasicModel', 'Hr');
+        // $this->Hr->myConstruct('hr');
+        // $this->load->model('BasicModel', 'Chat');
+        // $this->Chat->myConstruct('chat');
+        // $this->load->model('ChatModel');
+        // $this->ChatModel->myConstruct('chat');
+        $this->load->model('BasicModel', 'Mtn');
+        $this->Mtn->myConstruct('mtn');
+        $this->load->model('OvertimeModel', 'Overtime');
+        $this->Overtime->myConstruct('hr');
 
     }
+
+    // public function testPage()
+    // {
+    //     if ($xlsx = SimpleXLSX::parse('./assets/file_to_import/mesin_3.xlsx')) {
+    //         $header_values = $rows = [];
+    //         foreach ($xlsx->rows() as $k => $r) {
+    //             if ($k === 0) {
+    //                 $header_values = $r;
+    //                 continue;
+    //             }
+    //             $rows[] = array_combine($header_values, $r);
+    //         }
+
+    //         $data = [];
+    //         foreach ($rows as $key => $value) {
+    //             $exist = $this->Mtn->getOne('production_machines', ['name' => $value['name']]);
+    //             if($exist) {
+    //                 if($value['personil_ideal'] > 0) {
+    //                     $data[] = [
+    //                         'name' => $value['name'],
+    //                         'personil_ideal' => $value['personil_ideal'],
+    //                     ];
+    //                 }
+    //             }
+    //         }
+    //         $this->Mtn->updateMultiple('production_machines', $data, 'name');
+    //         echo "Oke";
+    //     } else {
+    //         echo SimpleXLSX::parseError();
+    //     }
+    // }
 
     // public function testPage()
     // {
@@ -174,4 +209,16 @@ class TestController extends CI_Controller
     //     }
     //     return $pin;
     // }
+
+    public function test()
+    {
+        $overtime = $this->Overtime->getOvertime(['equal_task_id' => '028/OT/KF-JKT/III/2022'])->row();
+        $this->load->view('html/overtime/email/approve_overtime', [
+            'overtime' => $overtime,
+            'rank' => 'Asman',
+            'level' => 'Asman',
+            'linkApprove' => '',
+            'linkReject' => '',
+        ]);
+    }
 }

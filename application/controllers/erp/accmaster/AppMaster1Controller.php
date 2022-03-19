@@ -1206,6 +1206,7 @@ class AppMaster1Controller extends Erp_Controller
             $xml .= "<cell>". cleanSC($machine->sub_department) ."</cell>";
             $xml .= "<cell>". cleanSC($machine->division) ."</cell>";
             $xml .= "<cell>". cleanSC($machine->dimension) ."</cell>";
+            $xml .= "<cell>". cleanSC($machine->personil_ideal) ."</cell>";
             $xml .= "<cell>". cleanSC($machine->emp1) ."</cell>";
             $xml .= "<cell>". cleanSC($machine->emp2) ."</cell>";
             $xml .= "<cell>". cleanSC(toIndoDateTime($machine->created_at)) ."</cell>";
@@ -1265,7 +1266,7 @@ class AppMaster1Controller extends Erp_Controller
     {
         $params = getParam();
         if (isset($params['id'])) {
-            $div = $this->Mtn->getDataById('production_machines', $params['id'], 'id,name,room_id,building_id,division_id,sub_department_id,department_id,dimension,filename');
+            $div = $this->Mtn->getDataById('production_machines', $params['id'], 'id,name,room_id,building_id,division_id,sub_department_id,department_id,dimension,personil_ideal,filename');
             fetchFormData($div);
         } else {
             $post = prettyText(getPost(), ['name']);

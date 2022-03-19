@@ -67,13 +67,6 @@ $script = <<< "JS"
             machineToolbar.disableItem("delete");
         }
 
-        var machineMenu =  mainTab.cells("master_production_machine").attachMenu({
-            icon_path: "./public/codebase/icons/",
-            items: [
-                {id: "update", text: "Update Grid", img: "update.png"}
-            ]
-        });
-
         var machineStatusBar = machineLayout.cells("a").attachStatusBar();
         function machineGridCount() {
             let machineGridRows = machineGrid.getRowsNum();
@@ -81,28 +74,18 @@ $script = <<< "JS"
         }
 
         var machineGrid = machineLayout.cells("a").attachGrid();
-        machineGrid.setHeader("No,Nama Mesin,Gedung,Ruangan,Sub Unit,Bagian,Sub Bagian,Dimensi,Created By,Updated By,DiBuat");
-        machineGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
-        machineGrid.setColSorting("str,str,str,str,str,str,str,str,str,str,str");
-        machineGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        machineGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left");
-        machineGrid.setInitWidthsP("5,25,20,20,15,20,20,15,15,15,25");
+        machineGrid.setHeader("No,Nama Mesin,Gedung,Ruangan,Sub Unit,Bagian,Sub Bagian,Dimensi,Personil Ideal,Created By,Updated By,DiBuat");
+        machineGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
+        machineGrid.setColSorting("str,str,str,str,str,str,str,str,str,str,str,str");
+        machineGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
+        machineGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left");
+        machineGrid.setInitWidthsP("5,25,20,20,15,20,20,15,15,15,15,25");
         machineGrid.enableSmartRendering(true);
         machineGrid.enableMultiselect(true);
-        machineGrid.setEditable(true);
         machineGrid.attachEvent("onXLE", function() {
             machineLayout.cells("a").progressOff();
         });
         machineGrid.init();
-
-        function setGridDP() {
-            machineGridDP = new dataProcessor(AppMaster('updateProdMachineBatch'));
-            machineGridDP.setTransactionMode("POST", true);
-            machineGridDP.setUpdateMode("Off");
-            machineGridDP.init(machineGrid);
-        }
-
-        setGridDP();
 
         function rMachineGrid() {
             machineLayout.cells("a").progressOn();
@@ -143,37 +126,6 @@ $script = <<< "JS"
             }
         });
 
-        machineMenu.attachEvent("onClick", function(id) {
-            switch (id) {
-                case "update":
-                    if(!machineGrid.getChangedRows()) {
-                        return eAlert("Belum ada row yang di edit!");
-                    }
-
-                    machineMenu.setItemDisabled("update");
-                    machineLayout.cells("a").progressOn();
-                    machineGridDP.sendData();
-                    machineGridDP.attachEvent('onAfterUpdate', function(id, action, tid, tag) {
-                        let message = tag.getAttribute('message');
-                        switch (action) {
-                            case 'updated':
-                                sAlert(message);
-                                rMachineGrid();
-                                machineMenu.setItemEnabled("update");
-                                machineLayout.cells("a").progressOff();
-                                setGridDP();
-                                break;
-                            case 'error':
-                                eAlert(message);
-                                machineMenu.setItemEnabled("update");
-                                machineLayout.cells("a").progressOff();
-                                break;
-                        }
-                    });
-                    break;
-            }
-        });
-
         function deleteMachineHandler() {
             reqAction(machineGrid, AppMaster("prodMachineDelete"), 1, (err, res) => {
                 rMachineGrid();
@@ -195,6 +147,7 @@ $script = <<< "JS"
                     {type: "combo", name: "sub_department_id", label: "Bagian", readonly: true, required: true, labelWidth: 130, inputWidth: 250},
                     {type: "combo", name: "division_id", label: "Sub Bagian", readonly: true, required: true, labelWidth: 130, inputWidth: 250},
                     {type: "input", name: "dimension", label: "Dimensi", labelWidth: 130, inputWidth: 250},
+                    {type: "input", name: "personil_ideal", label: "Personil Ideal", labelWidth: 130, inputWidth: 250},
                     {type: "hidden", name: "filename", label: "Filename", readonly: true},
                     {type: "upload", name: "file_uploader", inputWidth: 420,
                         url: AppMaster("fileUpload", {save: false, folder: "production_machines"}), 
@@ -321,6 +274,7 @@ $script = <<< "JS"
                     {type: "combo", name: "sub_department_id", label: "Bagian", readonly: true, required: true, labelWidth: 130, inputWidth: 250},
                     {type: "combo", name: "division_id", label: "Sub Bagian", readonly: true, required: true, labelWidth: 130, inputWidth: 250},
                     {type: "input", name: "dimension", label: "Dimensi", labelWidth: 130, inputWidth: 250},
+                    {type: "input", name: "personil_ideal", label: "Personil Ideal", labelWidth: 130, inputWidth: 250},
                     {type: "hidden", name: "filename", label: "Filename", readonly: true},
                     {type: "upload", name: "file_uploader", inputWidth: 420,
                         url: AppMaster("fileUpload", {save: false, folder: "production_machines"}), 
