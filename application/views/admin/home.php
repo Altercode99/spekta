@@ -17,6 +17,7 @@ $script = <<< "JS"
 				let currentVersion = localStorage.getItem('spekta_version');
 				if(currentVersion) {
 					if(currentVersion != version) {
+						$("#spekta_version").html(currentVersion);
 						dhtmlx.message({
 							title: "Versi Saat Ini " + currentVersion,
 							type: "alert-warning",
@@ -30,9 +31,11 @@ $script = <<< "JS"
 						});
 					} else {
 						localStorage.setItem('spekta_version', version);
+						$("#spekta_version").html(version);
 					}
 				} else {
 					localStorage.setItem('spekta_version', version);
+					$("#spekta_version").html(version);
 				}
 			}
 		});
