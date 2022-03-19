@@ -103,8 +103,12 @@
             </tr>
         </table>
 
+        <div style="<?= $style['button_container'] ?>">
+            <a href="<?= $link ?>" style="<?= $style['button'] ?>">Generate Lembur <?= $name ?></a>
+        </div>
+
         <?php 
-            $personils = $this->Overtime->getOvertimeDetail(['equal_task_id' => $overtime->task_id, 'notin_status' => 'CANCELED'])->result();
+            $personils = $this->Overtime->getOvertimeDetail(['equal_task_id' => $overtime->task_id, 'notin_status' => 'CANCELED' , 'order_by' => ['start_date' => 'ASC']])->result();
             $machineList = [];
             foreach ($personils as $personil) {
                 if($personil->machine_1) {
@@ -158,10 +162,6 @@
             }
         ?>
 
-        <div style="<?= $style['button_container'] ?>">
-            <a href="<?= $link ?>" style="<?= $style['button'] ?>">Generate Lembur <?= $name ?></a>
-        </div>
-
         <?php if(count($dataMachine) > 0) { ?>
         <table style="<?= $style['table'] ?> margin-top:20px">
             <tr>
@@ -175,7 +175,7 @@
                 <tr>
                     <th style="<?= $style['td'] ?>;" colspan="2">
                         <div style='display:flex;flex-direction:row;justify-content:space-between;width:100%;'>
-                            <span style='font-size: 14px;'><?= $mKey ?> (Sesi # <?= $sesi++; ?>)</span>
+                            <span style='font-size: 14px;'><?= $mKey ?> <?php echo count($mValue) > 1 ?  "(Sesi #$sesi)" : ''; ?></span>
                             <?php $color = count($tValue) > $personilIdeal[$mKey] ? 'color:red' : ''; ?>
                             <span style='font-size: 12px;<?= $color ?>'>Personil Ideal: <?= $personilIdeal[$mKey] ?> Orang</span>
                         </div>

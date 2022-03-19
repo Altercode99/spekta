@@ -122,7 +122,14 @@ class OvertimeModel extends CI_Model
                         f.employee_name LIKE '%$get[search]%'
                     )";
         } 
-        $sql .= " ORDER BY a.overtime_date ASC";
+        
+        if(isset($get['order_by'])) {
+            foreach ($get['order_by'] as $key => $value) {
+                $sql .= " ORDER BY a.$key $value";
+            }
+        } else {
+            $sql .= " ORDER BY a.overtime_date ASC";
+        }
         return $this->db->query($sql);
     }
 
