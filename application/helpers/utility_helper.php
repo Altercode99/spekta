@@ -563,6 +563,12 @@ function empRank()
     return $ci->auth->rankId ? $ci->auth->rankId : null;
 }
 
+function pltRankId()
+{
+    $ci = &get_instance();
+    return $ci->auth->pltRankId ? $ci->auth->pltRankId : null;
+}
+
 function locName()
 {
     $ci = &get_instance();

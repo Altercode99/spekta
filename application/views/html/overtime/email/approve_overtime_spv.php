@@ -30,15 +30,6 @@
 
 <?php 
     $locName = $this->Main->getOne('locations', ['code' => $overtime->location])->name;
-    if($subId == 5) {
-        $name = 'Teknik & Pemeliharaan';
-    } else if($subId == 7) {
-        $name = 'Sistem Mutu';
-    } else if($subId == 8) {
-        $name = 'Pengawasan Mutu';
-    } else if($subId == 13) {
-        $name = 'Penyimpanan';
-    }
 ?>
 
 <div>
@@ -49,8 +40,8 @@
     </div>
 
     <div style="<?= $style['body'] ?>">
-        <p>Dear Team <b><?= $name ?></b>,</p>
-        <p>Berikut ini adalah data lembur <b><?= $overtime->department ?></b> yang akan dilaksanan pada:</p>
+        <p>Dear <b><?= $rank ?></b>,</p>
+        <p>Berikut ini adalah data lembur<?= $level ?>yang akan dilaksanan pada:</p>
         <p><b><?= toIndoDateDay($overtime->overtime_date) ?></b></p>
 
         <table style="<?= $style['table'] ?>">
@@ -62,8 +53,12 @@
                 <td style="<?= $style['td'] ?>"><b><?= $overtime->task_id ?></b></td>
             </tr>
             <tr>
-                <td style="<?= $style['td'] ?>">Bagian</td>
+                <td style="<?= $style['td'] ?>">Sub Unit</td>
                 <td style="<?= $style['td'] ?>"><?= $overtime->department ?></td>
+            </tr>
+            <tr>
+                <td style="<?= $style['td'] ?>">Bagian</td>
+                <td style="<?= $style['td'] ?>"><?= $overtime->sub_department ?></td>
             </tr>
             <tr>
                 <td style="<?= $style['td'] ?>">Sub Bagian</td>
@@ -78,12 +73,12 @@
                 <td style="<?= $style['td'] ?>"><?= '<b>'.toIndoDateTime2($overtime->start_date) .'</b> - <b>'. toIndoDateTime2($overtime->end_date).'</b>' ?></td>
             </tr>
             <tr>
-                <td style="<?= $style['td'] ?>">Kebutuhan Lembur</td>
-                <td style="<?= $style['td'] ?>"><?= $overtime->notes ?></td>
+                <td style="<?= $style['td'] ?>">Kebutuhan Personil</td>
+                <td style="<?= $style['td'] ?>"><?= $overtime->personil ?> Orang</td>
             </tr>
             <tr>
                 <td style="<?= $style['td'] ?>">Kebutuhan Lembur</td>
-                <td style="<?= $style['td'] ?>"><?= $overtime->personil ?></td>
+                <td style="<?= $style['td'] ?>"><?= $overtime->notes ?></td>
             </tr>
             <tr>
                 <td style="<?= $style['td'] ?>;border:1px solid #422800;vertical-align:text-top;">Kebutuhan Support</td>
@@ -104,11 +99,10 @@
         </table>
 
         <div style="<?= $style['button_container'] ?>">
-            <a href="<?= $link ?>" style="<?= $style['button'] ?>">Generate Lembur <?= $name ?></a>
+            <a href="<?= $linkApprove ?>" style="<?= $style['button'] ?> background-color: #3399cc;">Approve Lembur: <?= $overtime->task_id ?></a><br/><br/>
+            <a href="<?= $linkReject ?>" style="<?= $style['button'] ?> background-color: #db8a10;">Reject Lembur: <?= $overtime->task_id ?></a>
         </div>
-
         <?php 
-            $personils = $this->Overtime->getOvertimeDetail(['equal_task_id' => $overtime->task_id, 'notin_status' => 'CANCELED' , 'order_by' => ['start_date' => 'ASC']])->result();
             $machineList = [];
             foreach ($personils as $personil) {
                 if($personil->machine_1) {
@@ -144,17 +138,17 @@
                             'status' => $personil->status,
                             'order' => $st
                         ];
-                    } else {
-                        $dataNonMachine[$personil->emp_task_id] = [
-                            'name' => $personil->employee_name,
-                            'sub_department' => $personil->sub_department,
-                            'division' => $personil->division,
-                            'overtime_hour' => "$start - $end",
-                            'task' => $personil->notes,
-                            'status' => $personil->status,
-                            'order' => $st
-                        ];
                     }
+                } else {
+                    $dataNonMachine[] = [
+                        'name' => $personil->employee_name,
+                        'sub_department' => $personil->sub_department,
+                        'division' => $personil->division,
+                        'overtime_hour' => "$start - $end",
+                        'task' => $personil->notes,
+                        'status' => $personil->status,
+                        'order' => $st
+                    ];
                 }
 
                 if($personil->machine_2) {
@@ -168,17 +162,7 @@
                             'status' => $personil->status,
                             'order' => $st
                         ];
-                    } else {
-                        $dataNonMachine[$personil->emp_task_id] = [
-                            'name' => $personil->employee_name,
-                            'sub_department' => $personil->sub_department,
-                            'division' => $personil->division,
-                            'overtime_hour' => "$start - $end",
-                            'task' => $personil->notes,
-                            'status' => $personil->status,
-                            'order' => $st
-                        ];
-                    }
+                    } 
                 }
             }
         ?>

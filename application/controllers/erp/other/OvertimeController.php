@@ -349,7 +349,8 @@ class OvertimeController extends Erp_Controller
 
     public function getOvertimeDetailGrid()
     {
-        $overtimes = $this->Overtime->getOvertimeDetail(getParam())->result();
+        $params = getParam();
+        $overtimes = $this->Overtime->getOvertimeDetail($params)->result();
         $xml = "";
         $no = 1;
         foreach ($overtimes as $overtime) {
@@ -371,11 +372,18 @@ class OvertimeController extends Erp_Controller
                 $status_updater = $overtime->status . ' By ' . $overtime->status_updater;
             }
 
+            $spvColor = $color;
+            if($overtime->apv_spv == 'APPROVED') {
+                $spvColor = "bgColor='#cedb10'";
+            } else if($overtime->apv_spv == 'REJECTED') {
+                $spvColor = "bgColor='#cedb10'";
+            }
+
             $machine1 = $overtime->machine_1 ? $overtime->machine_1 : '-';
             $machine2 = $overtime->machine_2 ? $overtime->machine_2 : '-';
             $meal = $overtime->meal > 0 ? "✓ ($overtime->total_meal x)" : '-';
             $xml .= "<row id='$overtime->id'>";
-            $xml .= "<cell $color>" . cleanSC($no) . "</cell>";
+            $xml .= "<cell $spvColor>" . cleanSC($no) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->emp_task_id) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->employee_name) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->department) . "</cell>";
@@ -679,12 +687,33 @@ class OvertimeController extends Erp_Controller
             'makan' => $makan > 0 ? 1 : 0,
         ];
 
-        // $dataEmpOvt = [];
-        // $empOvertimes = $this->Hr->getWhere('employee_overtimes_detail', ['task_id' => $overtime->task_id])->result();
-        // foreach ($empOvertimes as $empOvt) {
-        //     $isHaveSpv = $this->Hr->getOne('employees', ['division_id' => $empOvt->division_id], '*', ['rank_id' => ['5', '6']]);
-        //     $isHaveSpvPLT = $this->Hr->getOne('employee_ranks', ['division_id' => $overtime->division_id, 'status' => 'ACTIVE'], '*', ['rank_id' => ['5', '6']]);
-        // }
+        $empTaskIds = [];
+        $empOvertimes = $this->Hr->getWhere('employee_overtimes_detail', ['task_id' => $overtime->task_id])->result();
+        foreach ($empOvertimes as $empOvt) {
+            $isHaveSpv = $this->Hr->getOne('employees', ['division_id' => $empOvt->division_id], '*', ['rank_id' => ['5', '6']]);
+            $isHaveSpvPLT = $this->Hr->getOne('employee_ranks', ['division_id' => $empOvt->division_id, 'status' => 'ACTIVE'], '*', ['rank_id' => ['5', '6']]);
+            if ($isHaveSpv) {
+                $empTaskIds[$empOvt->division_id]['task'][] = $empOvt->emp_task_id;
+                $empTaskIds[$empOvt->division_id]['email'] = $isHaveSpv->email;
+            } else if ($isHaveSpvPLT) {
+                $email = $this->Hr->getDataById('employees', $isHaveSpvPLT->emp_id)->email;
+                $empTaskIds[$empOvt->division_id]['task'][] = $empOvt->emp_task_id;
+                $empTaskIds[$empOvt->division_id]['email'] = $email;
+            } else {
+                $data = [
+                    'apv_spv' => 'BY PASS',
+                    'apv_spv_nip' => '-',
+                    'apv_spv_date' => date('Y-m-d H:i:s'),
+                ];
+                $this->Hr->updateById('employee_overtimes_detail', $data, $empOvt->id);
+            }
+        }
+
+        foreach ($empTaskIds as $divId => $ovtData) {
+            $empTasks = implode(',', $ovtData['task']);
+            $personils = $this->Overtime->getOvertimeDetail(['in_emp_task_id' => $empTasks, 'notin_status' => 'CANCELED' , 'order_by' => ['start_date' => 'ASC']])->result();
+            $this->ovtlib->sendEmailAppv($ovtData['email'], 'Supervisor', 'spv', $overtime, $post->taskId, $personils, $divId);
+        }
 
         if($overtime->sub_department_id != 5 && isMtnSupport($overtime)) {
             $this->requestOvertime($overtime, 5);
@@ -1103,10 +1132,23 @@ class OvertimeController extends Erp_Controller
         response(['status' => 'success', 'message' => 'Lemburan berhasil di batalkan']);
     }
 
+    public function approvePersonilOvertime()
+    {
+        $post = fileGetContent();
+        $data = ['apv_spv' => 'APPROVED', 'apv_spv_nip' => empNip(), 'apv_spv_date' => date('Y-m-d H:i:s')];
+        $this->Hr->update('employee_overtimes_detail', $data, ['emp_task_id' => $post->empTaskId]);
+        response(['status' => 'success', 'message' => 'Lemburan berhasil di approve']);
+    }
+
     public function rejectPersonilOvertime()
     {
         $post = fileGetContent();
-        $this->Hr->update('employee_overtimes_detail', ['status' => 'REJECTED', 'status_by' => empNip()], ['emp_task_id' => $post->empTaskId]);
+        if(empRank() == 5 || empRank() == 6 || pltRankId() == 5 || pltRankId() == 6) {
+            $data = ['status' => 'REJECTED', 'status_by' => empNip(), 'apv_spv' => 'REJECTED', 'apv_spv_nip' => empNip(), 'apv_spv_date' => date('Y-m-d H:i:s')];
+        } else {
+            $data = ['status' => 'REJECTED', 'status_by' => empNip()];
+        }
+        $this->Hr->update('employee_overtimes_detail', $data, ['emp_task_id' => $post->empTaskId]);
         response(['status' => 'success', 'message' => 'Lemburan berhasil di batalkan']);
     }
 
@@ -1134,7 +1176,13 @@ class OvertimeController extends Erp_Controller
             response(['status' => 'error', 'message' => 'Waktu lembur akhir karyawan lebih beasr dari waktu perintah lembur!']);
         }
 
-        $this->Hr->updateById('employee_overtimes_detail', ['status' => 'PROCESS', 'status_by' => empNip()], $emp->id);
+        if(empRank() == 5 || empRank() == 6 || pltRankId() == 5 || pltRankId() == 6) {
+            $data = ['status' => 'PROCESS', 'status_by' => empNip(), 'apv_spv' => 'CREATED', 'apv_spv_nip' => empNip(), 'apv_spv_date' => date('Y-m-d H:i:s')];
+        } else {
+            $data = ['status' => 'PROCESS', 'status_by' => empNip()];
+        }
+
+        $this->Hr->updateById('employee_overtimes_detail', $data, $emp->id);
         response(['status' => 'success', 'message' => 'Berhasil mengembalikan karyawan ke daftar lemburan']);
     }
 
@@ -2416,8 +2464,6 @@ class OvertimeController extends Erp_Controller
             'location' => $this->auth->locName,
             'status' => $alertName,
         ], true);
-
-        // dd($message);
 
         $prefix = 'Request';
         if ($alertName == 'OVERTIME_PERSONIL_REVISION_REJECTION') {

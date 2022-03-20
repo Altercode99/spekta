@@ -20,12 +20,19 @@ class OvtLib
         $this->load = $this->ci->load;
     }
 
-    public function sendEmailAppv($email, $rank, $rankLevel, $overtime, $taskId)
+    public function sendEmailAppv($email, $rank, $rankLevel, $overtime, $taskId, $personils = null, $divId = null)
     {
-        $tokenApprove = simpleEncrypt($taskId . ":$rankLevel:APPROVED");
-        $linkApprove = LIVE_URL . "index.php?c=PublicController&m=approveOvertime&token=$tokenApprove";
-        $tokenReject = simpleEncrypt($taskId . ":$rankLevel:REJECTED");
-        $linkReject = LIVE_URL . "index.php?c=PublicController&m=approveOvertime&token=$tokenReject";
+        if(!$personils) {
+            $tokenApprove = simpleEncrypt($taskId . ":$rankLevel:APPROVED");
+            $tokenReject = simpleEncrypt($taskId . ":$rankLevel:REJECTED");
+            $linkApprove = LIVE_URL . "index.php?c=PublicController&m=approveOvertime&token=$tokenApprove";
+            $linkReject = LIVE_URL . "index.php?c=PublicController&m=approveOvertime&token=$tokenReject";
+        } else {
+            $tokenApprove = simpleEncrypt($taskId . ":$rankLevel:APPROVED:$divId");
+            $tokenReject = simpleEncrypt($taskId . ":$rankLevel:REJECTED:$divId");
+            $linkApprove = LIVE_URL . "index.php?c=PublicController&m=approveOvertimeSpv&token=$tokenApprove";
+            $linkReject = LIVE_URL . "index.php?c=PublicController&m=approveOvertimeSpv&token=$tokenReject";
+        }
 
         $linkApprove = LIVE_URL . "index.php?c=PublicController&m=pinVerification&action=positive&token=" . simpleEncrypt($linkApprove);
         $linkReject = LIVE_URL . "index.php?c=PublicController&m=pinVerification&action=negative&token=" . simpleEncrypt($linkReject);
@@ -41,13 +48,24 @@ class OvtLib
             $level = " <b>Sub Unit $overtime->department</b> ";
             $sublevel = "Sub Unit $overtime->department";
         }
-        $message = $this->load->view('html/overtime/email/approve_overtime', [
-            'overtime' => $overtime,
-            'rank' => $rank,
-            'level' => $level,
-            'linkApprove' => $linkApprove,
-            'linkReject' => $linkReject,
-        ], true);
+        if(!$personils) {
+            $message = $this->load->view('html/overtime/email/approve_overtime', [
+                'overtime' => $overtime,
+                'rank' => $rank,
+                'level' => $level,
+                'linkApprove' => $linkApprove,
+                'linkReject' => $linkReject,
+            ], true);
+        } else {
+            $message = $this->load->view('html/overtime/email/approve_overtime_spv', [
+                'personils' => $personils,
+                'overtime' => $overtime,
+                'rank' => $rank,
+                'level' => $level,
+                'linkApprove' => $linkApprove,
+                'linkReject' => $linkReject,
+            ], true);
+        }
         $dataEmail = [
             'alert_name' => 'OVERTIME_APPROVEMENT',
             'email_to' => $email,

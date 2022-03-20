@@ -90,6 +90,55 @@ class PublicController extends Erp_Controller
         }
     }
 
+    public function approveOvertimeSpv()
+    {
+        $params = getParam();
+        $expParam = isset($params['token']) ? explode(':', simpleEncrypt($params['token'], 'd')) : [];
+        if (count($expParam) == 4) {
+            $taskId = $expParam[0];
+            $appvType = $expParam[1];
+            $status = $expParam[2];
+            $divId = $expParam[3];
+            $nip = $params['nip'];
+            $empId = $params['emp_id'];
+            $emp = $this->Hr->getOne('employees', ['nip' => $nip]);
+            if($emp->division_id == $divId) {
+                if($status == 'APPROVED') {
+                    $data = [
+                        'apv_spv' => 'APPROVED',
+                        'apv_spv_nip' => $emp->nip,
+                        'apv_spv_date' => date('Y-m-d H:i:s'),
+                        'status_by' => $emp->id
+                    ];
+                } else {
+                    $data = [
+                        'apv_spv' => 'REJECTED',
+                        'apv_spv_nip' => $emp->nip,
+                        'apv_spv_date' => date('Y-m-d H:i:s'),
+                        'status' => 'REJECTED',
+                        'status_by' => $emp->id
+                    ];
+                }
+                if($status == 'REJECTED') {
+                    $overtime = $this->Hr->getOne('employee_overtimes', ['task_id' => $taskId]);
+                    if($overtime->apv_asman_nip == '-' || $overtime->apv_asman_nip == '') {
+                        $this->Hr->update('employee_overtimes_detail', $data, ['task_id' => $taskId, 'division_id' => $divId]);
+                        $this->load->view('html/valid_response', ['message' => "<p>Lembur <b>$taskId</b> berhasil di <b>$status</b></p>"]);
+                    } else {
+                        $this->load->view('html/invalid_response', ['message' => "Oops.. Lemburan $taskId sudah di approve ASMAN!"]);
+                    }
+                } else {
+                    $this->Hr->update('employee_overtimes_detail', $data, ['task_id' => $taskId, 'division_id' => $divId]);
+                    $this->load->view('html/valid_response', ['message' => "<p>Lembur <b>$taskId</b> berhasil di <b>$status</b></p>"]);
+                }
+            } else {
+                $this->load->view('html/invalid_response', ['message' => 'Jabatan anda tidak sesuai dengan <b>Sub Bagian Lembur</b>']);
+            }
+        } else {
+            $this->load->view('html/invalid_response', ['message' => 'Token tidak valid!']);
+        }
+    }
+
     public function approveOvertime()
     {
         $params = getParam();

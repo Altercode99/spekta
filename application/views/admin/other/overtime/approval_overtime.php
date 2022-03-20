@@ -504,13 +504,24 @@ $script = <<< "JS"
 
         rOvtGrid();
 
-        var appvDetailToolbar = appvTabs.cells("b").attachToolbar({
-            icon_path: "./public/codebase/icons/",
-            items: [
+        var dtlToolbar;
+        if(userLogged.rankId == 5 || userLogged.rankId == 6 || userLogged.pltRankId == 5 || userLogged.pltRankId == 6) {
+            dtlToolbar = [
+                {id: "approve_detail", text: "Approve (SPV)", type: "button", img: "ok.png"},
+                {id: "reject", text: "Batalkan Lembur Personil", type: "button", img: "messagebox_critical.png"},
+                {id: "rollback", text: "Kembalikan Ke Lemburan", type: "button", img: "refresh.png"},
+                {id: "hour_revision", text: "Revisi Waktu Lemburan", type: "button", img: "clock.png"},
+            ];
+        } else {
+            dtlToolbar = [
                 {id: "reject", text: "Batalkan Lembur Personil", type: "button", img: "messagebox_critical.png"},
                 {id: "rollback", text: "Kembalikan Ke Lemburan", type: "button", img: "refresh.png"},
                 {id: "hour_revision", text: "Revisi Waktu Lemburan", type: "button", img: "clock.png"},
             ]
+        }
+        var appvDetailToolbar = appvTabs.cells("b").attachToolbar({
+            icon_path: "./public/codebase/icons/",
+            items: dtlToolbar
         });
  
         appvDetailToolbar.attachEvent("onClick", function(id) {
@@ -520,6 +531,24 @@ $script = <<< "JS"
             let empName = ovtDetailGrid.cells(ovtDetailGrid.getSelectedRowId(), 2).getValue();
             let empTaskId = ovtDetailGrid.cells(ovtDetailGrid.getSelectedRowId(), 1).getValue();
             switch (id) {
+                case "approve_detail":
+                    dhtmlx.modalbox({
+                        type: "alert-warning",
+                        title: "Approve Lembur Personil",
+                        text: "Anda yakin akan approve lembur " + empName + "?",
+                        buttons: ["Ya", "Tidak"],
+                        callback: function (index) {
+                            if (index == 0) {
+                                reqJson(Overtime("approvePersonilOvertime"), "POST", {empTaskId}, (err, res) => {
+                                    if(res.status === "success") {
+                                        rOvtDetailGrid(ovtGrid.getSelectedRowId());
+                                    }
+                                    sAlert(res.message);
+                                });
+                            }
+                        },
+                    });
+                    break;
                 case "reject":
                     dhtmlx.modalbox({
                         type: "alert-error",
@@ -688,6 +717,9 @@ $script = <<< "JS"
                     if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 27).getValue() === "REJECTED") {
                         disableAppvDetailToolbar();
                     } else {
+                        if(userLogged.rankId == 5 || userLogged.rankId == 6 || userLogged.pltRankId == 5 || userLogged.pltRankId == 6) {
+                            appvDetailToolbar.disableItem("approve_detail");
+                        }
                         appvDetailToolbar.disableItem("reject");
                         appvDetailToolbar.enableItem("rollback");
                         appvDetailToolbar.disableItem("hour_revision");
@@ -698,8 +730,6 @@ $script = <<< "JS"
             } else {
                 if((userLogged.picOvertime && userLogged.rankId <= 6) || userLogged.pltRankId <= 6) {
                     if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 31).getValue() !== "-" || ovtGrid.cells(ovtGrid.getSelectedRowId(), 41).getValue() === "-") { //Approval MGR
-                        console.log("approval mgr");
-
                         if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 41).getValue() === "-") {
                             if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 28).getValue() === "-") {
                                 if(userLogged.rankId == 5 || userLogged.rankId == 6 || userLogged.pltRankId == 5 || userLogged.pltRankId == 6) {
@@ -710,6 +740,12 @@ $script = <<< "JS"
                             } else if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 29).getValue() === "-" || ovtGrid.cells(ovtGrid.getSelectedRowId(), 30).getValue() === "-") {
                                 if(userLogged.rankId == 3 || userLogged.rankId == 4 || userLogged.pltRankId == 3 || userLogged.pltRankId == 4){
                                     enableAppvDetailToolbar();
+                                } else if(userLogged.rankId == 5 || userLogged.rankId == 6 || userLogged.pltRankId == 5 || userLogged.pltRankId == 6){
+                                    if(ovtDetailGrid.cells(ovtDetailGrid.getSelectedRowId(), 5).getValue() != userLogged.division) {
+                                        disableAppvDetailToolbar();
+                                    } else {
+                                        enableAppvDetailToolbar();
+                                    }
                                 } else {
                                     disableAppvDetailToolbar();
                                 }
@@ -738,6 +774,12 @@ $script = <<< "JS"
                             } else if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 29).getValue() === "-") {
                                 if(userLogged.rankId == 3 || userLogged.rankId == 4 || userLogged.pltRankId == 3 || userLogged.pltRankId == 4){
                                     enableAppvDetailToolbar();
+                                } else if(userLogged.rankId == 5 || userLogged.rankId == 6 || userLogged.pltRankId == 5 || userLogged.pltRankId == 6){
+                                    if(ovtDetailGrid.cells(ovtDetailGrid.getSelectedRowId(), 5).getValue() != userLogged.division) {
+                                        disableAppvDetailToolbar();
+                                    } else {
+                                        enableAppvDetailToolbar();
+                                    }
                                 } else {
                                     disableAppvDetailToolbar();
                                 }
@@ -776,6 +818,12 @@ $script = <<< "JS"
                     } else if(ovtGrid.cells(ovtGrid.getSelectedRowId(), 28).getValue() !== "-" || ovtGrid.cells(ovtGrid.getSelectedRowId(), 38).getValue() === "-") { //Approval SPV
                         if(userLogged.rankId == 3 || userLogged.rankId == 4 || userLogged.pltRankId == 3 || userLogged.pltRankId == 4){
                             enableAppvDetailToolbar();
+                        } else if(userLogged.rankId == 5 || userLogged.rankId == 6 || userLogged.pltRankId == 5 || userLogged.pltRankId == 6){
+                            if(ovtDetailGrid.cells(ovtDetailGrid.getSelectedRowId(), 5).getValue() != userLogged.division) {
+                                disableAppvDetailToolbar();
+                            } else {
+                                enableAppvDetailToolbar();
+                            }
                         } else {
                             disableAppvDetailToolbar();
                         }
@@ -792,12 +840,18 @@ $script = <<< "JS"
         ovtDetailGrid.init();
 
         function disableAppvDetailToolbar() {
+            if(userLogged.rankId == 5 || userLogged.rankId == 6 || userLogged.pltRankId == 5 || userLogged.pltRankId == 6) {
+                appvDetailToolbar.disableItem("approve_detail");
+            }
             appvDetailToolbar.disableItem("reject");
             appvDetailToolbar.disableItem("rollback");
             appvDetailToolbar.disableItem("hour_revision");
         }
 
         function enableAppvDetailToolbar() {
+            if(userLogged.rankId == 5 || userLogged.rankId == 6 || userLogged.pltRankId == 5 || userLogged.pltRankId == 6) {
+                appvDetailToolbar.enableItem("approve_detail");
+            }
             appvDetailToolbar.enableItem("reject");
             appvDetailToolbar.disableItem("rollback");
             appvDetailToolbar.enableItem("hour_revision");
@@ -806,11 +860,9 @@ $script = <<< "JS"
         function rOvtDetailGrid(rId) {
             if(rId) {
                 appvTabs.cells("b").progressOn();
-                appvDetailToolbar.disableItem("reject");
-                appvDetailToolbar.disableItem("rollback");
-                appvDetailToolbar.disableItem("hour_revision");
+                disableAppvDetailToolbar();
                 let taskId = ovtGrid.cells(rId, 1).getValue();
-                ovtDetailGrid.clearAndLoad(Overtime("getOvertimeDetailGrid", {equal_task_id: taskId, notin_status: "CANCELED,ADD"}), countTotalOvertime);
+                ovtDetailGrid.clearAndLoad(Overtime("getOvertimeDetailGrid", {equal_task_id: taskId, notin_status: "CANCELED,ADD", order_by: 'division_id:asc'}), countTotalOvertime);
             } else {
                 ovtDetailGrid.clearAll();
                 ovtDetailGrid.callEvent("onGridReconstructed",[]);
@@ -818,8 +870,11 @@ $script = <<< "JS"
             }
         }
 
+        let ovtDetailStatusBar = appvTabs.cells("b").attachStatusBar();
         function countTotalOvertime() {
             sumGridToElement(ovtDetailGrid, 18, "other_total_ovt_appv");
+            var ovtDetailGridRows = ovtDetailGrid.getRowsNum();
+            ovtDetailStatusBar.setText("Total baris: " + ovtDetailGridRows + " (" + legend.approval_overtime_spv + ")");
         }
     }
 

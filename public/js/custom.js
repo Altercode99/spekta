@@ -1188,5 +1188,9 @@ function legendGrid() {
       "  " +
       genColor("#7ecbf1", "Libur Nasional") +
       "</span>",
+    approval_overtime_spv:
+      "<span style='margin-left:5px;margin-right:5px'> Approval: " +
+      genColor("#cedb10", "Approval/Konfirmasi Supervisor") +
+      "</span>",
   };
 }

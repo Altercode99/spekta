@@ -73,11 +73,11 @@
                 <td style="<?= $style['td'] ?>"><?= '<b>'.toIndoDateTime2($overtime->start_date) .'</b> - <b>'. toIndoDateTime2($overtime->end_date).'</b>' ?></td>
             </tr>
             <tr>
-                <td style="<?= $style['td'] ?>">Keperluan Personil</td>
+                <td style="<?= $style['td'] ?>">Kebutuhan Personil</td>
                 <td style="<?= $style['td'] ?>"><?= $overtime->personil ?> Orang</td>
             </tr>
             <tr>
-                <td style="<?= $style['td'] ?>">Keperluan Lembur</td>
+                <td style="<?= $style['td'] ?>">Kebutuhan Lembur</td>
                 <td style="<?= $style['td'] ?>"><?= $overtime->notes ?></td>
             </tr>
             <tr>
@@ -124,6 +124,7 @@
             }
             
             $dataMachine = [];
+            $dataNonMachine = [];
             foreach ($personils as $personil) {
                 $start = toIndoDateTime2($personil->start_date);
                 $end = toIndoDateTime2($personil->end_date);
@@ -131,6 +132,16 @@
                 if($personil->machine_1) {
                     if(array_key_exists($personil->machine_1, $machineList)) {
                         $dataMachine[$personil->machine_1][$st][] = [
+                            'name' => $personil->employee_name,
+                            'sub_department' => $personil->sub_department,
+                            'division' => $personil->division,
+                            'overtime_hour' => "$start - $end",
+                            'task' => $personil->notes,
+                            'status' => $personil->status,
+                            'order' => $st
+                        ];
+                    } else {
+                        $dataNonMachine[$personil->emp_task_id] = [
                             'name' => $personil->employee_name,
                             'sub_department' => $personil->sub_department,
                             'division' => $personil->division,
@@ -153,6 +164,16 @@
                             'status' => $personil->status,
                             'order' => $st
                         ];
+                    } else {
+                        $dataNonMachine[$personil->emp_task_id] = [
+                            'name' => $personil->employee_name,
+                            'sub_department' => $personil->sub_department,
+                            'division' => $personil->division,
+                            'overtime_hour' => "$start - $end",
+                            'task' => $personil->notes,
+                            'status' => $personil->status,
+                            'order' => $st
+                        ];
                     }
                 }
             }
@@ -161,7 +182,7 @@
         <?php if(count($dataMachine) > 0) { ?>
         <table style="<?= $style['table'] ?> margin-top:20px">
             <tr>
-                <th style="<?= $style['th'] ?>" colspan="2">Detail Personil Mesin (Aktual)</th>
+                <th style="<?= $style['th'] ?>" colspan="2">Detail Personil Mesin</th>
             </tr>
             <?php 
                 foreach ($dataMachine as $mKey => $mValue) { 
@@ -195,8 +216,33 @@
                         <span style='font-size:12px;'>Tugas: <?= $personil['task'] ?></span><br>
                     </td>
                 </tr>
-            <?php $no++; } } } } ?>            
+            <?php $no++; } } } } ?>     
         </table>
+
+        <?php if(count($dataNonMachine) > 0) { ?>
+            <table style="<?= $style['table'] ?> margin-top:20px">
+                <tr>
+                    <th style="<?= $style['th'] ?>" colspan="2">Detail Personil Non Operator</th>
+                </tr>
+                <?php                
+                    $no = 1; 
+                    foreach ($dataNonMachine as $empTask => $empValue) { ?>
+                    <tr>
+                        <td style="<?= $style['td'] ?>;text-align:right;font-size:12px;" width="10%"><?= $no ?></td>
+                        <td style="<?= $style['td'] ?>;" width="90%">
+                            <span style='font-size:12px;'><?= $empValue['name'] ?> 
+                                <?php if($empValue['status'] != 'CREATED' && $empValue['status'] != 'PROCESS') { ?>
+                                    <span style='color:red'><?= $empValue['status'] ?></span>
+                                <?php } ?>
+                            </span><br>
+                            <span style='font-size:12px;'><?= $empValue['sub_department'].' ('.$empValue['division'].')' ?></span><br>
+                            <span style='font-size:12px;'><?= $empValue['overtime_hour'] ?></span><br>
+                            <span style='font-size:12px;'>Tugas: <?= $empValue['task'] ?></span><br>
+                        </td>
+                    </tr>
+                <?php $no++; } ?>
+            </table>
+        <?php } ?>
     </div>
 
     <div style="<?= $style['footer'] ?>">

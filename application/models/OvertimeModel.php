@@ -124,6 +124,11 @@ class OvertimeModel extends CI_Model
         } 
         
         if(isset($get['order_by'])) {
+            if(!is_array($get['order_by'])) {
+                $exp = explode(':', $get['order_by']);
+                $get['order_by'] = [$exp[0] => $exp[1]];
+            }
+
             foreach ($get['order_by'] as $key => $value) {
                 $sql .= " ORDER BY a.$key $value";
             }
