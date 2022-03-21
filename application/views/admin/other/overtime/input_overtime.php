@@ -580,11 +580,11 @@ $script = <<< "JS"
                         personLayout.cells("b").progressOn();
                         var machineDetailGrid = personLayout.cells("b").attachGrid();
                         machineDetailGrid.setImagePath("./public/codebase/imgs/");
-                        machineDetailGrid.setHeader("No,Nama Mesin,Lokasi");
-                        machineDetailGrid.setColSorting("int,str,str");
-                        machineDetailGrid.setColAlign("center,left,left");
-                        machineDetailGrid.setColTypes("rotxt,rotxt,rotxt");
-                        machineDetailGrid.setInitWidthsP("5,45,50");
+                        machineDetailGrid.setHeader("No,Nama Mesin,Personil Ideal,Lokasi");
+                        machineDetailGrid.setColSorting("int,str,str,str");
+                        machineDetailGrid.setColAlign("center,left,left,left");
+                        machineDetailGrid.setColTypes("rotxt,rotxt,rotxt,rotxt");
+                        machineDetailGrid.setInitWidthsP("5,50,20,60");
                         machineDetailGrid.enableMultiselect(true);
                         machineDetailGrid.enableSmartRendering(true);
                         machineDetailGrid.attachEvent("onXLE", function() {

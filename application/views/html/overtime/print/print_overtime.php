@@ -60,8 +60,8 @@ class PDF extends PDF_MC_Table
         foreach ($ovtDetail as $ovtD) {
             if($ovtD->status != 'CANCELED' && $ovtD != 'REJECTED') {
                 $this->Row([$no, ucwords(strtolower($ovtD->employee_name)), $ovtD->notes, getTime($ovtD->start_date), getTime($ovtD->end_date), $ovtD->overtime_hour]);
+                $no++;
             }
-            $no++;
         }
 
         $isPPIC = false;

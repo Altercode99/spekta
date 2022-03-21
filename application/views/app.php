@@ -55,7 +55,7 @@
 	toDay = "<?= toIndoDateDay(date('Y-m-d')) ?>";
 	globalDate = "<?= date('Y-m-d') ?>";
 
-
+	var ipAddress = "<?= $ip ?>";
 
 	if (isLogin) {
 		localStorage.setItem("isLogin", true);

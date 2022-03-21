@@ -255,6 +255,9 @@ $script = <<< "JS"
                 equal_status: "CLOSED",
                 betweendate_overtime_date: start+","+end
             };
+            if(userLogged.rankId > 4) {
+                params.equal_sub_department_id = userLogged.subId;
+            }
             reportOvtGrid.clearAndLoad(Overtime("getReportOvertimeGrid", params), reportOvtGridCount);
         }
 
@@ -296,6 +299,9 @@ $script = <<< "JS"
                 betweendate_overtime_date: start+","+end,
                 groupby_sub_department_id: true
             };
+            if(userLogged.rankId > 4) {
+                params.equal_sub_department_id = userLogged.subId;
+            }
             reportOvtSubGrid.clearAndLoad(Overtime("getReportOvertimeSubGrid", params), reportOvtSubGridCount);
         }
 
@@ -337,6 +343,9 @@ $script = <<< "JS"
                 betweendate_overtime_date: start+","+end,
                 groupby_division_id: true
             };
+            if(userLogged.rankId > 4) {
+                params.equal_sub_department_id = userLogged.subId;
+            }
             reportOvtDivGrid.clearAndLoad(Overtime("getReportOvertimeDivGrid", params), reportOvtDivGridCount);
         }
 
@@ -378,6 +387,9 @@ $script = <<< "JS"
                 betweendate_overtime_date: start+","+end,
                 groupby_emp_id: true
             };
+            if(userLogged.rankId > 4) {
+                params.equal_sub_department_id = userLogged.subId;
+            }
             reportOvtEmpGrid.clearAndLoad(Overtime("getReportOvertimeEmpGrid", params), reportOvtEmpGridCount);
         }
 

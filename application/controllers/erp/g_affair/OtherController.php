@@ -487,9 +487,13 @@ class OtherController extends Erp_Controller
 
         foreach ($post as $key => $value) {
             if ($value['c17'] != 'REJECTED') {
+                $total = $value['c10'];
+                $confirm = $value['c11'];
+                $reject = $value['c12'];
                 $data[] = [
                     'id' => $key,
-                    'participant_confirmed' => $value['c11'],
+                    'total_participant' => $confirm > $total ? ($confirm + $reject) : $total,
+                    'participant_confirmed' => $confirm,
                 ];
                 $mSuccess .= "$key berhasil diubah \n";
             } else {

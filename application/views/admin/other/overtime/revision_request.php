@@ -176,7 +176,7 @@ $script = <<< "JS"
         var revSubLayout = reqRevTabs.cells("c").attachLayout({
             pattern: "3J",
             cells: [
-                {id: "a", text: "Daftar Lemburan (1 Minggu Terakhir)"},
+                {id: "a", text: "Daftar Lemburan (2 Minggu Terakhir)"},
                 {id: "b", text: "Form Revisi Lembur", width: 450},
                 {id: "c", text: "Detail Revisi Lembur", collapse: true},
             ]
@@ -1273,7 +1273,7 @@ $script = <<< "JS"
         });
 
         function ovtListWin(edit = false) {
-            var ovtWin = createWindow("rev_ovt_form_win", "Daftar Lembur (1 Minggu Terakhir)", 1100, 600);
+            var ovtWin = createWindow("rev_ovt_form_win", "Daftar Lembur (2 Minggu Terakhir)", 1100, 600);
             myWins.window("rev_ovt_form_win").skipMyCloseEvent = true;
 
             var ovtWinMenu = ovtWin.attachToolbar({

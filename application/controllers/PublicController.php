@@ -108,7 +108,7 @@ class PublicController extends Erp_Controller
                         'apv_spv' => 'APPROVED',
                         'apv_spv_nip' => $emp->nip,
                         'apv_spv_date' => date('Y-m-d H:i:s'),
-                        'status_by' => $emp->id
+                        'status_by' => $emp->nip
                     ];
                 } else {
                     $data = [
@@ -116,7 +116,7 @@ class PublicController extends Erp_Controller
                         'apv_spv_nip' => $emp->nip,
                         'apv_spv_date' => date('Y-m-d H:i:s'),
                         'status' => 'REJECTED',
-                        'status_by' => $emp->id
+                        'status_by' => $emp->nip
                     ];
                 }
                 if($status == 'REJECTED') {

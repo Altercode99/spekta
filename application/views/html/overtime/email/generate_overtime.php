@@ -62,8 +62,12 @@
                 <td style="<?= $style['td'] ?>"><b><?= $overtime->task_id ?></b></td>
             </tr>
             <tr>
-                <td style="<?= $style['td'] ?>">Bagian</td>
+                <td style="<?= $style['td'] ?>">Sub Unit</td>
                 <td style="<?= $style['td'] ?>"><?= $overtime->department ?></td>
+            </tr>
+            <tr>
+                <td style="<?= $style['td'] ?>">Bagian</td>
+                <td style="<?= $style['td'] ?>"><?= $overtime->sub_department ?></td>
             </tr>
             <tr>
                 <td style="<?= $style['td'] ?>">Sub Bagian</td>
@@ -144,32 +148,22 @@
                             'status' => $personil->status,
                             'order' => $st
                         ];
-                    } else {
-                        $dataNonMachine[$personil->emp_task_id] = [
-                            'name' => $personil->employee_name,
-                            'sub_department' => $personil->sub_department,
-                            'division' => $personil->division,
-                            'overtime_hour' => "$start - $end",
-                            'task' => $personil->notes,
-                            'status' => $personil->status,
-                            'order' => $st
-                        ];
                     }
+                } else {
+                    $dataNonMachine[] = [
+                        'name' => $personil->employee_name,
+                        'sub_department' => $personil->sub_department,
+                        'division' => $personil->division,
+                        'overtime_hour' => "$start - $end",
+                        'task' => $personil->notes,
+                        'status' => $personil->status,
+                        'order' => $st
+                    ];
                 }
 
                 if($personil->machine_2) {
                     if(array_key_exists($personil->machine_2, $machineList)) {
                         $dataMachine[$personil->machine_2][$st][] = [
-                            'name' => $personil->employee_name,
-                            'sub_department' => $personil->sub_department,
-                            'division' => $personil->division,
-                            'overtime_hour' => "$start - $end",
-                            'task' => $personil->notes,
-                            'status' => $personil->status,
-                            'order' => $st
-                        ];
-                    } else {
-                        $dataNonMachine[$personil->emp_task_id] = [
                             'name' => $personil->employee_name,
                             'sub_department' => $personil->sub_department,
                             'division' => $personil->division,

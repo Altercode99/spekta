@@ -18,7 +18,11 @@ class AppController extends Erp_Controller
 
     public function index()
     {
-        $this->load->view('app');
+        $ip = $this->input->ip_address();
+        $data = [
+            'ip' => $ip
+        ];
+        $this->load->view('app', $data);
     }
 
     public function loadViews()

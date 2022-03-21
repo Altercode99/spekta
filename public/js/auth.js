@@ -69,7 +69,9 @@ function loginFormUI() {
     {
       type: "label",
       label:
-        "<div id='logo-kf' style='text-align:center'><img src='public/img/logo-spekta.png' style='width:65%' /></div>",
+        "<div id='logo-kf' style='text-align:center'><img src='public/img/logo-spekta.png' style='width:65%' /></div><br /><div width='100%' style='text-align:center'><img src='public/codebase/icons/ip.png' width='16' height='16' />" +
+        ipAddress +
+        "</div>",
     },
     {
       type: "label",

@@ -75,6 +75,7 @@ $script = <<<"JS"
 		infoText = infoText + "<span style='font-size: 12px'> <img src='public/codebase/icons/puzzle_16.png' width='16' height='16' /> "+userLogged.subDepartment+"</span>";
 		infoText = infoText + "<span style='font-size: 12px'> <img src='public/codebase/icons/medal.png' width='16' height='16' /> "+userLogged.rank+"</span>";
 		infoText = infoText + "<span style='font-size: 12px'> <img src='public/codebase/icons/map_16.png' width='16' height='16' /> "+userLogged.empLoc+"</span>";
+		infoText = infoText + "<span style='font-size: 12px'> <img src='public/codebase/icons/ip.png' width='16' height='16' /> "+ipAddress+"</span>";
 		var userInfo = infoText;
 
 		sidebar = leftRightLayout.cells("a").attachForm([

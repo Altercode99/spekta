@@ -140,32 +140,22 @@
                             'status' => $personil->status,
                             'order' => $st
                         ];
-                    } else {
-                        $dataNonMachine[$personil->emp_task_id] = [
-                            'name' => $personil->employee_name,
-                            'sub_department' => $personil->sub_department,
-                            'division' => $personil->division,
-                            'overtime_hour' => "$start - $end",
-                            'task' => $personil->notes,
-                            'status' => $personil->status,
-                            'order' => $st
-                        ];
-                    }
+                    } 
+                } else {
+                    $dataNonMachine[] = [
+                        'name' => $personil->employee_name,
+                        'sub_department' => $personil->sub_department,
+                        'division' => $personil->division,
+                        'overtime_hour' => "$start - $end",
+                        'task' => $personil->notes,
+                        'status' => $personil->status,
+                        'order' => $st
+                    ];
                 }
 
                 if($personil->machine_2) {
                     if(array_key_exists($personil->machine_2, $machineList)) {
                         $dataMachine[$personil->machine_2][$st][] = [
-                            'name' => $personil->employee_name,
-                            'sub_department' => $personil->sub_department,
-                            'division' => $personil->division,
-                            'overtime_hour' => "$start - $end",
-                            'task' => $personil->notes,
-                            'status' => $personil->status,
-                            'order' => $st
-                        ];
-                    } else {
-                        $dataNonMachine[$personil->emp_task_id] = [
                             'name' => $personil->employee_name,
                             'sub_department' => $personil->sub_department,
                             'division' => $personil->division,

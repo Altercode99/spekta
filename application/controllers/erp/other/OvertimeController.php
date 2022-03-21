@@ -480,6 +480,7 @@ class OvertimeController extends Erp_Controller
             $xml .= "<row id='$machine->id'>";
             $xml .= "<cell>" . cleanSC($no) . "</cell>";
             $xml .= "<cell>" . cleanSC($machine->name) . "</cell>";
+            $xml .= "<cell>" . cleanSC($machine->personil_ideal) . " Orang</cell>";
             $xml .= "<cell>" . cleanSC("Gedung $machine->building Ruang $machine->room") . "</cell>";
             $xml .= "</row>";
             $no++;
@@ -1135,7 +1136,7 @@ class OvertimeController extends Erp_Controller
     public function approvePersonilOvertime()
     {
         $post = fileGetContent();
-        $data = ['apv_spv' => 'APPROVED', 'apv_spv_nip' => empNip(), 'apv_spv_date' => date('Y-m-d H:i:s')];
+        $data = ['apv_spv' => 'APPROVED', 'apv_spv_nip' => empNip(), 'apv_spv_date' => date('Y-m-d H:i:s'), 'status_by' => empNip()];
         $this->Hr->update('employee_overtimes_detail', $data, ['emp_task_id' => $post->empTaskId]);
         response(['status' => 'success', 'message' => 'Lemburan berhasil di approve']);
     }
@@ -1935,7 +1936,7 @@ class OvertimeController extends Erp_Controller
             $params['notin_emp_task_id'] = $taskIds;
         }
 
-        $params['gt_overtime_date'] = backDayToDate(date('Y-m-d'), 7);
+        $params['gt_overtime_date'] = backDayToDate(date('Y-m-d'), 14);
 
         $overtimes = $this->Overtime->getWindowOvertimeGrid($params)->result();
         $xml = "";

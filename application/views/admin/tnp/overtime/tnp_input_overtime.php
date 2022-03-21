@@ -1036,7 +1036,7 @@ $script = <<< "JS"
             let end = $("#tnp_ref_end_date").val();
             let params = {betweendate_created_at: start+","+end};
             if(userLogged.subId) {
-                params.sub_department_id = userLogged.subId;
+                params.equal_sub_department_id = userLogged.subId;
             }
             refProdToolbar.enableItem("del_ref");
             refProdToolbar.enableItem("process_support");

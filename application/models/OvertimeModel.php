@@ -242,7 +242,7 @@ class OvertimeModel extends CI_Model
     {
         if(isset($get['ids'])) {
             $ids = explode(',', $get['ids']);
-            return $this->db->select('a.id,a.name,b.name AS building,c.name AS room')
+            return $this->db->select('a.id,a.name,a.personil_ideal,b.name AS building,c.name AS room')
                             ->from("$this->kf_mtn.production_machines a")
                             ->join("$this->kf_general.buildings b", 'a.building_id = b.id')
                             ->join("$this->kf_general.building_rooms c", 'a.room_id = c.id')
@@ -344,7 +344,7 @@ class OvertimeModel extends CI_Model
 
     public function getOvt7Day($params)
     {
-        $lastWeeek = backDayToDate(date('Y-m-d'), 7);
+        $lastWeeek = backDayToDate(date('Y-m-d'), 14);
         $where = advanceSearch($params);
         $sql = "SELECT a.*,b.name AS department,c.name AS sub_department,d.name AS division,
                        (SELECT employee_name FROM employees WHERE id = a.created_by) AS emp1,
