@@ -41,7 +41,7 @@
 
     <div style="<?= $style['body'] ?>">
         <p>Dear <b><?= $driver->employee_name ?></b>,</p>
-        <p>Berikut ini adalah <b>Form Perjalanan Dinas</b> ke <b><?= $data->description ?></b>:</p>
+        <p>Berikut ini adalah <b>Form Perjalanan Dinas</b> ke <b><?= $data->destination ?></b>:</p>
         <div style="<?= $style['button_container'] ?>">
             <a href="<?= $linkForm ?>" style="<?= $style['button'] ?> background-color: #116171;">BUKA FORM PERJALANAN</a><br/><br/>
         </div>

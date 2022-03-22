@@ -1222,7 +1222,7 @@ $script = <<< "JS"
 
                     function rOvtTaskGrid() {
                         ovtTaskWin.progressOn();
-                        let params = {in_status: "CREATED"};
+                        let params = {in_status: "CREATED,PROCESS"};
                         if(userLogged.rankId >= 3 || userLogged.pltRankId >= 3) {
                             if(userLogged.rankId >= 6 || userLogged.pltRankId >= 6) {
                                 params.in_sub_department_id = userLogged.subId+","+userLogged.pltSubId;

@@ -219,12 +219,17 @@ $script = <<< "JS"
                 loadParticipant();
             } else if(button_id == "guest_button") {
                 guests = [];
-                var guestWindow = createWindow("rm_guest", "Daftar Tamu", 900, 400);
+                var guestWindow = createWindow("rm_guest", "Daftar Tamu", 1100, 400);
                 myWins.window("rm_guest").skipMyCloseEvent = true;
 
                 if(scheduler1.formSection('guest').getValue() !== "") {
                     let guest = scheduler1.formSection('guest').getValue().split(",");
-                    guest.map(email => email !== "" && guests.push(email));
+                    guest.map(data => { 
+                        if(data !== "") {
+                            let newData = data.split(":");
+                            guests.push({email: newData[0], total: newData[1], rId: newData[2]});
+                        }
+                    });
                 } 
 
                 var guestToolbar = guestWindow.attachToolbar({
@@ -233,6 +238,13 @@ $script = <<< "JS"
                         {id: "add", text: "Tambah", type: "button", img: "add.png"},
                         {id: "update", text: "Simpan & Update Tamu", type: "button", img: "update.png"},
                         {id: "save", text: "Simpan", type: "button", img: "ok.png"},
+                    ]
+                });
+
+                var guestMenu = guestWindow.attachMenu({
+                    icon_path: "./public/codebase/icons/",
+                    items: [
+                        {id: "add", text: "<span style='color:red'>Update Jumlah Peserta Undangan sebelum anda <b>Checklist</b> buku tamu!</span>"}
                     ]
                 });
 
@@ -246,7 +258,15 @@ $script = <<< "JS"
                                 total++;
                                 }
                                 if(countGuest == total) {
-                                    scheduler1.formSection('guest').setValue(guests);
+                                    let newGuest = "";
+                                    guests.map(data => {
+                                        if(newGuest== "") {
+                                            newGuest =  data.email + ":" + data.total + ":" + data.rId;
+                                        } else {
+                                            newGuest = newGuest + "," + data.email + ":" + data.total + ":" + data.rId;
+                                        }
+                                    })
+                                    scheduler1.formSection('guest').setValue(newGuest);
                                     closeWindow("rm_guest");
                                 } else {
                                     if(guestGrid.getRowsNum() == 0) {
@@ -259,7 +279,7 @@ $script = <<< "JS"
                             break;
                         case "add":
                             let newId = (new Date()).valueOf();
-                            guestGrid.addRow(newId, ["", 0, "Nama Tamu", "Nama Perusahaan", "Email"]);
+                            guestGrid.addRow(newId, ["", 0, "Nama Tamu", "Nama Perusahaan", "Email", "Jumlah Peserta Meeting"]);
                             break;
                         case "update":
                             if(!guestGrid.getChangedRows()) {
@@ -292,7 +312,16 @@ $script = <<< "JS"
                 function guestGridCount() {
                     var guestGridRows = guestGrid.getRowsNum();
                     guestStatusBar.setText("Total baris: " + guestGridRows);
-                    guests.length > 0 && guests.map(id => id !== '' && guestGrid.cells(id, 1).setValue(1));
+                    guests.length > 0 && guests.map(data => {
+                        if(data !== '') {
+                            guestGrid.cells(data.rId, 1).setValue(1);
+                            guestGrid.cells(data.rId, 5).setValue(data.total);
+                            guestGrid.cells(data.rId, 5).setDisabled(true);
+                            guestGrid.cells(data.rId, 2).setDisabled(true);
+                            guestGrid.cells(data.rId, 3).setDisabled(true);
+                            guestGrid.cells(data.rId, 4).setDisabled(true);
+                        }
+                    });
                     countGuest = guestGridRows;
                 }
 
@@ -300,12 +329,12 @@ $script = <<< "JS"
 
                 guestGrid = guestWindow.attachGrid();
                 guestGrid.setImagePath("./public/codebase/imgs/");
-                guestGrid.setHeader("No,Check,Nama Tamu,Perusahaan,Email");
-                guestGrid.attachHeader("#rspan,#rspan,#text_filter,#select_filter,#text_filter")
-                guestGrid.setColSorting("int,na,str,str,str");
-                guestGrid.setColAlign("center,left,left,left,left");
-                guestGrid.setColTypes("rotxt,ch,ed,ed,ed");
-                guestGrid.setInitWidthsP("5,5,30,35,25");
+                guestGrid.setHeader("No,Check,Nama Tamu,Perusahaan,Email,Jumlah Peserta Meeting (Klik 2X)");
+                guestGrid.attachHeader("#rspan,#rspan,#text_filter,#select_filter,#text_filter,#text_filter")
+                guestGrid.setColSorting("int,na,str,str,str,str");
+                guestGrid.setColAlign("center,left,left,left,left,left");
+                guestGrid.setColTypes("rotxt,ch,ed,ed,ed,ed");
+                guestGrid.setInitWidthsP("5,5,20,25,25,20");
                 guestGrid.enableSmartRendering(true);
                 guestGrid.setEditable(true);
                 guestGrid.attachEvent("onXLE", function() {
@@ -318,10 +347,18 @@ $script = <<< "JS"
                             eAlert("Melebihi kapasitas penumpang!");
                             guestGrid.cells(rId, 1).setValue(0);
                         } else {
-                            guests.push(rId);
+                            guests.push({email: guestGrid.cells(rId, 4).getValue(), total: guestGrid.cells(rId, 5).getValue(), rId});
+                            guestGrid.cells(rId, 5).setDisabled(true);
+                            guestGrid.cells(rId, 2).setDisabled(true);
+                            guestGrid.cells(rId, 3).setDisabled(true);
+                            guestGrid.cells(rId, 4).setDisabled(true);
                         }
                     } else {
-                        guests.splice(guests.indexOf(rId), 1);
+                        guests = guests.filter(guest => rId != guest.rId);
+                        guestGrid.cells(rId, 5).setDisabled(false);
+                        guestGrid.cells(rId, 2).setDisabled(false);
+                        guestGrid.cells(rId, 3).setDisabled(false);
+                        guestGrid.cells(rId, 4).setDisabled(false);
                     }
                 });
                 function setGridDP() {
@@ -337,7 +374,7 @@ $script = <<< "JS"
                     guestWindow.progressOn();
                     guestGrid.clearAndLoad(RoomRev("getGuests"), guestGridCount);
                 }
-
+                isGridNumeric(guestGrid, [5]);
                 loadGuest();
             }
         });

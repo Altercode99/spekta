@@ -640,6 +640,7 @@ $script = <<< "JS"
                                             personils= [];
                                             personilNames= [];
                                             clearAllForm(personilForm, null, null, ['start_date', 'end_date']);
+                                            personilForm.setItemValue("machine_id", "");
                                             rProcPersonGrid(formOvtGrid.getSelectedRowId());
                                             if(detailOvertime.overtime.machine_ids) {
                                                 machineDetailGrid.clearSelection();

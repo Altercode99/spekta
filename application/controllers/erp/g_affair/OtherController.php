@@ -401,7 +401,7 @@ class OtherController extends Erp_Controller
                 $emp = $this->Hr->getDataById('employees', empId());
                 $this->mroomlib->meetInvitation($emp, $revId);
             }
-            response(['status' => 'success', 'message' => 'Berhasil approve reservasi ruang']);
+            response(['status' => 'success', 'message' => 'Berhasil approve reservasi ruang meeting']);
         } else {
             response(['status' => 'error', 'message' => 'Sudah di approve sebelumnya!']);
         }

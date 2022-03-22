@@ -67,9 +67,10 @@ class MRoomLib
         if(count($guests) > 0) {
             foreach ($guests as $value) {
                 if($value != '') {
-                    $guest = $this->General->getOne('guest_books', ['email' => $value]);
-                    $tokenAccept = simpleEncrypt($id . ':' . $value . ':accept');
-                    $tokenReject = simpleEncrypt($id . ':' . $value . ':reject');
+                    $gd = explode(':', $value);
+                    $guest = $this->General->getOne('guest_books', ['email' => $gd[0]]);
+                    $tokenAccept = simpleEncrypt($id . ':' . $gd[0] . ':accept');
+                    $tokenReject = simpleEncrypt($id . ':' . $gd[0] . ':reject');
                     $urlAccept = LIVE_URL . "index.php?c=PublicController&m=responseMeeting&token=$tokenAccept";
                     $urlReject = LIVE_URL . "index.php?c=PublicController&m=responseMeeting&token=$tokenReject";
                     $type = 'Meeting External';
@@ -78,12 +79,13 @@ class MRoomLib
                         'linkR' => $urlReject,
                         'meeting' => $meeting,
                         'guest' => $guest,
+                        'total_participant' => $gd[1],
                         'location' => $locName,
                         'type' => $type,
                     ], true);
                     $data[] = [
                         'alert_name' => 'MEETING_INVITATION',
-                        'email_to' => $value,
+                        'email_to' => $gd[0],
                         'subject' => "Undangan Meeting Dari $locName (Ruang $meeting->room_name) @" . toIndoDateTime2($meeting->start_date),
                         'subject_name' => "Spekta Alert: Undangan Meeting $locName (Ruang $meeting->room_name) @" . toIndoDateTime2($meeting->start_date),
                         'message' => $message,

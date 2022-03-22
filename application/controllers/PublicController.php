@@ -440,19 +440,19 @@ class PublicController extends Erp_Controller
             $meetId = $token[0];
             $email = $token[1];
             $status = $token[2];
-            $currStatus = $this->General->getOne('meeting_participants', ['email' => $email, 'meeting_id' => $meetId])->status;
-            if($currStatus == 'BELUM MEMUTUSKAN') {
+            $currStatus = $this->General->getOne('meeting_participants', ['email' => $email, 'meeting_id' => $meetId]);
+            if($currStatus->status == 'BELUM MEMUTUSKAN') {
                 if($status == 'accept') {
                     $this->General->update('meeting_participants', ['status' => 'HADIR'], ['email' => $email,  'meeting_id' => $meetId]);
-                    $this->General->addValueBy('meeting_rooms_reservation', ['participant_confirmed' => 1], ['id' => $meetId]);
+                    $this->General->addValueBy('meeting_rooms_reservation', ['participant_confirmed' => $currStatus->total_participant], ['id' => $meetId]);
                     $this->load->view('html/valid_response', ['message' => "Konfirmasi diterima, anda akan HADIR di meeting tersebut"]);
                 } else {
                     $this->General->update('meeting_participants', ['status' => 'TIDAK HADIR'], ['email' => $email,  'meeting_id' => $meetId]);
-                    $this->General->addValueBy('meeting_rooms_reservation', ['participant_rejected' => 1], ['id' => $meetId]);
+                    $this->General->addValueBy('meeting_rooms_reservation', ['participant_rejected' => $currStatus->total_participant], ['id' => $meetId]);
                     $this->load->view('html/valid_response', ['message' => "Konfirmasi diterima, anda memutuskan TIDAK HADIR di meeting tersebut"]);
                 }
             } else {
-                $this->load->view('html/invalid_response', ['message' => "Anda telah mengambil keputusan $currStatus untuk undangan ini!"]);
+                $this->load->view('html/invalid_response', ['message' => "Anda telah mengambil keputusan $currStatus->status untuk undangan ini!"]);
             }
         } else {
             $this->load->view('html/invalid_response', ['message' => 'Token tidak valid!']);

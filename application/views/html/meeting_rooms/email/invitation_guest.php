@@ -53,6 +53,10 @@
                 <td style="<?= $style['td'] ?>"><?= $meeting->ticket ?></td>
             </tr>
             <tr>
+                <td style="<?= $style['td'] ?>">Jumlah Peserta (<?= $guest->company ?>)</td>
+                <td style="<?= $style['td'] ?>"><?= $total_participant ?> Orang</td>
+            </tr>
+            <tr>
                 <td style="<?= $style['td'] ?>">Topik</td>
                 <td style="<?= $style['td'] ?>"><b><?= $meeting->name  ?></b></td>
             </tr>

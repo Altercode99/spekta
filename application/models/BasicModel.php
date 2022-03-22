@@ -47,6 +47,28 @@ class BasicModel extends CI_Model
         return $this->db->count_all_results();
     }
 
+    public function sumWhere($table, $column, $where, $whereIn = null, $whereNotIn = null)
+    {
+        $this->db->select("SUM($column) AS total");
+        $this->db->from($table);
+        foreach ($where as $key => $value) {
+            $this->db->where($key, $value);
+        }
+        
+        if($whereIn && count($whereIn) > 0) {
+            foreach ($whereIn as $key => $value) {
+                $this->db->where_in($key, $value);
+            }
+        }
+
+        if($whereNotIn && count($whereNotIn) > 0) {
+            foreach ($whereNotIn as $key => $value) {
+                $this->db->where_not_in($key, $value);
+            }
+        }
+        return $this->db->get()->row()->total;
+    }
+
     public function getDataById($table, $id, $select = '*')
     {   
         $select !== '*' && $this->db->select($select);

@@ -57,12 +57,13 @@ class RoomRevController extends Erp_Controller
         $xml = "";
         $no = 1;
         foreach ($guests as $guest) {
-            $xml .= "<row id='$guest->email'>";
+            $xml .= "<row id='$guest->id'>";
             $xml .= "<cell>" . cleanSC($no) . "</cell>";
             $xml .= "<cell>0</cell>";
             $xml .= "<cell>" . cleanSC($guest->name) . "</cell>";
             $xml .= "<cell>" . cleanSC($guest->company) . "</cell>";
             $xml .= "<cell>" . cleanSC($guest->email) . "</cell>";
+            $xml .= "<cell>" . cleanSC(1) . "</cell>";
             $xml .= "</row>";
             $no++;
         }
@@ -96,31 +97,33 @@ class RoomRevController extends Erp_Controller
                     }
                 }
             } else {
-                if (!filter_var($value['c5'], FILTER_VALIDATE_EMAIL)) {
-                    $mError .= "$value[c5] format email tidak valid \n";
+                if (!filter_var($value['c4'], FILTER_VALIDATE_EMAIL)) {
+                    $mError .= "$value[c4] format email tidak valid \n";
                 } else {
-                    $guest = $this->General->getOne('guest_books', ['email' => $value['c5']]);
-                    if ($guest->email != $value['c5']) {
-                        $checkEmail = $this->Hr->getOne('employees', ['email' => $value['c5']]);
+                    $guest = $this->General->getOne('guest_books', ['email' => $value['c4']]);
+                    if ($guest && $guest->email != $value['c4']) {
+                        $checkEmail = $this->Hr->getOne('employees', ['email' => $value['c4']]);
                         if ($checkEmail) {
-                            $mError .= "$value[c5] email sudah digunakan \n";
+                            $mError .= "$value[c4] email sudah diubah \n";
                         } else {
                             $dataUpdate[] = [
-                                'name' => $value['c3'],
-                                'company' => $value['c4'],
-                                'email' => $value['c5'],
+                                'id' => $key,
+                                'name' => $value['c2'],
+                                'company' => $value['c3'],
+                                'email' => $value['c4'],
                                 'updated_by' => empId(),
                             ];
-                            $mSuccess .= "$value[c3] berhasil di tambahkan \n";
+                            $mSuccess .= "$value[c2] berhasil di diubah \n";
                         }
                     } else {
                         $dataUpdate[] = [
-                            'name' => $value['c3'],
-                            'company' => $value['c4'],
-                            'email' => $value['c5'],
+                            'id' => $key,
+                            'name' => $value['c2'],
+                            'company' => $value['c3'],
+                            'email' => $value['c4'],
                             'updated_by' => empId(),
                         ];
-                        $mSuccess .= "$value[c3] berhasil di tambahkan \n";
+                        $mSuccess .= "$value[c2] berhasil di diubah \n";
                     }
                 }
             }
@@ -130,7 +133,7 @@ class RoomRevController extends Erp_Controller
             $this->General->createMultiple('guest_books', $data);
         }
         if (count($dataUpdate) > 0) {
-            $this->General->updateMultiple('guest_books', $dataUpdate, 'email');
+            $this->General->updateMultiple('guest_books', $dataUpdate, 'id');
         }
         xmlResponse('updated', $mSuccess . ',' . $mError);
     }
@@ -227,11 +230,22 @@ class RoomRevController extends Erp_Controller
             xmlResponse('error', $message);
         }
 
-        $expParticipant = explode(',', $data->participant);
-        $expGuest = explode(',', $data->guest);
-        $totalParticipant = count($expParticipant) + count($expGuest);
+
 
         if ($action === 'inserted') {
+
+            $expGuest = explode(',', $data->guest);
+            $expParticipant = explode(',', $data->participant);
+            $totalParticipant = count($expParticipant);
+
+            $guestData = [];
+            foreach ($expGuest as $key => $value) {
+                $gd = explode(':', $value);
+                $guestData['email'][] = $gd[0];
+                $guestData['participant'][$gd[0]] = $gd[1];
+                $totalParticipant += $gd[1];
+            }
+
             $event = [
                 'id' => $id,
                 'location' => empLoc(),
@@ -258,7 +272,6 @@ class RoomRevController extends Erp_Controller
             $this->General->create('meeting_rooms_reservation', $event);
 
             $participants = count($expParticipant) > 0 ? $this->Hr->getWhereIn('employees', ['email' => $expParticipant])->result_array() : [];
-            $guests = count($expGuest) > 0 ? $this->General->getWhereIn('guest_books', ['email' => $expGuest])->result_array() : [];
             
             foreach ($participants as $key => $value) {
                 $dataPerson[] = [
@@ -266,18 +279,23 @@ class RoomRevController extends Erp_Controller
                     'name' => $value['employee_name'],
                     'email' => $value['email'],
                     'company' => $value['location'],
+                    'total_participant' => 1
                 ];
             }
 
-            foreach ($guests as $key => $value) {
-                $dataPerson[] = [
-                    'meeting_id' => $id,
-                    'name' => $value['name'],
-                    'email' => $value['email'],
-                    'company' => $value['company'],
-                ];
+            if(count($guestData) > 0) {
+                $guests = count($expGuest) > 0 ? $this->General->getWhereIn('guest_books', ['email' => $guestData['email']])->result_array() : [];
+                foreach ($guests as $key => $value) {
+                    $dataPerson[] = [
+                        'meeting_id' => $id,
+                        'name' => $value['name'],
+                        'email' => $value['email'],
+                        'company' => $value['company'],
+                        'total_participant' => $guestData['participant'][$value['email']]
+                    ];
+                }
+                $this->General->createMultiple('meeting_participants', $dataPerson);
             }
-            $this->General->createMultiple('meeting_participants', $dataPerson);
            
             if ($data->repeat > 1) {
                 $step = 0;
@@ -401,39 +419,41 @@ class RoomRevController extends Erp_Controller
                 'meal' => $data->meal,
                 'updated_at' => date('Y-m-d H:i:s'),
             ];
-
+    
             if ($data->guest != $checkOwner->guests) {
                 $existingMail = [];
-                $newMail = [];
                 $eventMail = explode(',', $checkOwner->guests);
-                $currGuest = count($eventMail) > 0 ? $this->General->getWhereIn('meeting_participants', ['email' => $eventMail, 'id' => array($id)])->result_array() : [];
-                foreach ($currGuest as $key => $value) {
-                    $existingMail[$value['email']] = [
-                        'meeting_id' => $id,
-                        'name' => $value['name'],
-                        'company' => $value['company'],
-                        'email' => $value['email'],
-                        'status' => $value['status'],
-                    ];
+                $eventMailData = [];
+                foreach ($eventMail as $key => $value) {
+                    $gd = explode(':', $value);
+                    $eventMailData['email'][] = $gd[0];
                 }
-
+                
+                count($eventMailData) > 0 && $this->General->deleteWhereIn('meeting_participants', ['email' => $eventMailData['email']], ['meeting_id' => $id]);
+                
                 $guestMail = explode(',', $data->guest);
-                $newGuest = count($guestMail) > 0 ? $this->General->getWhereIn('guest_books', ['email' => $guestMail])->result_array() : [];
-
-                foreach ($newGuest as $key => $value) {
-                    if (array_key_exists($value['email'], $existingMail)) {
-                        $newMail[] = $existingMail[$value['email']];
-                    } else {
+                if(count($guestMail) > 0) {
+                    $newMail = [];
+                    $guestMailData = [];
+                    foreach ($guestMail as $key => $value) {
+                        $gd = explode(':', $value);
+                        if(count($gd) == 3) {
+                             $guestMailData['email'][] = $gd[0];
+                             $guestMailData['total_participant'][$gd[0]] = $gd[1];
+                        }
+                    }
+                    $newGuest = count($guestMailData) > 0 ? $this->General->getWhereIn('guest_books', ['email' => $guestMailData['email']])->result_array() : [];
+                    foreach ($newGuest as $key => $value) {
                         $newMail[] = [
                             'meeting_id' => $id,
                             'name' => $value['name'],
                             'company' => $value['company'],
                             'email' => $value['email'],
+                            'total_participant' => $guestMailData['total_participant'][$value['email']]
                         ];
                     }
+                    count($newGuest) > 0 && $this->General->createMultiple('meeting_participants', $newMail);
                 }
-                count($newGuest) > 0 && $this->General->deleteWhereIn('meeting_participants', ['email' => $eventMail], ['meeting_id' => $id]);
-                count($newGuest) > 0 && $this->General->createMultiple('meeting_participants', $newMail);
             }
 
             if ($data->participant != $checkOwner->participants) {
@@ -472,7 +492,7 @@ class RoomRevController extends Erp_Controller
 
             $event['participant_confirmed'] = $this->General->countWhere('meeting_participants', ['meeting_id' => $id, 'status' => 'HADIR']);
             $event['participant_rejected'] = $this->General->countWhere('meeting_participants', ['meeting_id' => $id, 'status' => 'TIDAK HADIR']);
-            $event['total_participant'] = $this->General->countWhere('meeting_participants', ['meeting_id' => $id]);
+            $event['total_participant'] = $this->General->sumWhere('meeting_participants', 'total_participant', ['meeting_id' => $id]);
             $this->General->updateById('meeting_rooms_reservation', $event, $id);
             xmlResponse($action, "Reservsi ruang meeting berhasil diupdate", $id);
         } else if ($action === 'deleted') {

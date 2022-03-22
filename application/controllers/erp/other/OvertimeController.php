@@ -1136,7 +1136,7 @@ class OvertimeController extends Erp_Controller
     public function approvePersonilOvertime()
     {
         $post = fileGetContent();
-        $data = ['apv_spv' => 'APPROVED', 'apv_spv_nip' => empNip(), 'apv_spv_date' => date('Y-m-d H:i:s'), 'status_by' => empNip()];
+        $data = ['apv_spv' => 'APPROVED', 'apv_spv_nip' => empNip(), 'apv_spv_date' => date('Y-m-d H:i:s')];
         $this->Hr->update('employee_overtimes_detail', $data, ['emp_task_id' => $post->empTaskId]);
         response(['status' => 'success', 'message' => 'Lemburan berhasil di approve']);
     }
@@ -2087,7 +2087,7 @@ class OvertimeController extends Erp_Controller
     public function updatePrsRevOvtDesc()
     {
         $post = prettyText(getPost(), ['description']);
-        $status = $this->Hr->getOne('overtime_revision_requests_personil', ['rev_task_id' => $post['task_id']])->status;
+        $status = $this->Hr->getOne('overtime_revision_requests_personil', ['rev_task_id' => $post['rev_task_id']])->status;
         if ($status != 'CREATED') {
             xmlResponse('error', "Gagal update deskripsi, status permintaan revisi sudah $status");
         }
@@ -2096,7 +2096,7 @@ class OvertimeController extends Erp_Controller
             'updated_by' => empId(),
             'updated_at' => date('Y-m-d H:i:s'),
         ];
-        $this->Hr->update('overtime_revision_requests_personil', $data, ['rev_task_id' => $post['task_id']]);
+        $this->Hr->update('overtime_revision_requests_personil', $data, ['rev_task_id' => $post['rev_task_id']]);
         xmlResponse('updated', 'Berhasil mengubah deskripsi pengajuan revisi lembur');
     }
 
@@ -2205,7 +2205,7 @@ class OvertimeController extends Erp_Controller
     {
         $post = fileGetContent();
         $desc = $this->Hr->getOne('overtime_revision_requests_personil', ['rev_task_id' => $post->taskId]);
-        response(['task_id' => $desc->task_id, 'description' => $desc->description]);
+        response(['rev_task_id' => $desc->rev_task_id, 'description' => $desc->description]);
     }
 
     public function getRevision()
