@@ -128,8 +128,13 @@ class PublicController extends Erp_Controller
                         $this->load->view('html/invalid_response', ['message' => "Oops.. Lemburan $taskId sudah di approve ASMAN!"]);
                     }
                 } else {
-                    $this->Hr->update('employee_overtimes_detail', $data, ['task_id' => $taskId, 'division_id' => $divId]);
-                    $this->load->view('html/valid_response', ['message' => "<p>Lembur <b>$taskId</b> berhasil di <b>$status</b></p>"]);
+                    $isTakeAction = $this->Hr->getOne('employee_overtimes_detail', ['task_id' => $taskId, 'division_id' => $divId, 'apv_spv !=' => 'CREATED']);
+                    if(!$isTakeAction) {
+                        $this->Hr->update('employee_overtimes_detail', $data, ['task_id' => $taskId, 'division_id' => $divId]);
+                        $this->load->view('html/valid_response', ['message' => "<p>Lembur <b>$taskId</b> berhasil di <b>$status</b></p>"]);
+                    } else {
+                        $this->load->view('html/invalid_response', ['message' => "Oopss.. Lemburan ini sudah di <b>$status</b> sebelumnya!"]);
+                    }
                 }
             } else {
                 $this->load->view('html/invalid_response', ['message' => 'Jabatan anda tidak sesuai dengan <b>Sub Bagian Lembur</b>']);
