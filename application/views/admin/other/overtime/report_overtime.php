@@ -255,7 +255,7 @@ $script = <<< "JS"
                 equal_status: "CLOSED",
                 betweendate_overtime_date: start+","+end
             };
-            if(userLogged.rankId > 4) {
+            if(userLogged.rankId > 4 && userLogged.role !== "admin") {
                 params.equal_sub_department_id = userLogged.subId;
             }
             reportOvtGrid.clearAndLoad(Overtime("getReportOvertimeGrid", params), reportOvtGridCount);

@@ -99,6 +99,7 @@ class OvertimeModel extends CI_Model
                        (SELECT employee_name FROM employees WHERE id = a.created_by) AS emp1,
                        (SELECT employee_name FROM employees WHERE id = a.updated_by) AS emp2,
                        (SELECT employee_name FROM employees WHERE nip = a.status_by) AS status_updater,
+                       (SELECT employee_name FROM employees WHERE nip = a.apv_spv_nip) AS supervisor,
                        (SELECT name FROM $this->kf_mtn.production_machines WHERE id = a.machine_1) AS machine_1,
                        (SELECT name FROM $this->kf_mtn.production_machines WHERE id = a.machine_2) AS machine_2
                        FROM $this->kf_hr.employee_overtimes_detail a, $this->kf_hr.departments b, $this->kf_hr.sub_departments c, 

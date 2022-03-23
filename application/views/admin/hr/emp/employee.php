@@ -128,7 +128,7 @@ $script = <<< "JS"
             empGrid = empTabs.cells("data").attachGrid();
             empGrid.setHeader("No,Nama Karyawan,NPP,ID SAP,No. KK,NIK,NPWP,Tempat Lahir,Tanggal Lahir,Jenis Kelamin,Agama,Umur,Status Karyawan,OS,Alamat,No.Telp,No.Hp,Email,No. SK Jabatan,Tanggal SK Jabatan,Tanggal Efektif SK,Tanggal Berakhir SK,Atasan Langsung,Sub Unit,Bagian,Sub Bagian,Jabatan,Status");
             empGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter")
-            empGrid.setColSorting("str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
+            empGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
             empGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
             empGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
             empGrid.setInitWidthsP("5,20,15,15,15,15,15,15,20,15,15,10,15,20,35,15,15,20,15,15,15,15,15,15,20,30,15,15");

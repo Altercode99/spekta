@@ -5,6 +5,15 @@ if ((strpos(strtolower($_SERVER['SCRIPT_NAME']), strtolower(basename(__FILE__)))
 }
 $script = <<< "JS"
 
+    function masterProductTab() {
+        if (!mainTab.tabs("prod_master_products_product")){
+            mainTab.addTab("prod_master_products_product", tabsStyle("clock.png", "Master Produk"), null, null, true, true);
+            showMasterProduct();
+        } else {
+            mainTab.tabs("prod_master_products_product").setActive();
+        }
+    }
+
 JS;
 
 echo $script;

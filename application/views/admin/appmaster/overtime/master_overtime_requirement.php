@@ -60,7 +60,7 @@ $script = <<< "JS"
         var reqGrid = reqLayout.cells("a").attachGrid();
         reqGrid.setHeader("No,Nama Kebutuhan,Kategori,Sub Unit (Ref),Bagian (Ref),Sub Bagian (Ref),Created By,Updated By,DiBuat");
         reqGrid.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter")
-        reqGrid.setColSorting("str,str,str,str,str,str,str,str,str");
+        reqGrid.setColSorting("int,str,str,str,str,str,str,str,str");
         reqGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
         reqGrid.setColAlign("center,left,left,left,left,left,left,left,left");
         reqGrid.setInitWidthsP("5,20,20,20,20,15,15,15,25");

@@ -368,8 +368,6 @@ class OvertimeController extends Erp_Controller
                 $status_updater = $overtime->status . ' By ' . $overtime->status_updater;
             } else if ($overtime->change_time == 1) {
                 $status_updater = 'Revisi Jam Lembur By ' . $overtime->status_updater;
-            } else if ($overtime->status_by != '') {
-                $status_updater = $overtime->status . ' By ' . $overtime->status_updater;
             }
 
             $spvColor = $color;
@@ -406,6 +404,7 @@ class OvertimeController extends Erp_Controller
             $xml .= "<cell $color>" . cleanSC($overtime->notes) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->status) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($status_updater) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->supervisor ? $overtime->apv_spv.' By '.$overtime->supervisor : '-') . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->emp1) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->emp2) . "</cell>";
             $xml .= "<cell $color>" . cleanSC(toIndoDateTime($overtime->created_at)) . "</cell>";
@@ -664,7 +663,7 @@ class OvertimeController extends Erp_Controller
             $overtime = $this->Hr->getDataById('employee_overtimes_detail', $data->id);
             if ($overtime->status === 'CREATED' || $overtime->status === 'PROCESS' || $overtime->status === 'REJECTED') {
                 $mSuccess .= "- $data->field berhasil dibatalkan <br>";
-                $this->Hr->updateById('employee_overtimes_detail', ['status' => 'CANCELED'], $data->id);
+                $this->Hr->updateById('employee_overtimes_detail', ['status' => 'CANCELED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], $data->id);
             } else {
                 $mError .= "- $data->field sudah diapproved! <br>";
             }
@@ -701,12 +700,12 @@ class OvertimeController extends Erp_Controller
                 $empTaskIds[$empOvt->division_id]['task'][] = $empOvt->emp_task_id;
                 $empTaskIds[$empOvt->division_id]['email'] = $email;
             } else {
-                $data = [
+                $detailData = [
                     'apv_spv' => 'BY PASS',
                     'apv_spv_nip' => '-',
                     'apv_spv_date' => date('Y-m-d H:i:s'),
                 ];
-                $this->Hr->updateById('employee_overtimes_detail', $data, $empOvt->id);
+                $this->Hr->updateById('employee_overtimes_detail', $detailData, $empOvt->id);
             }
         }
 
@@ -1259,6 +1258,8 @@ class OvertimeController extends Erp_Controller
             'meal' => $overtimeHour['total_meal'] * $catPrice,
             'total_meal' => $overtimeHour['total_meal'],
             'status_by' => empNip(),
+            'updated_by' => empId(),
+            'updated_at' => date('Y-m-d H:i:s'),
             'change_time' => 1,
             'overtime_date' => date('Y-m-d', strtotime($startDate))
         ], $post['id']);
@@ -1269,7 +1270,7 @@ class OvertimeController extends Erp_Controller
     public function updateOvertimeDetailNotes()
     {
         $post = getPost();
-        $this->Hr->updateById('employee_overtimes_detail', ['notes' => $post['notes']], $post['id']);
+        $this->Hr->updateById('employee_overtimes_detail', ['notes' => $post['notes'], 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], $post['id']);
         xmlResponse('updated', "Berhasil update tugas lembur $post[empTask]");
     }
 
@@ -2183,7 +2184,9 @@ class OvertimeController extends Erp_Controller
                     'status_before' => $ovt->status_before,
                 ];
             }
-            $this->Hr->createMultiple('overtime_revision_requests_personil_history', $dataHistory);
+            if(count($dataHistory) > 0) {
+                $this->Hr->createMultiple('overtime_revision_requests_personil_history', $dataHistory);
+            }
             $this->Hr->update('employee_overtimes', ['on_revision' => 0], ['task_id' => $revision->task_id]);
             $this->Hr->update('employee_overtimes_detail', ['revision_status' => 'NONE'], ['task_id' => $revision->task_id]);
             response(['status' => 'success', 'message' => 'Berhasil membatalkan pengajuan revisi lembur']);
@@ -2305,7 +2308,9 @@ class OvertimeController extends Erp_Controller
                             'status_before' => $ovt->status_before,
                         ];
                     }
-                    $this->Hr->update('employee_overtimes', ['on_revision' => 0], ['task_id' => $revision->task_id]);
+                    if(count($dataHistory) > 0) {
+                        $this->Hr->update('employee_overtimes', ['on_revision' => 0], ['task_id' => $revision->task_id]);
+                    }
                     $this->Hr->update('overtime_revision_requests_personil', ['status' => 'REJECTED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['rev_task_id' => $data->id]);
                     $this->Hr->createMultiple('overtime_revision_requests_personil_history', $dataHistory);
                     $requestor = $this->Hr->getDataById('employees', $revision->created_by);
@@ -2357,6 +2362,8 @@ class OvertimeController extends Erp_Controller
             'meal' => $overtimeHour['total_meal'] * $catPrice,
             'total_meal' => $overtimeHour['total_meal'],
             'status_by' => empNip(),
+            'updated_by' => empId(),
+            'updated_at' => date('Y-m-d H:i:s'),
             'change_time' => 1,
             'overtime_date' => date('Y-m-d', strtotime($startDate))
         ], ['emp_task_id' => $post['task_id']]);
@@ -2407,7 +2414,9 @@ class OvertimeController extends Erp_Controller
                 'status_before' => $ovt->status_before,
             ];
         }
-        $this->Hr->createMultiple('overtime_revision_requests_personil_history', $dataHistory);
+        if(count($dataHistory) > 0) {
+            $this->Hr->createMultiple('overtime_revision_requests_personil_history', $dataHistory);
+        }
         $this->Hr->update('overtime_revision_requests_personil', ['status' => 'CLOSED', 'updated_by' => empId(), 'updated_at' => date('Y-m-d H:i:s')], ['rev_task_id' => $post->taskId]);
         $requestor = $this->Hr->getDataById('employees', $revision->created_by);
         $this->sendRevisionPersonilEmail($revision, 'OVERTIME_PERSONIL_REVISION_CLOSED', $requestor);
@@ -2556,8 +2565,6 @@ class OvertimeController extends Erp_Controller
             $status_updater = '-';
             if ($overtime->change_time == 1) {
                 $status_updater = 'Revisi Jam Lembur By ' . $overtime->status_updater;
-            } else if ($overtime->status_by != '') {
-                $status_updater = $overtime->status . ' By ' . $overtime->status_updater;
             }
 
             if($overtime->revision_status == "CANCELED") {
@@ -2641,8 +2648,6 @@ class OvertimeController extends Erp_Controller
             $status_updater = '-';
             if ($overtime->change_time == 1) {
                 $status_updater = 'Revisi Jam Lembur By ' . $overtime->status_updater;
-            } else if ($overtime->status_by != '') {
-                $status_updater = $overtime->status . ' By ' . $overtime->status_updater;
             }
 
             if($overtime->his_rev_status == "CANCELED") {
@@ -2839,11 +2844,15 @@ class OvertimeController extends Erp_Controller
                         'id' => $key,
                         'status' => $value['c4'],
                         'status_before' => $value['c3'],
+                        'updated_by' => empId(),
+                        'unit_date' => date('Y-m-d H:i:s')
                     ];
                 } else {
                     $data2[] = [
                         'id' => $key,
                         'status' => $value['c4'],
+                        'updated_by' => empId(),
+                        'unit_date' => date('Y-m-d H:i:s')
                     ];
                 }
             }
@@ -2871,6 +2880,8 @@ class OvertimeController extends Erp_Controller
                 $data[] = [
                     'id' => $key,
                     'status' => $value['c5'],
+                    'updated_by' => empId(),
+                    'unit_date' => date('Y-m-d H:i:s')
                 ];
             }
         }

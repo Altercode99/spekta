@@ -63,7 +63,7 @@ $script = <<< "JS"
         var reportMRoomGrid = reportMRoomTabs.cells("a").attachGrid();
         reportMRoomGrid.setHeader("No,No. Tiket,No. Ref,Topik Meeting,Jenis Meeting,Ruang Meeting,Waktu Mulai,Waktu Selesai,Druasi,Snack,Total Peserta,Konfirmasi Hadir,Konfirmasi Tidak Hadir,Belum Konfirmasi,Snack,Harga Snack,Total,Status,Alasan Penolakan,Created By,Updated By,DiBuat");
         reportMRoomGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
-        reportMRoomGrid.setColSorting("str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
+        reportMRoomGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
         reportMRoomGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,edtxt,rotxt,rotxt,rotxt,ron,ron,rotxt,rotxt,rotxt,rotxt,rotxt");
         reportMRoomGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
         reportMRoomGrid.setInitWidthsP("5,15,15,25,15,15,20,20,10,10,10,10,10,10,15,15,15,15,30,15,15,25");
@@ -124,7 +124,7 @@ $script = <<< "JS"
         var reportMRoomGroupGrid = reportMRoomTabs.cells("b").attachGrid();
         reportMRoomGroupGrid.setHeader("No,Nama Ruang Meeting,Total Reservasi,Total Peserta,Total Jam,Total Biaya Snack");
         reportMRoomGroupGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
-        reportMRoomGroupGrid.setColSorting("str,str,str,str,str,str");
+        reportMRoomGroupGrid.setColSorting("int,str,str,str,str,str");
         reportMRoomGroupGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
         reportMRoomGroupGrid.setColAlign("center,left,left,left,left,left");
         reportMRoomGroupGrid.setInitWidthsP("5,20,20,20,20,20");

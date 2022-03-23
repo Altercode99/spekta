@@ -51,7 +51,7 @@ $script = <<< "JS"
         var trainingGrid = trainingLayout.cells("a").attachGrid();
         trainingGrid.setHeader("No,Nama Training,Created By,Updated By,DiBuat");
         trainingGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#text_filter")
-        trainingGrid.setColSorting("str,str,str,str,str");
+        trainingGrid.setColSorting("int,str,str,str,str");
         trainingGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt");
         trainingGrid.setColAlign("center,left,left,left,left");
         trainingGrid.setInitWidthsP("5,25,22,23,25");

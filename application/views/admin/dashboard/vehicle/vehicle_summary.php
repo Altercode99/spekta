@@ -129,7 +129,7 @@ $script = <<< "JS"
             leftLayout.cells("b").progressOn();
             var vhcDashGrid =  leftLayout.cells("b").attachGrid();
             vhcDashGrid.setHeader("No,Nama Kendaraan Dinas,Total Reservasi,Total Jam,Total Kilometer");
-            vhcDashGrid.setColSorting("str,str,str,str,str");
+            vhcDashGrid.setColSorting("int,str,str,str,str");
             vhcDashGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt");
             vhcDashGrid.setColAlign("center,left,left,left,left");
             vhcDashGrid.setInitWidthsP("5,25,20,25,25");

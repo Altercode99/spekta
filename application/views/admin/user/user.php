@@ -101,7 +101,7 @@ $script = <<< "JS"
 			userGrid = userTabs.cells("data").attachGrid();
 			userGrid.setHeader("No,Nama Karyawan,Department,Jabatan,Username,Privilage,Status,Update Password,Di Buat");
 			userGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
-			userGrid.setColSorting("str,str,str,str,str,str,str,str,str");
+			userGrid.setColSorting("int,str,str,str,str,str,str,str,str");
 			userGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
 			userGrid.setColAlign("center,left,left,left,left,left,left,left,left");
 			userGrid.setInitWidthsP("5,15,15,15,15,15,15,20,20");

@@ -120,7 +120,7 @@ $script = <<< "JS"
 
         var subOvtGrid =  summaryLayout.cells("b").attachGrid();
         subOvtGrid.setHeader("No,Nama Bagian Penyelenggara Lembur,Jam Lembur,Nominal");
-        subOvtGrid.setColSorting("str,str,str,str");
+        subOvtGrid.setColSorting("int,str,str,str");
         subOvtGrid.setColTypes("rotxt,rotxt,rotxt,rotxt");
         subOvtGrid.setColAlign("center,left,left,left");
         subOvtGrid.setInitWidthsP("5,50,20,25");

@@ -8,9 +8,35 @@ $script = <<< "JS"
 
     function productionAccordion() {
         checkTrees();
-        $("#title-menu").html("Production");
+        $("#title-menu").html("Produksi");
         accordionItems.map(id => myTree.removeItem(id));
         accordionItems.push("a");
+
+        if(isHaveAcc("prod_master")) {
+            myTree.addItem("a", "Master", true);
+            var mProductItems = [];
+            var mProductItemsDetail = [];
+
+            //@PRODUCTS
+            if(isHaveTrees("prod_master_products_product")) {
+                mProductItemsDetail.push({id: "prod_master_products_product", text: "Produk", icons: {file: "menu_icon"}});
+            }
+
+            //@TREE
+            if(isHaveTrees('prod_master_products')) {
+                mProductItems.push({id: "prod_master_products", text: "Master Produk", open: 1, icons: {folder_opened: "arrow_down", folder_closed: "arrow_right"}, items: mProductItemsDetail})
+            }
+
+            var mProductTree = myTree.cells("a").attachTreeView({
+                items: mProductItems
+            });
+
+            mProductTree.attachEvent("onClick", function(id) {
+                if(id == "prod_master_products_product") {
+                    masterProductTab();
+                }
+            });
+        }
 
     }
 JS;

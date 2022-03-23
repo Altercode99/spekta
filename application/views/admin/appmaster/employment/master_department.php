@@ -55,7 +55,7 @@ $script = <<< "JS"
         var deptGrid = deptLayout.cells("a").attachGrid();
         deptGrid.setHeader("No,Nama Sub Unit,Created By,Updated By,DiBuat");
         deptGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#text_filter")
-        deptGrid.setColSorting("str,str,str,str,str");
+        deptGrid.setColSorting("int,str,str,str,str");
         deptGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt");
         deptGrid.setColAlign("center,left,left,left,left");
         deptGrid.setInitWidthsP("5,30,20,20,25");

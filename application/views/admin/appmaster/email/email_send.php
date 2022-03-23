@@ -33,7 +33,8 @@ $script = <<< "JS"
         });
 
         $("#email_send").on("change", function() {
-            reqJson(AppMaster2('enableEmail'), "POST", {status: $("#email_send").val()}, (err, res) => {
+            let status = $("#email_send").val();
+            reqJson(AppMaster2('enableEmail'), "POST", {status}, (err, res) => {
                 if(res.status === "success") {
                     sAlert(res.message);
                 } else {
@@ -108,7 +109,7 @@ $script = <<< "JS"
         var emailGrid =  emailLayout.cells("a").attachGrid();
         emailGrid.setHeader("No,Tipe Email,Subjek,Nama Subjek,Penerima,CC Penerima,Dibuat,Status,Dikirim");
         emailGrid.attachHeader("#rspan,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
-        emailGrid.setColSorting("str,str,str,str,str,str,str,str,str");
+        emailGrid.setColSorting("int,str,str,str,str,str,str,str,str");
         emailGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
         emailGrid.setColAlign("center,left,left,left,left,left,left,left,left");
         emailGrid.setInitWidthsP("5,25,35,35,30,20,25,20,25");
@@ -122,6 +123,7 @@ $script = <<< "JS"
         function rEmailGrid() {
             let month = $("#am_email_month").val();
             let year = $("#am_email_year").val();
+            emailLayout.cells("a").progressOn();
             emailGrid.clearAndLoad(AppMaster2("getEmailGrid", {month, year}), emailGridCount);
         }
 

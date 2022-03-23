@@ -64,7 +64,7 @@ $script = <<< "JS"
         var freeGrid = freeLayout.cells("a").attachGrid();
         freeGrid.setHeader("No,Tanggal Libur Nasional,Keterangan,Created By,Updated By,DiBuat");
         freeGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
-        freeGrid.setColSorting("str,str,str,str,str,str");
+        freeGrid.setColSorting("int,str,str,str,str,str");
         freeGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
         freeGrid.setColAlign("center,left,left,left,left,left");
         freeGrid.setInitWidthsP("5,20,25,15,15,25");

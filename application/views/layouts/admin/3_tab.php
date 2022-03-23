@@ -27,6 +27,10 @@ if ($this->auth->isLogin()) {
         require_once APPPATH . 'views/layouts/admin/tabs/GaTabs.php';
     }
 
+    if(array_key_exists(6, $this->auth->appMenu)) {
+        require_once APPPATH . 'views/layouts/admin/tabs/ProductionTabs.php';
+    }
+
     if(array_key_exists(8, $this->auth->appMenu) || array_key_exists(4, $this->auth->appMenu)) {
         require_once APPPATH . 'views/layouts/admin/tabs/TnPTabs.php';
     }

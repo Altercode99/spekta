@@ -410,13 +410,13 @@ $script = <<< "JS"
 
         formOvtDetailGridTnp = processlayoutTnp.cells("b").attachGrid();
         formOvtDetailGridTnp.setImagePath("./public/codebase/imgs/");
-        formOvtDetailGridTnp.setHeader("No,Task ID,Nama Karyawan,Sub Unit,Bagian,,,,Pelayanan Produksi,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Premi,Nominal Overtime,Makan,Tugas,Status Overtime,Status Terakhir,Created By,Updated By,Created At,,");
-        formOvtDetailGridTnp.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
-        formOvtDetailGridTnp.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
-        formOvtDetailGridTnp.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
-        formOvtDetailGridTnp.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        formOvtDetailGridTnp.setInitWidthsP("5,20,20,20,0,20,0,0,25,15,15,15,10,10,10,10,10,10,10,5,25,10,30,15,15,22,0,0");
-        formOvtDetailGridTnp.attachFooter("Total,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#stat_total,#stat_total,#stat_total,#stat_total,,<div id='tnp_total_ovt_input'></div>,,,,,,,,,");
+        formOvtDetailGridTnp.setHeader("No,Task ID,Nama Karyawan,Sub Unit,Bagian,,,,Pelayanan Produksi,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Premi,Nominal Overtime,Makan,Tugas,Status Overtime,Status Terakhir,,Created By,Updated By,Created At,,");
+        formOvtDetailGridTnp.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
+        formOvtDetailGridTnp.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
+        formOvtDetailGridTnp.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
+        formOvtDetailGridTnp.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
+        formOvtDetailGridTnp.setInitWidthsP("5,20,20,20,0,20,0,0,25,15,15,15,10,10,10,10,10,10,10,5,25,10,30,0,15,15,22,0,0");
+        formOvtDetailGridTnp.attachFooter("Total,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#stat_total,#stat_total,#stat_total,#stat_total,,<div id='tnp_total_ovt_input'></div>,,,,,,,,,,");
         formOvtDetailGridTnp.enableMultiselect(true);
         formOvtDetailGridTnp.enableSmartRendering(true);
         formOvtDetailGridTnp.attachEvent("onXLE", function() {
@@ -672,7 +672,7 @@ $script = <<< "JS"
                         addPersonilGrid.setHeader("No,Check,Nama Personil,Sub Unit,Bagian,Sub Bagian");
                         addPersonilGrid.attachHeader("#rspan,#master_checkbox,#text_filter,#select_filter,#select_filter,#select_filter")
                         addPersonilGrid.setColAlign("center,left,left,left,left,left");
-                        addPersonilGrid.setColSorting("str,na,str,str,str,str");
+                        addPersonilGrid.setColSorting("int,na,str,str,str,str");
                         addPersonilGrid.setColTypes("rotxt,ch,rotxt,rotxt,rotxt,rotxt");
                         addPersonilGrid.setInitWidthsP("5,5,20,20,25,25");
                         addPersonilGrid.enableSmartRendering(true);
@@ -1072,13 +1072,13 @@ $script = <<< "JS"
                         detailLayout.cells("b").progressOn();
                         detailGrid = detailLayout.cells("b").attachGrid();
                         detailGrid.setImagePath("./public/codebase/imgs/");
-                        detailGrid.setHeader("No,Task ID,Nama Karyawan,Sub Unit,Bagian,,,,Pelayanan Produksi,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Premi,Nominal Overtime,Makan,Tugas,Status Overtime,Status Terakhir,Created By,Updated By,Created At,,");
-                        detailGrid.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
-                        detailGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
-                        detailGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
-                        detailGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-                        detailGrid.setInitWidthsP("5,20,20,20,20,0,0,0,25,15,15,15,10,10,10,10,10,10,10,5,25,10,30,15,15,22,0,0");
-                        detailGrid.attachFooter("Total,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#stat_total,#stat_total,#stat_total,#stat_total,,<div id='tnp_total_ovt_prod_detail_"+refProdGrid.getSelectedRowId()+"'></div>,,,,,,,,,");
+                        detailGrid.setHeader("No,Task ID,Nama Karyawan,Sub Unit,Bagian,,,,Pelayanan Produksi,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Premi,Nominal Overtime,Makan,Tugas,Status Overtime,Status Terakhir,Spv Approval,Created By,Updated By,Created At,,");
+                        detailGrid.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
+                        detailGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
+                        detailGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
+                        detailGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
+                        detailGrid.setInitWidthsP("5,20,20,20,20,0,0,0,25,15,15,15,10,10,10,10,10,10,10,5,25,10,30,25,15,15,22,0,0");
+                        detailGrid.attachFooter("Total,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#stat_total,#stat_total,#stat_total,#stat_total,,<div id='tnp_total_ovt_prod_detail_"+refProdGrid.getSelectedRowId()+"'></div>,,,,,,,,,,");
                         detailGrid.enableSmartRendering(true);
                         detailGrid.attachEvent("onXLE", function() {
                             detailLayout.cells("b").progressOff();

@@ -59,7 +59,7 @@ $script = <<< "JS"
         var vehicleGrid = vehicleLayout.cells("a").attachGrid();
         vehicleGrid.setHeader("No,Nama Kendaraan,Merk/Brand,Tipe,Kode Warna,Colopicker,Nomor Polisi,Kapasitas Penumpang (Orang),Nomor BPKB,Nomor STNK,Nomor Mesin,Kapasitas Mesin (CC),Kilometer,Tanggal Service,Created By,Updated By,DiBuat");
         vehicleGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#rspan,#rspan,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
-        vehicleGrid.setColSorting("str,str,str,str,str,str,str,str,str,str,str,str,str,date,str,str,str");
+        vehicleGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,date,str,str,str");
         vehicleGrid.setColTypes("rotxt,rotxt,edtxt,edtxt,edtxt,cp,rotxt,edtxt,rotxt,rotxt,rotxt,edtxt,edtxt,dhxCalendar,rotxt,rotxt,rotxt");
         vehicleGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
         vehicleGrid.setInitWidthsP("5,15,15,15,10,10,15,20,15,15,20,15,15,15,15,15,25");

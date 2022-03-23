@@ -62,7 +62,7 @@ $script = <<< "JS"
         var divGrid = divLayout.cells("a").attachGrid();
         divGrid.setHeader("No,Nama Sub Bagian,Bagian,Sub Unit,Created By,Updated By,DiBuat");
         divGrid.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter")
-        divGrid.setColSorting("str,str,str,str,str,str,str");
+        divGrid.setColSorting("int,str,str,str,str,str,str");
         divGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
         divGrid.setColAlign("center,left,left,left,left,left,left");
         divGrid.setInitWidthsP("5,25,25,25,15,15,25");

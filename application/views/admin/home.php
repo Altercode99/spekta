@@ -104,13 +104,13 @@ $script = <<< "JS"
 			});
 		}
 
-		// if(isHaveMenu("Produksi")) {
-		// 	dataView.add({
-		// 		path:"./public/codebase/icons/production.png",
-		// 		title: "Produksi",
-		// 		id:"prod"
-		// 	});
-		// }
+		if(isHaveMenu("Produksi")) {
+			dataView.add({
+				path:"./public/codebase/icons/production.png",
+				title: "Produksi",
+				id:"prod"
+			});
+		}
 
 		// if(isHaveMenu("Penyimpanan")) {
 		// 	dataView.add({

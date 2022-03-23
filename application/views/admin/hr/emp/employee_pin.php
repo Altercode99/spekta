@@ -51,7 +51,7 @@ $script = <<< "JS"
         var pinGrid = pinLayout.cells("a").attachGrid();
         pinGrid.setHeader("No,Nama Karyawan,NIP,PIN,Jabatan,Sub Unit,Bagian,Sub Bagian,Created By,Updated By,DiBuat");
         pinGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter")
-        pinGrid.setColSorting("str,str,str,str,str,str,str,str,str,str,str");
+        pinGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str");
         pinGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
         pinGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left");
         pinGrid.setInitWidthsP("5,20,15,20,20,20,20,20,20,20,25");

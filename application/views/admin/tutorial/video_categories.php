@@ -50,7 +50,7 @@ $script = <<< "JS"
         var catGrid = catLayout.cells("a").attachGrid();
         catGrid.setHeader("No,Kategori,Created By,Updated By,DiBuat");
         catGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#text_filter")
-        catGrid.setColSorting("str,str,str,str,str");
+        catGrid.setColSorting("int,str,str,str,str");
         catGrid.setColTypes("rotxt,rotxt,ron,rotxt,rotxt");
         catGrid.setColAlign("center,left,left,left,left");
         catGrid.setInitWidthsP("5,30,20,20,25");

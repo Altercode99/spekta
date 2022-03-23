@@ -632,7 +632,7 @@ class OtherController extends Erp_Controller
             $xml .= "<cell $color2>" . cleanSC($rev->driver_confirmed) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($rev->start_km) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($rev->end_km) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC($rev->distance) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($rev->distance > 0 ? $rev->distance : 0) . "</cell>";
             $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($rev->start_date)) . "</cell>";
             $xml .= "<cell $color>" . cleanSC(toIndoDateTime2($rev->end_date)) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($rev->duration) . "</cell>";

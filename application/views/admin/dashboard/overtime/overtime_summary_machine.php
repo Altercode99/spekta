@@ -55,7 +55,7 @@ $script = <<< "JS"
 
         subOvtMachineHourGrid =  summaryLayout.cells("b").attachGrid();
         subOvtMachineHourGrid.setHeader("No,Nama Mesin,Bagian,Sub Bagian,Jam Operasional");
-        subOvtMachineHourGrid.setColSorting("str,str,str,str,str");
+        subOvtMachineHourGrid.setColSorting("int,str,str,str,str");
         subOvtMachineHourGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt");
         subOvtMachineHourGrid.setColAlign("center,left,left,left,left");
         subOvtMachineHourGrid.setInitWidthsP("10,30,25,25,10");

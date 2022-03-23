@@ -548,7 +548,7 @@ $script = <<< "JS"
                         addPersonilGrid.setHeader("No,Check,Nama Personil,Sub Unit,Bagian,Divisi");
                         addPersonilGrid.attachHeader("#rspan,#master_checkbox,#text_filter,#select_filter,#select_filter,#select_filter")
                         addPersonilGrid.setColAlign("center,left,left,left,left,left");
-                        addPersonilGrid.setColSorting("str,na,str,str,str,str");
+                        addPersonilGrid.setColSorting("int,na,str,str,str,str");
                         addPersonilGrid.setColTypes("rotxt,ch,rotxt,rotxt,rotxt,rotxt");
                         addPersonilGrid.setInitWidthsP("5,5,20,20,25,25");
                         addPersonilGrid.enableSmartRendering(true);

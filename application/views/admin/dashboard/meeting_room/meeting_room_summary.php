@@ -152,7 +152,7 @@ $script = <<< "JS"
             leftLayout.cells("b").progressOn();
             var roomGrid =  leftLayout.cells("b").attachGrid();
             roomGrid.setHeader("No,Nama Ruang Meeting,Total Reservasi,Total Peserta,Total Jam,Biaya Snack");
-            roomGrid.setColSorting("str,str,str,str,str,str");
+            roomGrid.setColSorting("int,str,str,str,str,str");
             roomGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
             roomGrid.setColAlign("center,left,left,left,left,left");
             roomGrid.setInitWidthsP("5,25,15,15,15,25");

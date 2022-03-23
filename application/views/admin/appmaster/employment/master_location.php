@@ -51,7 +51,7 @@ $script = <<< "JS"
         var locGrid = locLayout.cells("a").attachGrid();
         locGrid.setHeader("No,Kode,Lokasi,Created By,Updated By,DiBuat");
         locGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
-        locGrid.setColSorting("str,str,str,str,str,str");
+        locGrid.setColSorting("int,str,str,str,str,str");
         locGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
         locGrid.setColAlign("center,left,left,left,left,left");
         locGrid.setInitWidthsP("5,20,20,15,15,25");

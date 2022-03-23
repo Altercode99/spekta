@@ -51,7 +51,7 @@ $script = <<< "JS"
         var snackGrid = snackLayout.cells("a").attachGrid();
         snackGrid.setHeader("No,Nama Snack,Harga,Created By,Updated By,DiBuat");
         snackGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
-        snackGrid.setColSorting("str,str,str,str,str,str");
+        snackGrid.setColSorting("int,str,str,str,str,str");
         snackGrid.setColTypes("rotxt,rotxt,ron,rotxt,rotxt,rotxt");
         snackGrid.setColAlign("center,left,left,left,left,left");
         snackGrid.setInitWidthsP("5,20,20,15,15,25");
