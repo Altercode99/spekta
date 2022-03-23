@@ -61,11 +61,11 @@ $script = <<< "JS"
 
         var reportVehicleGrid = reportVehicleTabs.cells("a").attachGrid();
         reportVehicleGrid.setHeader("No,No. Tiket,Tujuan,Jenis Perjalanan,Kendaraan,Driver,Konfirmasi Driver,Kilometer Awal,Kilometer Akhir,Jarak Tempuh,Waktu Mulai,Waktu Selesai,Druasi,Jumlah Penumpang,Status,Alasan Penolakan,Created By,Updated By,DiBuat");
-        reportVehicleGrid.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter")
+        reportVehicleGrid.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#select_filter,#select_filter,#text_filter")
         reportVehicleGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
         reportVehicleGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,ron,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
         reportVehicleGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
-        reportVehicleGrid.setInitWidthsP("5,15,25,20,15,15,15,15,15,15,20,20,10,10,15,30,15,15,25");
+        reportVehicleGrid.setInitWidthsP("5,15,25,15,15,15,15,15,15,15,17,17,10,10,10,25,15,15,22");
         reportVehicleGrid.attachFooter(",Total,,,,,,,,<span id='ga_vehice_total_km'>0</span> KM,,,<span id='ga_vehice_total_hour'>0</span> Jam,,,,,,");
         reportVehicleGrid.attachFooter(",Total Jam Reservasi,<span id='ga_vehice_total_hour_grand'>0</span> Jam,");
         reportVehicleGrid.attachFooter(",Total Jarak Tempuh,<span id='ga_vehice_total_km_grand'>0</span> KM,");

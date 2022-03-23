@@ -125,8 +125,8 @@ function toIndoDateTime2($date)
         return '-';
     }
 
-    $time = $datetime[1];
-    return $date . " " . $time;
+    $time = explode(':', $datetime[1]);
+    return "$date $time[0]:$time[1]";
 }
 
 function toIndoDateTime3($date)
@@ -844,7 +844,11 @@ function countTotalHourWeekend($hour, $minute)
             $hour -= 7;
             $nextHour = $hour * 3;
             if ($minute > 0) {
-                $newHourMinute = $minute * 3;
+                if($hour > 0) {
+                    $newHourMinute = $minute * 4;
+                } else {
+                    $newHourMinute = $minute * 3;
+                }
                 return number_format(floatval($fistHour + $nextHour + $newHourMinute), 2);
             } else {
                 return number_format(floatval($fistHour + $nextHour), 2);

@@ -232,7 +232,7 @@ $script = <<< "JS"
                         {type: "block", offsetLeft: 30, offsetTop: 10, list: [
                             {type: "button", name: "update", className: "button_update", offsetLeft: 15, value: "Update"},
                             {type: "newcolumn"},
-                            {type: "button", name: "cancel", className: "button_no", offsetLeft: 30, value: "Clear"}
+                            {type: "button", name: "cancel", className: "button_no", offsetLeft: 30, value: "Cancel"}
                         ]},
                     ]);
 
@@ -623,13 +623,13 @@ $script = <<< "JS"
                         {type: "block", offsetLeft: 30, offsetTop: 10, list: [
                             {type: "button", name: "update", className: "button_update", offsetLeft: 15, value: "Update"},
                             {type: "newcolumn"},
-                            {type: "button", name: "cancel", className: "button_no", offsetLeft: 30, value: "Clear"}
+                            {type: "button", name: "cancel", className: "button_no", offsetLeft: 30, value: "Cancel"}
                         ]},
                     ]);
 
                     let startDetailCombo = hourDetailRevForm.getCombo("start_date");
                     let endDetailCombo = hourDetailRevForm.getCombo("end_date");
-                    let ovtDetailTime = getCurrentTime(ovtDetailGrid, 10, 11);
+                    let ovtDetailTime = getCurrentTime(ovtDetailGrid, 11, 12);
                     let startCurrWinIndex = workTime.filterStart.indexOf(ovtDetailTime.start);
                     let endCurrWinIndex = workTime.filterEnd.indexOf(ovtDetailTime.end);
                     startDetailCombo.selectOption(startCurrWinIndex);
@@ -691,7 +691,6 @@ $script = <<< "JS"
                             case "cancel":
                                 closeWindow("hour_revision_detail");
                                 break;
-
                         }
                     })
                     break;

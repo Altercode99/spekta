@@ -50,11 +50,11 @@ $script = <<< "JS"
 
         var snackGrid = snackLayout.cells("a").attachGrid();
         snackGrid.setHeader("No,Nama Snack,Harga,Created By,Updated By,DiBuat");
-        snackGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
+        snackGrid.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#text_filter")
         snackGrid.setColSorting("int,str,str,str,str,str");
         snackGrid.setColTypes("rotxt,rotxt,ron,rotxt,rotxt,rotxt");
         snackGrid.setColAlign("center,left,left,left,left,left");
-        snackGrid.setInitWidthsP("5,20,20,15,15,25");
+        snackGrid.setInitWidthsP("5,20,10,15,15,22");
         snackGrid.enableSmartRendering(true);
         snackGrid.attachEvent("onXLE", function() {
             snackLayout.cells("a").progressOff();

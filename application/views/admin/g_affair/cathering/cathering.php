@@ -50,11 +50,11 @@ $script = <<< "JS"
 
         var cathGrid = cathLayout.cells("a").attachGrid();
         cathGrid.setHeader("No,Nama Vendor,Harga,Status,Masa Berakhir Kontrak,Created By,Updated By,DiBuat");
-        cathGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
+        cathGrid.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#text_filter,#select_filter,#select_filter,#text_filter")
         cathGrid.setColSorting("int,str,str,str,str,str,str,str");
         cathGrid.setColTypes("rotxt,rotxt,ron,rotxt,rotxt,rotxt,rotxt,rotxt");
         cathGrid.setColAlign("center,left,left,left,left,left,left,left");
-        cathGrid.setInitWidthsP("5,25,15,15,20,15,15,25");
+        cathGrid.setInitWidthsP("5,25,15,10,12,15,15,22");
         cathGrid.enableSmartRendering(true);
         cathGrid.enableMultiselect(true);
         cathGrid.attachEvent("onXLE", function() {

@@ -83,11 +83,11 @@ $script = <<< "JS"
         var sumOvtProGrid = sumOvtProTabs.cells("a").attachGrid();
         sumOvtProGrid.setImagePath("./public/codebase/imgs/");
         sumOvtProGrid.setHeader("No,Task ID,No. Memo Lembur,Nama Karyawan,Bagian,Sub Bagian,Bagian Penyelenggara,Sub Bagian Penyelenggara,Nama Mesin #1,Nama Mesin #2,Pelayanan,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Premi,Nominal Overtime,Makan,Biaya Makan,Status Overtime,Created At");
-        sumOvtProGrid.attachHeader("#rspan,#select_filter,#select_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#rspan,#text_filter")
+        sumOvtProGrid.attachHeader("#rspan,#text_filter,#select_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#select_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#select_filter,#text_filter")
         sumOvtProGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
         sumOvtProGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
         sumOvtProGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        sumOvtProGrid.setInitWidthsP("5,20,20,20,0,0,20,20,15,15,15,15,15,15,10,10,10,10,10,10,15,5,15,10,25");
+        sumOvtProGrid.setInitWidthsP("5,20,20,20,0,0,20,20,20,20,20,15,15,15,10,10,10,10,10,10,13,5,10,10,22");
         sumOvtProGrid.attachFooter(",Total Summary,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#stat_total,#stat_total,#stat_total,#stat_total,,<div id='"+total_sum_overtime+"'>0</div>,,<div id='"+total_meal_sum_overtime+"'>0</div>,,");
         sumOvtProGrid.attachFooter(",Total Biaya Lembur,<div id='"+grand_sum_overtime+"'>0</div>");
         sumOvtProGrid.attachFooter(",Total Biaya Makan,<div id='"+grand_meal_sum_overtime+"'>0</div>");
@@ -178,7 +178,7 @@ $script = <<< "JS"
         sumOvtProEmpGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str");
         sumOvtProEmpGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left");
         sumOvtProEmpGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        sumOvtProEmpGrid.setInitWidthsP("5,20,20,20,20,10,10,10,10,15,15");
+        sumOvtProEmpGrid.setInitWidthsP("5,20,20,20,20,10,10,10,10,13,13");
         sumOvtProEmpGrid.attachFooter(",Total Summary,#cspan,#cspan,#cspan,#stat_total,#stat_total,#stat_total,#stat_total,<div id='"+total_sum_overtime_provider_emp+"'>0</div>,<div id='"+total_meal_sum_overtime_provider_emp+"'>0</div>");
         sumOvtProEmpGrid.attachFooter(",Total Biaya Lembur,<div id='"+grand_sum_overtime_provider_emp+"'>0</div>");
         sumOvtProEmpGrid.attachFooter(",Total Biaya Makan,<div id='"+grand_meal_sum_overtime_provider_emp+"'>0</div>");

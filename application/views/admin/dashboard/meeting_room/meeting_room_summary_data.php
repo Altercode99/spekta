@@ -49,12 +49,12 @@ $script = <<< "JS"
 
         var reportGrid = reportTabs.cells("a").attachGrid();
         reportGrid.setHeader("No,No. Tiket,No. Ref,Topik Meeting,Jenis Meeting,Ruang Meeting,Waktu Mulai,Waktu Selesai,Druasi,Snack,Total Peserta,Konfirmasi Hadir,Konfirmasi Tidak Hadir,Belum Konfirmasi,Snack,Harga Snack,Total,Status,Alasan Penolakan,Created By,Updated By,DiBuat");
-        reportGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
+        reportGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#select_filter,#select_filter,#text_filter")
         reportGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
         reportGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,edtxt,rotxt,rotxt,rotxt,ron,ron,rotxt,rotxt,rotxt,rotxt,rotxt");
         reportGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
-        reportGrid.setInitWidthsP("5,15,15,25,15,15,20,20,10,10,10,10,10,10,15,15,15,15,30,15,15,25");
-        reportGrid.attachFooter(",Total,,,,,,<span id='"+ga_rm_report_total_hour+"'>0</span> Jam,,,<span id='"+ga_rm_report_total_person+"'>0</span> Orang,,,,,<div id='"+ga_rm_report_total_snack+"'>0</div>,,,,,,");
+        reportGrid.setInitWidthsP("5,15,15,25,15,15,15,15,10,10,10,10,10,10,15,10,10,10,25,15,15,22");
+        reportGrid.attachFooter(",Total,,,,,,,<span id='"+ga_rm_report_total_hour+"'>0</span> Jam,,,<span id='"+ga_rm_report_total_person+"'>0</span> Orang,,,,,<div id='"+ga_rm_report_total_snack+"'>0</div>,,,,,");
         reportGrid.attachFooter(",Total Peserta,<span id='"+ga_rm_report_total_person_grand+"'>0</span> Orang");
         reportGrid.attachFooter(",Total Jam Reservasi,<span id='"+ga_rm_report_total_hour_grand+"'>0</span> Jam");
         reportGrid.attachFooter(",Total Biaya Snack,<div id='"+ga_rm_report_total_snack_grand+"'>0</div>");

@@ -46,8 +46,8 @@ $script = <<< "JS"
             {type: "fieldset", offsetTop: 30, offsetLeft: 30, label: "Form Revisi Lembur", list: [
                 {type: "editor", name: "description", label: "Keterangan", labelWidth: 130, inputWidth:900, inputHeight:200, required: true},
                 {type: "input", name: "task_ids", label: "Task ID Lembur", labelWidth: 130, inputWidth:350, required: true, rows: 3, readonly: true},
-                {type: "combo", name: "department_id", label: "Sub Unit", labelWidth: 130, inputWidth:350, required: true},
-                {type: "combo", name: "sub_department_id", label: "Bagian", labelWidth: 130, inputWidth:350, required: true},
+                {type: "combo", name: "department_id", label: "Sub Unit", labelWidth: 130, inputWidth:350, required: true, readonly: true},
+                {type: "combo", name: "sub_department_id", label: "Bagian", labelWidth: 130, inputWidth:350, required: true, readonly: true},
                 {type: "hidden", name: "filename", label: "Filename", readonly: true},
                 {type: "upload", name: "file_uploader", inputWidth: 420,
                     url: AppMaster("fileUpload", {save: false, folder: "overtimes_revision_requests"}), 
@@ -73,6 +73,7 @@ $script = <<< "JS"
         revForm.attachEvent("onFocus", function(name, value) {
             if(name === "task_ids") {
                 ovtListWin(false);
+                revForm.setItemFocus("description");
             }
         });
 
@@ -204,11 +205,11 @@ $script = <<< "JS"
         revSubLayout.cells("a").progressOn();
         revSubGrid.setImagePath("./public/codebase/imgs/");
         revSubGrid.setHeader("No,Task ID,Sub Unit,Bagian,Sub Bagian,Kebutuhan Orang,Status Hari,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Catatan,Created By,Updated By,DiBuat");
-        revSubGrid.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
+        revSubGrid.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#text_filter")
         revSubGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str");
         revSubGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
         revSubGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left");
-        revSubGrid.setInitWidthsP("5,20,20,20,20,10,10,20,20,20,20,20,20,25");
+        revSubGrid.setInitWidthsP("5,20,20,20,20,10,10,15,17,17,25,20,20,22");
         revSubGrid.enableSmartRendering(true);
         revSubGrid.attachEvent("onXLE", function() {
             revSubLayout.cells("a").progressOff();
@@ -246,11 +247,11 @@ $script = <<< "JS"
         var revSubDetailGrid = revSubLayout.cells("c").attachGrid();
         revSubDetailGrid.setImagePath("./public/codebase/imgs/");
         revSubDetailGrid.setHeader("No,Status,,,Task ID,Nama Karyawan,Sub Unit,Bagian,Sub Bagian,Nama Mesin #1,Nama Mesin #2,Pelayanan Produksi,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Premi,Nominal Overtime,Makan,Tugas,Status Overtime,Status Terakhir,Created By,Updated By,Di Buat,");
-        revSubDetailGrid.attachHeader("#rspan,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
+        revSubDetailGrid.attachHeader("#rspan,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#select_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#select_filter,#text_filter,#select_filter,#select_filter,#text_filter,#text_filter")
         revSubDetailGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
         revSubDetailGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
         revSubDetailGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        revSubDetailGrid.setInitWidthsP("5,10,0,0,20,20,20,20,25,25,25,25,15,15,15,10,10,10,10,10,10,10,5,25,10,30,15,30,22,0");
+        revSubDetailGrid.setInitWidthsP("5,10,0,0,20,20,20,20,20,20,20,20,15,17,17,10,10,10,10,10,10,10,5,25,10,25,15,15,22,0");
         revSubDetailGrid.enableSmartRendering(true);
         revSubDetailGrid.attachEvent("onXLE", function() {
             revSubLayout.cells("c").progressOff();
@@ -417,6 +418,7 @@ $script = <<< "JS"
                     personilForm.attachEvent("onFocus", function(name, value) {
                         if(name === 'personil_name') {
                             loadPersonil();
+                            personilForm.setItemFocus("overtime_id");
                         }
                     });
 
@@ -785,11 +787,11 @@ $script = <<< "JS"
         revSubListLayout.cells("a").progressOn();
         revSubListbGrid.setImagePath("./public/codebase/imgs/");
         revSubListbGrid.setHeader("No,Ref Task,Task ID,Sub Unit,Bagian,Sub Bagian,Kebutuhan Orang,Status Hari,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Catatan,Created By,Updated By,DiBuat,STATUS");
-        revSubListbGrid.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
+        revSubListbGrid.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#text_filter")
         revSubListbGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
         revSubListbGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
         revSubListbGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
-        revSubListbGrid.setInitWidthsP("5,20,20,20,20,20,10,10,20,20,20,20,20,20,25,0");
+        revSubListbGrid.setInitWidthsP("5,20,20,20,20,20,10,10,15,17,17,25,15,15,22,0");
         revSubListbGrid.enableSmartRendering(true);
         revSubListbGrid.attachEvent("onXLE", function() {
             revSubListLayout.cells("a").progressOff();
@@ -842,11 +844,11 @@ $script = <<< "JS"
         var revSubListDetailGrid = revSubListLayout.cells("c").attachGrid();
         revSubListDetailGrid.setImagePath("./public/codebase/imgs/");
         revSubListDetailGrid.setHeader("No,Status,,,Task ID,Nama Karyawan,Sub Unit,Bagian,Sub Bagian,Nama Mesin #1,Nama Mesin #2,Pelayanan Produksi,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Premi,Nominal Overtime,Makan,Tugas,Status Overtime,Status Terakhir,Created By,Updated By,Di Buat");
-        revSubListDetailGrid.attachHeader("#rspan,#select_filter,#select_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
+        revSubListDetailGrid.attachHeader("#rspan,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#select_filter,#text_filter,#select_filter,#select_filter,#text_filter")
         revSubListDetailGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
         revSubListDetailGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
         revSubListDetailGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        revSubListDetailGrid.setInitWidthsP("5,10,0,0,20,20,20,20,25,25,25,25,15,15,15,10,10,10,10,10,10,10,5,25,10,30,15,30,22");
+        revSubListDetailGrid.setInitWidthsP("5,10,0,0,20,20,20,20,20,20,20,20,15,17,17,10,10,10,10,10,10,10,5,25,10,25,15,15,22");
         revSubListDetailGrid.enableSmartRendering(true);
         revSubListDetailGrid.attachEvent("onXLE", function() {
             revSubListLayout.cells("c").progressOff();
@@ -1017,11 +1019,11 @@ $script = <<< "JS"
         var revListGrid = revListLayout.cells("a").attachGrid();
         revListGrid.setImagePath("./public/codebase/imgs/");
         revListGrid.setHeader("No,Task ID,Deskripsi,Bagian,Sub Bagian,Status,Created By,Updated By,DiBuat");
-        revListGrid.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter")
+        revListGrid.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter")
         revListGrid.setColSorting("int,str,str,str,str,str,str,str,str");
         revListGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
         revListGrid.setColAlign("center,left,left,left,left,left,left,left,left");
-        revListGrid.setInitWidthsP("5,20,35,20,20,20,20,20,25");
+        revListGrid.setInitWidthsP("5,20,30,20,20,10,20,20,22");
         revListGrid.enableSmartRendering(true);
         revListGrid.attachEvent("onXLE", function() {
             revListLayout.cells("a").progressOff();
@@ -1069,11 +1071,11 @@ $script = <<< "JS"
         var revListDetailGrid = revListLayout.cells("c").attachGrid();
         revListDetailGrid.setImagePath("./public/codebase/imgs/");
         revListDetailGrid.setHeader("No,Task ID,Nama Karyawan,Bagian,Sub Bagian,Nama Mesin #1,Nama Mesin #2,Pelayanan Produksi,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Premi,Nominal Overtime,Makan,Biaya Makan,Tugas,Status Overtime,DiBuat");
-        revListDetailGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
-        revListDetailGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
-        revListDetailGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        revListDetailGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
-        revListDetailGrid.setInitWidthsP("5,20,20,20,20,20,20,20,20,20,20,15,15,15,15,15,15,15,15,15,30,25");
+        revListDetailGrid.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#select_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#select_filter,#text_filter")
+        revListDetailGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
+        revListDetailGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
+        revListDetailGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
+        revListDetailGrid.setInitWidthsP("5,20,20,20,20,20,20,20,15,17,17,10,10,10,10,10,10,15,5,10,25,10,22");
         revListDetailGrid.enableSmartRendering(true);
         revListDetailGrid.enableMultiselect(true);
         revListDetailGrid.attachEvent("onXLE", function() {
@@ -1332,21 +1334,22 @@ $script = <<< "JS"
                 }
             }
 
-            ovtWin.progressOn();
             var ovtGrid = ovtWin.attachGrid();
             ovtGrid.setImagePath("./public/codebase/imgs/");
             ovtGrid.setHeader("No,Check,Task ID,Nama Karyawan,Bagian,Sub Bagian,Nama Mesin #1,Nama Mesin #2,Pelayanan Produksi,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Premi,Nominal Overtime,Makan,Biaya Makan,Tugas,Status Overtime,DiBuat");
-            ovtGrid.attachHeader("#rspan,#master_checkbox,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
+            ovtGrid.attachHeader("#rspan,#master_checkbox,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#select_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#select_filter")
             ovtGrid.setColSorting("int,na,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
             ovtGrid.setColTypes("rotxt,ch,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
             ovtGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
-            ovtGrid.setInitWidthsP("5,5,20,20,20,20,20,20,20,20,20,20,15,15,15,15,15,15,15,15,15,30,25");
+            ovtGrid.setInitWidthsP("5,5,20,20,20,20,20,20,20,15,17,17,10,15,15,15,15,15,15,5,10,25,10");
             ovtGrid.enableSmartRendering(true);
             ovtGrid.setEditable(true);
             ovtGrid.attachEvent("onXLE", function() {
                 ovtWin.progressOff();
             });
             ovtGrid.init();
+
+            ovtWin.progressOn();
             let date = new Date();
             ovtGrid.clearAndLoad(Overtime("getWindowOvertimeGrid", {
                 equal_status: "CLOSED", 
