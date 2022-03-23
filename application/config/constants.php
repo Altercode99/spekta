@@ -91,6 +91,7 @@ define('HR_DB', 'kf_hr');
 define('QHSE_DB', 'kf_qhse');
 define('GENERAL_DB', 'kf_general');
 define('MTN_DB', 'kf_maintenance');
+define('PROD_DB', 'kf_production');
 define('CHAT_DB', 'kf_chat');
 
 define('DB_USERNAME', 'arman');
@@ -102,6 +103,7 @@ define('HR_DB_DEV', 'kf_hr');
 define('QHSE_DB_DEV', 'kf_qhse');
 define('GENERAL_DB_DEV', 'kf_general');
 define('MTN_DB_DEV', 'kf_maintenance');
+define('PROD_DB_DEV', 'kf_production');
 define('CHAT_DB_DEV', 'kf_chat');
 
 define('DB_USERNAME_DEV', 'arman');

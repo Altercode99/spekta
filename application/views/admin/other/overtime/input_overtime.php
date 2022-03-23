@@ -15,7 +15,6 @@ $script = <<< "JS"
         var formOvtGrid;
         //@Modal Variabel
         var countMachine;
-        var countPerson;
 
         var comboUrl = {
             department_id: {
@@ -682,22 +681,18 @@ $script = <<< "JS"
                                     personils = [];
                                     personilNames = [];
                                     setTimeout(() => {
-                                        let total = 0;
                                         for (let i = 0; i < addPersonilGrid.getRowsNum(); i++) {
                                             let id = addPersonilGrid.getRowId(i);
                                             if(addPersonilGrid.cells(id, 1).getValue() == 1) {
                                                 personils.push(id);
                                                 personilNames.push(addPersonilGrid.cells(id, 2).getValue());
                                             }
-                                            total++;
                                         }
-                                        if(countPerson != total) {
-                                            eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
-                                        } else {
-                                            personilForm.setItemValue('personil_id', personils);
-                                            personilForm.setItemValue('personil_name', personilNames);
-                                            closeWindow("add_personil_win");
-                                        }
+
+                                        personilForm.setItemValue('personil_id', personils);
+                                        personilForm.setItemValue('personil_name', personilNames);
+                                        closeWindow("add_personil_win");
+                                        
                                     }, 200)
                                     break;
                             }
@@ -721,7 +716,6 @@ $script = <<< "JS"
 
                         function disabledBookedPersonil() {
                             bookedPersonil.map(empId => addPersonilGrid.setRowColor(empId, "#f7ed74"));
-                            countPerson = addPersonilGrid.getRowsNum();
                         }
                     }
                     break;

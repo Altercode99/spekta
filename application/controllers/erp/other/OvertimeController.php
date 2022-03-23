@@ -384,6 +384,9 @@ class OvertimeController extends Erp_Controller
             $xml .= "<cell $spvColor>" . cleanSC($no) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->emp_task_id) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->employee_name) . "</cell>";
+            if(isset($params['apv'])) {
+                $xml .= "<cell $color>" . cleanSC($overtime->notes) . "</cell>";
+            }
             $xml .= "<cell $color>" . cleanSC($overtime->department) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->sub_department) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->division) . "</cell>";
@@ -401,7 +404,9 @@ class OvertimeController extends Erp_Controller
             $xml .= "<cell $color>" . cleanSC(toNumber($overtime->premi_overtime)) . "</cell>";
             $xml .= "<cell $color>" . cleanSC(toNumber($overtime->overtime_value)) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($meal) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC($overtime->notes) . "</cell>";
+            if(!isset($params['apv'])) {
+                $xml .= "<cell $color>" . cleanSC($overtime->notes) . "</cell>";
+            }
             $xml .= "<cell $color>" . cleanSC($overtime->status) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($status_updater) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->supervisor ? $overtime->apv_spv.' By '.$overtime->supervisor : '-') . "</cell>";

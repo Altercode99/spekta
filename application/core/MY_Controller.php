@@ -24,6 +24,8 @@ class Erp_Controller extends MY_Controller
         $this->General->myConstruct('general');
         $this->load->model('BasicModel', 'Mtn');
         $this->Mtn->myConstruct('mtn');
+        $this->load->model('BasicModel', 'Prod');
+        $this->Prod->myConstruct('prod');
         $this->load->model('BasicModel', 'Chat');
         $this->Chat->myConstruct('chat');
 

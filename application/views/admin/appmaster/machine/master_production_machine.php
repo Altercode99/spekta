@@ -116,7 +116,6 @@ $script = <<< "JS"
             }
         });
 
-
         machineToolbar.attachEvent("onEnter", function(id) {
             switch (id) {
                 case "search":

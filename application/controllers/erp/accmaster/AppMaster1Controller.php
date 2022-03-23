@@ -1262,6 +1262,43 @@ class AppMaster1Controller extends Erp_Controller
         }
     }
 
+    public function checkBeforeAddFile4()
+    {
+        $post = fileGetContent();
+        $id = $post->id;
+        $isExist = false;
+        if (!$id) {
+            $checkProduct = $this->Prod->getOne('products', [
+                'name' => $post->name,
+                'code' => $post->code,
+            ]);
+            if ($checkProduct) {
+                $isExist = true;
+            }
+        } else {
+            $product = $this->Prod->getDataById('products', $id);
+            if ($product) {
+                if ($product->name != $post->name) {
+                    $checkProduct = $this->Prod->getOne('products', [
+                        'name' => $post->name,
+                        'code' => $post->code,
+                    ]);
+                    if ($checkProduct) {
+                        $isExist = true;
+                    }
+                }
+            } else {
+                response(['status' => 'deleted']);
+            }
+        }
+
+        if (!$isExist) {
+            response(['status' => 'success']);
+        } else {
+            response(['status' => 'exist', 'message' => 'Data produk sudah digunakan!']);
+        }
+    }
+
     public function prodMachineForm()
     {
         $params = getParam();

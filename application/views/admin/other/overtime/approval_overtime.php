@@ -312,11 +312,11 @@ $script = <<< "JS"
         var ovtGrid = appvTabs.cells("a").attachGrid();
         ovtGrid.setImagePath("./public/codebase/imgs/");
         ovtGrid.setHeader("No,Task ID,Sub Unit,Bagian,,Kebutuhan Orang,Status Hari,Tanggal Overtime,Waktu Mulai, Waktu Selesai,Catatan,Makan,Steam,AHU,Compressor,PW,Jemputan,Dust Collector,WFI,Mekanik,Listrik,H&N,QC,QA,Penandaan,GBK,GBB,Status Overtime,,Approval ASMAN,Approval PPIC,Approval MANAGER,Approval PLANT MANAGER,Revisi Jam Lembur,Rejection User Approval,Created By,Updated By,Created At,NIPSPV,NIPASMAN,NIPPPIC,NIPMGR");
-        ovtGrid.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
+        ovtGrid.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
         ovtGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
         ovtGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
         ovtGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        ovtGrid.setInitWidthsP("5,20,20,20,0,15,15,15,20,20,20,7,7,7,7,7,7,10,7,7,7,7,7,7,7,7,7,10,0,35,35,35,35,30,30,15,15,25,0,0,0,0");
+        ovtGrid.setInitWidthsP("5,20,20,20,0,10,10,15,15,15,25,7,7,7,7,7,7,10,7,7,7,7,7,7,7,7,7,10,0,30,30,30,30,30,30,15,15,22,0,0,0,0");
         ovtGrid.enableSmartRendering(true);
         ovtGrid.attachEvent("onXLE", function() {
             appvTabs.cells("a").progressOff();
@@ -700,13 +700,13 @@ $script = <<< "JS"
 
         var ovtDetailGrid = appvTabs.cells("b").attachGrid();
         ovtDetailGrid.setImagePath("./public/codebase/imgs/");
-        ovtDetailGrid.setHeader("No,Task ID,Nama Karyawan,Sub Unit,Bagian,Sub Bagian,Nama Mesin #1,Nama Mesin #2,Pelayanan Produksi,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Premi,Nominal Overtime,Makan,Tugas,Status Overtime,Status Terakhir,Spv Approval,Created By,Updated By,Created At,Nik Rejector");
-        ovtDetailGrid.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
+        ovtDetailGrid.setHeader("No,Task ID,Nama Karyawan,Tugas,Sub Unit,Bagian,Sub Bagian,Nama Mesin #1,Nama Mesin #2,Pelayanan Produksi,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Premi,Nominal Overtime,Makan,Status Overtime,Status Terakhir,Spv Approval,Created By,Updated By,Created At,");
+        ovtDetailGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#select_filter,#select_filter,#text_filter,#text_filter")
         ovtDetailGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
         ovtDetailGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
         ovtDetailGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        ovtDetailGrid.setInitWidthsP("5,20,20,20,20,20,25,25,25,15,15,15,10,10,10,10,10,10,10,5,25,10,30,25,15,15,22,0");
-        ovtDetailGrid.attachFooter("Total,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#stat_total,#stat_total,#stat_total,#stat_total,,<div id='other_total_ovt_appv'></div>,,,,,,,,,");
+        ovtDetailGrid.setInitWidthsP("5,20,20,25,20,20,20,20,20,20,15,15,15,10,10,10,10,10,10,10,5,10,25,25,15,15,22,0");
+        ovtDetailGrid.attachFooter(legend.approval_overtime_spv+",#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#stat_total,#stat_total,#stat_total,#stat_total,,<div id='other_total_ovt_appv'></div>,,,,,,,,");
         ovtDetailGrid.enableSmartRendering(true);
         ovtDetailGrid.attachEvent("onXLE", function() {
             appvTabs.cells("b").progressOff();
@@ -741,7 +741,7 @@ $script = <<< "JS"
                                 if(userLogged.rankId == 3 || userLogged.rankId == 4 || userLogged.pltRankId == 3 || userLogged.pltRankId == 4){
                                     enableAppvDetailToolbar();
                                 } else if(userLogged.rankId == 5 || userLogged.rankId == 6 || userLogged.pltRankId == 5 || userLogged.pltRankId == 6){
-                                    if(ovtDetailGrid.cells(ovtDetailGrid.getSelectedRowId(), 5).getValue() != userLogged.division) {
+                                    if(ovtDetailGrid.cells(ovtDetailGrid.getSelectedRowId(), 6).getValue() != userLogged.division) {
                                         disableAppvDetailToolbar();
                                     } else {
                                         enableAppvDetailToolbar();
@@ -775,7 +775,7 @@ $script = <<< "JS"
                                 if(userLogged.rankId == 3 || userLogged.rankId == 4 || userLogged.pltRankId == 3 || userLogged.pltRankId == 4){
                                     enableAppvDetailToolbar();
                                 } else if(userLogged.rankId == 5 || userLogged.rankId == 6 || userLogged.pltRankId == 5 || userLogged.pltRankId == 6){
-                                    if(ovtDetailGrid.cells(ovtDetailGrid.getSelectedRowId(), 5).getValue() != userLogged.division) {
+                                    if(ovtDetailGrid.cells(ovtDetailGrid.getSelectedRowId(), 6).getValue() != userLogged.division) {
                                         disableAppvDetailToolbar();
                                     } else {
                                         enableAppvDetailToolbar();
@@ -819,7 +819,7 @@ $script = <<< "JS"
                         if(userLogged.rankId == 3 || userLogged.rankId == 4 || userLogged.pltRankId == 3 || userLogged.pltRankId == 4){
                             enableAppvDetailToolbar();
                         } else if(userLogged.rankId == 5 || userLogged.rankId == 6 || userLogged.pltRankId == 5 || userLogged.pltRankId == 6){
-                            if(ovtDetailGrid.cells(ovtDetailGrid.getSelectedRowId(), 5).getValue() != userLogged.division) {
+                            if(ovtDetailGrid.cells(ovtDetailGrid.getSelectedRowId(), 6).getValue() != userLogged.division) {
                                 disableAppvDetailToolbar();
                             } else {
                                 enableAppvDetailToolbar();
@@ -862,7 +862,7 @@ $script = <<< "JS"
                 appvTabs.cells("b").progressOn();
                 disableAppvDetailToolbar();
                 let taskId = ovtGrid.cells(rId, 1).getValue();
-                ovtDetailGrid.clearAndLoad(Overtime("getOvertimeDetailGrid", {equal_task_id: taskId, notin_status: "CANCELED,ADD", order_by: 'division_id:asc'}), countTotalOvertime);
+                ovtDetailGrid.clearAndLoad(Overtime("getOvertimeDetailGrid", {equal_task_id: taskId, notin_status: "CANCELED,ADD", order_by: 'division_id:asc', apv: true}), countTotalOvertime);
             } else {
                 ovtDetailGrid.clearAll();
                 ovtDetailGrid.callEvent("onGridReconstructed",[]);
@@ -870,11 +870,8 @@ $script = <<< "JS"
             }
         }
 
-        let ovtDetailStatusBar = appvTabs.cells("b").attachStatusBar();
         function countTotalOvertime() {
-            sumGridToElement(ovtDetailGrid, 18, "other_total_ovt_appv");
-            var ovtDetailGridRows = ovtDetailGrid.getRowsNum();
-            ovtDetailStatusBar.setText("Total baris: " + ovtDetailGridRows + " (" + legend.approval_overtime_spv + ")");
+            sumGridToElement(ovtDetailGrid, 19, "other_total_ovt_appv");
         }
     }
 

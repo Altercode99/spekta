@@ -38,6 +38,7 @@ class Auth
     public $kf_qhse;
     public $kf_general;
     public $kf_mtn;
+    public $kf_prod;
     public $kf_chat;
 
     public $appMenu = [];
@@ -130,6 +131,7 @@ class Auth
         $this->kf_qhse = ENVIRONMENT !== 'production' ? QHSE_DB_DEV : QHSE_DB;
         $this->kf_general = ENVIRONMENT !== 'production' ? GENERAL_DB_DEV : GENERAL_DB;
         $this->kf_mtn = ENVIRONMENT !== 'production' ? MTN_DB_DEV : MTN_DB;
+        $this->kf_prod = ENVIRONMENT !== 'production' ? PROD_DB_DEV : PROD_DB;
         $this->kf_chat = ENVIRONMENT !== 'production' ? CHAT_DB_DEV : CHAT_DB;
     }
 }

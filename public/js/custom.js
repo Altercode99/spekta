@@ -409,6 +409,10 @@ function Project(method, params) {
   return erpController("project", "ProjectController", method, params);
 }
 
+function Production(method, params) {
+  return erpController("production", "ProductionController", method, params);
+}
+
 function Public(method, params) {
   return mainController("PublicController", method, params);
 }
