@@ -118,11 +118,11 @@ $script = <<< "JS"
         var reportOvtGrid = reportTabs.cells("a").attachGrid();
         reportOvtGrid.setImagePath("./public/codebase/imgs/");
         reportOvtGrid.setHeader("No,Check,Task ID,No. Memo Lembur,Nama Karyawan,Bagian Personil,Sub Bagian Personil,Bagian Penyelenggara,Sub Bagian Penyelenggara,Nama Mesin #1,Nama Mesin #2,Pelayanan,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Lembur,Premi,Nominal Overtime,Makan,Biaya Makan,Status Overtime,Ulasan Pencapaian Lembur,Created At");
-        reportOvtGrid.attachHeader("#rspan,#master_checkbox,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
+        reportOvtGrid.attachHeader("#rspan,#master_checkbox,#text_filter,#select_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#select_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#select_filter,#text_filter,#text_filter")
         reportOvtGrid.setColSorting("int,na,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
         reportOvtGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
         reportOvtGrid.setColTypes("rotxt,ch,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        reportOvtGrid.setInitWidthsP("5,0,20,20,20,20,20,20,20,15,15,15,15,15,15,10,10,10,10,10,10,15,5,15,10,30,25");
+        reportOvtGrid.setInitWidthsP("5,0,20,20,20,20,20,20,20,20,20,20,15,17,17,10,10,10,10,10,10,15,5,15,10,25,22");
         reportOvtGrid.attachFooter(",,Total Summary,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#stat_total,#stat_total,#stat_total,#stat_total,,<div id='hr_total_ovt_vfd'>0</div>,,<div id='hr_total_meal_ovt_vfd'>0</div>,,,");
         reportOvtGrid.attachFooter(",,Total Biaya Lembur,<div id='hr_grand_total_ovt_vfd'>0</div>");
         reportOvtGrid.attachFooter(",,Total Biaya Makan,<div id='hr_grand_total_meal_ovt_vfd'>0</div>");

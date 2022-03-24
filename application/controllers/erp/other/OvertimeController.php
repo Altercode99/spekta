@@ -1594,6 +1594,7 @@ class OvertimeController extends Erp_Controller
             $xml .= "<cell $color>" . cleanSC($overtime->status) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->overtime_review) . "</cell>";
             $xml .= "<cell $color>" . cleanSC(toIndoDateTime($overtime->created_at)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->payment_status) . "</cell>";
             $xml .= "</row>";
             $no++;
         }
@@ -1782,25 +1783,23 @@ class OvertimeController extends Erp_Controller
 
     public function ovtVerificationBatch()
     {
-        $post = prettyText(getGridPost());
+        $post = fileGetContent();
         $data = [];
-        foreach ($post as $key => $value) {
-            if ($value['c1'] == 1) {
-                $data[] = [
-                    'id' => $key,
-                    'payment_status' => 'VERIFIED',
-                    'payment_status_by' => empNip(),
-                    'updated_by' => empId(),
-                    'updated_at' => date('Y-m-d H:i:s'),
-                ];
-            }
+        foreach ($post->taskIds as $key => $value) {
+            $data[] = [
+                'id' => $value,
+                'payment_status' => 'VERIFIED',
+                'payment_status_by' => empNip(),
+                'updated_by' => empId(),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ];
         }
 
         $update = $this->Hr->updateMultiple('employee_overtimes_detail', $data, 'id');
         if ($update) {
-            xmlResponse('updated', 'Verifikasi lemburan berhasil');
+            response(['status' => 'success', 'message' => 'Berhasil verifikasi lembur']);
         } else {
-            xmlResponse('error', 'Verifikasi lemburan gagal!');
+            response(['status' => 'error', 'message' => 'Gagal verifikasi lembur!']);
         }
     }
 
@@ -2850,14 +2849,14 @@ class OvertimeController extends Erp_Controller
                         'status' => $value['c4'],
                         'status_before' => $value['c3'],
                         'updated_by' => empId(),
-                        'unit_date' => date('Y-m-d H:i:s')
+                        'updated_at' => date('Y-m-d H:i:s')
                     ];
                 } else {
                     $data2[] = [
                         'id' => $key,
                         'status' => $value['c4'],
                         'updated_by' => empId(),
-                        'unit_date' => date('Y-m-d H:i:s')
+                        'updated_at' => date('Y-m-d H:i:s')
                     ];
                 }
             }
@@ -2886,7 +2885,7 @@ class OvertimeController extends Erp_Controller
                     'id' => $key,
                     'status' => $value['c5'],
                     'updated_by' => empId(),
-                    'unit_date' => date('Y-m-d H:i:s')
+                    'updated_at' => date('Y-m-d H:i:s')
                 ];
             }
         }

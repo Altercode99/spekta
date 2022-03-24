@@ -6,6 +6,9 @@ if ((strpos(strtolower($_SERVER['SCRIPT_NAME']), strtolower(basename(__FILE__)))
 
 $script = <<< "JS"
 	function showHrReportOvertime() {	
+        var taskIds = [];
+        var limit  = 25;
+
         var legend = legendGrid();
         var reportTabs =  mainTab.cells("hr_report_overtime").attachTabbar({
             tabs: [
@@ -64,43 +67,39 @@ $script = <<< "JS"
                     sAlert("Export Data Dimulai");
                     break;
                 case "verification":
-                    if(!reportOvtGrid.getChangedRows()) {
-                        return eAlert("Belum ada lemburan yang di checklist!");
-                    }
-
-                    dhtmlx.modalbox({
-                        type: "alert-warning",
-                        title: "Verifikasi Lemburan",
-                        text: "Lemburan yang di verifikasi akan masuk ke daftar lemburan yang siap di bayarkan!",
-                        buttons: ["Ya", "Tidak"],
-                        callback: function (index) {
-                            if (index == 0) {
-                                reportToolbar.disableItem("verification");
-                                reportTabs.cells("a").progressOn();
-                                reportOvtGridDP.sendData();
-                                reportOvtGridDP.attachEvent('onAfterUpdate', function(id, action, tid, tag) {
-                                    let message = tag.getAttribute('message');
-                                    switch (action) {
-                                        case 'updated':
-                                            sAlert(message);
+                    if(taskIds.length > 0) {
+                        dhtmlx.modalbox({
+                            type: "alert-warning",
+                            title: "Verifikasi Lemburan",
+                            text: "Lemburan yang di verifikasi akan masuk ke daftar lemburan yang siap di bayarkan!",
+                            buttons: ["Ya", "Tidak"],
+                            callback: function (index) {
+                                if (index == 0) {
+                                    reportToolbar.disableItem("verification");
+                                    reportTabs.cells("a").progressOn();
+                                    reqJson(Overtime("ovtVerificationBatch"), "POST", {taskIds}, (err, res) => {
+                                        if(res.status === "success") {
+                                            taskIds = [];
+                                            sAlert(res.message);
                                             rReportOvtGrid();
                                             rReportOvtDeptGrid();
                                             rReportOvtSubGrid();
                                             rReportOvtEmpGrid();
                                             reportToolbar.enableItem("verification");
                                             reportTabs.cells("a").progressOff();
-                                            setGridDP();
-                                            break;
-                                        case 'error':
-                                            eAlert(message);
-                                            eportToolbar.setItemEnabled("verification");
+                                        } else {
+                                            eAlert(res.message);
+                                            reportToolbar.enableItem("verification");
                                             reportTabs.cells("a").progressOff();
-                                            break;
-                                    }
-                                });
-                            }
-                        },
-                    });
+                                        }
+                                        document.getElementById('ovt_verified').checked = false;
+                                    });
+                                }
+                            },
+                        });
+                    } else {
+                        eAlert("Belum ada lemburan yang dipilih!");
+                    }
                     break;
             }
         });
@@ -160,17 +159,22 @@ $script = <<< "JS"
             let totalOvertime = sumGridToElement(reportOvtGrid, 21, "hr_total_ovt_report", "hr_grand_total_ovt_report");
             let totalMeal = sumGridToElement(reportOvtGrid, 23, "hr_total_meal_ovt_report", "hr_grand_total_meal_ovt_report");
             $("#hr_grand_total_all_ovt_report").html("Rp. " + numberFormat(totalOvertime+totalMeal));
+            for (let i = 0; i < reportOvtGrid.getRowsNum(); i++) {
+                if(reportOvtGrid.cells2(i, 27).getValue() == 'VERIFIED') {
+                    reportOvtGrid.cells2(i, 1).setDisabled(true);
+                }
+            }
         }
 
         var reportOvtGrid = reportTabs.cells("a").attachGrid();
         reportOvtGrid.setImagePath("./public/codebase/imgs/");
-        reportOvtGrid.setHeader("No,Check,Task ID,No. Memo Lembur,Nama Karyawan,Bagian Personil,Sub Bagian Personil,Bagian Penyelenggara,Sub Bagian Penyelenggara,Nama Mesin #1,Nama Mesin #2,Pelayanan,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Lembur,Premi,Nominal Overtime,Makan,Biaya Makan,Status Overtime,Ulasan Pencapaian Lembur,Created At");
-        reportOvtGrid.attachHeader("#rspan,#master_checkbox,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
-        reportOvtGrid.setColSorting("int,na,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
-        reportOvtGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
-        reportOvtGrid.setColTypes("rotxt,ch,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        reportOvtGrid.setInitWidthsP("5,5,20,20,20,20,20,20,20,15,15,15,15,15,15,10,10,10,10,10,10,15,5,15,10,30,25");
-        reportOvtGrid.attachFooter(",,Total Summary,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#stat_total,#stat_total,#stat_total,#stat_total,,<div id='hr_total_ovt_report'>0</div>,,<div id='hr_total_meal_ovt_report'>0</div>,,,");
+        reportOvtGrid.setHeader("No,Check,Task ID,No. Memo Lembur,Nama Karyawan,Bagian Personil,Sub Bagian Personil,Bagian Penyelenggara,Sub Bagian Penyelenggara,Nama Mesin #1,Nama Mesin #2,Pelayanan,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Lembur,Premi,Nominal Overtime,Makan,Biaya Makan,Status Overtime,Ulasan Pencapaian Lembur,Di Buat,");
+        reportOvtGrid.attachHeader("#rspan,<input type='checkbox' id='ovt_verified' />,#text_filter,#select_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#select_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter")
+        reportOvtGrid.setColSorting("int,na,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
+        reportOvtGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
+        reportOvtGrid.setColTypes("rotxt,ch,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
+        reportOvtGrid.setInitWidthsP("5,5,20,20,20,20,20,20,20,20,20,20,15,17,17,10,10,10,10,10,10,15,5,15,10,25,22,0");
+        reportOvtGrid.attachFooter(",,Total Summary,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#stat_total,#stat_total,#stat_total,#stat_total,,<div id='hr_total_ovt_report'>0</div>,,<div id='hr_total_meal_ovt_report'>0</div>,,,,");
         reportOvtGrid.attachFooter(",,Total Biaya Lembur,<div id='hr_grand_total_ovt_report'>0</div>");
         reportOvtGrid.attachFooter(",,Total Biaya Makan,<div id='hr_grand_total_meal_ovt_report'>0</div>");
         reportOvtGrid.attachFooter(",,Grand Total,<div id='hr_grand_total_all_ovt_report'>0</div>");
@@ -178,23 +182,46 @@ $script = <<< "JS"
         reportOvtGrid.attachEvent("onXLE", function() {
             reportTabs.cells("a").progressOff();
         });
-        reportOvtGrid.attachEvent("onRowSelect", function(rId, cIdn) {
-            if((userLogged.rankId == 3 || userLogged.rankId == 4) && userLogged.subDepartment == reportOvtGrid.cells(rId, 4).getValue()) {
-                reportToolbar.enableItem("review");
-            } else {
-                reportToolbar.disableItem("review");
-            }
+        reportOvtGrid.attachEvent("onCheckbox", function(rId, cIdn, state) {
+           if(state) {
+                if(taskIds.length < limit) {
+                    taskIds.push(rId);
+                    reportOvtGrid.cells(rId, 1).setValue(1);
+                } else {
+                    eAlert("Total cek: "+taskIds.length+", Maksimal " + limit + " untuk satu kali submit!");
+                }
+           } else {
+                reportOvtGrid.cells(rId, 1).setValue(0);
+                taskIds.splice(taskIds.indexOf(rId), 1);
+           }
         });
         reportOvtGrid.init();
-        
-        function setGridDP() {
-            reportOvtGridDP = new dataProcessor(Overtime('ovtVerificationBatch'));
-            reportOvtGridDP.setTransactionMode("POST", true);
-            reportOvtGridDP.setUpdateMode("Off");
-            reportOvtGridDP.init(reportOvtGrid);
-        }
-        setGridDP();
-        
+
+        $("#ovt_verified").on("change", function() {
+            let checked = document.getElementById('ovt_verified').checked;
+            if(checked) {
+                for (let i = 0; i < reportOvtGrid.getRowsNum(); i++) {
+                    let id = reportOvtGrid.getRowId(i);
+                    if(reportOvtGrid.cells(id, 27).getValue() != 'VERIFIED') {
+                        if(taskIds.length < limit) {
+                            taskIds.push(id);
+                            reportOvtGrid.cells(id, 1).setValue(1);
+                        }
+                    }
+                }
+            } else {
+                taskIds = [];
+                for (let i = 0; i < reportOvtGrid.getRowsNum(); i++) {
+                    let id = reportOvtGrid.getRowId(i);
+                    if(reportOvtGrid.cells(id, 27).getValue() != 'VERIFIED') {
+                        if(taskIds.length < limit) {
+                            reportOvtGrid.cells(id, 1).setValue(0);
+                        }
+                    }
+                }
+            }
+        });
+    
         function rReportOvtGrid() {
             reportTabs.cells("a").progressOn();
             let start = $("#hr_start_ovt_report").val();

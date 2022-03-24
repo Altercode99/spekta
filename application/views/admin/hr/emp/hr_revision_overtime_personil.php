@@ -65,11 +65,11 @@ $script = <<< "JS"
         var revOvtPrsGrid = revOvtPrsLayout.cells("a").attachGrid();
         revOvtPrsGrid.setImagePath("./public/codebase/imgs/");
         revOvtPrsGrid.setHeader("No,Ref Task,Task ID,Sub Unit,Bagian,Sub Bagian,Kebutuhan Orang,Status Hari,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Catatan,Created By,Updated By,DiBuat,STATUS");
-        revOvtPrsGrid.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
+        revOvtPrsGrid.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#text_filter,#select_filter")
         revOvtPrsGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
         revOvtPrsGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
         revOvtPrsGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
-        revOvtPrsGrid.setInitWidthsP("5,20,20,20,20,20,10,10,20,20,20,20,20,20,25,20");
+        revOvtPrsGrid.setInitWidthsP("5,20,20,20,20,20,10,10,15,17,17,25,20,20,25,10");
         revOvtPrsGrid.enableSmartRendering(true);
         revOvtPrsGrid.attachEvent("onRowSelect", function(rId, cIdn) {
             let status = revOvtPrsGrid.cells(rId, 15).getValue();

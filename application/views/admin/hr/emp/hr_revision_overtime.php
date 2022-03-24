@@ -93,11 +93,11 @@ $script = <<< "JS"
         var revGrid = revLayout.cells("a").attachGrid();
         revGrid.setImagePath("./public/codebase/imgs/");
         revGrid.setHeader("No,Task ID,Deskripsi,Bagian,Sub Bagian,Status,Created By,Updated By,DiBuat");
-        revGrid.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter")
+        revGrid.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter")
         revGrid.setColSorting("int,str,str,str,str,str,str,str,str");
         revGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
         revGrid.setColAlign("center,left,left,left,left,left,left,left,left");
-        revGrid.setInitWidthsP("5,20,35,20,20,20,20,20,25");
+        revGrid.setInitWidthsP("5,20,25,20,20,20,20,20,22");
         revGrid.enableMultiselect(true);
         revGrid.enableSmartRendering(true);
         revGrid.attachEvent("onRowSelect", function(rId, cIdn) {
