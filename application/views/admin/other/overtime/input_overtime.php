@@ -152,7 +152,7 @@ $script = <<< "JS"
                                     initialForm.setItemValue('machine_name', machineName);
                                     closeWindow("machine_window");
                                 }
-                            }, 200)
+                            }, 250)
                             break;
                     }
                 });
@@ -690,12 +690,10 @@ $script = <<< "JS"
                                                 personilNames.push(addPersonilGrid.cells(id, 2).getValue());
                                             }
                                         }
-
                                         personilForm.setItemValue('personil_id', personils);
                                         personilForm.setItemValue('personil_name', personilNames);
                                         closeWindow("add_personil_win");
-                                        
-                                    }, 200)
+                                    }, 250)
                                     break;
                             }
                         });

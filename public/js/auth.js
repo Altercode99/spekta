@@ -89,7 +89,7 @@ function loginFormUI() {
       dhtmlx.message({
         type: "error",
         text: "Username & Password tidak boleh kosong",
-        expire: 10000,
+        expire: 3000,
       });
     } else {
       document.getElementById("realForm").submit();

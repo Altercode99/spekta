@@ -1727,19 +1727,26 @@ class OvertimeController extends Erp_Controller
         $overtimes = $this->Overtime->getReportOvertimeEmp(getParam())->result();
         $xml = "";
         $no = 1;
+
         foreach ($overtimes as $overtime) {
+
+            $color = null;
+            if ($overtime->real_hour > 60) {
+                $color = "bgColor='#ED9377'";
+            }
+
             $xml .= "<row id='$overtime->id'>";
-            $xml .= "<cell>" . cleanSC($no) . "</cell>";
-            $xml .= "<cell>" . cleanSC($overtime->emp_name) . "</cell>";
-            $xml .= "<cell>" . cleanSC($overtime->div_name) . "</cell>";
-            $xml .= "<cell>" . cleanSC($overtime->sub_name) . "</cell>";
-            $xml .= "<cell>" . cleanSC($overtime->dept_name) . "</cell>";
-            $xml .= "<cell>" . cleanSC($overtime->effective_hour) . "</cell>";
-            $xml .= "<cell>" . cleanSC($overtime->break_hour) . "</cell>";
-            $xml .= "<cell>" . cleanSC($overtime->real_hour) . "</cell>";
-            $xml .= "<cell>" . cleanSC($overtime->overtime_hour) . "</cell>";
-            $xml .= "<cell>" . cleanSC(toNumber($overtime->overtime_value)) . "</cell>";
-            $xml .= "<cell>" . cleanSC(toNumber($overtime->meal)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($no) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->emp_name) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->div_name) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->sub_name) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->dept_name) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->effective_hour) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->break_hour) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->real_hour) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($overtime->overtime_hour) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toNumber($overtime->overtime_value)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toNumber($overtime->meal)) . "</cell>";
             $xml .= "</row>";
             $no++;
         }

@@ -153,6 +153,7 @@ $script = <<< "JS"
 
             editReqForm.attachEvent("onFocus", function(name, value){
                 if(name === "pic_emails") {
+                    editReqForm.setItemFocus("id");
                     loadPIC(editReqForm);
                 }
             });

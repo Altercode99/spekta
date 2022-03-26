@@ -135,6 +135,7 @@ $script = <<< "JS"
 
             addPicForm.attachEvent("onFocus", function(name, value){
                 if(name === "pic_emails") {
+                    addPicForm.setItemFocus("name");
                     loadPIC(addPicForm);
                 }
             });
@@ -219,6 +220,7 @@ $script = <<< "JS"
 
             editPicForm.attachEvent("onFocus", function(name, value){
                 if(name === "pic_emails") {
+                    editPicForm.setItemFocus("id");
                     loadPIC(editPicForm);
                 }
             });

@@ -206,6 +206,119 @@ $script = <<< "JS"
             }
         }
 
+        function editProductHandler() {
+            if(!mProductGrid.getSelectedRowId()) {
+                return eAlert("Pilih baris yang akan diubah!");
+            }
+
+            mProductLayout.cells("b").expand();
+            mProductLayout.cells("b").showView("edit_produk");
+
+            editProductForm = mProductLayout.cells("b").attachForm([
+                {type: "fieldset", offsetTop: 30, offsetLeft: 30, label: "Tambah Produk", list: [
+                    {type: "hidden", name: "id", label: "ID", readonly: true},
+                    {type: "input", name: "name", label: "Nama Produk", labelWidth: 130, inputWidth:250, required: true},
+                    {type: "input", name: "code", label: "Kode Produk", labelWidth: 130, inputWidth:250, required: true},
+                    {type: "hidden", name: "filename", label: "Filename", readonly: true},
+                    {type: "upload", name: "file_uploader", inputWidth: 420,
+                        url: AppMaster("fileUpload", {save: false, folder: "products"}), 
+                        swfPath: "./public/codebase/ext/uploader.swf", 
+                        swfUrl: AppMaster("fileUpload"),
+                        autoStart: true
+                    },
+                    {type: "block", offsetTop: 30, list: [
+                        {type: "button", name: "update", className: "button_update", offsetLeft: 15, value: "Simpan"},
+                        {type: "newcolumn"},
+                        {type: "button", name: "cancel", className: "button_no", offsetLeft: 30, value: "Cancel"}
+                    ]}
+                ]},
+                {type: "fieldset", offsetTop: 30, offsetLeft: 30, label: "Foto Produk", list: [
+                    {type: "container", name : "file_display", label: "<img src='./public/img/no-image.png' height='120' width='120'>"}
+                ]},
+            ]);
+
+            const loadTemp = (filename) => {
+                if (filename.length === 0) {
+                    editProductForm.setItemLabel("file_display", "<img src='./public/img/no-image.png' height='120' width='120'>");
+                } else {
+                    filename.map(file => {
+                        if(file === '') {
+                            editProductForm.setItemLabel("file_display", "<img src='./public/img/no-image.png' height='120' width='120'>");
+                        } else {
+                            var fotoDisplay = "<img src='./assets/images/products/"+file+"' height='120' width='120'>"
+                            editProductForm.setItemLabel("file_display", fotoDisplay);
+                        }
+                    });
+                }	
+            }
+
+            fetchFormData(Production("productForm", {id: mProductGrid.getSelectedRowId()}), editProductForm, ["filename"], loadTemp);
+            editProductForm.attachEvent("onBeforeFileAdd", async function (filename, size) {
+                beforeFileAdd(editProductForm, {filename, size}, editProductForm.getItemValue("id"));
+            });
+
+            editProductForm.attachEvent("onBeforeFileUpload", function(mode, loader, formData){
+                if(fileError) {
+                    clearUploader(editProductForm, "file_uploader");
+                    eAlert("File error silahkan upload file sesuai ketentuan!");
+                    fileError = false;
+                } else {
+                    return true;
+                }
+            });
+
+            editProductForm.attachEvent("onUploadFile", function(filename, servername){
+                reqJson(AppMaster("updateAfterUpload"), "POST", {
+                    id: editProductForm.getItemValue("id"),
+                    oldFile: editProductForm.getItemValue("filename"),
+                    filename: servername,
+                    folder: "kf_production.products"
+                }, (err, res) => {
+                    if(res.status === "success") {
+                        editProductForm.setItemValue("filename", servername);
+                        clearUploader(editProductForm, "file_uploader");
+                        editProductForm.setItemLabel("file_display", "<img src='./assets/images/products/"+servername+"' height='120' width='120'>");
+                        sAlert(res.message);
+                    } else {
+                        eAlert(res.message);
+                    }
+                });
+            });    
+
+            editProductForm.attachEvent("onButtonClick", function(id) {
+                switch (id) {
+                    case "update":
+                        setDisable(["update", "cancel"], editProductForm, mProductLayout.cells("b"));
+
+                        let editProductFormDP = new dataProcessor(Production("productForm"));
+                        editProductFormDP.init(editProductForm);
+                        editProductForm.save();
+
+                        editProductFormDP.attachEvent("onAfterUpdate", function (id, action, tid, tag) {
+                        let message = tag.getAttribute("message");
+                            switch (action) {
+                                case "updated":
+                                    sAlert("Berhasil Mengubah Record <br>" + message);
+                                    rProductGrid();
+                                    mProductLayout.cells("b").progressOff();
+                                    mProductLayout.cells("b").showView("tambah_produk");
+                                    mProductLayout.cells("b").collapse();
+                                    break;
+                                case "error":
+                                    eAlert("Gagal Mengubah Record <br>" + message);
+                                    setEnable(["update", "cancel"], editProductForm, mProductLayout.cells("b"));
+                                    break;
+                            }
+                        });
+                        break;
+                    case "cancel":
+                        mProductLayout.cells("b").collapse();
+                        mProductLayout.cells("b").showView("edit_produk");
+                        break;
+                }
+            });
+        }
+
         async function beforeFileAdd(form, file, id = null) {
             if(form.validate()) {
                 var ext = file.filename.split(".").pop();

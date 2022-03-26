@@ -12,8 +12,6 @@ $script = <<< "JS"
         var requireName = [];
         var bookedPersonil = [];
         var formOvtGridTnp;
-        //@Modal Variabel
-        var countPerson;
 
         var comboUrl = {
             department_id: {
@@ -656,14 +654,11 @@ $script = <<< "JS"
                                             }
                                             total++;
                                         }
-                                        if(countPerson != total) {
-                                            eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
-                                        } else {
-                                            personilForm.setItemValue('personil_id', personils);
-                                            personilForm.setItemValue('personil_name', personilNames);
-                                            closeWindow("add_personil_win");
-                                        }
-                                    }, 200)
+                                        
+                                        personilForm.setItemValue('personil_id', personils);
+                                        personilForm.setItemValue('personil_name', personilNames);
+                                        closeWindow("add_personil_win");
+                                    }, 250)
                                     break;
                             }
                         });
@@ -690,8 +685,6 @@ $script = <<< "JS"
                         
                         function disabledBookedPersonil() {
                             bookedPersonil.map(empId => addPersonilGrid.setRowColor(empId, "#f7ed74"));
-                            countPerson = addPersonilGrid.getRowsNum();
-                            console.log(countPerson);
                         }
                     }
                     break;
@@ -1163,7 +1156,7 @@ $script = <<< "JS"
                                 }
                             });
                             inputTabs.tabs("a").setActive();
-                        }, 200);
+                        }, 250);
                     } else {
                         eAlert("Silahkan pilih referensi lembur terlebih dahulu!");
                     }

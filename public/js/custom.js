@@ -1108,6 +1108,10 @@ function genColor(color, text) {
 
 function legendGrid() {
   return {
+    overtime_limit:
+      "<span style='margin-left:5px;margin-right:5px'>Status: " +
+      genColor("#ED9377", "Melebihi Jam Lembur Maksimal") +
+      "</span>",
     email_send:
       "<span style='margin-left:5px;margin-right:5px'>Status: " +
       genColor("#8bc38f", "Terkirim") +

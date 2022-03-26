@@ -32,7 +32,7 @@ class Pc extends Erp_Controller
             $taskId = simpleEncrypt(getParam()['param'], 'd');
             if($taskId) {
                 $overtime = $this->Overtime->getOvertime(['equal_task_id' => $taskId])->row();
-                $ovtDetail = $this->Overtime->getOvertimeDetail(['equal_task_id' => $taskId])->result();
+                $ovtDetail = $this->Overtime->getOvertimeDetail(['equal_task_id' => $taskId, 'order_by' => 'id:asc'])->result();
                 $this->load->view('html/overtime/print/print_overtime', ['ovt' => $overtime, 'ovtDetail' => $ovtDetail]);
             } else {
                 $this->load->view('html/invalid_response', ['message' => 'Token tidak valid']);

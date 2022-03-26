@@ -54,7 +54,7 @@ $script = <<< "JS"
         snackGrid.setColSorting("int,str,str,str,str,str");
         snackGrid.setColTypes("rotxt,rotxt,ron,rotxt,rotxt,rotxt");
         snackGrid.setColAlign("center,left,left,left,left,left");
-        snackGrid.setInitWidthsP("5,20,10,15,15,22");
+        snackGrid.setInitWidthsP("5,23,10,20,20,22");
         snackGrid.enableSmartRendering(true);
         snackGrid.attachEvent("onXLE", function() {
             snackLayout.cells("a").progressOff();

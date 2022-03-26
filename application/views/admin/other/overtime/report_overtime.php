@@ -255,8 +255,13 @@ $script = <<< "JS"
                 equal_status: "CLOSED",
                 betweendate_overtime_date: start+","+end
             };
-            if(userLogged.rankId > 4 && userLogged.role !== "admin") {
-                params.equal_sub_department_id = userLogged.subId;
+
+            if(userLogged.role !== "admin" && userLogged.rankId != 1 && userLogged.pltRankId != 1) {
+                if(userLogged.rankId == 2 || userLogged.pltRankId == 2) {
+                    params.equal_department_id = userLogged.deptId+","+userLogged.pltDeptId;
+                } else if(userLogged.rankId > 2 || userLogged.pltRankId > 2) {
+                    params.equal_sub_department_id =userLogged.subId+","+userLogged.pltSubId;
+                } 
             }
             reportOvtGrid.clearAndLoad(Overtime("getReportOvertimeGrid", params), reportOvtGridCount);
         }
@@ -299,8 +304,12 @@ $script = <<< "JS"
                 betweendate_overtime_date: start+","+end,
                 groupby_sub_department_id: true
             };
-            if(userLogged.rankId > 4) {
-                params.equal_sub_department_id = userLogged.subId;
+            if(userLogged.role !== "admin" && userLogged.rankId != 1 && userLogged.pltRankId != 1) {
+                if(userLogged.rankId == 2 || userLogged.pltRankId == 2) {
+                    params.equal_department_id = userLogged.deptId+","+userLogged.pltDeptId;
+                } else if(userLogged.rankId > 2 || userLogged.pltRankId > 2) {
+                    params.equal_sub_department_id =userLogged.subId+","+userLogged.pltSubId;
+                } 
             }
             reportOvtSubGrid.clearAndLoad(Overtime("getReportOvertimeSubGrid", params), reportOvtSubGridCount);
         }
@@ -343,8 +352,12 @@ $script = <<< "JS"
                 betweendate_overtime_date: start+","+end,
                 groupby_division_id: true
             };
-            if(userLogged.rankId > 4) {
-                params.equal_sub_department_id = userLogged.subId;
+            if(userLogged.role !== "admin" && userLogged.rankId != 1 && userLogged.pltRankId != 1) {
+                if(userLogged.rankId == 2 || userLogged.pltRankId == 2) {
+                    params.equal_department_id = userLogged.deptId+","+userLogged.pltDeptId;
+                } else if(userLogged.rankId > 2 || userLogged.pltRankId > 2) {
+                    params.equal_sub_department_id =userLogged.subId+","+userLogged.pltSubId;
+                } 
             }
             reportOvtDivGrid.clearAndLoad(Overtime("getReportOvertimeDivGrid", params), reportOvtDivGridCount);
         }
@@ -354,7 +367,7 @@ $script = <<< "JS"
         let reportOvtEmpStatusBar = reportTabs.cells("d").attachStatusBar();
         function reportOvtEmpGridCount() {
             var reportOvtDivGridRows = reportOvtEmpGrid.getRowsNum();
-            reportOvtEmpStatusBar.setText("Total baris: " + reportOvtDivGridRows);
+            reportOvtEmpStatusBar.setText("Total baris: " + reportOvtDivGridRows + " (" + legend.overtime_limit + ")");
             let totalOvertimeEmp = sumGridToElement(reportOvtEmpGrid, 9, "other_total_ovt_report_emp", "other_grand_total_ovt_report_emp");
             let totalMealEmp = sumGridToElement(reportOvtEmpGrid, 10, "other_total_meal_ovt_report_emp", "other_grand_total_meal_ovt_report_emp");
             $("#other_grand_total_all_ovt_report_emp").html("Rp. " + numberFormat(totalOvertimeEmp+totalMealEmp));
@@ -387,8 +400,12 @@ $script = <<< "JS"
                 betweendate_overtime_date: start+","+end,
                 groupby_emp_id: true
             };
-            if(userLogged.rankId > 4) {
-                params.equal_sub_department_id = userLogged.subId;
+            if(userLogged.role !== "admin" && userLogged.rankId != 1 && userLogged.pltRankId != 1) {
+                if(userLogged.rankId == 2 || userLogged.pltRankId == 2) {
+                    params.equal_department_id = userLogged.deptId+","+userLogged.pltDeptId;
+                } else if(userLogged.rankId > 2 || userLogged.pltRankId > 2) {
+                    params.equal_sub_department_id =userLogged.subId+","+userLogged.pltSubId;
+                } 
             }
             reportOvtEmpGrid.clearAndLoad(Overtime("getReportOvertimeEmpGrid", params), reportOvtEmpGridCount);
         }

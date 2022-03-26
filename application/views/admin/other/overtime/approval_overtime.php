@@ -493,6 +493,8 @@ $script = <<< "JS"
                     if(userLogged.rankId == 3 || userLogged.pltRankId == 3 || userLogged.rankId == 4 || userLogged.pltRankId == 4) {
                         if(userLogged.subId == 9) {
                             params.in_sub_department_id = userLogged.subId+","+userLogged.pltSubId+",1,2,3,4,13";
+                        } else {
+                            params.in_sub_department_id = userLogged.subId+","+userLogged.pltSubId;
                         }
                     } else {
                         params.in_sub_department_id = userLogged.subId+","+userLogged.pltSubId;
@@ -861,7 +863,7 @@ $script = <<< "JS"
                 appvTabs.cells("b").progressOn();
                 disableAppvDetailToolbar();
                 let taskId = ovtGrid.cells(rId, 1).getValue();
-                ovtDetailGrid.clearAndLoad(Overtime("getOvertimeDetailGrid", {equal_task_id: taskId, notin_status: "CANCELED,ADD", order_by: 'division_id:asc', apv: true}), countTotalOvertime);
+                ovtDetailGrid.clearAndLoad(Overtime("getOvertimeDetailGrid", {equal_task_id: taskId, notin_status: "CANCELED,ADD", order_by: 'id:asc', apv: true}), countTotalOvertime);
             } else {
                 ovtDetailGrid.clearAll();
                 ovtDetailGrid.callEvent("onGridReconstructed",[]);

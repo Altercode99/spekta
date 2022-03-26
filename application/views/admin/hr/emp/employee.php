@@ -263,6 +263,7 @@ $script = <<< "JS"
 
                     addEmpForm.attachEvent("onFocus", function(name, value) {
                         if(name === "direct_spv") {
+                            addEmpForm.setItemFocus("id");
                             loadSPV(addEmpForm);
                         }
                     });
@@ -542,6 +543,7 @@ $script = <<< "JS"
                                 nipSpv = editEmpForm.getItemValue("direct_spv");
                                 editEmpForm.attachEvent("onFocus", function(name, value) {
                                     if(name === "direct_spv") {
+                                        editEmpForm.setItemFocus("id");
                                         loadSPV(editEmpForm);
                                     }
                                 });
