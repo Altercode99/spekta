@@ -10,10 +10,10 @@ $script = <<< "JS"
         checkTrees();
         $("#title-menu").html("Produksi");
         accordionItems.map(id => myTree.removeItem(id));
-        accordionItems.push("a");
+        accordionItems.push("a", "b");
 
         if(isHaveAcc("prod_master")) {
-            myTree.addItem("a", "Master", true);
+            myTree.addItem("a", "Master");
             var mProductItems = [];
             var mProductItemsDetail = [];
 
@@ -34,6 +34,32 @@ $script = <<< "JS"
             mProductTree.attachEvent("onClick", function(id) {
                 if(id == "prod_master_products_product") {
                     masterProductTab();
+                }
+            });
+        }
+
+        if(isHaveAcc("prod_process")) {
+            myTree.addItem("b", "Proses Produksi", true);
+            var spackItems = [];
+            var spackItemDetail = [];
+
+            //@SPACK
+            if(isHaveTrees("prod_spack_location")) {
+                spackItemDetail.push({id: "prod_spack_location", text: "Lokasi", icons: {file: "menu_icon"}});
+            }
+
+            //@TREE
+            if(isHaveTrees('prod_spack')) {
+                spackItems.push({id: "prod_spack", text: "Surat Pack", open: 1, icons: {folder_opened: "arrow_down", folder_closed: "arrow_right"}, items: spackItemDetail})
+            }
+
+            var spackTree = myTree.cells("b").attachTreeView({
+                items: spackItems
+            });
+
+            spackTree.attachEvent("onClick", function(id) {
+                if(id == "prod_spack_location") {
+                    spackLocationTab();
                 }
             });
         }

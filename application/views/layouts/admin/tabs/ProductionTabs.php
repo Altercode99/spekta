@@ -14,6 +14,15 @@ $script = <<< "JS"
         }
     }
 
+    function spackLocationTab() {
+        if (!mainTab.tabs("prod_spack_location")){
+            mainTab.addTab("prod_spack_location", tabsStyle("clock.png", "Lokasi"), null, null, true, true);
+            showSpackLocation();
+        } else {
+            mainTab.tabs("prod_spack_location").setActive();
+        }
+    }
+
 JS;
 
 echo $script;

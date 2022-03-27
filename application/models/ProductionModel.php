@@ -38,4 +38,25 @@ class ProductionModel extends CI_Model
         $sql .= " ORDER BY a.name DESC";
         return $this->db->query($sql);
     }
+
+    public function getSpLoc($params)
+    {
+        $where = advanceSearch($params);
+        $sql = "SELECT a.*,
+                       (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.created_by) AS emp1,
+                       (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.updated_by) AS emp2
+                       FROM $this->kf_prod.spack_locations a
+                       WHERE a.location = '$this->empLoc'
+                       $where";
+                    
+        if (isset($params['search']) && $params['search'] !== "") {
+            $sql .= "AND (
+                        a.name LIKE '%$params[search]%' OR 
+                        (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.created_by) LIKE '%$params[search]%' OR
+                        (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.updated_by) LIKE '%$params[search]%'
+                    )";
+        } 
+        $sql .= " ORDER BY a.name DESC";
+        return $this->db->query($sql);
+    }
 }
