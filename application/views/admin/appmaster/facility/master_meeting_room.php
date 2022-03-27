@@ -58,7 +58,7 @@ $script = <<< "JS"
 
         var roomGrid = roomLayout.cells("a").attachGrid();
         roomGrid.setHeader("No,Nama Ruangan,Kode Warna,Colopicker,Kapasitas,Gedung,Lantai,Created By,Updated By,DiBuat");
-        roomGrid.attachHeader("#rspan,#text_filter,#rspan,#rspan,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter")
+        roomGrid.attachHeader("#rspan,#text_filter,#rspan,#rspan,#select_filter,#select_filter,#text_filter,#select_filter,#select_filter,#text_filter")
         roomGrid.setColSorting("int,str,str,str,str,str,str,str,str,str");
         roomGrid.setColTypes("rotxt,rotxt,edtxt,cp,edtxt,edtxt,edtxt,rotxt,rotxt,rotxt");
         roomGrid.setColAlign("center,left,left,left,left,left,left,left,left,left");

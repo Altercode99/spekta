@@ -61,7 +61,7 @@ $script = <<< "JS"
 
         var divGrid = divLayout.cells("a").attachGrid();
         divGrid.setHeader("No,Nama Sub Bagian,Bagian,Sub Unit,Created By,Updated By,DiBuat");
-        divGrid.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter")
+        divGrid.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter")
         divGrid.setColSorting("int,str,str,str,str,str,str");
         divGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
         divGrid.setColAlign("center,left,left,left,left,left,left");

@@ -54,7 +54,7 @@ $script = <<< "JS"
         var ovtGrid = ovtCathLayout.cells("a").attachGrid();
         ovtGrid.setImagePath("./public/codebase/imgs/");
         ovtGrid.setHeader("No,Task ID,Nama Karyawan,Sub Unit,Bagian,Sub Bagian,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Makan,,Tugas,Status Overtime,Status Terakhir,Created By,Updated By,Created At");
-        ovtGrid.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter")
+        ovtGrid.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#select_filter,#select_filter,#text_filter,#select_filter,#select_filter,#text_filter")
         ovtGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
         ovtGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
         ovtGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");

@@ -49,7 +49,7 @@ $script = <<< "JS"
 
         var sallaryGrid = sallaryLayout.cells("a").attachGrid();
         sallaryGrid.setHeader("No,Nama Karyawan,Gaji Pokok,Total Gaji,Premi Lembur,Jam Lembur,Jabatan,Sub Unit,Bagian,Sub Bagian,Created By,Updated By,DiBuat");
-        sallaryGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter")
+        sallaryGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter")
         sallaryGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str");
         sallaryGrid.setColTypes("rotxt,rotxt,edn,ron,edn,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
         sallaryGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left");

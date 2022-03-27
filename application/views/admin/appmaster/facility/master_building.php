@@ -49,7 +49,7 @@ $script = <<< "JS"
 
         var buildingGrid = buildingLayout.cells("a").attachGrid();
         buildingGrid.setHeader("No,Nama Gedung,Created By,Updated By,DiBuat");
-        buildingGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#text_filter")
+        buildingGrid.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#text_filter")
         buildingGrid.setColSorting("int,str,str,str,str");
         buildingGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt");
         buildingGrid.setColAlign("center,left,left,left,left");

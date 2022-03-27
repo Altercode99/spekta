@@ -56,7 +56,7 @@ $script = <<< "JS"
 
         var picGrid = picLayout.cells("a").attachGrid();
         picGrid.setHeader("No,Kode,Nama Kegiatan,Sub Unit,Bagian,Created By,Updated By,DiBuat");
-        picGrid.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter")
+        picGrid.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter")
         picGrid.setColSorting("int,str,str,str,str,str,str,str");
         picGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
         picGrid.setColAlign("center,left,left,left,left,left,left,left");

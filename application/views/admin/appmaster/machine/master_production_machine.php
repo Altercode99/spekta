@@ -75,7 +75,7 @@ $script = <<< "JS"
 
         var machineGrid = machineLayout.cells("a").attachGrid();
         machineGrid.setHeader("No,Nama Mesin,Gedung,Ruangan,Sub Unit,Bagian,Sub Bagian,Dimensi,Personil Ideal,Created By,Updated By,DiBuat");
-        machineGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
+        machineGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#text_filter")
         machineGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str");
         machineGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
         machineGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left");

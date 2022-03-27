@@ -50,7 +50,7 @@ $script = <<< "JS"
 
         var rankGrid = rankLayout.cells("a").attachGrid();
         rankGrid.setHeader("No,Nama Jabatan,Created By,Updated By,DiBuat");
-        rankGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#text_filter")
+        rankGrid.attachHeader("#rspan,#text_filter,#select_filter,#select_filter,#text_filter")
         rankGrid.setColSorting("int,str,str,str,str");
         rankGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt");
         rankGrid.setColAlign("center,left,left,left,left");
