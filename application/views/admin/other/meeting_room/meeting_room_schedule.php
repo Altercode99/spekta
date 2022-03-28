@@ -11,9 +11,6 @@ $script = <<< "JS"
         var persons = [];
         var guests = [];
         var timeLightbox;
-        //@Modal Variabel
-        var countPersonil;
-        var countGuest;
 
         var scheduleLayout = mainTab.cells("meeting_room_schedule").attachLayout({
             pattern: "1C",
@@ -155,21 +152,13 @@ $script = <<< "JS"
                         case "save":
                             participantGrid.filterBy(0,"");
                             setTimeout(() => {
-                                let total = 0;
-                                for (let i = 0; i < participantGrid.getRowsNum(); i++) {
-                                total++;
-                                }
-                                if(countPerson == total) {
+                                if(participantGrid.getRowsNum() == 0) {
+                                    eaAlert("Bersihkan Filter", "Data grid kosong, silahkan tutup window, klik X dibagian kanan atas!");
+                                } else {
                                     scheduler1.formSection('participant').setValue(persons);
                                     closeWindow("rm_participant");
-                                } else {
-                                    if(participantGrid.getRowsNum() == 0) {
-                                        eaAlert("Bersihkan Filter", "Data grid kosong, silahkan tutup window, klik X dibagian kanan atas!");
-                                    } else {
-                                        eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
-                                    }
                                 }
-                            }, 200);
+                            }, 250);
                             break;
                     }
                 });
@@ -180,7 +169,6 @@ $script = <<< "JS"
                     var partGridRows = participantGrid.getRowsNum();
                     partStatusBar.setText("Total baris: " + partGridRows);
                     persons.length > 0 && persons.map(id => id !== '' && participantGrid.cells(id, 1).setValue(1));
-                    countPerson = partGridRows;
                 }
 
                 var max = roomData[scheduler1.formSection("room").getValue()].capacity;
@@ -253,11 +241,9 @@ $script = <<< "JS"
                         case "save":
                             guestGrid.filterBy(0,"");
                             setTimeout(() => {
-                                let total = 0;
-                                for (let i = 0; i < guestGrid.getRowsNum(); i++) {
-                                total++;
-                                }
-                                if(countGuest == total) {
+                                if(guestGrid.getRowsNum() == 0) {
+                                    eaAlert("Bersihkan Filter", "Data grid kosong, silahkan tutup window, klik X dibagian kanan atas!");
+                                } else {
                                     let newGuest = "";
                                     guests.map(data => {
                                         if(newGuest== "") {
@@ -268,14 +254,8 @@ $script = <<< "JS"
                                     })
                                     scheduler1.formSection('guest').setValue(newGuest);
                                     closeWindow("rm_guest");
-                                } else {
-                                    if(guestGrid.getRowsNum() == 0) {
-                                        eaAlert("Bersihkan Filter", "Data grid kosong, silahkan tutup window, klik X dibagian kanan atas!");
-                                    } else {
-                                        eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
-                                    }
                                 }
-                            }, 200);
+                            }, 250);
                             break;
                         case "add":
                             let newId = (new Date()).valueOf();
@@ -322,7 +302,6 @@ $script = <<< "JS"
                             guestGrid.cells(data.rId, 4).setDisabled(true);
                         }
                     });
-                    countGuest = guestGridRows;
                 }
 
                 var max = roomData[scheduler1.formSection("room").getValue()].capacity;

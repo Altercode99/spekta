@@ -59,4 +59,27 @@ class ProductionModel extends CI_Model
         $sql .= " ORDER BY a.name DESC";
         return $this->db->query($sql);
     }
+
+    public function getSpEntry($params)
+    {
+        $where = advanceSearch($params);
+        $sql = "SELECT a.*,b.name AS product_name,
+                       (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.created_by) AS emp1,
+                       (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.updated_by) AS emp2
+                       FROM $this->kf_prod.spack_batch_numbers a, $this->kf_prod.products b
+                       WHERE a.product_id = b.id
+                       AND a.location = '$this->empLoc'
+                       $where";
+                    
+        if (isset($params['search']) && $params['search'] !== "") {
+            $sql .= "AND (
+                        a.no_batch LIKE '%$params[search]%' OR 
+                        b.name LIKE '%$params[search]%' OR 
+                        (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.created_by) LIKE '%$params[search]%' OR
+                        (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.updated_by) LIKE '%$params[search]%'
+                    )";
+        } 
+        $sql .= " ORDER BY a.id DESC";
+        return $this->db->query($sql);
+    }
 }

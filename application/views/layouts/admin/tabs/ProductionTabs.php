@@ -7,7 +7,7 @@ $script = <<< "JS"
 
     function masterProductTab() {
         if (!mainTab.tabs("prod_master_products_product")){
-            mainTab.addTab("prod_master_products_product", tabsStyle("clock.png", "Master Produk"), null, null, true, true);
+            mainTab.addTab("prod_master_products_product", tabsStyle("medicine_16.png", "Master Produk"), null, null, true, true);
             showMasterProduct();
         } else {
             mainTab.tabs("prod_master_products_product").setActive();
@@ -16,10 +16,19 @@ $script = <<< "JS"
 
     function spackLocationTab() {
         if (!mainTab.tabs("prod_spack_location")){
-            mainTab.addTab("prod_spack_location", tabsStyle("clock.png", "Lokasi"), null, null, true, true);
+            mainTab.addTab("prod_spack_location", tabsStyle("map_16.png", "Lokasi"), null, null, true, true);
             showSpackLocation();
         } else {
             mainTab.tabs("prod_spack_location").setActive();
+        }
+    }
+
+    function spackEntryTab() {
+        if (!mainTab.tabs("prod_spack_entry")){
+            mainTab.addTab("prod_spack_entry", tabsStyle("email.png", "Entry Surat Pack"), null, null, true, true);
+            showSpackEntry();
+        } else {
+            mainTab.tabs("prod_spack_entry").setActive();
         }
     }
 

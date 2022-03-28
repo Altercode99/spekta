@@ -9,7 +9,6 @@ $script = <<< "JS"
 	function showReqOvertime() {	
         var editReqForm;
         var persons = [];
-        var countPerson;
 
         var comboUrl = {
             department_id: {
@@ -216,20 +215,16 @@ $script = <<< "JS"
                     case "save":
                         picGrid.filterBy(0,"");
                         persons = [];
-                        let total = 0;
-                        for (let i = 0; i < picGrid.getRowsNum(); i++) {
-                           let id = picGrid.getRowId(i);
-                           if(picGrid.cells(id, 1).getValue() == 1) {
-                               persons.push(id);
-                           } 
-                           total++;
-                        }
-                        if(countPerson == total) {
+                        setTimeout(() => {
+                            for (let i = 0; i < picGrid.getRowsNum(); i++) {
+                                let id = picGrid.getRowId(i);
+                                if(picGrid.cells(id, 1).getValue() == 1) {
+                                    persons.push(id);
+                                } 
+                            }
                             form.setItemValue('pic_emails', persons);
                             closeWindow("pic_window");
-                        } else {
-                            eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
-                        }
+                        }, 250);
                         break;
                 }
             });
@@ -244,7 +239,6 @@ $script = <<< "JS"
                         picGrid.cells(id, 1).setValue(1);
                     }
                 });
-                countPerson = picGridRows;
             }
 
             picWindow.progressOn();

@@ -47,6 +47,9 @@ $script = <<< "JS"
             if(isHaveTrees("prod_spack_location")) {
                 spackItemDetail.push({id: "prod_spack_location", text: "Lokasi", icons: {file: "menu_icon"}});
             }
+            if(isHaveTrees("prod_spack_entry")) {
+                spackItemDetail.push({id: "prod_spack_entry", text: "Entry Surat Pack", icons: {file: "menu_icon"}});
+            }
 
             //@TREE
             if(isHaveTrees('prod_spack')) {
@@ -60,6 +63,8 @@ $script = <<< "JS"
             spackTree.attachEvent("onClick", function(id) {
                 if(id == "prod_spack_location") {
                     spackLocationTab();
+                } else if(id == "prod_spack_entry") {
+                    spackEntryTab();
                 }
             });
         }

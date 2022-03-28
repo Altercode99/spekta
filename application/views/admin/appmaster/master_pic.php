@@ -10,7 +10,6 @@ $script = <<< "JS"
         var addPicForm;
         var editPicForm;
         var persons = [];
-        var countPerson;
 
         var comboUrl = {
             department_id: {
@@ -283,20 +282,16 @@ $script = <<< "JS"
                     case "save":
                         wPicGrid.filterBy(0,"");
                         persons = [];
-                        let total = 0;
-                        for (let i = 0; i < wPicGrid.getRowsNum(); i++) {
-                           let id = wPicGrid.getRowId(i);
-                           if(wPicGrid.cells(id, 1).getValue() == 1) {
-                               persons.push(id);
-                           } 
-                           total++;
-                        }
-                        if(countPerson == total) {
+                        setTimeout(() => {
+                            for (let i = 0; i < wPicGrid.getRowsNum(); i++) {
+                                let id = wPicGrid.getRowId(i);
+                                if(wPicGrid.cells(id, 1).getValue() == 1) {
+                                    persons.push(id);
+                                } 
+                            }
                             form.setItemValue('pic_emails', persons);
                             closeWindow("master_pic_window");
-                        } else {
-                            eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
-                        }
+                        }, 250);
                         break;
                 }
             });

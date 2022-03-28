@@ -12,9 +12,6 @@ $script = <<< "JS"
         var vehicleData = [];
         var persons = [];
         var drivers = [];
-        //@Modal Variable
-        var countPerson;
-        var countDriver;
 
         var scheduleLayout = mainTab.cells("vehicle_schedule").attachLayout({
             pattern: "1C",
@@ -95,23 +92,14 @@ $script = <<< "JS"
                         case "save":
                             driverGrid.filterBy(0,"");
                             setTimeout(() => {
-                                let total = 0;
-                                for (let i = 0; i < driverGrid.getRowsNum(); i++) {
-                                    total++;
-                                }
-
-                                if(countDriver == total) {
+                                if(driverGrid.getRowsNum() == 0) {
+                                    eaAlert("Bersihkan Filter", "Data grid kosong, silahkan tutup window, klik X dibagian kanan atas!");
+                                } else {
                                     const newDriver = drivers.filter(id => id !== "");
                                     scheduler2.formSection('driver').setValue(newDriver);
                                     closeWindow("driver");
-                                } else {
-                                    if(driverGrid.getRowsNum() == 0) {
-                                        eaAlert("Bersihkan Filter", "Data grid kosong, silahkan tutup window, klik X dibagian kanan atas!");
-                                    } else {
-                                        eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
-                                    }
                                 }
-                            }, 200);
+                            }, 250);
                             break;
                     }
                 });
@@ -122,7 +110,6 @@ $script = <<< "JS"
                     var driverGridRows = driverGrid.getRowsNum();
                     driverStatusBar.setText("Total baris: " + driverGridRows);
                     drivers.length > 0 && drivers.map(id => id !== '' && driverGrid.cells(id, 1).setValue(1));
-                    countDriver = driverGridRows;
                 }
 
                 function loadVehicle() {
@@ -179,22 +166,13 @@ $script = <<< "JS"
                         case "save":
                             empGrid.filterBy(0,"");
                             setTimeout(() => {
-                                let total = 0;
-                                for (let i = 0; i < empGrid.getRowsNum(); i++) {
-                                    total++;
-                                }
-
-                                if(countPerson == total) {
+                                if(empGrid.getRowsNum() == 0) {
+                                    eaAlert("Bersihkan Filter", "Data grid kosong, silahkan tutup window, klik X dibagian kanan atas!");
+                                } else {
                                     scheduler2.formSection('passenger').setValue(persons);
                                     closeWindow("emp_vehicle");
-                                } else {
-                                    if(empGrid.getRowsNum() == 0) {
-                                        eaAlert("Bersihkan Filter", "Data grid kosong, silahkan tutup window, klik X dibagian kanan atas!");
-                                    } else {
-                                        eaWarning("Bersihkan Filter", "Silahkan bersihkan filter sebelum klik Simpan!");
-                                    }
                                 }
-                            }, 200);
+                            }, 250);
                             break;
                     }
                 });
@@ -205,7 +183,6 @@ $script = <<< "JS"
                     var empGridRows = empGrid.getRowsNum();
                     empStatusBar.setText("Total baris: " + empGridRows);
                     persons.length > 0 && persons.map(id => empGrid.cells(id, 1).setValue(1));
-                    countPerson = empGridRows;
                 }
 
                 var max = vehicleData[scheduler2.formSection("vehicle").getValue()].passenger_capacity;
