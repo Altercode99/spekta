@@ -70,15 +70,21 @@ class ProductionModel extends CI_Model
                        WHERE a.product_id = b.id
                        AND a.location = '$this->empLoc'
                        $where";
-                    
-        if (isset($params['search']) && $params['search'] !== "") {
-            $sql .= "AND (
-                        a.no_batch LIKE '%$params[search]%' OR 
-                        b.name LIKE '%$params[search]%' OR 
-                        (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.created_by) LIKE '%$params[search]%' OR
-                        (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.updated_by) LIKE '%$params[search]%'
-                    )";
-        } 
+        $sql .= " ORDER BY a.id DESC";
+        return $this->db->query($sql);
+    }
+
+    public function getSpPrint($params)
+    {
+        $where = advanceSearch($params);
+        $sql = "SELECT a.*,b.name AS product_name,b.package_desc,c.name AS location,
+                       (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.packing_by) AS packing_by,
+                       (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.spv_by) AS spv_by,
+                       (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.created_by) AS emp1
+                       FROM $this->kf_prod.spack_prints a, $this->kf_prod.products b, $this->kf_prod.spack_locations c
+                       WHERE a.product_id = b.id
+                       AND a.location_id = c.id
+                       $where";
         $sql .= " ORDER BY a.id DESC";
         return $this->db->query($sql);
     }

@@ -163,12 +163,19 @@ class UserController extends Erp_Controller
     public function getEmps()
     {
         $params = getParam();        
-        $employees = $this->Hr->getLike('employees', null, ['employee_name' => $params['name']], 'id,employee_name,nip', 15)->result();
         $empList = [];
-        foreach ($employees as $emp) {
+        if(isset($params['name'])) {
+            $employees = $this->Hr->getLike('employees', null, ['employee_name' => $params['name']], 'id,employee_name,nip', 15)->result();
+            foreach ($employees as $emp) {
+                $empList['options'][] = [
+                    'value' => $emp->nip,
+                    'text' => "$emp->employee_name ($emp->nip)"
+                ];
+            }
+        } else {
             $empList['options'][] = [
-                'value' => $emp->nip,
-                'text' => "$emp->employee_name ($emp->nip)"
+                'value' => 0,
+                'text' => ""
             ];
         }
         echo json_encode($empList);

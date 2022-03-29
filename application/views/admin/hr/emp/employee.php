@@ -505,6 +505,10 @@ $script = <<< "JS"
                             var editLocationCombo = editEmpForm.getCombo("location_id");
                             fetchFormData(Emp("empForm", {id: empGrid.getSelectedRowId()}), editEmpForm, null, null, setCombo);
 
+                            if(editEmpForm.getItemValue("rank_id") <= 6) {
+                                editEmpForm.setReadonly("nip", true);
+                            }
+
                             function setCombo() {
                                 editDeptCombo.load(Emp("getDepartment", {select: editEmpForm.getItemValue("department_id")}));
                                 editSubDeptCombo.load(Emp("getSubDepartment", {deptId: editEmpForm.getItemValue("department_id"), select: editEmpForm.getItemValue("sub_department_id")}));

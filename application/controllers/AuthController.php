@@ -47,7 +47,7 @@ class AuthController extends Erp_Controller
                     $isPicOvertime = $this->Main->getLike('pics', ['code' => 'overtime'], ['pic_emails' => $emp->email])->row();
                     if ($isPicOvertime) {
                         $picOvertime = true;
-                    } else if ($emp->rank_id <= 6 || $role === "admin") {
+                    } else if ($emp->rank_id <= 6 || $plt->rank_id <= 6 || $role === "admin") {
                         $picOvertime = true;
                     }
 

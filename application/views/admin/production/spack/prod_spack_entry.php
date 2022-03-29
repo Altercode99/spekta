@@ -9,6 +9,20 @@ $script = <<< "JS"
     function showSpackEntry() {
         var addEntryForm;
         var editEntryForm;
+        
+        var comboUrl = {
+            product_id: {
+                url: Production("getProduct"),
+                reload: true
+            },
+        }
+
+        var comboUrl2 = {
+            location_id: {
+                url: Production("getLocation"),
+                reload: true
+            },
+        }
 
         var spEntryTabs = mainTab.cells("prod_spack_entry").attachTabbar({
             tabs: [
@@ -37,8 +51,6 @@ $script = <<< "JS"
                     {type: "button", name: "add", className: "button_add", offsetLeft: 15, value: "Tambah"},
                     {type: "newcolumn"},
                     {type: "button", name: "clear", className: "button_clear", offsetLeft: 30, value: "Clear"},
-                    {type: "newcolumn"},
-                    {type: "button", name: "cancel", className: "button_no", offsetLeft: 30, value: "Cancel"}
                 ]}
             ]}
         ]);
@@ -64,7 +76,7 @@ $script = <<< "JS"
                             case "inserted":
                                 rSpEntryGrid();
                                 sAlert("Berhasil Menambahkan Record <br>" + message);
-                                clearAllForm(addEntryForm);
+                                clearAllForm(addEntryForm, comboUrl);
                                 setEnable(["add", "clear"], addEntryForm, spEntryLayout.cells("b"));
                                 break;
                             case "error":
@@ -75,11 +87,7 @@ $script = <<< "JS"
                     });
                     break;
                 case "clear":
-                    clearAllForm(addEntryForm);
-                    break;
-                case "cancel":
-                    rSpEntryGrid();
-                    spEntryLayout.cells("b").collapse();
+                    clearAllForm(addEntryForm, comboUrl);
                     break;
             }
         });
@@ -116,6 +124,7 @@ $script = <<< "JS"
 
                     let tabName = "pros_spack_entry_" + spEntryGrid.getSelectedRowId();
                     let noBatch = spEntryGrid.cells(spEntryGrid.getSelectedRowId(), 1).getValue();
+                    let productName = spEntryGrid.cells(spEntryGrid.getSelectedRowId(), 2).getValue();
                     if (!spEntryTabs.tabs(tabName)){
                         spEntryTabs.addTab(tabName, "Cetak " + noBatch, null, null, true, true);
                     } else {
@@ -125,24 +134,242 @@ $script = <<< "JS"
                     var printLayout = spEntryTabs.cells(tabName).attachLayout({
                         pattern: "2E",
                         cells: [
-                            {id: "a", text: "Form Cetak No. Batch: " + noBatch},
-                            {id: "b", text: "History Print No. Batch: " + noBatch},
+                            {id: "a", text: "Form Cetak No. Batch: " + noBatch, height: 330},
+                            {id: "b", header : false},
                         ]
                     });
 
+                    var formToolbar = printLayout.cells("a").attachToolbar({
+                        icon_path: "./public/codebase/icons/",
+                        items: [
+                            {id: "save", text: "Simpan", type: "button", img: "update.png"},
+                            {id: "clear", text: "Clear Form", type: "button", img: "clear.png"},
+                        ]
+                    });
+
+                    const years = [{
+                        value: 0, text: "-Pilih Tahun-",
+                    }];
+                    const newDate = new Date();
+                    for (let i = 2022; i <= newDate.getFullYear() + 5; i++) {
+                        years.push({value: i, text: i});
+                    }
                     var printForm = printLayout.cells("a").attachForm([
-                        {type: "fieldset", offsetTop: 30, offsetLeft: 30, label: "Data Untuk Di Cetak", list: [
-                            {type: "combo", name: "product_id", label: "Produk", labelWidth: 130, inputWidth: 250, readonly: true, required: true},
-                            {type: "input", name: "no_batch", label: "No. Batch", labelWidth: 130, inputWidth:250, required: true},
-                            {type: "block", offsetTop: 30, list: [
-                                {type: "button", name: "add", className: "button_add", offsetLeft: 15, value: "Tambah"},
-                                {type: "newcolumn"},
-                                {type: "button", name: "clear", className: "button_clear", offsetLeft: 30, value: "Clear"},
-                                {type: "newcolumn"},
-                                {type: "button", name: "cancel", className: "button_no", offsetLeft: 30, value: "Cancel"}
-                            ]}
-                        ]}
+                        {type: "block", offsetTop: 30, list: [
+                            {type: "calendar", name: "letter_date", label: "Tanggal", labelWidth: 130, inputWidth:250, required: true, readonly:true},
+                            {type: "input", name: "no_batch", label: "No. Batch", labelWidth: 130, inputWidth:250, required: true, readonly:true, value: noBatch},
+                            {type: "input", name: "product_name", label: "Produk", labelWidth: 130, inputWidth:250, required: true, readonly:true, value: productName},
+                            {type: "combo", name: "location_id", label: "Lokasi", labelWidth: 130, inputWidth: 250, readonly: true, required: true},
+                            {type: "combo", name: "packing_by", label: "Dikemas Oleh", labelWidth: 130, inputWidth: 250, 
+                                validate: "NotEmpty", 
+                                required: true
+                            },
+                            {type: "combo", name: "spv_by", label: "Supervisor", labelWidth: 130, inputWidth: 250, 
+                                validate: "NotEmpty", 
+                                required: true
+                            },
+                        ]}, 
+                        {type: "newcolumn"},
+                        {type: "block", offsetTop: 30, list: [
+                            {type: "combo", name: "mfg_month", label: "Mfg. Bulan", readonly: true, required: true, labelWidth: 130, inputWidth: 250,
+                                validate: "NotEmpty", 
+                                options:[
+                                    {value: 0, text: "-Pilih Bulan-"},
+                                    {value: 1, text: "Januari"},
+                                    {value: 2, text: "Februari"},
+                                    {value: 3, text: "Maret"},
+                                    {value: 4, text: "April"},
+                                    {value: 5, text: "Mei"},
+                                    {value: 6, text: "Juni"},
+                                    {value: 7, text: "Juli"},
+                                    {value: 8, text: "Agustus"},
+                                    {value: 9, text: "September"},
+                                    {value: 10, text: "Oktober"},
+                                    {value: 11, text: "November"},
+                                    {value: 12, text: "Desember"},
+                                ]
+                            },
+                            {type: "combo", name: "mfg_year", label: "Mfg. Tahun", readonly: true, required: true, labelWidth: 130, inputWidth: 250,
+                                validate: "NotEmpty", 
+                                options: years
+                            },
+                            {type: "combo", name: "exp_month", label: "Exp. Bulan", readonly: true, required: true, labelWidth: 130, inputWidth: 250,
+                                validate: "NotEmpty", 
+                                options:[
+                                    {value: 0, text: "-Pilih Bulan-"},
+                                    {value: 1, text: "Januari"},
+                                    {value: 2, text: "Februari"},
+                                    {value: 3, text: "Maret"},
+                                    {value: 4, text: "April"},
+                                    {value: 5, text: "Mei"},
+                                    {value: 6, text: "Juni"},
+                                    {value: 7, text: "Juli"},
+                                    {value: 8, text: "Agustus"},
+                                    {value: 9, text: "September"},
+                                    {value: 10, text: "Oktober"},
+                                    {value: 11, text: "November"},
+                                    {value: 12, text: "Desember"},
+                                ]
+                            },
+                            {type: "combo", name: "exp_year", label: "Exp. Tahun", readonly: true, required: true, labelWidth: 130, inputWidth: 250,
+                                validate: "NotEmpty", 
+                                options: years
+                            },
+                        ]},
                     ]);
+
+                    var packingCombo = printForm.getCombo("packing_by");
+                    packingCombo.enableFilteringMode(true, 'packing_by');
+                    packingCombo.attachEvent("onDynXLS", packingComboFilter);
+
+                    var locCombo = printForm.getCombo("location_id");
+                    locCombo.load(Production("getLocation"));
+
+                    function packingComboFilter(text){
+                        packingCombo.clearAll();
+                        if(text.length > 3) {
+                            dhx.ajax.get(User('getEmps', {name: text}), function(xml){
+                                if(xml.xmlDoc.responseText) {
+                                    packingCombo.load(xml.xmlDoc.responseText);
+                                    packingCombo.openSelect();
+                                }
+                            });
+                        }
+                    };
+
+                    var spvCombo = printForm.getCombo("spv_by");
+                    spvCombo.enableFilteringMode(true, 'spv_by');
+                    spvCombo.attachEvent("onDynXLS", spvComboFilter);
+
+                    function spvComboFilter(text){
+                        spvCombo.clearAll();
+                        if(text.length > 3) {
+                            dhx.ajax.get(User('getEmps', {name: text}), function(xml){
+                                if(xml.xmlDoc.responseText) {
+                                    spvCombo.load(xml.xmlDoc.responseText);
+                                    spvCombo.openSelect();
+                                }
+                            });
+                        }
+                    };
+
+                    formToolbar.attachEvent("onClick", function(id) {
+                        switch (id) {
+                            case "save":
+                                if(!printForm.validate()) {
+                                    return eAlert("Input error!");
+                                }
+
+                                printLayout.cells("a").progressOn();
+                                formToolbar.disableItem("save");
+                                let printFormDP = new dataProcessor(Production("createSpPrint"));
+                                printFormDP.init(printForm);
+                                printForm.save();
+
+                                printFormDP.attachEvent("onAfterUpdate", function (id, action, tid, tag) {
+                                    let message = tag.getAttribute("message");
+                                    switch (action) {
+                                        case "inserted":
+                                            sAlert("Berhasil Menambahkan Record <br>" + message);
+                                            formToolbar.enableItem("save");
+                                            printLayout.cells("a").progressOff();
+                                            clearPrintForm();
+                                            rSpPrintGrid();
+                                            break;
+                                        case "error":
+                                            eAlert("Gagal Menambahkan Record <br>" + message);
+                                            formToolbar.enableItem("save");
+                                            printLayout.cells("a").progressOff();
+                                            break;
+                                    }
+                                });
+                                break;
+                            case "clear":
+                                clearPrintForm();
+                                break;
+                        }
+                    });
+
+                    function clearPrintForm() {
+                        printForm.setItemValue("letter_date", "");
+                        clearComboReload(printForm, "location_id", Production("getLocation"));
+                        clearComboOptions(printForm, "mfg_month");
+                        clearComboOptions(printForm, "mfg_year");
+                        clearComboOptions(printForm, "exp_month");
+                        clearComboOptions(printForm, "exp_year");
+                        clearComboReload(printForm, "packing_by", User("getEmps"));
+                        clearComboReload(printForm, "spv_by", User("getEmps"));
+                    }
+
+                    var gridToolbar = printLayout.cells("b").attachToolbar({
+                        icon_path: "./public/codebase/icons/",
+                        items: [
+                            {id: "print", text: "Cetak Surat Pack", type: "button", img: "print.png"},
+                            {id: "delete", text: "Hapus", type: "button", img: "delete.png"},
+                        ]
+                    });
+
+                    var spPrintGrid = printLayout.cells("b").attachGrid();
+                    spPrintGrid.setHeader("No,Nomor Batch,Produk,Kemasan,Tanggal Surat,Dikemas Oleh,Supervisor,Mfg Date,Exp Date,Created By");
+                    spPrintGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter")
+                    spPrintGrid.setColSorting("int,str,str,str,str,str,str,str,str,str");
+                    spPrintGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
+                    spPrintGrid.setColAlign("center,left,left,left,left,left,left,left,left,left");
+                    spPrintGrid.setInitWidthsP("5,15,25,25,20,20,20,20,20,20");
+                    spPrintGrid.enableSmartRendering(true);
+                    spPrintGrid.enableMultiselect(true);
+                    spPrintGrid.attachEvent("onXLE", function() {
+                        printLayout.cells("b").progressOff();
+                    });
+                    spPrintGrid.init();
+
+                    function rSpPrintGrid() {
+                        printLayout.cells("b").progressOn();
+                        spPrintGrid.clearAndLoad(Production("getSpPrint", {equal_no_batch: noBatch}));
+                    }
+
+                    rSpPrintGrid();
+
+                    gridToolbar.attachEvent("onClick", function(id) {
+                        switch (id) {
+                            case "print":
+                                if(!spPrintGrid.getSelectedRowId()) {
+                                    return eAlert("Pilih baris yang akan cetak!");
+                                }
+
+                                var qtySpWin = createWindow("qty_sp_win", "Jumlah Cetakan", 500, 300);
+                                myWins.window("qty_sp_win").skipMyCloseEvent = true;
+                                
+                                qtySpForm = qtySpWin.attachForm([
+                                    {type: "fieldset", offsetTop: 30, offsetLeft: 30, label: "Tambah Surat Pack", list: [
+                                        {type: "input", name: "no_batch", label: "No. Batch", labelWidth: 130, inputWidth:250, required: true, value: spPrintGrid.cells(spPrintGrid.getSelectedRowId(), 1).getValue()},
+                                        {type: "input", name: "product_desc", label: "Kemasan", labelWidth: 130, inputWidth:250, required: true, value: spPrintGrid.cells(spPrintGrid.getSelectedRowId(), 3).getValue()},
+                                        {type: "input", name: "total_print", label: "Jumlah Cetakan", labelWidth: 130, inputWidth:250, required: true},
+                                        {type: "input", name: "start_from", label: "Mulai Dari", labelWidth: 130, inputWidth:250, required: true},
+                                        {type: "block", offsetTop: 30, list: [
+                                            {type: "button", name: "print", className: "button_print", offsetLeft: 30, value: "Cetak"},
+                                        ]}
+                                    ]}
+                                ]);
+                                isFormNumeric(qtySpForm, ['total_print']);
+
+                                qtySpForm.attachEvent("onButtonClick", function(name) {
+                                    switch (name) {
+                                        case "print":
+                                            reqJson(Production("print"), "POST", {})
+                                            break;
+                                    }
+                                });
+                                break;
+                            case "delete":
+                                reqAction(spPrintGrid, Production("spPrintDelete"), 1, (err, res) => {
+                                    rSpPrintGrid();
+                                    res.mSuccess && sAlert("Sukses Menghapus Record <br>" + res.mSuccess);
+                                    res.mError && eAlert("Gagal Menghapus Record <br>" + res.mError);
+                                });
+                                break;
+                        }
+                    });
                     break;
             }
         });

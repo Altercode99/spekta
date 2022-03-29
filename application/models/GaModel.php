@@ -127,6 +127,7 @@ class GaModel extends CI_Model
                     FROM vehicles_reservation a, vehicles b
                     WHERE a.vehicle_id = b.id
                     AND a.location = '$this->empLoc'
+                    AND a.distance > 0
                     $where
                     GROUP BY a.vehicle_id
                     ORDER BY b.name ASC";     

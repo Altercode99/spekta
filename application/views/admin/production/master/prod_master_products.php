@@ -50,12 +50,12 @@ $script = <<< "JS"
         }
 
         var mProductGrid = mProductLayout.cells("a").attachGrid();
-        mProductGrid.setHeader("No,Nama Produk,Kode Produk,Created By,Updated By,DiBuat");
-        mProductGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter")
-        mProductGrid.setColSorting("int,str,str,str,str,str");
-        mProductGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        mProductGrid.setColAlign("center,left,left,left,left,left");
-        mProductGrid.setInitWidthsP("5,30,20,20,20,22");
+        mProductGrid.setHeader("No,Nama Produk,Kode Produk,Kemasan,Created By,Updated By,DiBuat");
+        mProductGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#text_filter")
+        mProductGrid.setColSorting("int,str,str,str,str,str,str");
+        mProductGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
+        mProductGrid.setColAlign("center,left,left,left,left,left,left");
+        mProductGrid.setInitWidthsP("5,30,30,20,20,20,22");
         mProductGrid.enableSmartRendering(true);
         mProductGrid.enableMultiselect(true);
         mProductGrid.attachEvent("onXLE", function() {
@@ -117,6 +117,7 @@ $script = <<< "JS"
                 {type: "fieldset", offsetTop: 30, offsetLeft: 30, label: "Tambah Produk", list: [
                     {type: "input", name: "name", label: "Nama Produk", labelWidth: 130, inputWidth:250, required: true},
                     {type: "input", name: "code", label: "Kode Produk", labelWidth: 130, inputWidth:250, required: true},
+                    {type: "input", name: "package_desc", label: "Kemasan", labelWidth: 130, inputWidth:250, required: true},
                     {type: "hidden", name: "filename", label: "Filename", readonly: true},
                     {type: "upload", name: "file_uploader", inputWidth: 420,
                         url: AppMaster("fileUpload", {save: false, folder: "products"}), 
@@ -219,6 +220,7 @@ $script = <<< "JS"
                     {type: "hidden", name: "id", label: "ID", readonly: true},
                     {type: "input", name: "name", label: "Nama Produk", labelWidth: 130, inputWidth:250, required: true},
                     {type: "input", name: "code", label: "Kode Produk", labelWidth: 130, inputWidth:250, required: true},
+                    {type: "input", name: "package_desc", label: "Kemasan", labelWidth: 130, inputWidth:250, required: true},
                     {type: "hidden", name: "filename", label: "Filename", readonly: true},
                     {type: "upload", name: "file_uploader", inputWidth: 420,
                         url: AppMaster("fileUpload", {save: false, folder: "products"}), 

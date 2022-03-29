@@ -22,6 +22,7 @@ class ProductionController extends Erp_Controller
             $xml .= "<cell>" . cleanSC($no) . "</cell>";
             $xml .= "<cell>" . cleanSC($prod->name) . "</cell>";
             $xml .= "<cell>" . cleanSC($prod->code) . "</cell>";
+            $xml .= "<cell>" . cleanSC($prod->package_desc) . "</cell>";
             $xml .= "<cell>" . cleanSC($prod->emp1) . "</cell>";
             $xml .= "<cell>" . cleanSC($prod->emp2) . "</cell>";
             $xml .= "<cell>" . cleanSC(toIndoDateTime($prod->created_at)) . "</cell>";
@@ -38,7 +39,7 @@ class ProductionController extends Erp_Controller
             $product = $this->Prod->getDataById('products', $params['id']);
             fetchFormData($product);
         } else {
-            $post = prettyText(getPost(), ['name']);
+            $post = prettyText(getPost(), ['package_desc'], ['name', 'code']);
             if (!isset($post['id'])) {
                 $this->createProduct($post);
             } else {
@@ -54,7 +55,7 @@ class ProductionController extends Erp_Controller
             'code' => $post['code'],
         ]);
         isExist(["Produk $post[name]" => $checkProduct]);
-
+        
         $post['location'] = empLoc();
         $post['created_by'] = empId();
         $post['updated_by'] = empId();
@@ -91,12 +92,17 @@ class ProductionController extends Erp_Controller
         $mSuccess = '';
         $datas = $post->datas;
         foreach ($datas as $id => $data) {
-            $product = $this->Prod->getDataById('products', $data->id);
-            $this->Prod->delete('products', ['id' => $data->id]);
-            if (file_exists('./assets/images/products/' . $product->filename)) {
-                unlink('./assets/images/products/' . $product->filename);
+            $checkBr = $this->Prod->getOne('spack_batch_numbers', ['product_id' => $data->id]);
+            if($checkBr) {
+                $mError .= "- $data->field sudah digunakan! <br>";
+            } else {
+                $product = $this->Prod->getDataById('products', $data->id);
+                $this->Prod->delete('products', ['id' => $data->id]);
+                if (file_exists('./assets/images/products/' . $product->filename)) {
+                    unlink('./assets/images/products/' . $product->filename);
+                }
+                $mSuccess .= "- $data->field berhasil dihapus <br>";
             }
-            $mSuccess .= "- $data->field berhasil dihapus <br>";
         }
         response(['status' => 'success', 'mError' => $mError, 'mSuccess' => $mSuccess]);
     }
@@ -127,8 +133,13 @@ class ProductionController extends Erp_Controller
         $mSuccess = '';
         $datas = $post->datas;
         foreach ($datas as $id => $data) {
-            $this->Prod->delete('spack_locations', ['id' => $data->id]);
-            $mSuccess .= "- $data->field berhasil dihapus <br>";
+            $checkPrint = $this->Prod->getOne('spack_prints', ['location_id' => $data->id]);
+            if($checkPrint) {
+                $mError .= "- $data->field sudah digunakan! <br>";
+            } else {
+                $this->Prod->delete('spack_locations', ['id' => $data->id]);
+                $mSuccess .= "- $data->field berhasil dihapus <br>";
+            }
         }
         response(['status' => 'success', 'mError' => $mError, 'mSuccess' => $mSuccess]);
     }
@@ -199,6 +210,21 @@ class ProductionController extends Erp_Controller
         echo json_encode($prodList);
     }
 
+    public function getLocation()
+    {
+        $params = getParam();
+        $locations = $this->Prod->getWhere('spack_locations', ['location' => empLoc()])->result();
+        $locs = [];
+        foreach ($locations as $loc) {
+            $locs['options'][] = [
+                'value' => $loc->id,
+                'text' => $loc->name,
+                'selected' => isset($params['select']) && $params['select'] == $prod->id ? 1 : 0,
+            ];
+        }
+        echo json_encode($locs);
+    }
+
     public function spEntryForm()
     {
         $params = getParam();
@@ -206,7 +232,7 @@ class ProductionController extends Erp_Controller
             $batch = $this->Prod->getDataById('spack_batch_numbers', $params['id']);
             fetchFormData($batch);
         } else {
-            $post = prettyText(getPost(), ['name']);
+            $post = prettyText(getPost(), null, ['no_batch']);
             if (!isset($post['id'])) {
                 $this->createSpBatch($post);
             } else {
@@ -217,6 +243,7 @@ class ProductionController extends Erp_Controller
 
     public function createSpBatch($post)
     {
+        $post['no_batch'] = str_replace(' ', '', strtoupper($post['no_batch']));
         $check = $this->Prod->getOne('spack_batch_numbers', [
             'no_batch' => $post['no_batch'],
         ]);
@@ -233,13 +260,18 @@ class ProductionController extends Erp_Controller
 
     public function updateSpBatch($post)
     {
+        $post['no_batch'] = str_replace(' ', '', strtoupper($post['no_batch']));
         $batch = $this->Prod->getDataById('spack_batch_numbers', $post['id']);
         isDelete(["Nomor Batch $post[no_batch]" => $batch]);
+
+        $checkPrint = $this->Prod->getOne('spack_prints', ['no_batch' => $post['no_batch']]);
+        if($checkPrint) {
+            xmlResponse('error', "$post[no_batch] sudah digunakan & tidak bisa di edit, silahkan buat entry baru!");
+        } 
 
         if ($batch->no_batch != $post['no_batch'] || $batch->product_id != $post['product_id']) {
             $check = $this->Prod->getOne('spack_batch_numbers', [
                 'no_batch' => $post['no_batch'],
-                'product_id' => $post['product_id'],
             ]);
             isExist(["Nomor Batch $post[no_batch]" => $check]);
         }
@@ -275,10 +307,89 @@ class ProductionController extends Erp_Controller
         $mSuccess = '';
         $datas = $post->datas;
         foreach ($datas as $id => $data) {
-            $this->Prod->delete('spack_batch_numbers', ['id' => $data->id]);
-            $mSuccess .= "- $data->field berhasil dihapus <br>";
+            $noBatch = $this->Prod->getDataById('spack_batch_numbers', $data->id)->no_batch;
+            $checkPrint = $this->Prod->getOne('spack_prints', ['no_batch' => $noBatch]);
+            if($checkPrint) {
+                $mError .= "- $data->field sudah digunakan! <br>";
+            } else {
+                $this->Prod->delete('spack_batch_numbers', ['id' => $data->id]);
+                $mSuccess .= "- $data->field berhasil dihapus <br>";
+            }
         }
         response(['status' => 'success', 'mError' => $mError, 'mSuccess' => $mSuccess]);
     }
 
+    public function createSpPrint()
+    {
+        $post = getPost();
+        $checkPackingBy = $this->Hr->getOne('employees', ['nip' => $post['packing_by']]);
+        $checkSpvBy = $this->Hr->getOne('employees', ['nip' => $post['spv_by']]);
+
+        $batch = $this->Prod->getOne('spack_batch_numbers', ['no_batch' => $post['no_batch']]);
+        isDelete(["Nomor Batch $post[no_batch]" => $batch]);
+
+        if(!$checkPackingBy || !$checkSpvBy) {
+            xmlResponse('error', 'Operator kemas / Spv tidak valid!');
+        }
+        
+        $check = $this->Prod->getOne('spack_prints', [
+            'letter_date' => $post['letter_date'],
+            'no_batch' => $post['no_batch'],
+            'product_id' => $batch->product_id,
+            'location_id' => $post['location_id'],
+            'mfg_month' => $post['mfg_month'],
+            'mfg_year' => $post['mfg_year'],
+            'exp_month' => $post['exp_month'],
+            'exp_year' => $post['exp_year'],
+        ]);
+        isExist(["Surat Pack" => $check]);
+        unset($post['product_name']);
+        $post['product_id'] = $batch->product_id;
+        $post['packing_by'] = $checkPackingBy->id;
+        $post['spv_by'] = $checkSpvBy->id;
+        $post['created_by'] = empId();
+
+        $insertId = $this->Prod->create('spack_prints', $post);
+        xmlResponse('inserted', $post['no_batch']);
+    }
+
+    public function getSpPrint()
+    {
+        $params = getParam();
+        $prints = $this->ProdModel->getSpPrint($params)->result();
+        $xml = "";
+        $no = 1;
+        foreach ($prints as $print) {
+            $lDate = $print->location.", ".toIndoDate($print->letter_date);
+            $mfgDate = mToMonth($print->mfg_month).' '.$print->mfg_year;
+            $expDate = mToMonth($print->exp_month).' '.$print->exp_year;
+            $xml .= "<row id='$print->id'>";
+            $xml .= "<cell>" . cleanSC($no) . "</cell>";
+            $xml .= "<cell>" . cleanSC($print->no_batch) . "</cell>";
+            $xml .= "<cell>" . cleanSC($print->product_name) . "</cell>";
+            $xml .= "<cell>" . cleanSC($print->package_desc) . "</cell>";
+            $xml .= "<cell>" . cleanSC($lDate) . "</cell>";
+            $xml .= "<cell>" . cleanSC($print->packing_by) . "</cell>";
+            $xml .= "<cell>" . cleanSC($print->spv_by) . "</cell>";
+            $xml .= "<cell>" . cleanSC($mfgDate) . "</cell>";
+            $xml .= "<cell>" . cleanSC($expDate) . "</cell>";
+            $xml .= "<cell>" . cleanSC($print->emp1) . "</cell>";
+            $xml .= "</row>";
+            $no++;
+        }
+        gridXmlHeader($xml);
+    }
+
+    public function spPrintDelete()
+    {
+        $post = fileGetContent();
+        $mError = '';
+        $mSuccess = '';
+        $datas = $post->datas;
+        foreach ($datas as $id => $data) {
+            $this->Prod->delete('spack_prints', ['id' => $data->id]);
+            $mSuccess .= "- $data->field berhasil dihapus <br>";
+        }
+        response(['status' => 'success', 'mError' => $mError, 'mSuccess' => $mSuccess]);
+    }
 }

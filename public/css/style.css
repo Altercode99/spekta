@@ -139,6 +139,14 @@ div.dhxform_item_label_left.button_refresh div.dhxform_btn_txt {
     margin: 0px 15px 0px 12px;
 }
 
+div.dhxform_item_label_left.button_print div.dhxform_btn_txt {
+    background-image: url(../codebase/icons/print.png);
+    background-repeat: no-repeat;
+    background-position: 0px 3px;
+    padding-left: 22px;
+    margin: 0px 15px 0px 12px;
+}
+
 /*end image for button*/
 
 .dhxtoolbar_input {

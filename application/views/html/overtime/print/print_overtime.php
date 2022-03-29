@@ -20,6 +20,13 @@ class PDF extends PDF_MC_Table
 
         $fontSize1 = 12;
         $fontSize2 = 10;
+        $start = date('Y-m-d', strtotime($ovt->start_date));
+        $end = date('Y-m-d', strtotime($ovt->end_date));
+        if($start != $end) {
+            $rangeDate = toIndoDateDay($start) .' - '.toIndoDateDay($end);
+        } else {
+            $rangeDate = toIndoDateDay($start);
+        }
         $this->SetFont('Times', '', $fontSize1);
         $this->Cell(50, 5, '1. Bagian', 0, 0, 'L');
         $this->Cell(130, 5, ': ' . $ovt->sub_department, 0, 0, 'L');
@@ -30,7 +37,7 @@ class PDF extends PDF_MC_Table
         $this->Cell(50, 5, '3. Target Pengerjaan', 0, 0, 'L');
         $this->Ln();
         $this->Cell(50, 5, '    Hari/Tanggal', 0, 0, 'L');
-        $this->Cell(130, 5, ': ' . toIndoDateDay($ovt->overtime_date), 0, 0, 'L');
+        $this->Cell(130, 5, ': ' . $rangeDate, 0, 0, 'L');
         $this->Ln();
         $this->Cell(50, 5, '4. Jam Mulai', 0, 0, 'L');
         $this->Cell(130, 5, ': ' . getTime($ovt->start_date), 0, 0, 'L');
@@ -45,17 +52,17 @@ class PDF extends PDF_MC_Table
         $this->SetFont('Times', '', $fontSize2);
         $this->Cell(7, 10, 'No', 1, 0, 'C');
         $this->Cell(50, 10, 'Nama', 1, 0, 'C');
-        $this->Cell(65, 10, 'Tugas', 1, 0, 'C');
-        $this->Cell(63, 5, 'Realisasi', 1, 0, 'C');
+        $this->Cell(73, 10, 'Tugas', 1, 0, 'C');
+        $this->Cell(55, 5, 'Realisasi', 1, 0, 'C');
         $this->Ln(5);
-        $this->Cell(122, 5, '', 0, 0, 'C');
+        $this->Cell(130, 5, '', 0, 0, 'C');
         $this->Cell(20, 5, 'Jam Mulai', 1, 0, 'C');
         $this->Cell(20, 5, 'Jam Selesai', 1, 0, 'C');
-        $this->Cell(23, 5, 'Jam Overtime', 1, 0, 'C');
+        $this->Cell(15, 5, 'Jam Hit', 1, 0, 'C');
         $this->Ln();
 
         $this->SetFont('Times', '', $fontSize2);
-        $this->SetWidths([7, 50, 65, 20, 20, 23]);
+        $this->SetWidths([7, 50, 73, 20, 20, 15]);
         $no = 1;
         foreach ($ovtDetail as $ovtD) {
             if($ovtD->status != 'CANCELED' && $ovtD != 'REJECTED') {
@@ -72,6 +79,7 @@ class PDF extends PDF_MC_Table
         }
 
         $this->Ln(5);
+        $this->Cell(0.01, $isPPIC ? 100 : 80, $ovt->overtime_review, 0, 0, 'L');
         $this->Cell(57, 5, 'Approval Supervisor', 1, 0, 'C');
         $this->Cell(128, 5, 'Evaluasi Overtime', 1, 0, 'C');
         $this->Ln();

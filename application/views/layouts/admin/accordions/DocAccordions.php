@@ -20,7 +20,7 @@ $script = <<<"JS"
             docTree.attachEvent("onClick", function(id) {
                 res.depts.map(dept => {
                     dept.items.map(sub => {
-                        return id === sub.id && detailDocumentTab(sub)
+                        return id === sub.id && detailDocumentTab(sub);
                     });
                 });
             });
