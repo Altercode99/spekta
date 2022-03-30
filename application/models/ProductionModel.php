@@ -77,7 +77,7 @@ class ProductionModel extends CI_Model
     public function getSpPrint($params)
     {
         $where = advanceSearch($params);
-        $sql = "SELECT a.*,b.name AS product_name,b.package_desc,c.name AS location,
+        $sql = "SELECT a.*,b.name AS product_name,b.package_desc,b.product_type,c.name AS location,
                        (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.packing_by) AS packing_by,
                        (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.spv_by) AS spv_by,
                        (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.created_by) AS emp1

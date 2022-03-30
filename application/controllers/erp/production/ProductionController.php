@@ -22,6 +22,7 @@ class ProductionController extends Erp_Controller
             $xml .= "<cell>" . cleanSC($no) . "</cell>";
             $xml .= "<cell>" . cleanSC($prod->name) . "</cell>";
             $xml .= "<cell>" . cleanSC($prod->code) . "</cell>";
+            $xml .= "<cell>" . cleanSC($prod->product_type) . "</cell>";
             $xml .= "<cell>" . cleanSC($prod->package_desc) . "</cell>";
             $xml .= "<cell>" . cleanSC($prod->emp1) . "</cell>";
             $xml .= "<cell>" . cleanSC($prod->emp2) . "</cell>";
@@ -39,7 +40,7 @@ class ProductionController extends Erp_Controller
             $product = $this->Prod->getDataById('products', $params['id']);
             fetchFormData($product);
         } else {
-            $post = prettyText(getPost(), ['package_desc'], ['name', 'code']);
+            $post = prettyText(getPost(), ['package_desc']);
             if (!isset($post['id'])) {
                 $this->createProduct($post);
             } else {
@@ -333,6 +334,7 @@ class ProductionController extends Erp_Controller
         }
         
         $check = $this->Prod->getOne('spack_prints', [
+            'makloon' => $post['makloon'],
             'letter_date' => $post['letter_date'],
             'no_batch' => $post['no_batch'],
             'product_id' => $batch->product_id,
@@ -407,6 +409,7 @@ class ProductionController extends Erp_Controller
                     'no_batch' => $print->no_batch,
                     'product_name' => $print->product_name,
                     'package_desc_ori' => $print->package_desc,
+                    'product_type' => $print->product_type,
                     'package_desc' => $params['package_desc'],
                     'mfg_date' => $mfgDate,
                     'exp_date' => $expDate,
@@ -414,6 +417,7 @@ class ProductionController extends Erp_Controller
                     'spv_by' => $print->spv_by,
                     'total_print' => $params['total_print'],
                     'start_from' => $params['start_from'],
+                    'makloon' => $print->makloon
                 ];
                 $this->load->view('html/surat_pack/print', $data);
             } else {

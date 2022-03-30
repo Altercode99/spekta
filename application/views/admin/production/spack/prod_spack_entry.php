@@ -215,6 +215,12 @@ $script = <<< "JS"
                                 validate: "NotEmpty", 
                                 options: years
                             },
+                            {type: "combo", name: "makloon", label: "Makloon", readonly: true, labelWidth: 130, inputWidth: 250,
+                                options:[
+                                    {value: '', text: "-Kosongkan Jika Bukan Makloon-"},
+                                    {value: 'PHA-SOLINDO', text: "PHA-SOLINDO"},
+                                ]
+                            },
                         ]},
                     ]);
 
@@ -292,6 +298,7 @@ $script = <<< "JS"
 
                     function clearPrintForm() {
                         printForm.setItemValue("letter_date", "");
+                        printForm.setItemValue("makloon", "");
                         clearComboReload(printForm, "location_id", Production("getLocation"));
                         clearComboOptions(printForm, "mfg_month");
                         clearComboOptions(printForm, "mfg_year");

@@ -6,13 +6,18 @@
     <br>
     <br>
     <br>
+    <br>
+    <br>
+    <?php if($i > 1) { ?>
+        <br>
+    <?php } ?>
     <div class="date_container">
         <p class="font"><?= $letter_date ?></p>
         <p class="font-bold"><?= ($i - 1) + $start_from ?></p>
     </div>
 
     <div class="body_letter">
-        <div class="title font-bold">SURAT PACK</div>
+        <div class="title font-spack">SURAT PAK</div>
         <br />
         <div class="field">
             <table class="spack_table">
@@ -29,16 +34,16 @@
                 <tr>
                     <td class="font">NO. BATCH</td>
                     <td class="font">:</td>
-                    <td class="font"><?= $no_batch ?></td>
+                    <td class="font"><b><?= $no_batch ?></b></td>
                 </tr>
                 <tr>
                     <td class="font">EXP. DATE</td>
                     <td class="font">:</td>
-                    <td class="font"><?= $exp_date ?></td>
+                    <td class="font"><b><?= $exp_date ?></b></td>
                 </tr>
             </table>
             <?php if($package_desc != $package_desc_ori) { ?>
-                <div class="title font-middle">** ETHICAL **</div>
+                <div class="title font-middle">** <?= $product_type ?> **</div>
                 <div class="title font-middle">** ECERAN+LOS **</div>
             <?php } ?>
             <br />
@@ -46,12 +51,12 @@
                 <tr>
                     <td class="font">Dikemas Group</td>
                     <td class="font">:</td>
-                    <td class="font"><?= $packing_by ?></td>
+                    <td class="font"><?= ucwords(strtolower($packing_by)) ?></td>
                 </tr>
                 <tr>
                     <td class="font">Supervisor</td>
                     <td class="font">:</td>
-                    <td class="font"><?= $spv_by ?></td>
+                    <td class="font"><?= ucwords(strtolower($spv_by)) ?></td>
                 </tr>
             </table>
         </div>
@@ -67,7 +72,11 @@
         <div class="font">ED: <?= $exp_date ?></div>
         <br />
         <div class="font"><?= $product_name ?></div>
-        <div class="font">** ETHICAL **</div>
+        <div class="font">** <?= $makloon != '' ? $makloon : $product_type ?> **</div>
+    </div>
+
+    <div class="cpr">
+      <p style="font-size:10px">-Hardware & Network-</p>
     </div>
 </div>
 <?php } ?>
@@ -79,7 +88,7 @@
 <style>
     .spack_container {
         position: relative;
-        width: 95%;
+        width: 98%;
         height: 650px;
     }
 
@@ -97,17 +106,25 @@
     }
 
     .font {
-        font-size:12px;
+        font-size:13px;
+        font-family: "Times New Roman", Times, serif;
     }
 
     .font-bold {
         font-weight:bold;
-        font-size:14px;
+        font-size:16px;
+        font-family: "Times New Roman", Times, serif;
     }
 
     .font-middle {
         font-size:18px;
         font-style: italic;
+        font-family: "Times New Roman", Times, serif;
+    }
+
+    .font-spack {
+        font-size:20px;
+        font-family: "Times New Roman", Times, serif;
     }
 
     .spack_table td td {
@@ -118,7 +135,15 @@
         text-align: right;
         width: 100%;
         position: absolute;
-        bottom: 0;
+        bottom: 20;
         right: 0;
+    }
+
+    .cpr {
+        text-align: left;
+        width: 100%;
+        position: absolute;
+        bottom: 20;
+        left: 0;
     }
 </style>
