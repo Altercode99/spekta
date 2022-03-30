@@ -17,7 +17,7 @@
     </div>
 
     <div class="body_letter">
-        <div class="title font-spack">SURAT PAK</div>
+        <div class="title font-spack"><?= $product_type ?></div>
         <br />
         <div class="field">
             <table class="spack_table">

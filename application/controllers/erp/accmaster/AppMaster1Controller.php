@@ -1268,7 +1268,7 @@ class AppMaster1Controller extends Erp_Controller
         $id = $post->id;
         $isExist = false;
         if (!$id) {
-            $checkProduct = $this->Prod->getOne('products', [
+            $checkProduct = $this->Prod->getOne('spack_products', [
                 'name' => $post->name,
                 'code' => $post->code,
             ]);
@@ -1276,10 +1276,10 @@ class AppMaster1Controller extends Erp_Controller
                 $isExist = true;
             }
         } else {
-            $product = $this->Prod->getDataById('products', $id);
+            $product = $this->Prod->getDataById('spack_products', $id);
             if ($product) {
                 if ($product->name != $post->name) {
-                    $checkProduct = $this->Prod->getOne('products', [
+                    $checkProduct = $this->Prod->getOne('spack_products', [
                         'name' => $post->name,
                         'code' => $post->code,
                     ]);

@@ -37,7 +37,7 @@ class ProductionController extends Erp_Controller
     {
         $params = getParam();
         if (isset($params['id'])) {
-            $product = $this->Prod->getDataById('products', $params['id']);
+            $product = $this->Prod->getDataById('spack_products', $params['id']);
             fetchFormData($product);
         } else {
             $post = prettyText(getPost(), ['package_desc']);
@@ -51,7 +51,7 @@ class ProductionController extends Erp_Controller
 
     public function createProduct($post)
     {
-        $checkProduct = $this->Prod->getOne('products', [
+        $checkProduct = $this->Prod->getOne('spack_products', [
             'name' => $post['name'],
             'code' => $post['code'],
         ]);
@@ -62,17 +62,17 @@ class ProductionController extends Erp_Controller
         $post['updated_by'] = empId();
         $post['updated_at'] = date('Y-m-d H:i:s');
 
-        $insertId = $this->Prod->create('products', $post);
+        $insertId = $this->Prod->create('spack_products', $post);
         xmlResponse('inserted', $post['name']);
     }
 
     public function updateProduct($post)
     {
-        $product = $this->Prod->getDataById('products', $post['id']);
+        $product = $this->Prod->getDataById('spack_products', $post['id']);
         isDelete(["Produk $post[name]" => $product]);
 
         if ($product->name != $post['name']) {
-            $checkProduct = $this->Prod->getOne('products', [
+            $checkProduct = $this->Prod->getOne('spack_products', [
                 'name' => $post['name'],
                 'code' => $post['code'],
             ]);
@@ -82,7 +82,7 @@ class ProductionController extends Erp_Controller
         $post['updated_by'] = empId();
         $post['updated_at'] = date('Y-m-d H:i:s');
 
-        $this->Prod->updateById('products', $post, $post['id']);
+        $this->Prod->updateById('spack_products', $post, $post['id']);
         xmlResponse('updated', $post['name']);
     }
 
@@ -97,10 +97,10 @@ class ProductionController extends Erp_Controller
             if($checkBr) {
                 $mError .= "- $data->field sudah digunakan! <br>";
             } else {
-                $product = $this->Prod->getDataById('products', $data->id);
-                $this->Prod->delete('products', ['id' => $data->id]);
-                if (file_exists('./assets/images/products/' . $product->filename)) {
-                    unlink('./assets/images/products/' . $product->filename);
+                $product = $this->Prod->getDataById('spack_products', $data->id);
+                $this->Prod->delete('spack_products', ['id' => $data->id]);
+                if (file_exists('./assets/images/spack_products/' . $product->filename)) {
+                    unlink('./assets/images/spack_products/' . $product->filename);
                 }
                 $mSuccess .= "- $data->field berhasil dihapus <br>";
             }
@@ -370,6 +370,7 @@ class ProductionController extends Erp_Controller
             $xml .= "<cell>" . cleanSC($print->no_batch) . "</cell>";
             $xml .= "<cell>" . cleanSC($print->product_name) . "</cell>";
             $xml .= "<cell>" . cleanSC($print->package_desc) . "</cell>";
+            $xml .= "<cell>" . cleanSC($print->makloon ? $print->makloon : '-') . "</cell>";
             $xml .= "<cell>" . cleanSC($lDate) . "</cell>";
             $xml .= "<cell>" . cleanSC($print->packing_by) . "</cell>";
             $xml .= "<cell>" . cleanSC($print->spv_by) . "</cell>";

@@ -134,7 +134,7 @@ $script = <<< "JS"
                     var printLayout = spEntryTabs.cells(tabName).attachLayout({
                         pattern: "2E",
                         cells: [
-                            {id: "a", text: "Form Cetak No. Batch: " + noBatch, height: 330},
+                            {id: "a", text: "Form Cetak No. Batch: " + noBatch, height: 350},
                             {id: "b", header : false},
                         ]
                     });
@@ -155,10 +155,16 @@ $script = <<< "JS"
                         years.push({value: i, text: i});
                     }
                     var printForm = printLayout.cells("a").attachForm([
-                        {type: "block", offsetTop: 30, list: [
+                        {type: "block", offsetTop: 10, list: [
                             {type: "calendar", name: "letter_date", label: "Tanggal", labelWidth: 130, inputWidth:250, required: true, readonly:true},
                             {type: "input", name: "no_batch", label: "No. Batch", labelWidth: 130, inputWidth:250, required: true, readonly:true, value: noBatch},
                             {type: "input", name: "product_name", label: "Produk", labelWidth: 130, inputWidth:250, required: true, readonly:true, value: productName},
+                            {type: "combo", name: "makloon", label: "Makloon", readonly: true, labelWidth: 130, inputWidth: 250,
+                                options:[
+                                    {value: '', text: "-Kosongkan Jika Bukan Makloon-"},
+                                    {value: 'PHA-SOLINDO', text: "PHA-SOLINDO"},
+                                ]
+                            },
                             {type: "combo", name: "location_id", label: "Lokasi", labelWidth: 130, inputWidth: 250, readonly: true, required: true},
                             {type: "combo", name: "packing_by", label: "Dikemas Oleh", labelWidth: 130, inputWidth: 250, 
                                 validate: "NotEmpty", 
@@ -170,7 +176,7 @@ $script = <<< "JS"
                             },
                         ]}, 
                         {type: "newcolumn"},
-                        {type: "block", offsetTop: 30, list: [
+                        {type: "block", offsetTop: 10, list: [
                             {type: "combo", name: "mfg_month", label: "Mfg. Bulan", readonly: true, required: true, labelWidth: 130, inputWidth: 250,
                                 validate: "NotEmpty", 
                                 options:[
@@ -214,12 +220,6 @@ $script = <<< "JS"
                             {type: "combo", name: "exp_year", label: "Exp. Tahun", readonly: true, required: true, labelWidth: 130, inputWidth: 250,
                                 validate: "NotEmpty", 
                                 options: years
-                            },
-                            {type: "combo", name: "makloon", label: "Makloon", readonly: true, labelWidth: 130, inputWidth: 250,
-                                options:[
-                                    {value: '', text: "-Kosongkan Jika Bukan Makloon-"},
-                                    {value: 'PHA-SOLINDO', text: "PHA-SOLINDO"},
-                                ]
                             },
                         ]},
                     ]);
@@ -317,12 +317,12 @@ $script = <<< "JS"
                     });
 
                     var spPrintGrid = printLayout.cells("b").attachGrid();
-                    spPrintGrid.setHeader("No,Nomor Batch,Produk,Kemasan,Tanggal Surat,Dikemas Oleh,Supervisor,Mfg Date,Exp Date,Created By");
-                    spPrintGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter")
-                    spPrintGrid.setColSorting("int,str,str,str,str,str,str,str,str,str");
-                    spPrintGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-                    spPrintGrid.setColAlign("center,left,left,left,left,left,left,left,left,left");
-                    spPrintGrid.setInitWidthsP("5,15,25,25,20,20,20,20,20,20");
+                    spPrintGrid.setHeader("No,Nomor Batch,Produk,Kemasan,Makloon,Tanggal Surat,Dikemas Oleh,Supervisor,Mfg Date,Exp Date,Created By");
+                    spPrintGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter")
+                    spPrintGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str");
+                    spPrintGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
+                    spPrintGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left");
+                    spPrintGrid.setInitWidthsP("5,15,25,25,20,20,20,20,20,20,20");
                     spPrintGrid.enableSmartRendering(true);
                     spPrintGrid.enableMultiselect(true);
                     spPrintGrid.attachEvent("onXLE", function() {

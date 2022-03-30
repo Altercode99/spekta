@@ -24,7 +24,7 @@ class ProductionModel extends CI_Model
         $sql = "SELECT a.*,
                        (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.created_by) AS emp1,
                        (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.updated_by) AS emp2
-                       FROM $this->kf_prod.products a
+                       FROM $this->kf_prod.spack_products a
                        WHERE a.location = '$this->empLoc'
                        $where";
                     
@@ -66,7 +66,7 @@ class ProductionModel extends CI_Model
         $sql = "SELECT a.*,b.name AS product_name,
                        (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.created_by) AS emp1,
                        (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.updated_by) AS emp2
-                       FROM $this->kf_prod.spack_batch_numbers a, $this->kf_prod.products b
+                       FROM $this->kf_prod.spack_batch_numbers a, $this->kf_prod.spack_products b
                        WHERE a.product_id = b.id
                        AND a.location = '$this->empLoc'
                        $where";
@@ -81,7 +81,7 @@ class ProductionModel extends CI_Model
                        (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.packing_by) AS packing_by,
                        (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.spv_by) AS spv_by,
                        (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.created_by) AS emp1
-                       FROM $this->kf_prod.spack_prints a, $this->kf_prod.products b, $this->kf_prod.spack_locations c
+                       FROM $this->kf_prod.spack_prints a, $this->kf_prod.spack_products b, $this->kf_prod.spack_locations c
                        WHERE a.product_id = b.id
                        AND a.location_id = c.id
                        $where";
