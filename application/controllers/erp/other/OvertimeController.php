@@ -1206,6 +1206,18 @@ class OvertimeController extends Erp_Controller
             xmlResponse('error', 'Ada waktu lembur karyawan yang lebih kecil dari ' . toIndoDateTime($startDate) . ', silahkan cek kembali!');
         }
 
+        $dateStart = new DateTime($startDate);
+        $dateEnd = new DateTime($endDate);
+        if ($dateEnd <= $dateStart) {
+            $endDate = addDayToDate($endDate, 1);
+        } else if($dateEnd > $dateStart) {
+            $currStart = date('Y-m-d', strtotime($startDate));
+            $currEnd = date('Y-m-d', strtotime($endDate));
+            if($currStart != $currEnd) {
+                $endDate = backDayToDate($endDate, 1);
+            }
+        }
+
         $checkEnd = $this->Hr->getWhere('employee_overtimes_detail',
             ['task_id' => $overtime->task_id, 'end_date >' => $endDate],
             'task_id', null, null, null, ['status' => ['CANCELED']]

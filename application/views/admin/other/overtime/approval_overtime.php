@@ -243,6 +243,12 @@ $script = <<< "JS"
                     startCombo.selectOption(startIndex);
                     endCombo.selectOption(endIndex);
 
+                    hourRevForm.attachEvent("onChange", function(name, value) {
+                        if(name === "start_date" || name === "end_date") {
+                            checkTime(startCombo, endCombo, ['update', 'cancel'], hourRevForm);
+                        }
+                    });
+
                     hourRevForm.attachEvent("onButtonClick", function(id) {
                         switch (id) {
                             case "update":
