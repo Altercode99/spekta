@@ -81,6 +81,17 @@ function toIndoDate($date)
     return $date[2] . " " . $month . " " . $date[0];
 }
 
+function spackDate($date)
+{
+    if ($date == '0000-00-00') {
+        return '-';
+    }
+
+    $date = explode("-", $date);
+    $month = mToMonth($date[1]);
+    return $date[2] . "-" . substr($month, 0, 3) . "-" . $date[0];
+}
+
 function toIndoDate2($date)
 {
     if ($date == '0000-00-00') {

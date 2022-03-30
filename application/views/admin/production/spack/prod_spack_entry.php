@@ -337,15 +337,15 @@ $script = <<< "JS"
                                     return eAlert("Pilih baris yang akan cetak!");
                                 }
 
-                                var qtySpWin = createWindow("qty_sp_win", "Jumlah Cetakan", 500, 300);
+                                var qtySpWin = createWindow("qty_sp_win", "Jumlah Cetakan", 500, 350);
                                 myWins.window("qty_sp_win").skipMyCloseEvent = true;
                                 
                                 qtySpForm = qtySpWin.attachForm([
-                                    {type: "fieldset", offsetTop: 30, offsetLeft: 30, label: "Tambah Surat Pack", list: [
-                                        {type: "input", name: "no_batch", label: "No. Batch", labelWidth: 130, inputWidth:250, required: true, value: spPrintGrid.cells(spPrintGrid.getSelectedRowId(), 1).getValue()},
-                                        {type: "input", name: "product_desc", label: "Kemasan", labelWidth: 130, inputWidth:250, required: true, value: spPrintGrid.cells(spPrintGrid.getSelectedRowId(), 3).getValue()},
-                                        {type: "input", name: "total_print", label: "Jumlah Cetakan", labelWidth: 130, inputWidth:250, required: true},
-                                        {type: "input", name: "start_from", label: "Mulai Dari", labelWidth: 130, inputWidth:250, required: true},
+                                    {type: "fieldset", offsetTop: 30, offsetLeft: 30, list: [
+                                        {type: "input", name: "no_batch", label: "No. Batch", labelWidth: 130, inputWidth:250, required: true, readonly: true, value: spPrintGrid.cells(spPrintGrid.getSelectedRowId(), 1).getValue()},
+                                        {type: "input", name: "package_desc", label: "Kemasan", labelWidth: 130, inputWidth:250, required: true, value: spPrintGrid.cells(spPrintGrid.getSelectedRowId(), 3).getValue()},
+                                        {type: "input", name: "total_print", label: "Jumlah Cetakan", labelWidth: 130, inputWidth:250, required: true, validate:"ValidNumeric"},
+                                        {type: "input", name: "start_from", label: "Mulai Dari", labelWidth: 130, inputWidth:250, required: true, validate:"ValidNumeric"},
                                         {type: "block", offsetTop: 30, list: [
                                             {type: "button", name: "print", className: "button_print", offsetLeft: 30, value: "Cetak"},
                                         ]}
@@ -356,7 +356,30 @@ $script = <<< "JS"
                                 qtySpForm.attachEvent("onButtonClick", function(name) {
                                     switch (name) {
                                         case "print":
-                                            reqJson(Production("print"), "POST", {})
+                                            if(!qtySpForm.validate()) {
+                                                return eAlert("Input error!");
+                                            }
+
+                                            let totalPrint = qtySpForm.getItemValue("total_print");
+                                            let startFrom = qtySpForm.getItemValue("start_from");
+
+                                            if(totalPrint <= 0) {
+                                                return eAlert("Jumlah Cetakan harus lebih besar dari 0");
+                                            }
+
+                                            if(startFrom <= 0) {
+                                                return eAlert("Mulai Dari harus lebih besar dari 0");
+                                            }
+
+                                            let dataPrint = {
+                                                id: spPrintGrid.getSelectedRowId(),
+                                                no_batch: qtySpForm.getItemValue("no_batch"),
+                                                package_desc: qtySpForm.getItemValue("package_desc"),
+                                                total_print: totalPrint,
+                                                start_from: startFrom,
+                                            };
+                                            
+                                            window.open(Production("doSpPrint", dataPrint), '_blank', 'location=yes,height=650,width=450,scrollbars=yes,status=yes');
                                             break;
                                     }
                                 });

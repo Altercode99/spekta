@@ -99,12 +99,12 @@ $script = <<< "JS"
 
         var sumOvtGrid = sumOvtTabs.cells("a").attachGrid();
         sumOvtGrid.setImagePath("./public/codebase/imgs/");
-        sumOvtGrid.setHeader("No,Task ID,No. Memo Lembur,Nama Karyawan,Bagian,Sub Bagian,,,Nama Mesin #1,Nama Mesin #2,Pelayanan,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Premi,Nominal Overtime,Makan,Biaya Makan,Status Overtime,Created At");
+        sumOvtGrid.setHeader("No,Task ID,No. Memo Lembur,Nama Karyawan,Bagian,Sub Bagian,,,Nama Mesin,,Pelayanan Produksi,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Premi,Nominal Overtime,Makan,Biaya Makan,Status Overtime,Created At");
         sumOvtGrid.attachHeader("#rspan,#text_filter,#select_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#select_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#select_filter,#text_filter")
         sumOvtGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
         sumOvtGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
         sumOvtGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        sumOvtGrid.setInitWidthsP("5,20,20,20,20,20,0,0,20,20,20,15,15,15,10,10,10,10,10,10,13,5,10,10,22");
+        sumOvtGrid.setInitWidthsP("5,20,20,20,20,20,0,0,20,0,20,15,15,15,10,10,10,10,10,10,13,5,10,10,22");
         sumOvtGrid.attachFooter(",Total Summary,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#stat_total,#stat_total,#stat_total,#stat_total,,<div id='"+total_sum_overtime+"'>0</div>,,<div id='"+total_meal_sum_overtime+"'>0</div>,,");
         sumOvtGrid.attachFooter(",Total Biaya Lembur,<div id='"+grand_sum_overtime+"'>0</div>");
         sumOvtGrid.attachFooter(",Total Biaya Makan,<div id='"+grand_meal_sum_overtime+"'>0</div>");

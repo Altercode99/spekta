@@ -392,4 +392,35 @@ class ProductionController extends Erp_Controller
         }
         response(['status' => 'success', 'mError' => $mError, 'mSuccess' => $mSuccess]);
     }
+
+    public function doSpPrint()
+    {
+        $params = getParam();
+        if(isset($params['id']) && isset($params['no_batch']) && isset($params['package_desc']) && isset($params['total_print']) && isset($params['start_from'])) {
+            $print = $this->ProdModel->getSpPrint(['equal_id' => $params['id']])->row();
+            if($print) {
+                $mfgDate = strtoupper(substr(mToMonth($print->mfg_month), 0, 3)) . ' ' . substr($print->mfg_year, 0, 2);
+                $expDate = strtoupper(substr(mToMonth($print->exp_month), 0, 3)) . ' ' . substr($print->exp_year, 0, 2);
+                $data = [
+                    'letter_date' => $print->location . ', ' .spackDate($print->letter_date),
+                    'footer_date' => spackDate($print->letter_date),
+                    'no_batch' => $print->no_batch,
+                    'product_name' => $print->product_name,
+                    'package_desc_ori' => $print->package_desc,
+                    'package_desc' => $params['package_desc'],
+                    'mfg_date' => $mfgDate,
+                    'exp_date' => $expDate,
+                    'packing_by' => $print->packing_by,
+                    'spv_by' => $print->spv_by,
+                    'total_print' => $params['total_print'],
+                    'start_from' => $params['start_from'],
+                ];
+                $this->load->view('html/surat_pack/print', $data);
+            } else {
+                $this->load->view('html/invalid_response', ['message' => 'Nomor Batch tidak ditemukan!']);
+            }
+        } else {
+            $this->load->view('html/invalid_response', ['message' => 'Parameter tidak valid!']);
+        }
+    }
 }

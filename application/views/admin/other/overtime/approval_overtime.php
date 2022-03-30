@@ -701,12 +701,12 @@ $script = <<< "JS"
 
         var ovtDetailGrid = appvTabs.cells("b").attachGrid();
         ovtDetailGrid.setImagePath("./public/codebase/imgs/");
-        ovtDetailGrid.setHeader("No,Task ID,Nama Karyawan,Tugas,Sub Unit,Bagian,Sub Bagian,Nama Mesin #1,Nama Mesin #2,Pelayanan Produksi,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Premi,Nominal Overtime,Makan,Status Overtime,Status Terakhir,Spv Approval,Created By,Updated By,Created At,");
+        ovtDetailGrid.setHeader("No,Task ID,Nama Karyawan,Tugas,Sub Unit,Bagian,Sub Bagian,Nama Mesin,,Pelayanan Produksi,Tanggal Overtime,Waktu Mulai,Waktu Selesai,Status Hari,Jam Efektif,Jam Istirahat,Jam Ril,Jam Hit,Premi,Nominal Overtime,Makan,Status Overtime,Status Terakhir,Spv Approval,Created By,Updated By,Created At,");
         ovtDetailGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#select_filter,#select_filter,#text_filter,#text_filter")
         ovtDetailGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
         ovtDetailGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
         ovtDetailGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        ovtDetailGrid.setInitWidthsP("5,20,20,25,20,20,20,20,20,20,15,15,15,10,10,10,10,10,10,10,5,10,25,25,15,15,22,0");
+        ovtDetailGrid.setInitWidthsP("5,20,20,25,20,20,20,20,0,20,15,15,15,10,10,10,10,10,10,10,5,10,25,25,15,15,22,0");
         ovtDetailGrid.attachFooter(legend.approval_overtime_spv+",#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#stat_total,#stat_total,#stat_total,#stat_total,,<div id='other_total_ovt_appv'></div>,,,,,,,,");
         ovtDetailGrid.enableSmartRendering(true);
         ovtDetailGrid.attachEvent("onXLE", function() {
