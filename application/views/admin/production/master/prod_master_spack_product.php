@@ -12,7 +12,14 @@ $script = <<< "JS"
         var fileError;
         var totalFile;
 
-        var mProductLayout = mainTab.cells("prod_master_products_product").attachLayout({
+        var comboUrl = {
+            producy_type: {
+                url: Production("getProductType"),
+                reload: true
+            },
+        }
+
+        var mProductLayout = mainTab.cells("prod_master_spack_product").attachLayout({
             pattern: "2U",
             cells: [{
                     id: "a",
@@ -27,7 +34,7 @@ $script = <<< "JS"
             ]
         });
 
-        var mProductToolbar = mainTab.cells("prod_master_products_product").attachToolbar({
+        var mProductToolbar = mainTab.cells("prod_master_spack_product").attachToolbar({
             icon_path: "./public/codebase/icons/",
             items: [
                 {id: "refresh", text: "Refresh", type: "button", img: "refresh.png"},
@@ -50,12 +57,12 @@ $script = <<< "JS"
         }
 
         var mProductGrid = mProductLayout.cells("a").attachGrid();
-        mProductGrid.setHeader("No,Nama Produk,Kode Produk,Tipe Produk,Kemasan,Created By,Updated By,DiBuat");
-        mProductGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#text_filter")
-        mProductGrid.setColSorting("int,str,str,str,str,str,str,str");
-        mProductGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-        mProductGrid.setColAlign("center,left,left,left,left,left,left,left");
-        mProductGrid.setInitWidthsP("5,30,20,20,30,20,20,22");
+        mProductGrid.setHeader("No,Nama Produk,Golongan Produk,Kemasan,Created By,Updated By,DiBuat");
+        mProductGrid.attachHeader("#rspan,#text_filter,#select_filter,#text_filter,#select_filter,#select_filter,#text_filter")
+        mProductGrid.setColSorting("int,str,str,str,str,str,str");
+        mProductGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
+        mProductGrid.setColAlign("center,left,left,left,left,left,left");
+        mProductGrid.setInitWidthsP("5,30,20,30,20,20,22");
         mProductGrid.enableSmartRendering(true);
         mProductGrid.enableMultiselect(true);
         mProductGrid.attachEvent("onXLE", function() {
@@ -116,17 +123,8 @@ $script = <<< "JS"
             addProductForm = mProductLayout.cells("b").attachForm([
                 {type: "fieldset", offsetTop: 30, offsetLeft: 30, label: "Tambah Produk", list: [
                     {type: "input", name: "name", label: "Nama Produk", labelWidth: 130, inputWidth:250, required: true},
-                    {type: "input", name: "code", label: "Kode Produk", labelWidth: 130, inputWidth:250, required: true},
                     {type: "input", name: "package_desc", label: "Kemasan", labelWidth: 130, inputWidth:250, required: true},
-                    {type: "combo", name: "product_type", label: "Tipe Produk", readonly: true, required: true, labelWidth: 130, inputWidth: 250,
-                        validate: "NotEmpty", 
-                        options:[
-                            {value: '', text: "-Pilih Tipe Produk-"},
-                            {value: 'ETHICAL', text: "ETHICAL"},
-                            {value: 'GENERIK', text: "GENERIK"},
-                            {value: 'BRANDED', text: "BRANDED"},
-                        ]
-                    },
+                    {type: "combo", name: "product_type", label: "Golongan Produk", labelWidth: 130, inputWidth: 250, readonly: true},
                     {type: "hidden", name: "filename", label: "Filename", readonly: true},
                     {type: "upload", name: "file_uploader", inputWidth: 420,
                         url: AppMaster("fileUpload", {save: false, folder: "products"}), 
@@ -142,6 +140,9 @@ $script = <<< "JS"
                     ]}
                 ]}
             ]);
+
+            var addTypeCombo = addProductForm.getCombo("product_type");
+            addTypeCombo.load(Production("getProductType"));
 
             addProductForm.attachEvent("onBeforeFileAdd", async function (filename, size) {
                 beforeFileAdd(addProductForm, {filename, size});
@@ -174,7 +175,7 @@ $script = <<< "JS"
                         }
                         break;
                     case "clear":
-                        clearAllForm(addProductForm);
+                        clearAllForm(addProductForm, comboUrl);
                         break;
                     case "cancel":
                         mProductLayout.cells("b").collapse();
@@ -203,7 +204,7 @@ $script = <<< "JS"
                         case "inserted":
                             sAlert("Berhasil Menambahkan Record <br>" + message);
                             rProductGrid();
-                            clearAllForm(addProductForm);
+                            clearAllForm(addProductForm, comboUrl);
                             clearUploader(addProductForm, "file_uploader");
                             setEnable(["add", "clear"], addProductForm, mProductLayout.cells("b"));
                             break;
@@ -225,20 +226,11 @@ $script = <<< "JS"
             mProductLayout.cells("b").showView("edit_produk");
 
             editProductForm = mProductLayout.cells("b").attachForm([
-                {type: "fieldset", offsetTop: 30, offsetLeft: 30, label: "Tambah Produk", list: [
+                {type: "fieldset", offsetTop: 30, offsetLeft: 30, label: "Edit Produk", list: [
                     {type: "hidden", name: "id", label: "ID", readonly: true},
                     {type: "input", name: "name", label: "Nama Produk", labelWidth: 130, inputWidth:250, required: true},
-                    {type: "input", name: "code", label: "Kode Produk", labelWidth: 130, inputWidth:250, required: true},
                     {type: "input", name: "package_desc", label: "Kemasan", labelWidth: 130, inputWidth:250, required: true},
-                    {type: "combo", name: "product_type", label: "Tipe Produk", readonly: true, required: true, labelWidth: 130, inputWidth: 250,
-                        validate: "NotEmpty", 
-                        options:[
-                            {value: '', text: "-Pilih Tipe Produk-"},
-                            {value: 'ETHICAL', text: "ETHICAL"},
-                            {value: 'GENERIK', text: "GENERIK"},
-                            {value: 'BRANDED', text: "BRANDED"},
-                        ]
-                    },
+                    {type: "combo", name: "product_type", label: "Golongan Produk", labelWidth: 130, inputWidth: 250, readonly: true},
                     {type: "hidden", name: "filename", label: "Filename", readonly: true},
                     {type: "upload", name: "file_uploader", inputWidth: 420,
                         url: AppMaster("fileUpload", {save: false, folder: "products"}), 
@@ -272,7 +264,13 @@ $script = <<< "JS"
                 }	
             }
 
-            fetchFormData(Production("productForm", {id: mProductGrid.getSelectedRowId()}), editProductForm, ["filename"], loadTemp);
+            fetchFormData(Production("productForm", {id: mProductGrid.getSelectedRowId()}), editProductForm, ["filename"], loadTemp, setCombo);
+
+            var editTypeCombo = editProductForm.getCombo("product_type");
+            function setCombo() {
+                editTypeCombo.load(Production("getProductType", {select: editProductForm.getItemValue("product_type")}));
+            }
+
             editProductForm.attachEvent("onBeforeFileAdd", async function (filename, size) {
                 beforeFileAdd(editProductForm, {filename, size}, editProductForm.getItemValue("id"));
             });

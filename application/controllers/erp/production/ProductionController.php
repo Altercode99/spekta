@@ -11,6 +11,45 @@ class ProductionController extends Erp_Controller
         $this->auth->isAuth();
     }
 
+
+    public function getMasterMakloonGrid()
+    {
+        $params = getParam();
+        $products = $this->ProdModel->getMasterMakloon($params)->result();
+        $xml = "";
+        $no = 1;
+        foreach ($products as $prod) {
+            $xml .= "<row id='$prod->id'>";
+            $xml .= "<cell>" . cleanSC($no) . "</cell>";
+            $xml .= "<cell>" . cleanSC($prod->name) . "</cell>";
+            $xml .= "<cell>" . cleanSC($prod->emp1) . "</cell>";
+            $xml .= "<cell>" . cleanSC($prod->emp2) . "</cell>";
+            $xml .= "<cell>" . cleanSC(toIndoDateTime($prod->created_at)) . "</cell>";
+            $xml .= "</row>";
+            $no++;
+        }
+        gridXmlHeader($xml);
+    }
+
+    public function getMasterProductTypeGrid()
+    {
+        $params = getParam();
+        $products = $this->ProdModel->getMasterProductType($params)->result();
+        $xml = "";
+        $no = 1;
+        foreach ($products as $prod) {
+            $xml .= "<row id='$prod->id'>";
+            $xml .= "<cell>" . cleanSC($no) . "</cell>";
+            $xml .= "<cell>" . cleanSC($prod->name) . "</cell>";
+            $xml .= "<cell>" . cleanSC($prod->emp1) . "</cell>";
+            $xml .= "<cell>" . cleanSC($prod->emp2) . "</cell>";
+            $xml .= "<cell>" . cleanSC(toIndoDateTime($prod->created_at)) . "</cell>";
+            $xml .= "</row>";
+            $no++;
+        }
+        gridXmlHeader($xml);
+    }
+
     public function getMasterProductGrid()
     {
         $params = getParam();
@@ -21,8 +60,7 @@ class ProductionController extends Erp_Controller
             $xml .= "<row id='$prod->id'>";
             $xml .= "<cell>" . cleanSC($no) . "</cell>";
             $xml .= "<cell>" . cleanSC($prod->name) . "</cell>";
-            $xml .= "<cell>" . cleanSC($prod->code) . "</cell>";
-            $xml .= "<cell>" . cleanSC($prod->product_type) . "</cell>";
+            $xml .= "<cell>" . cleanSC($prod->product_type ? $prod->product_type : '-') . "</cell>";
             $xml .= "<cell>" . cleanSC($prod->package_desc) . "</cell>";
             $xml .= "<cell>" . cleanSC($prod->emp1) . "</cell>";
             $xml .= "<cell>" . cleanSC($prod->emp2) . "</cell>";
@@ -53,7 +91,6 @@ class ProductionController extends Erp_Controller
     {
         $checkProduct = $this->Prod->getOne('spack_products', [
             'name' => $post['name'],
-            'code' => $post['code'],
         ]);
         isExist(["Produk $post[name]" => $checkProduct]);
         
@@ -74,7 +111,6 @@ class ProductionController extends Erp_Controller
         if ($product->name != $post['name']) {
             $checkProduct = $this->Prod->getOne('spack_products', [
                 'name' => $post['name'],
-                'code' => $post['code'],
             ]);
             isExist(["Produk $post[name]" => $checkProduct]);
         }
@@ -102,6 +138,146 @@ class ProductionController extends Erp_Controller
                 if (file_exists('./assets/images/spack_products/' . $product->filename)) {
                     unlink('./assets/images/spack_products/' . $product->filename);
                 }
+                $mSuccess .= "- $data->field berhasil dihapus <br>";
+            }
+        }
+        response(['status' => 'success', 'mError' => $mError, 'mSuccess' => $mSuccess]);
+    }
+
+    public function productTypeForm()
+    {
+        $params = getParam();
+        if (isset($params['id'])) {
+            $type = $this->Prod->getDataById('spack_product_types', $params['id']);
+            fetchFormData($type);
+        } else {
+            $post = prettyText(getPost(), null, ['name']);
+            if (!isset($post['id'])) {
+                $this->createProductType($post);
+            } else {
+                $this->updateProductType($post);
+            }
+        }
+    }
+
+    public function createProductType($post)
+    {
+        $checkType = $this->Prod->getOne('spack_product_types', [
+            'name' => $post['name'],
+        ]);
+        isExist(["Tipe produk $post[name]" => $checkType]);
+        
+        $post['location'] = empLoc();
+        $post['created_by'] = empId();
+        $post['updated_by'] = empId();
+        $post['updated_at'] = date('Y-m-d H:i:s');
+
+        $insertId = $this->Prod->create('spack_product_types', $post);
+        xmlResponse('inserted', $post['name']);
+    }
+
+    public function updateProductType($post)
+    {
+        $type = $this->Prod->getDataById('spack_product_types', $post['id']);
+        isDelete(["Tipe produk $post[name]" => $type]);
+
+        if ($type->name != $post['name']) {
+            $checkType = $this->Prod->getOne('spack_product_types', [
+                'name' => $post['name'],
+            ]);
+            isExist(["Produk $post[name]" => $checkType]);
+        }
+
+        $post['updated_by'] = empId();
+        $post['updated_at'] = date('Y-m-d H:i:s');
+
+        $this->Prod->updateById('spack_product_types', $post, $post['id']);
+        xmlResponse('updated', $post['name']);
+    }
+
+
+    public function productTypeDelete()
+    {
+        $post = fileGetContent();
+        $mError = '';
+        $mSuccess = '';
+        $datas = $post->datas;
+        foreach ($datas as $id => $data) {
+            $checkProduct = $this->Prod->getOne('spack_products', ['product_type' => $data->id]);
+            if($checkProduct) {
+                $mError .= "- $data->field sudah digunakan! <br>";
+            } else {
+                $this->Prod->delete('spack_product_types', ['id' => $data->id]);
+                $mSuccess .= "- $data->field berhasil dihapus <br>";
+            }
+        }
+        response(['status' => 'success', 'mError' => $mError, 'mSuccess' => $mSuccess]);
+    }
+
+    public function makloonForm()
+    {
+        $params = getParam();
+        if (isset($params['id'])) {
+            $makloon = $this->Prod->getDataById('spack_makloons', $params['id']);
+            fetchFormData($type);
+        } else {
+            $post = prettyText(getPost(), null, ['name']);
+            if (!isset($post['id'])) {
+                $this->createMakloonType($post);
+            } else {
+                $this->updateMakloonType($post);
+            }
+        }
+    }
+
+    public function createMakloonType($post)
+    {
+        $checkMakloon = $this->Prod->getOne('spack_makloons', [
+            'name' => $post['name'],
+        ]);
+        isExist(["Makloon $post[name]" => $checkMakloon]);
+        
+        $post['location'] = empLoc();
+        $post['created_by'] = empId();
+        $post['updated_by'] = empId();
+        $post['updated_at'] = date('Y-m-d H:i:s');
+
+        $insertId = $this->Prod->create('spack_makloons', $post);
+        xmlResponse('inserted', $post['name']);
+    }
+
+    public function updateMakloonType($post)
+    {
+        $makloon = $this->Prod->getDataById('spack_makloons', $post['id']);
+        isDelete(["Makloon $post[name]" => $makloon]);
+
+        if ($makloon->name != $post['name']) {
+            $checkMakloon = $this->Prod->getOne('spack_makloons', [
+                'name' => $post['name'],
+            ]);
+            isExist(["Produk $post[name]" => $checkMakloon]);
+        }
+
+        $post['updated_by'] = empId();
+        $post['updated_at'] = date('Y-m-d H:i:s');
+
+        $this->Prod->updateById('spack_makloons', $post, $post['id']);
+        xmlResponse('updated', $post['name']);
+    }
+
+
+    public function makloonDelete()
+    {
+        $post = fileGetContent();
+        $mError = '';
+        $mSuccess = '';
+        $datas = $post->datas;
+        foreach ($datas as $id => $data) {
+            $checkPrint = $this->Prod->getOne('spack_prints', ['makloon' => $data->id]);
+            if($checkPrint) {
+                $mError .= "- $data->field sudah digunakan! <br>";
+            } else {
+                $this->Prod->delete('spack_makloons', ['id' => $data->id]);
                 $mSuccess .= "- $data->field berhasil dihapus <br>";
             }
         }
@@ -226,6 +402,46 @@ class ProductionController extends Erp_Controller
         echo json_encode($locs);
     }
 
+    public function getProductType()
+    {
+        $params = getParam();
+        $types = $this->Prod->getWhere('spack_product_types', ['location' => empLoc()])->result();
+        $typeList = [];
+        $typeList['options'][] = [
+            'value' => '',
+            'text' => '-Pilih Golongan Produk-',
+            'selected' => 1,
+        ];
+        foreach ($types as $type) {
+            $typeList['options'][] = [
+                'value' => $type->id,
+                'text' => $type->name,
+                'selected' => isset($params['select']) && $params['select'] == $type->id ? 1 : 0,
+            ];
+        }
+        echo json_encode($typeList);
+    }
+
+    public function getMakloon()
+    {
+        $params = getParam();
+        $makloons = $this->Prod->getWhere('spack_makloons', ['location' => empLoc()])->result();
+        $makloonList = [];
+        $makloonList['options'][] = [
+            'value' => '',
+            'text' => '-Kosongkan Jika Bukan Makloon-',
+            'selected' => 1,
+        ];
+        foreach ($makloons as $makloon) {
+            $makloonList['options'][] = [
+                'value' => $makloon->id,
+                'text' => $makloon->name,
+                'selected' => isset($params['select']) && $params['select'] == $makloon->id ? 1 : 0,
+            ];
+        }
+        echo json_encode($makloonList);
+    }
+
     public function spEntryForm()
     {
         $params = getParam();
@@ -263,7 +479,7 @@ class ProductionController extends Erp_Controller
     {
         $post['no_batch'] = str_replace(' ', '', strtoupper($post['no_batch']));
         $batch = $this->Prod->getDataById('spack_batch_numbers', $post['id']);
-        isDelete(["Nomor Batch $post[no_batch]" => $batch]);
+        isDelete(["Nomor batch $post[no_batch]" => $batch]);
 
         $checkPrint = $this->Prod->getOne('spack_prints', ['no_batch' => $post['no_batch']]);
         if($checkPrint) {
@@ -369,8 +585,9 @@ class ProductionController extends Erp_Controller
             $xml .= "<cell>" . cleanSC($no) . "</cell>";
             $xml .= "<cell>" . cleanSC($print->no_batch) . "</cell>";
             $xml .= "<cell>" . cleanSC($print->product_name) . "</cell>";
+            $xml .= "<cell>" . cleanSC($print->product_type) . "</cell>";
             $xml .= "<cell>" . cleanSC($print->package_desc) . "</cell>";
-            $xml .= "<cell>" . cleanSC($print->makloon ? $print->makloon : '-') . "</cell>";
+            $xml .= "<cell>" . cleanSC($print->makloon_name ? $print->makloon_name : '-') . "</cell>";
             $xml .= "<cell>" . cleanSC($lDate) . "</cell>";
             $xml .= "<cell>" . cleanSC($print->packing_by) . "</cell>";
             $xml .= "<cell>" . cleanSC($print->spv_by) . "</cell>";
@@ -418,7 +635,7 @@ class ProductionController extends Erp_Controller
                     'spv_by' => $print->spv_by,
                     'total_print' => $params['total_print'],
                     'start_from' => $params['start_from'],
-                    'makloon' => $print->makloon
+                    'makloon' => $print->makloon_name
                 ];
                 $this->load->view('html/surat_pack/print', $data);
             } else {

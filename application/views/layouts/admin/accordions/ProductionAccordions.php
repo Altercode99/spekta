@@ -18,13 +18,19 @@ $script = <<< "JS"
             var mProductItemsDetail = [];
 
             //@PRODUCTS
-            if(isHaveTrees("prod_master_products_product")) {
-                mProductItemsDetail.push({id: "prod_master_products_product", text: "Produk", icons: {file: "menu_icon"}});
+            if(isHaveTrees("prod_master_spack_product")) {
+                mProductItemsDetail.push({id: "prod_master_spack_product", text: "Produk", icons: {file: "menu_icon"}});
+            }
+            if(isHaveTrees("prod_master_spack_product_type")) {
+                mProductItemsDetail.push({id: "prod_master_spack_product_type", text: "Golongan Produk", icons: {file: "menu_icon"}});
+            }
+            if(isHaveTrees("prod_master_spack_makloon")) {
+                mProductItemsDetail.push({id: "prod_master_spack_makloon", text: "Daftar Makloon", icons: {file: "menu_icon"}});
             }
 
             //@TREE
-            if(isHaveTrees('prod_master_products')) {
-                mProductItems.push({id: "prod_master_products", text: "Master Produk", open: 1, icons: {folder_opened: "arrow_down", folder_closed: "arrow_right"}, items: mProductItemsDetail})
+            if(isHaveTrees('prod_master_spack')) {
+                mProductItems.push({id: "prod_master_spack", text: "Master Surat Pack", open: 1, icons: {folder_opened: "arrow_down", folder_closed: "arrow_right"}, items: mProductItemsDetail})
             }
 
             var mProductTree = myTree.cells("a").attachTreeView({
@@ -32,8 +38,12 @@ $script = <<< "JS"
             });
 
             mProductTree.attachEvent("onClick", function(id) {
-                if(id == "prod_master_products_product") {
+                if(id == "prod_master_spack_product") {
                     masterProductTab();
+                } else if(id == "prod_master_spack_product_type") {
+                    masterProductTypeTab();
+                } else if(id == "prod_master_spack_makloon") {
+                    masterMakloonTab();
                 }
             });
         }

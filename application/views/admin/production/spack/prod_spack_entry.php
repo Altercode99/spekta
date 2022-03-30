@@ -22,6 +22,10 @@ $script = <<< "JS"
                 url: Production("getLocation"),
                 reload: true
             },
+            makloon: {
+                url: Production("getMakloon"),
+                reload: true
+            },
         }
 
         var spEntryTabs = mainTab.cells("prod_spack_entry").attachTabbar({
@@ -159,12 +163,7 @@ $script = <<< "JS"
                             {type: "calendar", name: "letter_date", label: "Tanggal", labelWidth: 130, inputWidth:250, required: true, readonly:true},
                             {type: "input", name: "no_batch", label: "No. Batch", labelWidth: 130, inputWidth:250, required: true, readonly:true, value: noBatch},
                             {type: "input", name: "product_name", label: "Produk", labelWidth: 130, inputWidth:250, required: true, readonly:true, value: productName},
-                            {type: "combo", name: "makloon", label: "Makloon", readonly: true, labelWidth: 130, inputWidth: 250,
-                                options:[
-                                    {value: '', text: "-Kosongkan Jika Bukan Makloon-"},
-                                    {value: 'PHA-SOLINDO', text: "PHA-SOLINDO"},
-                                ]
-                            },
+                            {type: "combo", name: "makloon", label: "Maklook", labelWidth: 130, inputWidth: 250, readonly: true},
                             {type: "combo", name: "location_id", label: "Lokasi", labelWidth: 130, inputWidth: 250, readonly: true, required: true},
                             {type: "combo", name: "packing_by", label: "Dikemas Oleh", labelWidth: 130, inputWidth: 250, 
                                 validate: "NotEmpty", 
@@ -230,6 +229,9 @@ $script = <<< "JS"
 
                     var locCombo = printForm.getCombo("location_id");
                     locCombo.load(Production("getLocation"));
+
+                    var makloonCombo = printForm.getCombo("makloon");
+                    makloonCombo.load(Production("getMakloon"));
 
                     function packingComboFilter(text){
                         packingCombo.clearAll();
@@ -317,12 +319,12 @@ $script = <<< "JS"
                     });
 
                     var spPrintGrid = printLayout.cells("b").attachGrid();
-                    spPrintGrid.setHeader("No,Nomor Batch,Produk,Kemasan,Makloon,Tanggal Surat,Dikemas Oleh,Supervisor,Mfg Date,Exp Date,Created By");
-                    spPrintGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter")
-                    spPrintGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str");
-                    spPrintGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-                    spPrintGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left");
-                    spPrintGrid.setInitWidthsP("5,15,25,25,20,20,20,20,20,20,20");
+                    spPrintGrid.setHeader("No,Nomor Batch,Produk,Golongan Produk,Kemasan,Makloon,Tanggal Surat,Dikemas Oleh,Supervisor,Mfg Date,Exp Date,Created By");
+                    spPrintGrid.attachHeader("#rspan,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter")
+                    spPrintGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str");
+                    spPrintGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
+                    spPrintGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left");
+                    spPrintGrid.setInitWidthsP("5,15,25,20,20,20,20,20,20,20,20,20,20");
                     spPrintGrid.enableSmartRendering(true);
                     spPrintGrid.enableMultiselect(true);
                     spPrintGrid.attachEvent("onXLE", function() {
@@ -350,7 +352,7 @@ $script = <<< "JS"
                                 qtySpForm = qtySpWin.attachForm([
                                     {type: "fieldset", offsetTop: 30, offsetLeft: 30, list: [
                                         {type: "input", name: "no_batch", label: "No. Batch", labelWidth: 130, inputWidth:250, required: true, readonly: true, value: spPrintGrid.cells(spPrintGrid.getSelectedRowId(), 1).getValue()},
-                                        {type: "input", name: "package_desc", label: "Kemasan", labelWidth: 130, inputWidth:250, required: true, value: spPrintGrid.cells(spPrintGrid.getSelectedRowId(), 3).getValue()},
+                                        {type: "input", name: "package_desc", label: "Kemasan", labelWidth: 130, inputWidth:250, required: true, value: spPrintGrid.cells(spPrintGrid.getSelectedRowId(), 4).getValue()},
                                         {type: "input", name: "total_print", label: "Jumlah Cetakan", labelWidth: 130, inputWidth:250, required: true, validate:"ValidNumeric"},
                                         {type: "input", name: "start_from", label: "Mulai Dari", labelWidth: 130, inputWidth:250, required: true, validate:"ValidNumeric"},
                                         {type: "block", offsetTop: 30, list: [

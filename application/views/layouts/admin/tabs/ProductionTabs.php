@@ -6,11 +6,29 @@ if ((strpos(strtolower($_SERVER['SCRIPT_NAME']), strtolower(basename(__FILE__)))
 $script = <<< "JS"
 
     function masterProductTab() {
-        if (!mainTab.tabs("prod_master_products_product")){
-            mainTab.addTab("prod_master_products_product", tabsStyle("medicine_16.png", "Master Produk"), null, null, true, true);
+        if (!mainTab.tabs("prod_master_spack_product")){
+            mainTab.addTab("prod_master_spack_product", tabsStyle("medicine_16.png", "Spack Produk"), null, null, true, true);
             showMasterProduct();
         } else {
-            mainTab.tabs("prod_master_products_product").setActive();
+            mainTab.tabs("prod_master_spack_product").setActive();
+        }
+    }
+
+    function masterProductTypeTab() {
+        if (!mainTab.tabs("prod_master_spack_product_type")){
+            mainTab.addTab("prod_master_spack_product_type", tabsStyle("medicine_16.png", "Spack Golongan Produk"), null, null, true, true);
+            showMasterProductType();
+        } else {
+            mainTab.tabs("prod_master_spack_product_type").setActive();
+        }
+    }
+
+    function masterMakloonTab() {
+        if (!mainTab.tabs("prod_master_spack_makloon")){
+            mainTab.addTab("prod_master_spack_makloon", tabsStyle("building.png", "Spack Makloon", "background-size: 16px 16px"), null, null, true, true);
+            showMasterMakloon();
+        } else {
+            mainTab.tabs("prod_master_spack_makloon").setActive();
         }
     }
 

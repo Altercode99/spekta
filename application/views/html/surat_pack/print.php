@@ -17,7 +17,7 @@
     </div>
 
     <div class="body_letter">
-        <div class="title font-spack"><?= $product_type ?></div>
+        <div class="title font-spack"><?= $product_type ? $product_type : 'SURAT PACK' ?></div>
         <br />
         <div class="field">
             <table class="spack_table">
@@ -72,7 +72,7 @@
         <div class="font">ED: <?= $exp_date ?></div>
         <br />
         <div class="font"><?= $product_name ?></div>
-        <div class="font">** <?= $makloon != '' ? $makloon : $product_type ?> **</div>
+        <div class="font"><?= $makloon != '' ? '** '.$makloon. ' **' : '** '.$product_type.' **' ?></div>
     </div>
 
     <div class="cpr">

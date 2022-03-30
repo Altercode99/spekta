@@ -18,13 +18,13 @@ class ProductionModel extends CI_Model
         $this->empLoc = empLoc();
     }
 
-    public function getMasterProduct($params)
+    public function getMasterMakloon($params)
     {
         $where = advanceSearch($params);
         $sql = "SELECT a.*,
                        (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.created_by) AS emp1,
                        (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.updated_by) AS emp2
-                       FROM $this->kf_prod.spack_products a
+                       FROM $this->kf_prod.spack_makloons a
                        WHERE a.location = '$this->empLoc'
                        $where";
                     
@@ -33,6 +33,51 @@ class ProductionModel extends CI_Model
                         a.name LIKE '%$params[search]%' OR 
                         (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.created_by) LIKE '%$params[search]%' OR
                         (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.updated_by) LIKE '%$params[search]%'
+                    )";
+        } 
+        $sql .= " ORDER BY a.name DESC";
+        return $this->db->query($sql);
+    }
+
+
+    public function getMasterProductType($params)
+    {
+        $where = advanceSearch($params);
+        $sql = "SELECT a.*,
+                       (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.created_by) AS emp1,
+                       (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.updated_by) AS emp2
+                       FROM $this->kf_prod.spack_product_types a
+                       WHERE a.location = '$this->empLoc'
+                       $where";
+                    
+        if (isset($params['search']) && $params['search'] !== "") {
+            $sql .= "AND (
+                        a.name LIKE '%$params[search]%' OR 
+                        (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.created_by) LIKE '%$params[search]%' OR
+                        (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.updated_by) LIKE '%$params[search]%'
+                    )";
+        } 
+        $sql .= " ORDER BY a.name DESC";
+        return $this->db->query($sql);
+    }
+
+    public function getMasterProduct($params)
+    {
+        $where = advanceSearch($params);
+        $sql = "SELECT a.*,
+                       (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.created_by) AS emp1,
+                       (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.updated_by) AS emp2,
+                       (SELECT name FROM $this->kf_prod.spack_product_types WHERE id = a.product_type) AS product_type
+                       FROM $this->kf_prod.spack_products a
+                       WHERE a.location = '$this->empLoc'
+                       $where";
+                    
+        if (isset($params['search']) && $params['search'] !== "") {
+            $sql .= "AND (
+                        a.name LIKE '%$params[search]%' OR 
+                        (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.created_by) LIKE '%$params[search]%' OR
+                        (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.updated_by) LIKE '%$params[search]%' OR
+                        (SELECT name FROM $this->kf_prod.spack_product_types WHERE id = a.product_type) LIKE '%$params[search]%'
                     )";
         } 
         $sql .= " ORDER BY a.name DESC";
@@ -77,10 +122,12 @@ class ProductionModel extends CI_Model
     public function getSpPrint($params)
     {
         $where = advanceSearch($params);
-        $sql = "SELECT a.*,b.name AS product_name,b.package_desc,b.product_type,c.name AS location,
+        $sql = "SELECT a.*,b.name AS product_name,b.package_desc,c.name AS location,
                        (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.packing_by) AS packing_by,
                        (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.spv_by) AS spv_by,
-                       (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.created_by) AS emp1
+                       (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.created_by) AS emp1,
+                       (SELECT name FROM $this->kf_prod.spack_product_types WHERE id = b.product_type) AS product_type,
+                       (SELECT name FROM $this->kf_prod.spack_makloons WHERE id = a.makloon) AS makloon_name
                        FROM $this->kf_prod.spack_prints a, $this->kf_prod.spack_products b, $this->kf_prod.spack_locations c
                        WHERE a.product_id = b.id
                        AND a.location_id = c.id
