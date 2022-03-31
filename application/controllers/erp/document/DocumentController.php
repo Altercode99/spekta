@@ -17,7 +17,7 @@ class DocumentController extends Erp_Controller
 
     public function getDepartments()
     {
-        if (empRole() === 'admin' || empRank() <= 6 || pltRankId() <= 6) {
+        if (empRole() === 'admin' || empRank() <= 6 || (pltRankId() != '-' && pltRankId() <= 6) || empSub() == 7) {
             $depts = $this->Hr->getWhere('departments', ['location' => empLoc()], 'id, name')->result();
         } else {
             $depts = $this->Hr->getWhere('departments', ['location' => empLoc(), 'id' => empDept()], 'id, name')->result();
@@ -28,7 +28,7 @@ class DocumentController extends Erp_Controller
             if (empRole() === 'admin' || empSub() == 0) {
                 $subs = $this->Hr->getWhere('sub_departments', ['department_id' => $dept->id])->result();
             } else {
-                if(empRank() <= 6 || pltRankId() <= 6) {
+                if(empRank() <= 6 || (pltRankId() != '-' && pltRankId() <= 6) || empSub() == 7) {
                     $subs = $this->Hr->getWhere('sub_departments', ['department_id' => $dept->id])->result();
                 } else {
                     $subs = $this->Hr->getWhere('sub_departments', ['id' => empSub()])->result();
@@ -106,11 +106,12 @@ class DocumentController extends Erp_Controller
             foreach ($mainFiles as $main) {
                 $mainFileList[$main->parent_id][] = [
                     'id' => 'mfile-' . $main->id,
-                    'text' => $main->name,
+                    'text' => $main->no_doc.' - '.$main->name,
                     'type' => $main->type,
                 ];
                 $files['mfile-' . $main->id] = [
                     'id' => 'mfile-' . $main->id,
+                    'no_doc' => $main->no_doc,
                     'name' => $main->name,
                     'type' => $main->type,
                     'size' => setFileSize($main->size),
@@ -156,11 +157,12 @@ class DocumentController extends Erp_Controller
             foreach ($subFiles as $sub) {
                 $subFileList['sub-' . $sub->sub_id][] = [
                     'id' => 'sfile-' . $sub->id,
-                    'text' => $sub->name,
+                    'text' => $sub->no_doc.' - '.$sub->name,
                     'type' => $sub->type,
                 ];
                 $files['sfile-' . $sub->id] = [
                     'id' => 'sfile-' . $sub->id,
+                    'no_doc' => $sub->no_doc,
                     'name' => $sub->name,
                     'type' => $sub->type,
                     'size' => setFileSize($sub->size),
@@ -380,6 +382,7 @@ class DocumentController extends Erp_Controller
         $file = $this->Main->getOne('temp_files', ['filename' => $post['filename']]);
         $data = [
             'name' => $post['name'],
+            'no_doc' => $post['no_doc'],
             'type' => $file->type,
             'size' => $file->size,
             'filename' => $file->filename,
@@ -398,6 +401,7 @@ class DocumentController extends Erp_Controller
         $revision = [
             'file_id' => $insertId,
             'sub_id' => $subId,
+            'no_doc' => $post['no_doc'],
             'name' => $post['name'],
             'revision' => $post['revision'],
             'edition' => $post['edition'],
@@ -452,6 +456,7 @@ class DocumentController extends Erp_Controller
         $file = $this->Main->getOne('temp_files', ['filename' => $post['filename']]);
 
         $updateFile = [
+            'no_doc' => $post['no_doc'],
             'name' => $post['name'],
             'type' => $file->type,
             'size' => $file->size,
@@ -466,6 +471,7 @@ class DocumentController extends Erp_Controller
         $revision = [
             'file_id' => $id,
             'sub_id' => $subId,
+            'no_doc' => $post['no_doc'],
             'name' => $post['name'],
             'revision' => $post['revision'],
             'edition' => $post['edition'],
@@ -494,6 +500,7 @@ class DocumentController extends Erp_Controller
         foreach ($revisions as $rev) {
             $xml .= "<row id='$rev->id'>";
             $xml .= "<cell>". cleanSC($no) ."</cell>";
+            $xml .= "<cell>". cleanSC($rev->no_doc) ."</cell>";
             $xml .= "<cell>". cleanSC($rev->name) ."</cell>";
             $xml .= "<cell>". cleanSC($rev->filename) ."</cell>";
             $xml .= "<cell>". cleanSC($rev->type) ."</cell>";

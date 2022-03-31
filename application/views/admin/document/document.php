@@ -18,6 +18,13 @@ $script = <<< "JS"
         var fileGrid;
         var fileError = false;
 
+        var isAsman = false;
+        if(userLogged.rankId == 3 || userLogged.rankId == 4 || userLogged.pltRankId == 3 || userLogged.pltRankId == 4) {
+            if(userLogged.subId == 7 || userLogged.pltSubId == 7) {
+                isAsman = true;
+            }
+        }
+
         var comboUrl = {
             parent_id: {
                 url: Document("getMainFolders", {subId}),
@@ -35,7 +42,7 @@ $script = <<< "JS"
                     id: "b",
                     text: "Preview File",
                     header: true,
-                    width: 350
+                    width: 375
                 },
                 {
                     id: "c",
@@ -56,7 +63,7 @@ $script = <<< "JS"
             ]
         });
 
-        if((userLogged.rankId <= 6 &&  userLogged.subId == 27) || userLogged.role == "admin") {
+        if((userLogged.role == "admin" || userLogged.divId == 27 || isAsman)) {
             docToolbar.enableItem("add_folder");
             docToolbar.enableItem("rename_folder");
             docToolbar.enableItem("add_file");
@@ -87,7 +94,7 @@ $script = <<< "JS"
             icon_path: "./public/codebase/icons/",
             items: [
                 {id: "revision", text: "Revisi Dokumen", img: "edit.png"},
-                {id: "download", text: "Download", img: "download_16.png"},
+                {id: "read", text: "Baca", img: "read_16.png"},
                 {id: "delete", text: "Hapus", img: "delete.png"},
             ]
         });
@@ -327,8 +334,9 @@ $script = <<< "JS"
                 {type: "hidden", name: "filename", label: "File Terupload", labelWidth: 130, inputWidth:250 },
                 {type: "hidden", name: "subId", label: "File Terupload", labelWidth: 130, inputWidth:250, value: subId },
                 {type: "input", name: "folder_name", label: "Target Folder", labelWidth: 130, inputWidth:250, required: true, readonly: true},
+                {type: "input", name: "no_doc", label: "Nomor Dokumen", labelWidth: 130, inputWidth:250, required: true},
                 {type: "input", name: "name", label: "Nama Dokumen", labelWidth: 130, inputWidth:250, required: true},
-                {type: "calendar", name: "effective_date", label: "Tanggal Efektif", labelWidth: 130, inputWidth:250, required: true},
+                {type: "calendar", name: "effective_date", label: "Tanggal Revisi", labelWidth: 130, inputWidth:250, required: true},
                 {type: "input", name: "revision", label: "Revisi", labelWidth: 130, inputWidth:250, validate:"ValidNumeric"},
                 {type: "input", name: "edition", label: "Edisi", labelWidth: 130, inputWidth:250, validate:"ValidNumeric"},
                 {type: "upload", name: "file_uploader", inputWidth: 420,
@@ -350,14 +358,14 @@ $script = <<< "JS"
             ]},
         ]);
 
-        if(userLogged.role !== "admin") {
+        if(userLogged.role !== "admin" && userLogged.divId != 27 || isAsman) {
             setDisable(["add", "clear"], addFileForm);
         }
 
         isFormNumeric(addFileForm, ["revision"]);
 
         addFileForm.attachEvent("onBeforeFileAdd", function(filename, size){
-            if(userLogged.role !== "admin") {
+            if(userLogged.role !== "admin" && userLogged.divId != 27 && !isAsman) {
                 return eAlert("Tidak ada privilage untuk upload!");
             }
 
@@ -457,7 +465,11 @@ $script = <<< "JS"
                         showDetail("folder", sub[id]);
                     }
                     disableMenu();
-                    infoMenu.setItemEnabled("delete");
+
+                    if(userLogged.role === "admin" || userLogged.divId == 27 || userLogged.pltDivId == 27 || isAsman) {
+                        infoMenu.setItemEnabled("delete");
+                    }
+
                     if(isMain) {
                         addFileForm.setItemValue("folder_id", id);
                         addFileForm.setItemValue("folder_name", name);
@@ -474,7 +486,7 @@ $script = <<< "JS"
             if(type === "file") {
                 if(!detail) {
                     disableMenu();
-                    treeLayout.cells("b").attachHTMLString("<div class='fwm_container' style='height:100%;overflow-x:hidden;overflow-y:scroll'><div class='fwu_container'><div class='fw_img'><img width='70' height='70' src='./public/img/no-doc.png' /></div><div class='fw_desc'><table><tr><td>Nama</td><td>:</td><td>-</td></tr><tr><td>Tipe</td><td>:</td><td>-</td></tr><tr><td>Ukuran</td><td>:</td><td>-</td></tr><tr><td>Revisi</td><td>:</td><td>-</td></tr><tr><td>Edisi</td><td>:</td><td>-</td></tr><tr><td>Efektif</td><td>:</td><td>-</td></tr><tr><td>Created By</td><td>:</td><td>-</td></tr><tr><td>Updated By</td><td>:</td><td>-</td></tr></table></div></div><div class='fwd_container'><div class='fwd_desc_2'><table><tr><td>Dibuat Tanggal</td><td>:</td><td>-</td></tr><tr><td>Diupdate Tanggal</td><td>:</td><td>-</td></tr></table></div></div></div>");
+                    treeLayout.cells("b").attachHTMLString("<div class='fwm_container' style='height:100%;overflow-x:hidden;overflow-y:scroll'><div class='fwu_container'><div class='fw_img'><img width='70' height='70' src='./public/img/no-doc.png' /></div><div class='fw_desc'><table><tr><td>No Doc</td><td>:</td><td>-</td></tr><tr><td>Nama</td><td>:</td><td>-</td></tr><tr><td>Tipe</td><td>:</td><td>-</td></tr><tr><td>Ukuran</td><td>:</td><td>-</td></tr><tr><td>Revisi</td><td>:</td><td>-</td></tr><tr><td>Edisi</td><td>:</td><td>-</td></tr><tr><td>Efektif</td><td>:</td><td>-</td></tr><tr><td>Created By</td><td>:</td><td>-</td></tr><tr><td>Updated By</td><td>:</td><td>-</td></tr></table></div></div><div class='fwd_container'><div class='fwd_desc_2'><table><tr><td>Dibuat Tanggal</td><td>:</td><td>-</td></tr><tr><td>Diupdate Tanggal</td><td>:</td><td>-</td></tr></table></div></div></div>");
                 } else {
                     enableMenu();
                     selectedFilename = detail.filename;
@@ -487,13 +499,13 @@ $script = <<< "JS"
                     } else if(detail.type == "xls" || detail.type == "xlsx") {
                         icon = "excel.png";
                     } 
-                    treeLayout.cells("b").attachHTMLString("<div class='fwm_container' style='height:100%;overflow-x:hidden;overflow-y:scroll'><div class='fwu_container'><div class='fw_img'><img width='70' height='70' src='./public/img/"+icon+"' /></div><div class='fw_desc'><table><tr><td>Nama</td><td>:</td><td>"+detail.name+"</td></tr><tr><td>Tipe</td><td>:</td><td>"+detail.type+"</td></tr><tr><td>Ukuran</td><td>:</td><td>"+detail.size+"</td></tr><tr><td>Revisi</td><td>:</td><td>"+detail.revision+"</td></tr><tr><td>Edisi</td><td>:</td><td>"+detail.edition+"</td></tr><tr><td>Efektif</td><td>:</td><td>"+detail.effective_date+"</td></tr><tr><td>Created By</td><td>:</td><td>"+detail.created_by+"</td></tr><tr><td>Updated By</td><td>:</td><td>"+detail.updated_by+"</td></tr></table></div></div><div class='fwd_container'><div class='fwd_desc_2'><table><tr><td>Dibuat Tanggal</td><td>:</td><td>"+detail.created_at+"</td></tr><tr><td>Diupdate Tanggal</td><td>:</td><td>"+detail.updated_at+"</td></tr></table></div></div></div>");
+                    treeLayout.cells("b").attachHTMLString("<div class='fwm_container' style='height:100%;overflow-x:hidden;overflow-y:scroll'><div class='fwu_container'><div class='fw_img'><img width='70' height='70' src='./public/img/"+icon+"' /></div><div class='fw_desc'><table><tr><td>No Doc</td><td>:</td><td>"+detail.no_doc+"</td></tr><tr><td>Nama</td><td>:</td><td>"+detail.name+"</td></tr><tr><td>Tipe</td><td>:</td><td>"+detail.type+"</td></tr><tr><td>Ukuran</td><td>:</td><td>"+detail.size+"</td></tr><tr><td>Revisi</td><td>:</td><td>"+detail.revision+"</td></tr><tr><td>Edisi</td><td>:</td><td>"+detail.edition+"</td></tr><tr><td>Efektif</td><td>:</td><td>"+detail.effective_date+"</td></tr><tr><td>Created By</td><td>:</td><td>"+detail.created_by+"</td></tr><tr><td>Updated By</td><td>:</td><td>"+detail.updated_by+"</td></tr></table></div></div><div class='fwd_container'><div class='fwd_desc_2'><table><tr><td>Dibuat Tanggal</td><td>:</td><td>"+detail.created_at+"</td></tr><tr><td>Diupdate Tanggal</td><td>:</td><td>"+detail.updated_at+"</td></tr></table></div></div></div>");
                 }
             } else {
                 selectedFilename = null;
                 disableMenu();
                 if(!detail) {
-                    treeLayout.cells("b").attachHTMLString("<div class='fwm_container'><div class='fwu_container'><div class='fw_img'><img width='70' height='70' src='./public/img/folder.png' /></div><div class='fw_desc'><table><tr><td>Nama</td><td>:</td><td>-</td></tr><tr><td>Sub Folder</td><td>:</td><td>-</td></tr><tr><td>Total File</td><td>:</td><td>-</td></tr><tr><td>Ukuran</td><td>:</td><td>-</td></tr><tr><td>Created By</td><td>:</td><td>-</td></tr><tr><td>Updated By</td><td>:</td><td>-</td></tr></table></div></div><div class='fwd_container'><div class='fwd_desc_2'><table><tr><td>Dibuat Tanggal</td><td>:</td><td>-</td></tr><tr><td>Diupdate Tanggal</td><td>:</td><td>-</td></tr></table></div></div></div>");
+                    treeLayout.cells("b").attachHTMLString("<div class='fwm_container'><div class='fwu_container'><div class='fw_img'><img width='60' height='70' src='./public/img/folder.png' /></div><div class='fw_desc'><table><tr><td>Nama</td><td>:</td><td>-</td></tr><tr><td>Sub Folder</td><td>:</td><td>-</td></tr><tr><td>Total File</td><td>:</td><td>-</td></tr><tr><td>Ukuran</td><td>:</td><td>-</td></tr><tr><td>Created By</td><td>:</td><td>-</td></tr><tr><td>Updated By</td><td>:</td><td>-</td></tr></table></div></div><div class='fwd_container'><div class='fwd_desc_2'><table><tr><td>Dibuat Tanggal</td><td>:</td><td>-</td></tr><tr><td>Diupdate Tanggal</td><td>:</td><td>-</td></tr></table></div></div></div>");
                 } else {
                     selectedDocId = detail.id;
                     treeLayout.cells("b").attachHTMLString("<div class='fwm_container'><div class='fwu_container'><div class='fw_img'><img width='70' height='70' src='./public/img/folder.png' /></div><div class='fw_desc'><table><tr><td>Nama</td><td>:</td><td>"+detail.folder_name+"</td></tr><tr><td>Sub Folder</td><td>:</td><td>"+detail.sub_folder+"</td></tr><tr><td>Total File</td><td>:</td><td>"+detail.total_file+"</td></tr><tr><td>Ukuran</td><td>:</td><td>"+detail.total_size+"</td></tr><tr><td>Created By</td><td>:</td><td>"+detail.created_by+"</td></tr><tr><td>Updated By</td><td>:</td><td>"+detail.updated_by+"</td></tr></table></div></div><div class='fwd_container'><div class='fwd_desc_2'><table><tr><td>Dibuat Tanggal</td><td>:</td><td>"+detail.created_at+"</td></tr><tr><td>Diupdate Tanggal</td><td>:</td><td>"+detail.updated_at+"</td></tr></table></div></div></div>");
@@ -506,16 +518,16 @@ $script = <<< "JS"
         }
 
         function enableMenu() {
-            if ((userLogged.rankId <= 6 && userLogged.subId == 27) || userLogged.role === "admin") {
+            if (userLogged.role === "admin" || userLogged.divId == 27 || isAsman) {
                 infoMenu.setItemEnabled("revision");
                 infoMenu.setItemEnabled("delete");
             }
-            infoMenu.setItemEnabled("download");
+            infoMenu.setItemEnabled("read");
         }
 
         function disableMenu() {
             infoMenu.setItemDisabled("revision");
-            infoMenu.setItemDisabled("download");
+            infoMenu.setItemDisabled("read");
             infoMenu.setItemDisabled("delete");
         }
 
@@ -525,7 +537,7 @@ $script = <<< "JS"
                     if(myWins.isWindow("revision") === false) {
                         let openedWins = checkMaxOpenWins();
                         if(openedWins < 5) {
-                            let revisionWins = createWindow("revision", "Revisi Dokumen", 850, 550);
+                            let revisionWins = createWindow("revision", "Revisi Dokumen", 850, 600);
                             let revisionTabbar = revisionWins.attachTabbar({
                                 tabs: [
                                     {id: "a", text: tabsStyle("edit.png", "Upload Dokumen Revisi"), active: true},
@@ -541,7 +553,7 @@ $script = <<< "JS"
                                 ]
                             });
 
-                            if(userLogged.role !== "admin") {
+                            if(userLogged.role !== "admin" && userLogged.divId != 27 && isAsman) {
                                 revHistToolbar.disableItem("delete");
                             }
 
@@ -551,7 +563,7 @@ $script = <<< "JS"
                                         if(!fileGrid.getSelectedRowId()) {
                                             eAlert("Belum ada file yang dipilih!");
                                         } else {
-                                            toDownload(fileUrl(fileGrid.cells(fileGrid.getSelectedRowId(), 2).getValue()));
+                                            toDownload(fileUrl(fileGrid.cells(fileGrid.getSelectedRowId(), 3).getValue()));
                                         }
                                         break;
                                     case "delete":
@@ -589,11 +601,11 @@ $script = <<< "JS"
                                 
                                 revisionTabbar.cells("b").progressOn();
                                 fileGrid = revisionTabbar.cells("b").attachGrid();
-                                fileGrid.setHeader("No,Nama Dokumen,Nama File,Tipe,Size,Remark,Revisi,Edisi,DiRevisi Oleh,Tanggal Rrevisi");
-                                fileGrid.setColSorting("int,str,str,str,str,str,str,str,str,str");
-                                fileGrid.setColAlign("center,left,left,left,left,left,left,left,left,left");
-                                fileGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
-                                fileGrid.setInitWidthsP("5,25,25,10,15,35,15,15,15,15");
+                                fileGrid.setHeader("No,Nomor Dokument,Nama Dokumen,Nama File,Tipe,Size,Remark,Revisi,Edisi,DiRevisi Oleh,Tanggal Rrevisi");
+                                fileGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str");
+                                fileGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left");
+                                fileGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
+                                fileGrid.setInitWidthsP("5,20,25,25,10,15,35,15,15,25,15");
                                 fileGrid.enableMultiselect(true);
                                 fileGrid.enableSmartRendering(true);
                                 fileGrid.attachEvent("onXLE", function() {
@@ -611,8 +623,9 @@ $script = <<< "JS"
                                 {type: "fieldset", offsetTop: 30, offsetLeft: 30, label: "Upload Dokumen Baru", list: [
                                     {type: "hidden", name: "id", label: "ID", value: currentFile.id },
                                     {type: "hidden", name: "filename", label: "Filename" },
-                                    {type: "input", name: "name", label: "Nama Dokumen", labelWidth: 130, inputWidth:250, required: true, value: currentFile.name},
-                                    {type: "calendar", name: "effective_date", label: "Tanggal Efektif", labelWidth: 130, inputWidth:250, required: true, value: globalDate},
+                                    {type: "input", name: "no_doc", label: "Nomor Dokumen", labelWidth: 130, inputWidth:250, readonly: true, required: true, value:currentFile.no_doc},
+                                    {type: "input", name: "name", label: "Nama Dokumen", labelWidth: 130, inputWidth:250, readonly: true, required: true, value: currentFile.name},
+                                    {type: "calendar", name: "effective_date", label: "Tanggal Revisi", labelWidth: 130, inputWidth:250, required: true, value: globalDate},
                                     {type: "input", name: "revision", label: "Revisi", labelWidth: 130, inputWidth:250, validate:"ValidNumeric", value: parseInt(currentFile.revision)},
                                     {type: "input", name: "edition", label: "Edisi", labelWidth: 130, inputWidth:250, validate:"ValidNumeric", value: parseInt(currentFile.edition)},
                                     {type: "input", name: "remark", label: "Remark", labelWidth: 130, inputWidth:250, rows: 3},
@@ -744,15 +757,14 @@ $script = <<< "JS"
 			            myWins.window("revision").center();
                     }
                     break;
-                case "download":
+                case "read":
                     if(selectedFilename) {
-                        toDownload(fileUrl(selectedFilename));
+                        window.open(fileUrl(selectedFilename, "read"), "_blank");
                     } else {
                         eAlert("Belum ada file yang dipilih!");
                     }
                     break;
                 case "delete":
-                    
                     if(selectedDocId) {
                         dhtmlx.modalbox({
                             type: "alert-error",

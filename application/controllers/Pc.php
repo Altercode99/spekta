@@ -41,4 +41,23 @@ class Pc extends Erp_Controller
             $this->load->view('html/invalid_response', ['message' => 'Token tidak valid']);
         }
     }
+
+    public function pdfreader()
+    {
+        $params = getParam();
+        if(count($params) == 4) {
+            if (isset($params['file']) && file_exists('./assets/files/' . $params['file'])) {
+                $mode = isset($params['mode']) ? $params['mode'] : 'preview';
+                if($mode != '' && ($mode == 'read' || $mode == 'preview')) {
+                    $this->load->view('html/document/pdf_reader', ['file' => $params['file'], 'mode' => $mode]);
+                } else {
+                    $this->load->view('html/invalid_response', ['message' => 'Mode Error!']);
+                }
+            } else {
+                $this->load->view('html/invalid_response', ['message' => 'File tidak ditemukan!']);
+            }
+        } else {
+            $this->load->view('html/invalid_response', ['message' => 'Link tidak valid!']);
+        }
+    }
 }

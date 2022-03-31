@@ -8,7 +8,7 @@ class CronController extends Erp_Controller
         parent::__construct();
     }
 
-    //@URL: http://localhost/spekta/index.php?c=AppController&m=sendEmail
+    //@URL: http://localhost/spekta/index.php?c=CronController&m=sendEmail
     public function sendEmail()
     {
         $status = $this->Main->getDataById('email_send', 1)->status;
@@ -27,7 +27,14 @@ class CronController extends Erp_Controller
         }
     }
 
-    //@URL: http://localhost/spekta/index.php?c=AppController&m=updateStatusReservasi
+    //@URL: http://localhost/spekta/index.php?c=CronController&m=clearEmail
+    public function clearEmail()
+    {
+       $last7Day = backDayToDate(date('Y-m-d'), 7);
+       $this->Main->delete('email', ['created_at <' => $last7Day, 'status' => 1]);
+    }
+
+    //@URL: http://localhost/spekta/index.php?c=CronController&m=updateStatusReservasi
     public function updateStatusReservasi()
     {
         $vehicles = $this->General->getWhere('vehicles_reservation', ['status' => 'APPROVED'])->result();

@@ -61,7 +61,7 @@ class QhseModel extends CI_Model
                         ->from('file_revisions a')
                         ->join("$this->kf_hr.employees b", 'a.revised_by = b.id')
                         ->where('a.file_id', $fileId)
-                        ->order_by('a.revision', 'DESC')
+                        ->order_by('a.id', 'DESC')
                         ->get()->result();
     }
 

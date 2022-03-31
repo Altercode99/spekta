@@ -27,6 +27,9 @@ $script = <<< "JS"
             if(isHaveTrees("prod_master_spack_makloon")) {
                 mProductItemsDetail.push({id: "prod_master_spack_makloon", text: "Daftar Makloon", icons: {file: "menu_icon"}});
             }
+            if(isHaveTrees("prod_spack_location")) {
+                mProductItemsDetail.push({id: "prod_spack_location", text: "Lokasi", icons: {file: "menu_icon"}});
+            }
 
             //@TREE
             if(isHaveTrees('prod_master_spack')) {
@@ -44,6 +47,8 @@ $script = <<< "JS"
                     masterProductTypeTab();
                 } else if(id == "prod_master_spack_makloon") {
                     masterMakloonTab();
+                } else if(id == "prod_spack_location") {
+                    spackLocationTab();
                 }
             });
         }
@@ -54,9 +59,6 @@ $script = <<< "JS"
             var spackItemDetail = [];
 
             //@SPACK
-            if(isHaveTrees("prod_spack_location")) {
-                spackItemDetail.push({id: "prod_spack_location", text: "Lokasi", icons: {file: "menu_icon"}});
-            }
             if(isHaveTrees("prod_spack_entry")) {
                 spackItemDetail.push({id: "prod_spack_entry", text: "Entry Surat Pack", icons: {file: "menu_icon"}});
             }
@@ -71,9 +73,7 @@ $script = <<< "JS"
             });
 
             spackTree.attachEvent("onClick", function(id) {
-                if(id == "prod_spack_location") {
-                    spackLocationTab();
-                } else if(id == "prod_spack_entry") {
+                if(id == "prod_spack_entry") {
                     spackEntryTab();
                 }
             });
