@@ -96,6 +96,18 @@
                 <td style="<?= $style['td'] ?>;border:1px solid #422800;vertical-align:text-top;">Status Lembur</td>
                 <td style="<?= $style['td'] ?>; <?= $overtime->status == 'REJECTED' ? 'color:red;' : null ?>"><?= $overtime->status ?></td>
             </tr>
+            <tr>
+                <td style="<?= $style['td'] ?>;border:1px solid #422800;vertical-align:text-top;">Batas Waktu Approval</td>
+                <?php if($rank == 'ASMAN') { ?>
+                <td style="<?= $style['td'] ?>;color:red;"><?= toIndoDateTime(addDayToDate($overtime->apv_spv_date, 2)) ?></td>
+                <?php } else if($rank == 'PPIC') { ?>
+                    <td style="<?= $style['td'] ?>;color:red;"><?= toIndoDateTime(addDayToDate($overtime->apv_asman_date, 2)) ?></td>
+                <?php } else if($rank == 'Manager') { ?>
+                    <td style="<?= $style['td'] ?>;color:red;"><?= toIndoDateTime(addDayToDate($overtime->apv_ppic_date, 2)) ?></td>
+                <?php } else if($rank == 'Plant Manager') { ?>
+                    <td style="<?= $style['td'] ?>;color:red;"><?= toIndoDateTime(addDayToDate($overtime->apv_mgr_date, 2)) ?></td>
+                <?php } ?>
+            </tr>
         </table>
 
         <div style="<?= $style['button_container'] ?>">

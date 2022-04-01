@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="<?= asset("img/spekta.png") ?>" type="image/x-icon" />
   <title>S.P.E.K.T.A PDF Reader</title>
   <script src="<?= asset('js/pdf.min.js') ?>">
   </script>
@@ -52,17 +53,17 @@
             <canvas id="pdf_renderer" style="margin-left: -6px"></canvas>
         </div>
 
-        <div class="nav_container">
+        <div class="nav_container" style="background-color: #116171">
             <div id="navigation_controls">
                 <button id="go_previous">Previous</button>
                 <input id="current_page" value="1" type="number"/>
                 <button id="go_next">Next</button>
             </div>
             <?php if($mode == 'read') { ?>
-            <p style='font-style:italic'>Developed By Hardware & Network</p>
+            <p style='font-style:italic;color:#fff'>Developed By Hardware & Network</p>
             <?php } ?>
             <div id="zoom_controls">  
-                <span>Zoom</span>
+                <span style="color:#fff">Zoom</span>
                 <button id="zoom_in">+</button>
                 <button id="zoom_out">-</button>
             </div>

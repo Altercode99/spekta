@@ -708,7 +708,7 @@ class OvertimeController extends Erp_Controller
                 $detailData = [
                     'apv_spv' => 'BY PASS',
                     'apv_spv_nip' => '-',
-                    'apv_spv_date' => date('Y-m-d H:i:s'),
+                    'apv_spv_date' => $overtime->start_date,
                 ];
                 $this->Hr->updateById('employee_overtimes_detail', $detailData, $empOvt->id);
             }
@@ -741,7 +741,7 @@ class OvertimeController extends Erp_Controller
         if ($overtime->division_id == 0 || (!$isHaveSpv && !$isHaveSpvPLT)) {
             $data['apv_spv'] = 'BY PASS';
             $data['apv_spv_nip'] = '-';
-            $data['apv_spv_date'] = date('Y-m-d H:i:s');
+            $data['apv_spv_date'] = $overtime->start_date;
         } else {
             if ($overtime->apv_spv_nip == '' && !$sendEmail) {
                 if ($isHaveSpv) {
@@ -759,7 +759,7 @@ class OvertimeController extends Erp_Controller
         if ($overtime->sub_department_id == 0 || (!$isHaveAsman && !$isHaveAsmanPLT)) {
             $data['apv_asman'] = 'BY PASS';
             $data['apv_asman_nip'] = '-';
-            $data['apv_asman_date'] = date('Y-m-d H:i:s');
+            $data['apv_asman_date'] = $overtime->start_date;
         } else {
             if ($overtime->apv_asman_nip == '' && !$sendEmail) {
                 if ($isHaveAsman) {
@@ -777,7 +777,7 @@ class OvertimeController extends Erp_Controller
         if ($overtime->sub_department_id == 0 || ($overtime->sub_department_id != 1 && $overtime->sub_department_id != 2 && $overtime->sub_department_id != 3 && $overtime->sub_department_id != 4 && $overtime->sub_department_id != 13) || (!$isHavePPIC && !$isHavePPICPLT)) {
             $data['apv_ppic'] = 'BY PASS';
             $data['apv_ppic_nip'] = '-';
-            $data['apv_ppic_date'] = date('Y-m-d H:i:s');
+            $data['apv_ppic_date'] = $overtime->start_date;
         } else {
             if ($overtime->apv_ppic_nip == '' && !$sendEmail) {
                 if ($isHavePPIC) {
@@ -796,12 +796,12 @@ class OvertimeController extends Erp_Controller
             if ($overtime->department_id == 3) {
                 $data['apv_mgr'] = 'BY PASS';
                 $data['apv_mgr_nip'] = '-';
-                $data['apv_mgr_date'] = date('Y-m-d H:i:s');
+                $data['apv_mgr_date'] = $overtime->start_date;
             }
         } else if (!$isHaveMgr && !$isHaveMgrPLT) {
             $data['apv_mgr'] = 'BY PASS';
             $data['apv_mgr_nip'] = '-';
-            $data['apv_mgr_date'] = date('Y-m-d H:i:s');
+            $data['apv_mgr_date'] = $overtime->start_date;
         } else {
             if ($overtime->apv_mgr_nip == '' && !$sendEmail) {
                 if ($isHaveAsman) {
@@ -1336,6 +1336,23 @@ class OvertimeController extends Erp_Controller
 
         if ($rankId == 1 || $pltRankId == 1) {
             $data['status'] = "CLOSED";
+        }
+
+        $currDate = date('Y-m-d H:i:s');
+        $newCurrDate = new DateTime($currDate);
+        $ovtStartDate = new DateTime($overtime->start_date);
+        if($columnApv == 'apv_asman') {
+            if($overtime->apv_ppic_nip == '-') {
+                if($overtime->apv_mgr_nip == '-') {
+                    $data['apv_mgr_date'] = $newCurrDate < $ovtStartDate ? $overtime->start_date : $currDate;
+                } else {
+                    $data['apv_ppic_date'] = $newCurrDate < $ovtStartDate ? $overtime->start_date : $currDate;
+                }
+            }
+        } else if($columnApv == 'apv_ppic') {
+            if($overtime->apv_mgr_nip == '-') {
+                $data['apv_mgr_date'] = $newCurrDate < $ovtStartDate ? $overtime->start_date : $currDate;
+            }
         }
 
         $update = $this->Hr->update('employee_overtimes', $data, ['task_id' => $taskId]);

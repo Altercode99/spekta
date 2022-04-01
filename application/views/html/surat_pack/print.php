@@ -36,6 +36,11 @@
                     <td class="font">:</td>
                     <td class="font"><b><?= $no_batch ?></b></td>
                 </tr>
+                 <tr>
+                    <td class="font">MFG. DATE</td>
+                    <td class="font">:</td>
+                    <td class="font"><b><?= $mfg_date ?></b></td>
+                </tr>
                 <tr>
                     <td class="font">EXP. DATE</td>
                     <td class="font">:</td>
@@ -69,6 +74,7 @@
         <div class="font-bold"><?= ($i - 1) + $start_from ?></div>
         <div class="font">Tgl: <?= $footer_date ?></div>
         <div class="font"><?= $no_batch ?></div>
+         <div class="font">MD: <?= $mfg_date ?></div>
         <div class="font">ED: <?= $exp_date ?></div>
         <br />
         <div class="font"><?= $product_name ?></div>

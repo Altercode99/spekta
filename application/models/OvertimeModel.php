@@ -443,4 +443,65 @@ class OvertimeModel extends CI_Model
         $sql .= " ORDER BY a.overtime_date ASC";
         return $this->db->query($sql);
     }
+
+    public function getAppvAsman($date)
+    {
+        $sql = "SELECT a.*,b.name AS department,c.name AS sub_department,d.name AS division
+                    FROM employee_overtimes a, departments b, sub_departments c, divisions d 
+                    WHERE a.department_id = b.id
+                    AND a.sub_department_id = c.id
+                    AND a.division_id = d.id
+                    AND apv_asman_nip = '' 
+                    AND apv_asman = 'CREATED' 
+                    AND status = 'PROCESS' 
+                    AND apv_spv_date != '0000-00-00 00:00:00'
+                    AND apv_spv_date < '$date'";
+        return $this->db->query($sql)->result();
+    }
+
+    public function getAppvPPIC($date)
+    {
+        $sql = "SELECT a.*,b.name AS department,c.name AS sub_department,d.name AS division
+                    FROM employee_overtimes a, departments b, sub_departments c, divisions d 
+                    WHERE a.department_id = b.id
+                    AND a.sub_department_id = c.id
+                    AND a.division_id = d.id
+                    AND a.sub_department_id IN('1','2','3','4','13')
+                    AND apv_ppic_nip = '' 
+                    AND apv_ppic = 'CREATED' 
+                    AND status = 'PROCESS' 
+                    AND apv_asman_date != '0000-00-00 00:00:00'
+                    AND apv_asman_date < '$date'";
+        return $this->db->query($sql)->result();
+    }
+
+    public function getAppvManager($date)
+    {
+        $sql = "SELECT a.*,b.name AS department,c.name AS sub_department,d.name AS division
+                    FROM employee_overtimes a, departments b, sub_departments c, divisions d 
+                    WHERE a.department_id = b.id
+                    AND a.sub_department_id = c.id
+                    AND a.division_id = d.id
+                    AND apv_mgr_nip = '' 
+                    AND apv_mgr = 'CREATED' 
+                    AND status = 'PROCESS' 
+                    AND apv_ppic_date != '0000-00-00 00:00:00'
+                    AND apv_ppic_date < '$date'";
+        return $this->db->query($sql)->result();
+    }
+
+    public function getAppvHead($date)
+    {
+        $sql = "SELECT a.*,b.name AS department,c.name AS sub_department,d.name AS division
+                    FROM employee_overtimes a, departments b, sub_departments c, divisions d 
+                    WHERE a.department_id = b.id
+                    AND a.sub_department_id = c.id
+                    AND a.division_id = d.id
+                    AND apv_head_nip = '' 
+                    AND apv_head = 'CREATED' 
+                    AND status = 'PROCESS' 
+                    AND apv_mgr_date != '0000-00-00 00:00:00'
+                    AND apv_mgr_date < '$date'";
+        return $this->db->query($sql)->result();
+    }
 }
