@@ -417,14 +417,8 @@ function Public(method, params) {
   return mainController("PublicController", method, params);
 }
 
-function fileUrl(filename, mode) {
-  if (mode == "read") {
-    return (
-      BASE_URL + "index.php?c=Pc&m=pdfreader&file=" + filename + "&mode=" + mode
-    );
-  } else {
-    return BASE_URL + "index.php?c=Pc&m=pdfreader&file=" + filename;
-  }
+function fileUrl(filename) {
+  return `${BASE_URL}assets/files/${filename}`;
 }
 
 function cleanSC(string) {

@@ -45,11 +45,12 @@ class Pc extends Erp_Controller
     public function pdfreader()
     {
         $params = getParam();
-        if(count($params) == 4) {
-            if (isset($params['file']) && file_exists('./assets/files/' . $params['file'])) {
+        if (isset($params['token'])) {
+            $file = simpleEncrypt($params['token'], 'd');
+            if($file && file_exists('./assets/files/' . $file)) {
                 $mode = isset($params['mode']) ? $params['mode'] : 'preview';
                 if($mode != '' && ($mode == 'read' || $mode == 'preview')) {
-                    $this->load->view('html/document/pdf_reader', ['file' => $params['file'], 'mode' => $mode]);
+                    $this->load->view('html/document/pdf_reader', ['file' => $file, 'mode' => $mode]);
                 } else {
                     $this->load->view('html/invalid_response', ['message' => 'Mode Error!']);
                 }

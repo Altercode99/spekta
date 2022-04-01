@@ -592,4 +592,11 @@ class DocumentController extends Erp_Controller
         $this->Qhse->updateById($table, $data, $id);
         xmlResponse('updated', $post['name']);
     }
+
+    public function encryptFile()
+    {
+        $post = fileGetContent();
+        $filename = simpleEncrypt($post->filename, 'e');
+        response(['filename' => $filename]);
+    }
 }

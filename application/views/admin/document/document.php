@@ -451,7 +451,9 @@ $script = <<< "JS"
                 if(mFile || sFile) {
                     let file = files[id];
                     if(file.type === "pdf") {
-                        docLayout.cells("b").attachURL(fileUrl(file.filename));
+                        reqJson(Document("encryptFile"), "POST", { filename: file.filename }, (err, res) => {
+                            docLayout.cells("b").attachURL(BASE_URL + "index.php?c=Pc&m=pdfreader&mode=preview&token=" + res.filename);
+                        });
                         showDetail("file", file);
                     } else {
                         noPreview();
@@ -759,7 +761,9 @@ $script = <<< "JS"
                     break;
                 case "read":
                     if(selectedFilename) {
-                        window.open(fileUrl(selectedFilename, "read"), "_blank");
+                        reqJson(Document("encryptFile"), "POST", { filename: selectedFilename }, (err, res) => {
+                            window.open(BASE_URL + "index.php?c=Pc&m=pdfreader&mode=read&token=" + res.filename, "_blank");
+                        });
                     } else {
                         eAlert("Belum ada file yang dipilih!");
                     }
