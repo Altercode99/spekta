@@ -45,6 +45,12 @@
           bottom: 0;
           left: 0;
       }
+
+      @media print {
+      	#my_pdf_viewer {
+      	   display: none;
+      	}
+      }
   </style>
 </head>
 <body>

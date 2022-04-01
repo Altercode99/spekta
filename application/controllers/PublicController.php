@@ -271,6 +271,7 @@ class PublicController extends Erp_Controller
             if($columnApv == 'apv_asman') {
                 if($overtime->apv_ppic_nip == '-') {
                     if($overtime->apv_mgr_nip == '-') {
+                        $data['apv_ppic_date'] = $newCurrDate < $ovtStartDate ? $overtime->start_date : $currDate;
                         $data['apv_mgr_date'] = $newCurrDate < $ovtStartDate ? $overtime->start_date : $currDate;
                     } else {
                         $data['apv_ppic_date'] = $newCurrDate < $ovtStartDate ? $overtime->start_date : $currDate;

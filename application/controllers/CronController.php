@@ -97,6 +97,18 @@ class CronController extends Erp_Controller
                 'apv_asman_date' => date('Y-m-d H:i:s'),
             ];
 
+            $currDate = date('Y-m-d H:i:s');
+            $newCurrDate = new DateTime($currDate);
+            $ovtStartDate = new DateTime($overtime->start_date);
+            if($overtime->apv_ppic_nip == '-') {
+                if($overtime->apv_mgr_nip == '-') {
+                    $data['apv_ppic_date'] = $newCurrDate < $ovtStartDate ? $overtime->start_date : $currDate;
+                    $data['apv_mgr_date'] = $newCurrDate < $ovtStartDate ? $overtime->start_date : $currDate;
+                } else {
+                    $data['apv_ppic_date'] = $newCurrDate < $ovtStartDate ? $overtime->start_date : $currDate;
+                }
+            }
+
             $update = $this->Hr->update('employee_overtimes', $data, ['task_id' => $overtime->task_id]);
             if ($update) {
                 if ($overtime->sub_department_id == 1 || $overtime->sub_department_id == 2 || $overtime->sub_department_id == 3 || $overtime->sub_department_id == 4 || $overtime->sub_department_id == 13) {
@@ -141,6 +153,14 @@ class CronController extends Erp_Controller
                 'apv_ppic_nip' => $empNip,
                 'apv_ppic_date' => date('Y-m-d H:i:s'),
             ];
+
+            $currDate = date('Y-m-d H:i:s');
+            $newCurrDate = new DateTime($currDate);
+            $ovtStartDate = new DateTime($overtime->start_date);
+            if($overtime->apv_mgr_nip == '-') {
+                $data['apv_mgr_date'] = $newCurrDate < $ovtStartDate ? $overtime->start_date : $currDate;
+            }
+
             $update = $this->Hr->update('employee_overtimes', $data, ['task_id' => $overtime->task_id]);
             if ($update) {
                 $isHaveMgr = $this->isHaveMgr($overtime);
