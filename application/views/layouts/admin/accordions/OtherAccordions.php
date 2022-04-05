@@ -22,12 +22,20 @@ $script = <<< "JS"
                 subOvertimeItems.push({id: "other_input_lembur_support", text: "Input Lembur (B)", icons: {file: "menu_icon"}});
             }
 
+            if(isHaveTrees("other_report_req_lembur")) {
+                subOvertimeItems.push({id: "other_report_req_lembur", text: "Report Request Lembur", icons: {file: "menu_icon"}});
+            }
+
             if(isHaveTrees("other_input_lembur")) {
                 subOvertimeItems.push({id: "other_input_lembur", text: "Input Lembur (A)", icons: {file: "menu_icon"}});
             }
 
             if(isHaveTrees("other_approval_lembur")) {
                 subOvertimeItems.push({id: "other_approval_lembur", text: "Approval Lembur", icons: {file: "menu_icon"}});
+            }
+
+            if(isHaveTrees("other_report_form_lembur")) {
+                subOvertimeItems.push({id: "other_report_form_lembur", text: "Rekap Form Lembur", icons: {file: "menu_icon"}});
             }
 
             if(isHaveTrees("other_report_lembur")) {
@@ -52,12 +60,16 @@ $script = <<< "JS"
                     inputOvertimeTab();
                 } else if(id == "other_input_lembur_support") {
                     inputOvertimeTNPTab();
-                } if(id == "other_approval_lembur") {
+                } else if(id == "other_approval_lembur") {
                     appvOvertimeTab();
                 } else if(id == "other_report_lembur") {
                     reportOvertimeTab();
                 } else if(id == "other_pengajuan_revisi_lembur") {
                     reqRevOvertimeTab();
+                } else if(id == "other_report_req_lembur") {
+                    reportReqOvtTNPTab();
+                } else if(id == "other_report_form_lembur") {
+                    reportFormOvertimeTab();
                 }
             });
         }

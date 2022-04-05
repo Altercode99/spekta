@@ -77,6 +77,18 @@ $script = <<< "JS"
         }
     }
 
+    function reportFormOvertimeTab() {
+        if (!mainTab.tabs("other_report_form_lembur")){
+            if(!userLogged.picOvertime) {
+                return eaAlert("Kesalahan Hak Akses", "Anda tidak memiliki hak akses sebagai Admin lemburan!");
+            }
+            mainTab.addTab("other_report_form_lembur", tabsStyle("app18.png", "Rekap Form Lembur", "background-size: 16px 16px"), null, null, true, true);
+            showFormOvertime();
+        } else {
+            mainTab.tabs("other_report_form_lembur").setActive();
+        }
+    }
+
     function reqRevOvertimeTab() {
         if (!mainTab.tabs("other_pengajuan_revisi_lembur")){
             if(!userLogged.picOvertime) {

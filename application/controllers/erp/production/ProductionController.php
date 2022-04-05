@@ -545,13 +545,21 @@ class ProductionController extends Erp_Controller
         $batch = $this->Prod->getOne('spack_batch_numbers', ['no_batch' => $post['no_batch']]);
         isDelete(["Nomor Batch $post[no_batch]" => $batch]);
 
-        if(!$checkPackingBy || !$checkSpvBy) {
-            xmlResponse('error', 'Operator kemas / Spv tidak valid!');
+        if($post['packing_by'] != '') {
+            if(!$checkPackingBy) {
+                xmlResponse('error', 'Operator kemas tidak valid!');
+            }
         }
-        
+
+        if($post['spv_by'] != '') {
+            if(!$checkSpvBy) {
+                xmlResponse('error', 'Spv tidak valid!');
+            }
+        }
+       
         $check = $this->Prod->getOne('spack_prints', [
             'makloon' => $post['makloon'],
-            'letter_date' => $post['letter_date'],
+            'letter_date' => $post['letter_date'] ? $post['letter_date'] : NULL,
             'no_batch' => $post['no_batch'],
             'product_id' => $batch->product_id,
             'location_id' => $post['location_id'],
@@ -563,8 +571,8 @@ class ProductionController extends Erp_Controller
         isExist(["Surat Pack" => $check]);
         unset($post['product_name']);
         $post['product_id'] = $batch->product_id;
-        $post['packing_by'] = $checkPackingBy->id;
-        $post['spv_by'] = $checkSpvBy->id;
+        $post['packing_by'] = $checkPackingBy ? $checkPackingBy->id : NULL;
+        $post['spv_by'] = $checkSpvBy ? $checkPackingBy->id : NULL;
         $post['created_by'] = empId();
 
         $insertId = $this->Prod->create('spack_prints', $post);
@@ -621,9 +629,10 @@ class ProductionController extends Erp_Controller
             if($print) {
                 $mfgDate = strtoupper(substr(mToMonth($print->mfg_month), 0, 3)) . ' ' . substr($print->mfg_year, 0, 2);
                 $expDate = strtoupper(substr(mToMonth($print->exp_month), 0, 3)) . ' ' . substr($print->exp_year, 0, 2);
+                $spackDate = $print->letter_date ? spackDate($print->letter_date) : "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
                 $data = [
-                    'letter_date' => $print->location . ', ' .spackDate($print->letter_date),
-                    'footer_date' => spackDate($print->letter_date),
+                    'letter_date' => $print->location . ', ' .$spackDate,
+                    'footer_date' => $spackDate,
                     'no_batch' => $print->no_batch,
                     'product_name' => $print->product_name,
                     'package_desc_ori' => $print->package_desc,

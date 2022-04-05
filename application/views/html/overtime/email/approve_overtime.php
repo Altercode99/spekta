@@ -97,15 +97,26 @@
                 <td style="<?= $style['td'] ?>; <?= $overtime->status == 'REJECTED' ? 'color:red;' : null ?>"><?= $overtime->status ?></td>
             </tr>
             <tr>
+                <?php 
+                    $newOvertime = $this->Hr->getOne('employee_overtimes', ['task_id' => $overtime->task_id]); 
+                    $currDate = date('Y-m-d H:i:s');
+                    $newCurrDate = new DateTime($currDate);
+                    $ovtStartDate = new DateTime($overtime->start_date);
+                    if($newCurrDate < $ovtStartDate) {
+                        $altDate = $overtime->start_date;
+                    } else {
+                        $altDate = $currDate;
+                    }
+                ?>
                 <td style="<?= $style['td'] ?>;border:1px solid #422800;vertical-align:text-top;">Batas Waktu Approval</td>
                 <?php if($rank == 'ASMAN') { ?>
-                <td style="<?= $style['td'] ?>;color:red;"><?= toIndoDateTime(addDayToDate($overtime->apv_spv_date, 2)) ?></td>
+                <td style="<?= $style['td'] ?>;color:red;"><?= toIndoDateTime(addDayToDate($newOvertime->start_date, 2)); ?></td>
                 <?php } else if($rank == 'PPIC') { ?>
-                    <td style="<?= $style['td'] ?>;color:red;"><?= toIndoDateTime(addDayToDate($overtime->apv_asman_date, 2)) ?></td>
+                    <td style="<?= $style['td'] ?>;color:red;"><?= $newOvertime->apv_asman_date != '0000-00-00 00:00:00' ? toIndoDateTime(addDayToDate($newOvertime->apv_asman_date, 2)) : toIndoDateTime(addDayToDate($altDate, 2)); ?></td>
                 <?php } else if($rank == 'Manager') { ?>
-                    <td style="<?= $style['td'] ?>;color:red;"><?= toIndoDateTime(addDayToDate($overtime->apv_ppic_date, 2)) ?></td>
+                    <td style="<?= $style['td'] ?>;color:red;"><?= $newOvertime->apv_ppic_date != '0000-00-00 00:00:00' ? toIndoDateTime(addDayToDate($newOvertime->apv_ppic_date, 2)) : toIndoDateTime(addDayToDate($altDate, 2)); ?></td>
                 <?php } else if($rank == 'Plant Manager') { ?>
-                    <td style="<?= $style['td'] ?>;color:red;"><?= toIndoDateTime(addDayToDate($overtime->apv_mgr_date, 2)) ?></td>
+                    <td style="<?= $style['td'] ?>;color:red;"><?= $newOvertime->apv_mgr_date != '0000-00-00 00:00:00' ? toIndoDateTime(addDayToDate($newOvertime->apv_mgr_date, 2)) : toIndoDateTime(addDayToDate($altDate, 2)); ?></td>
                 <?php } ?>
             </tr>
         </table>

@@ -160,19 +160,13 @@ $script = <<< "JS"
                     }
                     var printForm = printLayout.cells("a").attachForm([
                         {type: "block", offsetTop: 10, list: [
-                            {type: "calendar", name: "letter_date", label: "Tanggal", labelWidth: 130, inputWidth:250, required: true, readonly:true},
+                            {type: "calendar", name: "letter_date", label: "Tanggal", labelWidth: 130, inputWidth:250, readonly:true},
                             {type: "input", name: "no_batch", label: "No. Batch", labelWidth: 130, inputWidth:250, required: true, readonly:true, value: noBatch},
                             {type: "input", name: "product_name", label: "Produk", labelWidth: 130, inputWidth:250, required: true, readonly:true, value: productName},
                             {type: "combo", name: "makloon", label: "Maklook", labelWidth: 130, inputWidth: 250, readonly: true},
                             {type: "combo", name: "location_id", label: "Lokasi", labelWidth: 130, inputWidth: 250, readonly: true, required: true},
-                            {type: "combo", name: "packing_by", label: "Dikemas Oleh", labelWidth: 130, inputWidth: 250, 
-                                validate: "NotEmpty", 
-                                required: true
-                            },
-                            {type: "combo", name: "spv_by", label: "Supervisor", labelWidth: 130, inputWidth: 250, 
-                                validate: "NotEmpty", 
-                                required: true
-                            },
+                            {type: "combo", name: "packing_by", label: "Dikemas Oleh", labelWidth: 130, inputWidth: 250},
+                            {type: "combo", name: "spv_by", label: "Supervisor", labelWidth: 130, inputWidth: 250},
                         ]}, 
                         {type: "newcolumn"},
                         {type: "block", offsetTop: 10, list: [

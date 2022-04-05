@@ -289,7 +289,6 @@ $script = <<< "JS"
                     }, (err, res) => {
                         window.open(res.url, '_blank');
                     });
-                    
                     break;
                 case "send_wsap":
                     if(!ovtGrid.getSelectedRowId()) {

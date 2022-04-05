@@ -17,6 +17,18 @@ $script = <<< "JS"
         }
     }
 
+    function reportReqOvtTNPTab() {
+        if (!mainTab.tabs("tnp_report_req_lembur")){
+            if(!userLogged.picOvertime) {
+                return eaAlert("Kesalahan Hak Akses", "Anda tidak memiliki hak akses sebagai Admin lemburan!");
+            }
+            mainTab.addTab("tnp_report_req_lembur", tabsStyle("clock.png", "Report Request Lembur"), null, null, true, true);
+            showReportReqOvt();
+        } else {
+            mainTab.tabs("tnp_report_req_lembur").setActive();
+        }
+    }
+
 JS;
 
 echo $script;
