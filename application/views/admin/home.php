@@ -152,6 +152,14 @@ $script = <<< "JS"
 			});
 		}
 
+		if(isHaveMenu("Continous Improvement")) {
+			dataView.add({
+				path:"./public/codebase/icons/increase-icon.png",
+				title: "Continous Improvement",
+				id:"improvement"
+			});
+		}
+
 		dataView.select("info");
 
 		dataView.attachEvent("onAfterSelect", function(id) {
@@ -229,6 +237,13 @@ $script = <<< "JS"
 					if(typeof projectAccordion === "function"){
 						projectAccordion();
 						projectManagerTab();
+					}
+				}, 100);
+			} else if(id == "improvement") {
+				leftRightLayout.cells("a").expand();
+				setTimeout(() => {
+					if(typeof projectAccordion === "function"){
+						improveAccordion();
 					}
 				}, 100);
 			}

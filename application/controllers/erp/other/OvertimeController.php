@@ -960,6 +960,16 @@ class OvertimeController extends Erp_Controller
             $changeTime = $overtime->change_time != '' ? $overtime->change_time : '-';
             $rejectionNote = $overtime->rejection_note != '' ? $overtime->rejection_note : '-';
 
+            if($overtime->apv_head_date != '0000-00-00 00:00:00') {
+                if ($overtime->status_day === 'Hari Libur') {
+                    $appvStatus = "bgColor='#efd898'";
+                } else if ($overtime->status_day === 'Libur Nasional') {
+                    $appvStatus = "bgColor='#7ecbf1'";
+                } else {
+                    $appvStatus = null;
+                }
+            }
+
             $xml .= "<row id='$overtime->id'>";
             $xml .= "<cell $appvStatus>" . cleanSC($no) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->task_id) . "</cell>";
@@ -3118,5 +3128,64 @@ class OvertimeController extends Erp_Controller
         $this->Hr->updateById('employee_overtimes_detail', ['requirements' => $name], $post->id);
         response(['status' => 'success', 'message' => 'Berhasil mengubah kebutuhan lembur personil']);
     }
-}
 
+    public function getRekapColumn()
+    {
+        $post = fileGetContent();
+        $date1 = explode('-', $post->start);
+        $date2 = explode('-', $post->end);
+        $divisions = $this->Overtime->getDivision();
+        
+        $time1 = mktime(0, 0, 0, $date1[1], $date1[2], $date1[0]);
+        $time2 = mktime(0, 0, 0, $date2[1], $date2[2], $date2[0]);
+        
+      
+
+        $header = "";
+        $attheader = "";
+        $colsort = "";
+        $colalign = "";
+        $coltypes = "";
+        $width = "";
+        foreach ($divisions as $div) {
+            $header .= ",$div->name";
+            $attheader .= ",#text_filter";
+            $colsort .= ",str";
+            $colalign .= ",left";
+            $coltypes .= ",rotxt";
+            $width .= ",10";
+        }
+
+        $data = [];
+        $no = 1;
+        for ($start = $time1;$start <= $time2; $start += 86400) {
+            $date = date('Y-m-d', $start);
+            $dt = [
+                $no,
+                toIndoDateDay($date)
+            ];
+
+            foreach ($divisions as $div) {
+                $min = $this->Overtime->getMinStartHour($date, $div->id);
+                $max = $this->Overtime->getMinEndHour($date, $div->id);
+                $dt[] = "$min - $max";
+            }
+
+            $data['rows'][] = [
+                'id' => $date,
+                'data' => $dt
+            ];
+            $no++;
+        }
+
+        response([
+            'header' => $header,
+            'attheader' => $attheader,
+            'colsort' => $colsort,
+            'colalign' => $colalign,
+            'coltypes' => $coltypes,
+            'width' => $width,
+            'rows' => $data
+        ]);
+    }
+}

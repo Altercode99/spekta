@@ -198,7 +198,10 @@ class RoomRevController extends Erp_Controller
             xmlResponse('error', "Waktu selesai reservasi ruang meeting maksimal adalah 6 jam!");
         }
 
-        $bookedRooms = $this->General->getWhere('meeting_rooms_reservation', ['room_id' => $data->room, 'DATE(start_date)' => $start, 'status !=' => 'REJECTED', 'status !=' => 'CLOSED'])->result();
+        $bookedRooms = $this->General->getWhere('meeting_rooms_reservation', [
+            'room_id' => $data->room, 
+            'DATE(start_date)' => $start
+        ], '*', null, null, null, ['status' => ['REJECTED', 'CLOSED']])->result();
         $dateExist = 0;
         $dt1 = "";
         $dt2 = "";

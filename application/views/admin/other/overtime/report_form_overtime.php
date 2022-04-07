@@ -10,7 +10,7 @@ $script = <<< "JS"
         var reportFormLayout =  mainTab.cells("other_report_form_lembur").attachLayout({
             pattern: "2E",
             cells: [
-                {id: "a", text: "Report Form Lembur"},
+                {id: "a", text: "Rekap Form Lembur"},
                 {id: "b", text: "Detail Lembur", collapse: true},
             ]
         });

@@ -21,12 +21,12 @@ $script = <<< "JS"
                 overtimeSubItems.push({id: "tnp_input_lembur", text: "Input Lembur (B)", icons: {file: "menu_icon"}});
             }
 
-            if(isHaveTrees("tnp_report_form_lembur")) {
-                overtimeSubItems.push({id: "tnp_report_form_lembur", text: "Report Form Lembur", icons: {file: "menu_icon"}});
+            if(isHaveTrees("tnp_report_req_lembur")) {
+                overtimeSubItems.push({id: "tnp_report_req_lembur", text: "Rekap Jam Lembur", icons: {file: "menu_icon"}});
             }
 
-            if(isHaveTrees("tnp_report_req_lembur")) {
-                overtimeSubItems.push({id: "tnp_report_req_lembur", text: "Report Request Lembur", icons: {file: "menu_icon"}});
+            if(isHaveTrees("tnp_report_form_lembur")) {
+                overtimeSubItems.push({id: "tnp_report_form_lembur", text: "Rekap Form Lembur", icons: {file: "menu_icon"}});
             }
 
             //TREES

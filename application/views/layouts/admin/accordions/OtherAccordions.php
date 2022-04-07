@@ -22,16 +22,16 @@ $script = <<< "JS"
                 subOvertimeItems.push({id: "other_input_lembur_support", text: "Input Lembur (B)", icons: {file: "menu_icon"}});
             }
 
-            if(isHaveTrees("other_report_req_lembur")) {
-                subOvertimeItems.push({id: "other_report_req_lembur", text: "Report Request Lembur", icons: {file: "menu_icon"}});
-            }
-
             if(isHaveTrees("other_input_lembur")) {
                 subOvertimeItems.push({id: "other_input_lembur", text: "Input Lembur (A)", icons: {file: "menu_icon"}});
             }
 
             if(isHaveTrees("other_approval_lembur")) {
                 subOvertimeItems.push({id: "other_approval_lembur", text: "Approval Lembur", icons: {file: "menu_icon"}});
+            }
+
+            if(isHaveTrees("other_report_req_lembur")) {
+                subOvertimeItems.push({id: "other_report_req_lembur", text: "Rekap Jam Lembur", icons: {file: "menu_icon"}});
             }
 
             if(isHaveTrees("other_report_form_lembur")) {

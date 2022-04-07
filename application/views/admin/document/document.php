@@ -375,8 +375,8 @@ $script = <<< "JS"
 
 			var ext = filename.split(".").pop();
 			if (ext == "pdf" || ext == "doc" || ext == "docx" || ext == "xls" || ext == "xlsx") {
-				if (size > 15000000) {
-					eAlert("Tidak boleh melebihi 15 MB!");
+				if (size > 50000000) {
+					eAlert("Tidak boleh melebihi 50 MB!");
 				} else {
 					if(totalFile > 0) {
 						eAlert("Maksimal 1 file!");
@@ -648,9 +648,9 @@ $script = <<< "JS"
                                 if(addRevisionForm.validate()) {
                                     var ext = filename.split(".").pop();
                                     if (ext == "pdf" || ext == "doc" || ext == "docx" || ext == "xls" || ext == "xlsx") {
-                                        if (size > 15000000) {
+                                        if (size > 50000000) {
                                             fileError = true;
-                                            eAlert("Tidak boleh melebihi 15 MB!");
+                                            eAlert("Tidak boleh melebihi 50 MB!");
                                         } else {
                                             if(totalFile > 0) {
                                                 eAlert("Maksimal 1 file");

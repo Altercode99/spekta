@@ -91,7 +91,11 @@ class VehicleRevController extends Erp_Controller
             xmlResponse('error', "Waktu selesai reservasi kendaraan maksimal adalah 12 jam!");
         }
 
-        $bookedVehicles = $this->General->getWhere('vehicles_reservation', ['driver' => $data->driver, 'vehicle_id' => $data->vehicle, 'DATE(start_date)' => $start, 'status !=' => 'REJECTED', 'status !=' => 'CLOSED'])->result();
+        $bookedVehicles = $this->General->getWhere('vehicles_reservation', [
+            'driver' => $data->driver, 
+            'vehicle_id' => $data->vehicle, 
+            'DATE(start_date)' => $start
+        ], '*', null, null, null, ['status' => ['REJECTED', 'CLOSED']])->result();
         $dateExist = 0;
         $dt1 = "";
         $dt2 = "";

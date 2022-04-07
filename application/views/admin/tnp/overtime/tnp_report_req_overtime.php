@@ -6,10 +6,11 @@ if ((strpos(strtolower($_SERVER['SCRIPT_NAME']), strtolower(basename(__FILE__)))
 
 $script = <<< "JS"
 	function showReportReqOvt() {	
+        var rekapGrid;
         var reportReqLayout =  mainTab.cells("tnp_report_req_lembur").attachLayout({
             pattern: "1C",
             cells: [
-                {id: "a", text: "Report Request Lembur"},
+                {id: "a", text: "Rekap Request Lembur"},
             ]
         });
 
@@ -25,16 +26,52 @@ $script = <<< "JS"
         var reportReqMenu =  reportReqLayout.cells("a").attachMenu({
             icon_path: "./public/codebase/icons/",
             items: [
-                {id: "search", text: "<div style='width:100%'>Search: <input type='text' id='tbp_start_ovt_req_report' readonly value='"+currentDate.start+"' /> - <input type='text' id='tbp_end_ovt_req_report' readonly value='"+currentDate.end+"' /> <button id='other_btn_ftr_ovt_req_report'>Proses</button>"}
+                {id: "search", text: "<div style='width:100%'>Search: <input type='text' id='tnp_start_ovt_req_report' readonly value='"+currentDate.start+"' /> - <input type='text' id='tnp_end_ovt_req_report' readonly value='"+currentDate.end+"' /> <button id='other_btn_ftr_ovt_req_report'>Proses</button>"}
             ]
         });
 
-        var filterCalendar = new dhtmlXCalendarObject(["tbp_start_ovt_req_report","tbp_end_ovt_req_report"]);
+        var filterCalendar = new dhtmlXCalendarObject(["tnp_start_ovt_req_report","tnp_end_ovt_req_report"]);
         $("#other_btn_ftr_ovt_req_report").on("click", function() {
-            if(checkFilterDate($("#tbp_start_ovt_req_report").val(), $("#tbp_end_ovt_req_report").val())) {
-               
+            if(checkFilterDate($("#tnp_start_ovt_req_report").val(), $("#tnp_end_ovt_req_report").val())) {
+                getRekapGrid();
             }
         });
+
+        reportReqToolbar.attachEvent("onClick", function(id) {
+            switch (id) {
+                case "refresh":
+                    getRekapGrid();
+                    break;
+                case "export":
+                    rekapGrid.toExcel("./public/codebase/grid-to-excel-php/generate.php");
+                    break;
+            }
+        });
+
+        function getRekapGrid() {
+            let start = $("#tnp_start_ovt_req_report").val();
+            let end = $("#tnp_end_ovt_req_report").val();
+            reportReqLayout.cells("a").progressOn();
+            reqJson(Overtime("getRekapColumn"), "POST", {start, end}, (err, res) => {
+                rekapGrid = reportReqLayout.cells("a").attachGrid();
+                rekapGrid.setImagePath("./public/codebase/imgs/");
+                rekapGrid.setHeader("No,Tanggal" + res.header);
+                rekapGrid.attachHeader("#rspan,#text_filter" + res.attheader);
+                rekapGrid.setColSorting("int,str" + res.colsort);
+                rekapGrid.setColAlign("center,left" + res.colalign);
+                rekapGrid.setColTypes("rotxt,rotxt" + res.coltypes);
+                rekapGrid.setInitWidthsP("5,20" + res.width);
+                rekapGrid.enableSmartRendering(true);
+                rekapGrid.attachEvent("onXLE", function() {
+                    reportReqLayout.cells("a").progressOff();
+                });
+                rekapGrid.init();
+                rekapGrid.parse(res.rows, "json");
+
+            });
+        }
+
+        getRekapGrid();
     }
 
 JS;

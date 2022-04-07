@@ -610,7 +610,7 @@ function checkDateExist($current, $start, $end)
     $startdate = new DateTime($start);
     $enddate = new DateTime($end);
 
-    if ($startdate <= $now && $now <= $enddate) {
+    if ($now >= $startdate && $now <= $enddate) {
         return true;
     } else {
         return false;

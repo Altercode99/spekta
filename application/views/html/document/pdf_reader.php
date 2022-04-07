@@ -46,6 +46,16 @@
           left: 0;
       }
 
+      #warning {
+           display: flex;
+           flex-direction: column;
+           width: 100%;
+           height: 100vh;
+           justify-content: center;
+           align-items: center;
+           text-align: center;
+      }
+
       @media print {
       	#my_pdf_viewer {
       	   display: none;
@@ -54,6 +64,15 @@
   </style>
 </head>
 <body>
+    <?php 
+        $ip = explode('.', $this->input->ip_address()); 
+        if($ip[0] != "::1") {
+            $segment = $ip[0].'.'.$ip[1];
+        } else {
+            $segment = '';
+        }
+    ?>
+    <?php if($this->auth->role == 'admin' || $segment == '10.9' || $segment == '192.168') { ?>
      <div id="my_pdf_viewer">
         <div id="canvas_container">
             <canvas id="pdf_renderer" style="margin-left: -6px"></canvas>
@@ -75,6 +94,11 @@
             </div>
         </div>
     </div>
+    <?php } else { ?>
+        <div id="warning">
+            <h5>Hanya bisa di buka dari Jaringan PT. Kimia Farma Tbk. Plant Jakarta</h5>
+        </div>
+    <?php } ?>
  
     <script>
         document.addEventListener('contextmenu', event => event.preventDefault());

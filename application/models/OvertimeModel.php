@@ -504,4 +504,43 @@ class OvertimeModel extends CI_Model
                     AND apv_mgr_date < '$date'";
         return $this->db->query($sql)->result();
     }
+
+    public function getDivision()
+    {
+        $sql = "SELECT a.id,a.name,b.name AS sub_department
+                    FROM divisions a, sub_departments b
+                    WHERE a.sub_department_id = b.id
+                    AND a.location = '$this->empLoc'
+                    AND a.id != 0
+                    ORDER BY a.id";
+        return $this->db->query($sql)->result();
+    }
+
+    public function getMinStartHour($date, $divId)
+    {
+        $sql = "SELECT start_date FROM $this->kf_hr.employee_overtimes_detail
+                    WHERE DATE(start_date) = '$date'
+                    AND division_id = '$divId'
+                    ORDER BY start_date ASC LIMIT 1";
+        $query =  $this->db->query($sql)->row();
+        if($query) {
+            return getTime($query->start_date);
+        } else {
+            return '';
+        }
+    }
+
+    public function getMinEndHour($date, $divId)
+    {
+        $sql = "SELECT end_date FROM $this->kf_hr.employee_overtimes_detail
+                    WHERE DATE(end_date) = '$date'
+                    AND division_id = '$divId'
+                    ORDER BY end_date DESC LIMIT 1";
+        $query =  $this->db->query($sql)->row();
+        if($query) {
+            return getTime($query->end_date);
+        } else {
+            return '';
+        }
+    }
 }
