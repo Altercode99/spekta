@@ -94,8 +94,8 @@ define('MTN_DB', 'kf_maintenance');
 define('PROD_DB', 'kf_production');
 define('CHAT_DB', 'kf_chat');
 
-define('DB_USERNAME', 'arman');
-define('DB_PASSWORD', 'secret');
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', 'J@nuari1993');
 define('DB_HOST', 'localhost');
 
 define('MAIN_DB_DEV', 'kf_main');
@@ -106,8 +106,8 @@ define('MTN_DB_DEV', 'kf_maintenance');
 define('PROD_DB_DEV', 'kf_production');
 define('CHAT_DB_DEV', 'kf_chat');
 
-define('DB_USERNAME_DEV', 'arman');
-define('DB_PASSWORD_DEV', 'secret');
+define('DB_USERNAME_DEV', 'root');
+define('DB_PASSWORD_DEV', 'J@nuari1993');
 define('DB_HOST_DEV', 'localhost');
 
 define('PERMANENT_USER', ['superuser' => true]);

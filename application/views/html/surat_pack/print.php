@@ -8,6 +8,7 @@
     <br>
     <br>
     <br>
+    <br>
     <?php if($i > 1) { ?>
         <br>
     <?php } ?>
@@ -104,6 +105,7 @@
 
     .body_letter {
         width: 100%;
+        margin-top:-15px;
     }
 
     .title {
@@ -141,7 +143,7 @@
         text-align: right;
         width: 100%;
         position: absolute;
-        bottom: 20;
+        bottom: 5;
         right: 0;
     }
 

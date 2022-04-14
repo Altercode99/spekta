@@ -210,15 +210,15 @@ class TestController extends CI_Controller
     //     return $pin;
     // }
 
-    public function test()
-    {
-        $overtime = $this->Overtime->getOvertime(['equal_task_id' => '028/OT/KF-JKT/III/2022'])->row();
-        $this->load->view('html/overtime/email/approve_overtime', [
-            'overtime' => $overtime,
-            'rank' => 'Asman',
-            'level' => 'Asman',
-            'linkApprove' => '',
-            'linkReject' => '',
-        ]);
-    }
+    // public function test()
+    // {
+    //     $overtime = $this->Overtime->getOvertime(['equal_task_id' => '028/OT/KF-JKT/III/2022'])->row();
+    //     $this->load->view('html/overtime/email/approve_overtime', [
+    //         'overtime' => $overtime,
+    //         'rank' => 'Asman',
+    //         'level' => 'Asman',
+    //         'linkApprove' => '',
+    //         'linkReject' => '',
+    //     ]);
+    // }
 }

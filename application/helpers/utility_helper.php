@@ -1018,12 +1018,29 @@ function totalHour($empId, $start, $end, $startTime, $endTime)
 
     $totalMeal = 0;
 
+    $currentDate = new DateTime($date);
+    $startRamadhan = new DateTime(date('Y-m-d', strtotime('2022-04-02')));
+    $endRamadhan = new DateTime(date('Y-m-d', strtotime('2022-05-01')));
+    
+    if($currentDate >= $startRamadhan && $currentDate <= $endRamadhan) {
+        $isRamadhan = true;
+    } else {
+        $isRamadhan = false;
+    }
+
+    $addRamadhan = 0;
     for ($i = intval($startHour) + 1; $i <= $endFixing; $i++) {
         if ($i == $rest1 || $i == $rest2 || $i == $rest3 || $i == $rest4 || $i == $rest5 || ($i - 1) == $rest6 || $i == $normalRest4 || $i == $normalRest4) {
             if ($i != $rest5) {
                 $div++;
             }
         }
+
+        if($isRamadhan) {
+            if($i == 13) {
+                $addRamadhan += 1;
+            }
+        } 
 
         $hour++;
 
@@ -1066,9 +1083,9 @@ function totalHour($empId, $start, $end, $startTime, $endTime)
     }
 
     if ($div < 0) {
-        $totalHour = ($hour - $divStartMinute + $divEndMinute);
+        $totalHour = ($hour - $divStartMinute + $divEndMinute) + $addRamadhan;
     } else {
-        $totalHour = ($hour - $divStartMinute + $divEndMinute) - $div;
+        $totalHour = (($hour - $divStartMinute + $divEndMinute) - $div) + $addRamadhan;
         if ($endHour < $startHour && ($hour - $divStartMinute + $divEndMinute) >= 7 && ($startHour + $divStartMinute) >= 19.5) {
             $totalHour += 1;
         }

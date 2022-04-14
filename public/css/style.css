@@ -322,6 +322,11 @@ div.dhxform_item_label_left.button_print div.dhxform_btn_txt {
 }
 
 /* CUSTOMS ICONS */
+.icon_improvement {
+    background-image: url(../codebase/icons/increase-icon.png) !important;
+    background-size: 16px 16px;
+}
+
 .icon_tutorial {
     background-image: url(../codebase/icons/play.png) !important;
     background-size: 16px 16px;

@@ -695,8 +695,8 @@ class OvertimeController extends Erp_Controller
         $empTaskIds = [];
         $empOvertimes = $this->Hr->getWhere('employee_overtimes_detail', ['task_id' => $overtime->task_id])->result();
         foreach ($empOvertimes as $empOvt) {
-            $isHaveSpv = $this->Hr->getOne('employees', ['division_id' => $empOvt->division_id], '*', ['rank_id' => ['5', '6']]);
-            $isHaveSpvPLT = $this->Hr->getOne('employee_ranks', ['division_id' => $empOvt->division_id, 'status' => 'ACTIVE'], '*', ['rank_id' => ['5', '6']]);
+            $isHaveSpv = $this->Hr->getOne('employees', ['division_id' => $empOvt->division_id, 'division_id !=' => 0], '*', ['rank_id' => ['5', '6']]);
+            $isHaveSpvPLT = $this->Hr->getOne('employee_ranks', ['division_id' => $empOvt->division_id, 'division_id !=' => 0, 'status' => 'ACTIVE'], '*', ['rank_id' => ['5', '6']]);
             if ($isHaveSpv) {
                 $empTaskIds[$empOvt->division_id]['task'][] = $empOvt->emp_task_id;
                 $empTaskIds[$empOvt->division_id]['email'] = $isHaveSpv->email;
@@ -1224,7 +1224,9 @@ class OvertimeController extends Erp_Controller
             $currStart = date('Y-m-d', strtotime($startDate));
             $currEnd = date('Y-m-d', strtotime($endDate));
             if($currStart != $currEnd) {
-                $endDate = backDayToDate($endDate, 1);
+                if(clockToFloat(getTime($endDate)) > clockToFloat(getTime($startDate))) {
+                    $endDate = backDayToDate($endDate, 1);
+                }
             }
         }
 
@@ -1233,7 +1235,7 @@ class OvertimeController extends Erp_Controller
             'task_id', null, null, null, ['status' => ['CANCELED']]
         )->row();
         if ($checkEnd) {
-            xmlResponse('error', 'Ada waktu lembur karyawan yang lebih beasr dari ' . toIndoDateTime($endDate) . ', silahkan cek kembali!');
+            xmlResponse('error', 'Ada waktu lembur karyawan yang lebih besar dari ' . toIndoDateTime($endDate) . ', silahkan cek kembali!');
         }
 
         $this->Hr->updateById('employee_overtimes', [

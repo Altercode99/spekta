@@ -994,7 +994,7 @@ class OtherController extends Erp_Controller
 
             $time = dtToFloat($overtime->start_date);
             if($params['change_shift'] == 2) {
-                if($time >= 2.5 && $time <= 8) {
+                if($time >= 1.5 && $time <= 8) {
                     $meal = $overtime->meal > 0 ? "✓ ($overtime->total_meal x)" : '-';
                     $xml .= "<row id='$overtime->id'>";
                     $xml .= "<cell $color>" . cleanSC($no) . "</cell>";
@@ -1020,7 +1020,7 @@ class OtherController extends Erp_Controller
                     $no++;
                 }
             } else {    
-                if($time >= 2.5 && $time <= 8) {
+                if($time >= 1.5 && $time <= 8) {
 
                 } else {
                     $meal = $overtime->meal > 0 ? "✓ ($overtime->total_meal x)" : '-';

@@ -374,17 +374,38 @@ class ProductionController extends Erp_Controller
 
     public function getProduct()
     {
-        $params = getParam();
-        $products = $this->ProdModel->getMasterProduct($params)->result();
+        $params = getParam();        
         $prodList = [];
-        foreach ($products as $prod) {
+        if(isset($params['name'])) {
+            $products = $this->Prod->getLike('spack_products', null, ['name' => $params['name']], 'id,name', 15)->result();
+            foreach ($products as $prod) {
+                $prodList['options'][] = [
+                    'value' => $prod->id,
+                    'text' => "$prod->name"
+                ];
+            }
+        } else {
             $prodList['options'][] = [
+                'value' => 0,
+                'text' => ""
+            ];
+        }
+        echo json_encode($prodList);
+    }
+
+    public function getProduct2()
+    {
+        $params = getParam();
+        $products = $this->Prod->getWhere('spack_products', ['location' => empLoc()])->result();
+        $prods = [];
+        foreach ($products as $prod) {
+            $prods['options'][] = [
                 'value' => $prod->id,
                 'text' => $prod->name,
                 'selected' => isset($params['select']) && $params['select'] == $prod->id ? 1 : 0,
             ];
         }
-        echo json_encode($prodList);
+        echo json_encode($prods);
     }
 
     public function getLocation()
@@ -466,7 +487,13 @@ class ProductionController extends Erp_Controller
         ]);
         isExist(["Nomor Batch $post[no_batch]" => $check]);
 
+        $checkProduct = $this->Prod->getDataById('spack_products', $post['product_id']);
+        if(!$checkProduct) {
+            xmlResponse('error', 'Produk tidak ditemukan');
+        }
+
         $post['location'] = empLoc();
+        $post['sub_department_id'] = empSub();
         $post['created_by'] = empId();
         $post['updated_by'] = empId();
         $post['updated_at'] = date('Y-m-d H:i:s');
@@ -480,6 +507,11 @@ class ProductionController extends Erp_Controller
         $post['no_batch'] = str_replace(' ', '', strtoupper($post['no_batch']));
         $batch = $this->Prod->getDataById('spack_batch_numbers', $post['id']);
         isDelete(["Nomor batch $post[no_batch]" => $batch]);
+
+        $checkProduct = $this->Prod->getDataById('spack_products', $post['product_id']);
+        if(!$checkProduct) {
+            xmlResponse('error', 'Produk tidak ditemukan');
+        }
 
         $checkPrint = $this->Prod->getOne('spack_prints', ['no_batch' => $post['no_batch']]);
         if($checkPrint) {
@@ -572,7 +604,7 @@ class ProductionController extends Erp_Controller
         unset($post['product_name']);
         $post['product_id'] = $batch->product_id;
         $post['packing_by'] = $checkPackingBy ? $checkPackingBy->id : NULL;
-        $post['spv_by'] = $checkSpvBy ? $checkPackingBy->id : NULL;
+        $post['spv_by'] = $checkSpvBy ? $checkSpvBy->id : NULL;
         $post['created_by'] = empId();
 
         $insertId = $this->Prod->create('spack_prints', $post);
@@ -627,9 +659,9 @@ class ProductionController extends Erp_Controller
         if(isset($params['id']) && isset($params['no_batch']) && isset($params['package_desc']) && isset($params['total_print']) && isset($params['start_from'])) {
             $print = $this->ProdModel->getSpPrint(['equal_id' => $params['id']])->row();
             if($print) {
-                $mfgDate = strtoupper(substr(mToMonth($print->mfg_month), 0, 3)) . ' ' . substr($print->mfg_year, 0, 2);
-                $expDate = strtoupper(substr(mToMonth($print->exp_month), 0, 3)) . ' ' . substr($print->exp_year, 0, 2);
-                $spackDate = $print->letter_date ? spackDate($print->letter_date) : "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                $mfgDate = strtoupper(substr(mToMonth($print->mfg_month), 0, 3)) . ' ' . substr($print->mfg_year, 2, 4);
+                $expDate = strtoupper(substr(mToMonth($print->exp_month), 0, 3)) . ' ' . substr($print->exp_year, 2, 4);
+                $spackDate = $print->letter_date != '0000-00-00' ? spackDate($print->letter_date) : "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
                 $data = [
                     'letter_date' => $print->location . ', ' .$spackDate,
                     'footer_date' => $spackDate,

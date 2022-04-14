@@ -413,6 +413,10 @@ function Production(method, params) {
   return erpController("production", "ProductionController", method, params);
 }
 
+function Improve(method, params) {
+  return erpController("improvement", "ImproveController", method, params);
+}
+
 function Public(method, params) {
   return mainController("PublicController", method, params);
 }

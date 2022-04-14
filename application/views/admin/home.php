@@ -242,7 +242,7 @@ $script = <<< "JS"
 			} else if(id == "improvement") {
 				leftRightLayout.cells("a").expand();
 				setTimeout(() => {
-					if(typeof projectAccordion === "function"){
+					if(typeof improveAccordion === "function"){
 						improveAccordion();
 					}
 				}, 100);

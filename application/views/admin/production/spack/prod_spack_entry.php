@@ -49,7 +49,7 @@ $script = <<< "JS"
 
         addEntryForm = spEntryLayout.cells("a").attachForm([
             {type: "fieldset", offsetTop: 30, offsetLeft: 30, label: "Tambah Surat Pack", list: [
-                {type: "combo", name: "product_id", label: "Produk", labelWidth: 130, inputWidth: 250, readonly: true, required: true},
+                {type: "combo", name: "product_id", label: "Produk", labelWidth: 130, inputWidth: 250, required: true},
                 {type: "input", name: "no_batch", label: "No. Batch", labelWidth: 130, inputWidth:250, required: true},
                 {type: "block", offsetTop: 30, list: [
                     {type: "button", name: "add", className: "button_add", offsetLeft: 15, value: "Tambah"},
@@ -60,7 +60,20 @@ $script = <<< "JS"
         ]);
 
         var addProductCombo = addEntryForm.getCombo("product_id");
-        addProductCombo.load(Production("getProduct"));
+        addProductCombo.enableFilteringMode(true, 'product_id');
+        addProductCombo.attachEvent("onDynXLS", productComboFilter);
+
+        function productComboFilter(text){
+            addProductCombo.clearAll();
+            if(text.length > 3) {
+                dhx.ajax.get(Production('getProduct', {name: text}), function(xml){
+                    if(xml.xmlDoc.responseText) {
+                        addProductCombo.load(xml.xmlDoc.responseText);
+                        addProductCombo.openSelect();
+                    }
+                });
+            }
+        };
 
         addEntryForm.attachEvent("onButtonClick", function (name) {
             switch (name) {
@@ -421,7 +434,7 @@ $script = <<< "JS"
         
         function rSpEntryGrid() {
             spEntryLayout.cells("b").progressOn();
-            spEntryGrid.clearAndLoad(Production("getSpEntryGrid"), spEntryGridCount);
+            spEntryGrid.clearAndLoad(Production("getSpEntryGrid", {equal_sub_department_id: userLogged.subId}), spEntryGridCount);
         }
 
         rSpEntryGrid();
@@ -449,7 +462,7 @@ $script = <<< "JS"
             var editProductCombo = editEntryForm.getCombo("product_id");
 
             function setCombo() {
-                editProductCombo.load(Production("getProduct", {select: editEntryForm.getItemValue("product_id")}));
+                editProductCombo.load(Production("getProduct2", {select: editEntryForm.getItemValue("product_id")}));
             }
 
             editEntryForm.attachEvent("onButtonClick", function(name) {
