@@ -168,7 +168,7 @@ $script = <<< "JS"
                         value: 0, text: "-Pilih Tahun-",
                     }];
                     const newDate = new Date();
-                    for (let i = 2022; i <= newDate.getFullYear() + 5; i++) {
+                    for (let i = 2021; i <= newDate.getFullYear() + 5; i++) {
                         years.push({value: i, text: i});
                     }
                     var printForm = printLayout.cells("a").attachForm([

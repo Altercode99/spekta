@@ -33,6 +33,15 @@ $script = <<< "JS"
         }
     }
 
+    function masterBulanPuasaTab() {
+        if (!mainTab.tabs("hr_data_bulan_puasa")){
+            mainTab.addTab("hr_data_bulan_puasa", tabsStyle("calendar.png", "Data Bulan Puasa"), null, null, true, true);
+            showBulanPuasa();
+        } else {
+            mainTab.tabs("hr_data_bulan_puasa").setActive();
+        }
+    }
+
     function superiorSallaryTab() {
         if (!mainTab.tabs("superior_sallary")){
             mainTab.addTab("superior_sallary", tabsStyle("money.png", "Data Gaji Atasan"), null, null, true, true);
@@ -84,6 +93,15 @@ $script = <<< "JS"
             showHrRevisionOvertimePersonil();
         } else {
             mainTab.tabs("hr_revision_overtime_personil").setActive();
+        }
+    }
+
+    function workShiftTab() {
+        if (!mainTab.tabs("hr_work_shift")){
+            mainTab.addTab("hr_work_shift", tabsStyle("clock.png", "Shift Kerja", "background-size: 16px 16px"), null, null, true, true);
+            showWorkShift();
+        } else {
+            mainTab.tabs("hr_work_shift").setActive();
         }
     }
     

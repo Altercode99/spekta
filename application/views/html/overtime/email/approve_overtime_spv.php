@@ -136,7 +136,8 @@
                             'overtime_hour' => "$start - $end",
                             'task' => $personil->notes,
                             'status' => $personil->status,
-                            'order' => $st
+                            'order' => $st,
+                            'real_hour' => $personil->total_real_hour,
                         ];
                     }
                 } else {
@@ -147,7 +148,8 @@
                         'overtime_hour' => "$start - $end",
                         'task' => $personil->notes,
                         'status' => $personil->status,
-                        'order' => $st
+                        'order' => $st,
+                        'real_hour' => $personil->total_real_hour,
                     ];
                 }
 
@@ -160,7 +162,8 @@
                             'overtime_hour' => "$start - $end",
                             'task' => $personil->notes,
                             'status' => $personil->status,
-                            'order' => $st
+                            'order' => $st,
+                            'real_hour' => $personil->total_real_hour,
                         ];
                     } 
                 }
@@ -201,6 +204,7 @@
                         <span style='font-size:12px;'><?= $personil['sub_department'].' ('.$personil['division'].')' ?></span><br>
                         <span style='font-size:12px;'><?= $personil['overtime_hour'] ?></span><br>
                         <span style='font-size:12px;'>Tugas: <?= $personil['task'] ?></span><br>
+                        <span style='font-size:12px; <?= $empValue['real_hour'] > 60 ? 'color:red' : null ?>'>Total Jam Ril: <?= $personil['real_hour'] ?></span><br>
                     </td>
                 </tr>
             <?php $no++; } } } } ?>            
@@ -225,6 +229,7 @@
                             <span style='font-size:12px;'><?= $empValue['sub_department'].' ('.$empValue['division'].')' ?></span><br>
                             <span style='font-size:12px;'><?= $empValue['overtime_hour'] ?></span><br>
                             <span style='font-size:12px;'>Tugas: <?= $empValue['task'] ?></span><br>
+                            <span style='font-size:12px; <?= $empValue['real_hour'] > 60 ? 'color:red' : null ?>'>Total Jam Ril: <?= $empValue['real_hour'] ?></span><br>
                         </td>
                     </tr>
                 <?php $no++; } ?>

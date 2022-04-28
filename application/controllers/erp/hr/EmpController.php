@@ -15,6 +15,44 @@ class EmpController extends Erp_Controller
         $this->auth->isAuth();
     }
 
+    public function getSuperior()
+    {
+        $emp = $this->Hr->getDataById('employees', empId());
+        if($emp->direct_spv != '') {
+            $super = $this->Hr->getOne('employees', ['id' => $emp->direct_spv]);
+            response(['status' => 'success', 'superior_id' => $super->id, 'superior_nip' => $super->nip, 'superior_name' => $super->employee_name]);
+        } else {
+            if($emp->rank_id > 6) {
+                $super = $this->Hr->getOne('employees', ['division_id' => empDiv()], '*', ['rank_id' => ['5', '6']]);
+                if(!$super) {
+                    $super = $this->Hr->getOne('employees', ['sub_department_id' => empSub()], '*', ['rank_id' => ['3', '4']]);
+                    if(!$super) {
+                        $super = $this->Hr->getOne('employees', ['department_id' => empDept(), 'rank_id' => 2]);
+                        if(!$super) {
+                            $super = $this->Hr->getOne('employees', ['rank_id' => 1]);
+                        }
+                    }
+                }
+            } else if($emp->rank_id >= 5 && $emp->rank_id <= 6) {
+                $super = $this->Hr->getOne('employees', ['sub_department_id' => empSub()], '*', ['rank_id' => ['3', '4']]);
+                if(!$super) {
+                    $super = $this->Hr->getOne('employees', ['department_id' => empDept(), 'rank_id' => 2]);
+                    if(!$super) {
+                        $super = $this->Hr->getOne('employees', ['rank_id' => 1]);
+                    }
+                }
+            } else if($emp->rank_id >= 3 && $emp->rank_id <= 4) {
+                $super = $this->Hr->getOne('employees', ['department_id' => empDept(), 'rank_id' => 2]);
+                if(!$super) {
+                    $super = $this->Hr->getOne('employees', ['rank_id' => 1]);
+                }
+            } else if($emp->rank_id == 2) { 
+                $super = $this->Hr->getOne('employees', ['rank_id' => 1]);
+            }
+            response(['status' => 'success', 'superior_id' => $super->id, 'superior_nip' => $super->nip, 'superior_name' => $super->employee_name]);
+        }
+    }
+
     public function getEmployees()
     {
         $emps = $this->HrModel->getEmployee(getParam())->result();
@@ -66,7 +104,7 @@ class EmpController extends Erp_Controller
             $xml .= "<cell>". cleanSC($emp->sk_date) ."</cell>";
             $xml .= "<cell>". cleanSC(toIndoDate($emp->sk_start_date))."</cell>";
             $xml .= "<cell>". cleanSC(toIndoDate($emp->sk_end_date))."</cell>";
-            $xml .= "<cell>". cleanSC($emp->direct_spv) ."</cell>";
+            $xml .= "<cell>". cleanSC($emp->direct_spv_name ? $emp->direct_spv_name : '-') ."</cell>";
             $xml .= "<cell>". cleanSC($emp->dept_name) ."</cell>";
             $xml .= "<cell>". cleanSC($emp->sub_name) ."</cell>";
             $xml .= "<cell>". cleanSC($emp->division_name) ."</cell>";

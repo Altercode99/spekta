@@ -19,6 +19,7 @@ $script = <<< "JS"
             var empSubItems_2 = [];
             var empSubItems_3 = [];
             var empSubItems_4 = [];
+            var empSubItems_5 = [];
 
             //@KARYAWAN
             if(isHaveTrees("hr_data_karyawan")) {
@@ -75,9 +76,18 @@ $script = <<< "JS"
                 empSubItems_2.push({id: "hr_data_training", text: "Data Training", icons: {file: "menu_icon"}});
             }
 
-             //@MASTER LIBUR NASIONAL
-             if(isHaveTrees("hr_data_libur_nasional")) {
+            //@MASTER LIBUR NASIONAL
+            if(isHaveTrees("hr_data_libur_nasional")) {
                 empSubItems_3.push({id: "hr_data_libur_nasional", text: "Libur Nasional", icons: {file: "menu_icon"}});
+            }
+
+            if(isHaveTrees("hr_data_bulan_puasa")) {
+                empSubItems_3.push({id: "hr_data_bulan_puasa", text: "Bulan Puasa", icons: {file: "menu_icon"}});
+            }
+
+            //@MASTER SHIFT
+            if(isHaveTrees("hr_work_shift")) {
+                empSubItems_5.push({id: "hr_work_shift", text: "Shift Kerja", icons: {file: "menu_icon"}});
             }
 
             //@TREES
@@ -94,7 +104,11 @@ $script = <<< "JS"
             }
 
             if(isHaveTrees("hr_libur_nasional")) {
-                empItems.push({id: "hr_libur_nasional", text: "Master Libur Nasional", open: 1, icons: {folder_opened: "arrow_down", folder_closed: "arrow_right"}, items: empSubItems_3});
+                empItems.push({id: "hr_libur_nasional", text: "Master Hari Besar", open: 1, icons: {folder_opened: "arrow_down", folder_closed: "arrow_right"}, items: empSubItems_3});
+            }
+
+            if(isHaveTrees("hr_master_shift")) {
+                empItems.push({id: "hr_master_shift", text: "Master Shift Kerja", open: 1, icons: {folder_opened: "arrow_down", folder_closed: "arrow_right"}, items: empSubItems_5});
             }
 
             var employeeTree = myTree.cells("a").attachTreeView({
@@ -130,6 +144,10 @@ $script = <<< "JS"
                     masterTrainingTab();
                 } else if(id == "hr_data_libur_nasional") {
                     masterNasionalFreeTab();
+                } else if(id == "hr_data_bulan_puasa") {
+                    masterBulanPuasaTab();
+                } else if(id == "hr_work_shift") {
+                    workShiftTab();
                 }
             });
         }

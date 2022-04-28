@@ -10,30 +10,61 @@ $script = <<< "JS"
         checkTrees();
         $("#title-menu").html("Continous Improvement");
         accordionItems.map(id => myTree.removeItem(id));
-        accordionItems.push("a");
+        accordionItems.push("a", "b");
 
-        if(isHaveAcc("improvement_detective")) {
-            myTree.addItem("a", "Detective", true);
-            var masterDetItems = [];
-            var subMasterDetItems = [];
+        if(isHaveAcc("improvement_master")) {
+            myTree.addItem("a", "Master Improvement", true);
+            var masterImproveItems = [];
+            var subMasterImproveItems = [];
 
             //@ITEMS
-            if(isHaveTrees("master_detective_categories")) {
-                subMasterDetItems.push({id: "master_detective_categories", text: "Kategori Improvement", icons: {file: "menu_icon"}});
+            if(isHaveTrees("master_improve_categories")) {
+                subMasterImproveItems.push({id: "master_improve_categories", text: "Kategori Improvement", icons: {file: "menu_icon"}});
+            }
+            if(isHaveTrees("master_improve_levels")) {
+                subMasterImproveItems.push({id: "master_improve_levels", text: "Tingkatan Improvement", icons: {file: "menu_icon"}});
             }
 
             //@MASTER TREE
             if(isHaveTrees('master_detective')) {
-                masterDetItems.push({id: "master_detective", text: "Mater Data", open: 1, icons: {folder_opened: "arrow_down", folder_closed: "arrow_right"}, items: subMasterDetItems})
+                masterImproveItems.push({id: "master_detective", text: "Mater Data", open: 1, icons: {folder_opened: "arrow_down", folder_closed: "arrow_right"}, items: subMasterImproveItems})
             }
 
-            var masterDetTree = myTree.cells("a").attachTreeView({
-                items: masterDetItems
+            var masterImproveTree = myTree.cells("a").attachTreeView({
+                items: masterImproveItems
             });
 
-            masterDetTree.attachEvent("onClick", function(id) {
-                if(id == "master_detective_categories") {
-                    detCatTab();
+            masterImproveTree.attachEvent("onClick", function(id) {
+                if(id == "master_improve_categories") {
+                    improveCatTab();
+                } else if(id == "master_improve_levels") {
+                    improveLevelTab();
+                }
+            });
+        }
+
+        if(isHaveAcc("improvement_process")) {
+            myTree.addItem("b", "Pengajuan Improvement", true);
+            var procImproveItems = [];
+            var subProcImproveItems = [];
+
+            //@ITEMS
+            if(isHaveTrees("improve_form_detective")) {
+                subProcImproveItems.push({id: "improve_form_detective", text: "Form Detektif", icons: {file: "menu_icon"}});
+            }
+
+            //@MASTER TREE
+            if(isHaveTrees('improve_detective')) {
+                procImproveItems.push({id: "improve_detective", text: "Detektif", open: 1, icons: {folder_opened: "arrow_down", folder_closed: "arrow_right"}, items: subProcImproveItems})
+            }
+
+            var procImproveTree = myTree.cells("b").attachTreeView({
+                items: procImproveItems
+            });
+
+            procImproveTree.attachEvent("onClick", function(id) {
+                if(id == "improve_form_detective") {
+                    improveFormDetTab();
                 }
             });
         }

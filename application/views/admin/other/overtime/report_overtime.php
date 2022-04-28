@@ -212,9 +212,11 @@ $script = <<< "JS"
         function reportOvtGridCount() {
             var reportOvtGridRows = reportOvtGrid.getRowsNum();
             reportOvtStatusBar.setText("Total baris: " + reportOvtGridRows + " (" + legend.report_overtime + ")");
-            let totalOvertime = sumGridToElement(reportOvtGrid, 20, "other_total_ovt_report", "other_grand_total_ovt_report");
-            let totalMeal = sumGridToElement(reportOvtGrid, 22, "other_total_meal_ovt_report", "other_grand_total_meal_ovt_report");
-            $("#other_grand_total_all_ovt_report").html("Rp. " + numberFormat(totalOvertime+totalMeal));
+            if(userLogged.role == 'admin' || userLogged.rankId <= 6 || (userLogged.pltRankId !== '-' && userLogged.pltRankId <= 6)) {
+                let totalOvertime = sumGridToElement(reportOvtGrid, 20, "other_total_ovt_report", "other_grand_total_ovt_report");
+                let totalMeal = sumGridToElement(reportOvtGrid, 22, "other_total_meal_ovt_report", "other_grand_total_meal_ovt_report");
+                $("#other_grand_total_all_ovt_report").html("Rp. " + numberFormat(totalOvertime+totalMeal));
+            }
         }
 
         var reportOvtGrid = reportTabs.cells("a").attachGrid();
@@ -273,9 +275,11 @@ $script = <<< "JS"
         function reportOvtSubGridCount() {
             var reportOvtSubGridRows = reportOvtSubGrid.getRowsNum();
             reportOvtSumStatusBar.setText("Total baris: " + reportOvtSubGridRows);
-            let totalOvertimeSub = sumGridToElement(reportOvtSubGrid, 7, "other_total_ovt_report_sub", "other_grand_total_ovt_report_sub");
-            let totalMealSub = sumGridToElement(reportOvtSubGrid, 8, "other_total_meal_ovt_report_sub", "other_grand_total_meal_ovt_report_sub");
-            $("#other_grand_total_all_ovt_report_sub").html("Rp. " + numberFormat(totalOvertimeSub+totalMealSub));
+            if(userLogged.role == 'admin' || userLogged.rankId <= 6 || (userLogged.pltRankId !== '-' && userLogged.pltRankId <= 6)) {
+                let totalOvertimeSub = sumGridToElement(reportOvtSubGrid, 7, "other_total_ovt_report_sub", "other_grand_total_ovt_report_sub");
+                let totalMealSub = sumGridToElement(reportOvtSubGrid, 8, "other_total_meal_ovt_report_sub", "other_grand_total_meal_ovt_report_sub");
+                $("#other_grand_total_all_ovt_report_sub").html("Rp. " + numberFormat(totalOvertimeSub+totalMealSub));
+            }
         }
 
         var reportOvtSubGrid = reportTabs.cells("b").attachGrid();
@@ -321,9 +325,11 @@ $script = <<< "JS"
         function reportOvtDivGridCount() {
             var reportOvtDivGridRows = reportOvtDivGrid.getRowsNum();
             reportOvtDivStatusBar.setText("Total baris: " + reportOvtDivGridRows);
-            let totalOvertimeDiv = sumGridToElement(reportOvtDivGrid, 7, "other_total_ovt_report_div", "other_grand_total_ovt_report_div");
-            let totalMealDiv = sumGridToElement(reportOvtDivGrid, 8, "other_total_meal_ovt_report_div", "other_grand_total_meal_ovt_report_div");
-            $("#other_grand_total_all_ovt_report_div").html("Rp. " + numberFormat(totalOvertimeDiv+totalMealDiv));
+            if(userLogged.role == 'admin' || userLogged.rankId <= 6 || (userLogged.pltRankId !== '-' && userLogged.pltRankId <= 6)) {
+                let totalOvertimeDiv = sumGridToElement(reportOvtDivGrid, 7, "other_total_ovt_report_div", "other_grand_total_ovt_report_div");
+                let totalMealDiv = sumGridToElement(reportOvtDivGrid, 8, "other_total_meal_ovt_report_div", "other_grand_total_meal_ovt_report_div");
+                $("#other_grand_total_all_ovt_report_div").html("Rp. " + numberFormat(totalOvertimeDiv+totalMealDiv));
+            }
         }
 
         var reportOvtDivGrid = reportTabs.cells("c").attachGrid();
@@ -369,9 +375,11 @@ $script = <<< "JS"
         function reportOvtEmpGridCount() {
             var reportOvtDivGridRows = reportOvtEmpGrid.getRowsNum();
             reportOvtEmpStatusBar.setText("Total baris: " + reportOvtDivGridRows + " (" + legend.overtime_limit + ")");
-            let totalOvertimeEmp = sumGridToElement(reportOvtEmpGrid, 9, "other_total_ovt_report_emp", "other_grand_total_ovt_report_emp");
-            let totalMealEmp = sumGridToElement(reportOvtEmpGrid, 10, "other_total_meal_ovt_report_emp", "other_grand_total_meal_ovt_report_emp");
-            $("#other_grand_total_all_ovt_report_emp").html("Rp. " + numberFormat(totalOvertimeEmp+totalMealEmp));
+            if(userLogged.role == 'admin' || userLogged.rankId <= 6 || (userLogged.pltRankId !== '-' && userLogged.pltRankId <= 6)) {
+                let totalOvertimeEmp = sumGridToElement(reportOvtEmpGrid, 9, "other_total_ovt_report_emp", "other_grand_total_ovt_report_emp");
+                let totalMealEmp = sumGridToElement(reportOvtEmpGrid, 10, "other_total_meal_ovt_report_emp", "other_grand_total_meal_ovt_report_emp");
+                $("#other_grand_total_all_ovt_report_emp").html("Rp. " + numberFormat(totalOvertimeEmp+totalMealEmp));
+            }
         }
 
         var reportOvtEmpGrid = reportTabs.cells("d").attachGrid();

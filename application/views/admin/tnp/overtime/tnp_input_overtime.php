@@ -632,7 +632,7 @@ $script = <<< "JS"
                     });
 
                     function loadPersonil() {
-                        var addPersonilWin = createWindow("add_personil_win", "Daftar Personil", 900, 500);
+                        var addPersonilWin = createWindow("add_personil_win", "Daftar Personil", 1200, 500);
                         myWins.window("add_personil_win").skipMyCloseEvent = true;
 
                         var personilToolbar = addPersonilWin.attachToolbar({
@@ -669,12 +669,12 @@ $script = <<< "JS"
 
                         var addPersonilGrid = addPersonilWin.attachGrid();
                         addPersonilGrid.setImagePath("./public/codebase/imgs/");
-                        addPersonilGrid.setHeader("No,Check,Nama Personil,Sub Unit,Bagian,Sub Bagian");
-                        addPersonilGrid.attachHeader("#rspan,#master_checkbox,#text_filter,#select_filter,#select_filter,#select_filter")
-                        addPersonilGrid.setColAlign("center,left,left,left,left,left");
-                        addPersonilGrid.setColSorting("int,na,str,str,str,str");
-                        addPersonilGrid.setColTypes("rotxt,ch,rotxt,rotxt,rotxt,rotxt");
-                        addPersonilGrid.setInitWidthsP("5,5,20,20,25,25");
+                        addPersonilGrid.setHeader("No,Check,Nama Personil,Jam Ril,,Bagian,Sub Bagian,Status");
+                        addPersonilGrid.attachHeader("#rspan,#master_checkbox,#text_filter,#text_filter,#select_filter,#select_filter,#select_filter,#select_filter")
+                        addPersonilGrid.setColAlign("center,left,left,left,left,left,left,left");
+                        addPersonilGrid.setColSorting("int,na,str,str,str,str,str,str");
+                        addPersonilGrid.setColTypes("rotxt,ch,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
+                        addPersonilGrid.setInitWidthsP("5,5,20,10,0,25,25,10");
                         addPersonilGrid.enableSmartRendering(true);
                         addPersonilGrid.attachEvent("onXLE", function() {
                             personils.length > 0 && personils.map(id => id !== '' && addPersonilGrid.cells(id, 1).setValue(1));

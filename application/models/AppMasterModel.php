@@ -326,6 +326,26 @@ class AppMasterModel extends CI_Model
         return $this->db->query($sql)->result();
     }
 
+    public function getPuasaGrid($get)
+    {
+        $where = advanceSearch($get);
+        $sql = "SELECT a.*,
+                    (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.created_by) AS emp1,
+                    (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.updated_by) AS emp2
+                    FROM $this->kf_hr.month_of_puasa a
+                    WHERE location = '$this->empLoc'
+                    $where";
+
+        if (isset($get['search']) && $get['search'] !== "") {
+            $sql .= "AND (a.name LIKE '%$get[search]%' OR
+                          (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.created_by) LIKE '%$get[search]%' OR
+                          (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.updated_by) LIKE '%$get[search]%'
+                    )";
+        }
+        $sql .= " ORDER BY a.year ASC";
+        return $this->db->query($sql)->result();
+    }
+
     public function getVideoCat($get)
     {
         $sql = "SELECT a.*,

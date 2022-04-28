@@ -100,8 +100,8 @@ class CronController extends Erp_Controller
             $currDate = date('Y-m-d H:i:s');
             $newCurrDate = new DateTime($currDate);
             $ovtStartDate = new DateTime($overtime->start_date);
-            if($overtime->apv_ppic_nip == '-') {
-                if($overtime->apv_mgr_nip == '-') {
+            if ($overtime->apv_ppic_nip == '-') {
+                if ($overtime->apv_mgr_nip == '-') {
                     $data['apv_ppic_date'] = $newCurrDate < $ovtStartDate ? $overtime->start_date : $currDate;
                     $data['apv_mgr_date'] = $newCurrDate < $ovtStartDate ? $overtime->start_date : $currDate;
                 } else {
@@ -157,7 +157,7 @@ class CronController extends Erp_Controller
             $currDate = date('Y-m-d H:i:s');
             $newCurrDate = new DateTime($currDate);
             $ovtStartDate = new DateTime($overtime->start_date);
-            if($overtime->apv_mgr_nip == '-') {
+            if ($overtime->apv_mgr_nip == '-') {
                 $data['apv_mgr_date'] = $newCurrDate < $ovtStartDate ? $overtime->start_date : $currDate;
             }
 
@@ -225,7 +225,7 @@ class CronController extends Erp_Controller
                 'apv_head' => 'APPROVED',
                 'apv_head_nip' => $empNip,
                 'apv_head_date' => date('Y-m-d H:i:s'),
-                'status' => 'CLOSED'
+                'status' => 'CLOSED',
             ];
             $update = $this->Hr->update('employee_overtimes', $data, ['task_id' => $overtime->task_id]);
             if ($update) {
@@ -292,5 +292,28 @@ class CronController extends Erp_Controller
         } else {
             return false;
         }
+    }
+
+    //@URL: http://localhost/spekta/index.php?c=CronController&m=alertEmpExp
+    public function alertEmpExp()
+    {
+        
+    }
+
+    //@URL: http://localhost/spekta/index.php?c=CronController&m=autoGenTableAbsen
+    public function autoGenTableAbsen()
+    {
+        $date = explode('-', date('Y-m-d'));
+        $year = $date[0];
+        $month = $date[1];
+        $day = $date[2];
+
+        if($month == 12) {
+            $year += 1;
+            $month = 1;
+        }
+
+        $tableName = 'absen_'.$year.''.$month;
+        $this->db->query("CREATE TABLE IF NOT EXISTS kf_hr.$tableName LIKE kf_hr.absen_202202");
     }
 }

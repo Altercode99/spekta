@@ -401,8 +401,13 @@ class OvertimeController extends Erp_Controller
             $xml .= "<cell $color>" . cleanSC($overtime->break_hour) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->real_hour) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->overtime_hour) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC(toNumber($overtime->premi_overtime)) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC(toNumber($overtime->overtime_value)) . "</cell>";
+            if(empRole() === 'admin' || empRank() <= 6 || (pltRankId() !== '-' && pltRankId() <= 6)) {
+                $xml .= "<cell $color>" . cleanSC(toNumber($overtime->premi_overtime)) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC(toNumber($overtime->overtime_value)) . "</cell>";
+            } else {
+                $xml .= "<cell $color>" . cleanSC(toNumber(0)) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC(toNumber(0)) . "</cell>";
+            }
             $xml .= "<cell $color>" . cleanSC($meal) . "</cell>";
             if(!isset($params['apv'])) {
                 $xml .= "<cell $color>" . cleanSC($overtime->notes) . "</cell>";
@@ -495,17 +500,24 @@ class OvertimeController extends Erp_Controller
     public function getEmployees()
     {
         $get = getParam();
-        $emps = $this->HrModel->getEmployee($get)->result();
+        $emps = $this->Overtime->getEmployee($get)->result();
         $xml = "";
         $no = 1;
         foreach ($emps as $emp) {
+            $realHour = $emp->real_hour ? $emp->real_hour : 0;
+            $color = null;
+            if ($realHour > 60) {
+                $color = "bgColor='#ed9a9a'";
+            }
             $xml .= "<row id='$emp->id'>";
-            $xml .= "<cell>" . cleanSC($no) . "</cell>";
-            $xml .= "<cell>0</cell>";
-            $xml .= "<cell>" . cleanSC($emp->employee_name) . "</cell>";
-            $xml .= "<cell>" . cleanSC($emp->dept_name) . "</cell>";
-            $xml .= "<cell>" . cleanSC($emp->sub_name) . "</cell>";
-            $xml .= "<cell>" . cleanSC($emp->division_name) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($no) . "</cell>";
+            $xml .= "<cell $color>0</cell>";
+            $xml .= "<cell $color>" . cleanSC($emp->employee_name) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($realHour) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($emp->dept_name) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($emp->sub_name) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($emp->division_name) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($emp->employee_status) ."</cell>";
             $xml .= "</row>";
             $no++;
         }
@@ -716,7 +728,7 @@ class OvertimeController extends Erp_Controller
 
         foreach ($empTaskIds as $divId => $ovtData) {
             $empTasks = implode(',', $ovtData['task']);
-            $personils = $this->Overtime->getOvertimeDetail(['in_emp_task_id' => $empTasks, 'notin_status' => 'CANCELED' , 'order_by' => ['start_date' => 'ASC']])->result();
+            $personils = $this->Overtime->getOvertimeDetailRealHour(['in_emp_task_id' => $empTasks, 'notin_status' => 'CANCELED' , 'order_by' => ['start_date' => 'ASC']])->result();
             $this->ovtlib->sendEmailAppv($ovtData['email'], 'Supervisor', 'spv', $overtime, $post->taskId, $personils, $divId);
         }
 
@@ -1580,6 +1592,7 @@ class OvertimeController extends Erp_Controller
         $overtimes = $this->Overtime->getReportOvertime($params)->result();
         $xml = "";
         $no = 1;
+
         foreach ($overtimes as $overtime) {
             $color = null;
             if ($overtime->status_day === 'Hari Libur') {
@@ -1611,6 +1624,17 @@ class OvertimeController extends Erp_Controller
             if (isset($params['check'])) {
                 $xml .= "<cell $color>0</cell>";
             }
+
+            if(empRole() === 'admin' || empRank() <= 6 || (pltRankId() !== '-' && pltRankId() <= 6)) {
+                $premiOvertime = $overtime->premi_overtime;
+                $valueOvertime = $overtime->overtime_value;
+                $mealOvertime = $overtime->meal;
+            } else {
+                $premiOvertime = 0;
+                $valueOvertime = 0;
+                $mealOvertime = 0;
+            }
+
             $xml .= "<cell $color>" . cleanSC($overtime->emp_task_id) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->task_id) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->employee_name) . "</cell>";
@@ -1629,10 +1653,10 @@ class OvertimeController extends Erp_Controller
             $xml .= "<cell $color>" . cleanSC($overtime->break_hour) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->real_hour) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->overtime_hour) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC(toNumber($overtime->premi_overtime)) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC(toNumber($overtime->overtime_value)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toNumber($premiOvertime)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toNumber($valueOvertime)) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($meal) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC(toNumber($overtime->meal)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC(toNumber($mealOvertime)) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->status) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->overtime_review) . "</cell>";
             $xml .= "<cell $color>" . cleanSC(toIndoDateTime($overtime->created_at)) . "</cell>";
@@ -1667,14 +1691,14 @@ class OvertimeController extends Erp_Controller
                 $breakHour = $ovt[$sub->name]['break_hour'];
                 $realHour = $ovt[$sub->name]['real_hour'];
                 $overtimeHour = $ovt[$sub->name]['overtime_hour'];
-                $overtimeHalue = toNumber($ovt[$sub->name]['overtime_value']);
+                $overtimeValue = toNumber($ovt[$sub->name]['overtime_value']);
                 $meal = toNumber($ovt[$sub->name]['meal']);
             } else {
                 $effectiveHour = 0;
                 $breakHour = 0;
                 $realHour = 0;
                 $overtimeHour = 0;
-                $overtimeHalue = 0;
+                $overtimeValue = 0;
                 $meal = 0;
             }
 
@@ -1695,8 +1719,13 @@ class OvertimeController extends Erp_Controller
             $xml .= "<cell>" . cleanSC($breakHour) . "</cell>";
             $xml .= "<cell>" . cleanSC($realHour) . "</cell>";
             $xml .= "<cell>" . cleanSC($overtimeHour) . "</cell>";
-            $xml .= "<cell>" . cleanSC($overtimeHalue) . "</cell>";
-            $xml .= "<cell>" . cleanSC($meal) . "</cell>";
+            if(empRole() === 'admin' || empRank() <= 6 || (pltRankId() !== '-' && pltRankId() <= 6)) {
+                $xml .= "<cell>" . cleanSC($overtimeValue) . "</cell>";
+                $xml .= "<cell>" . cleanSC($meal) . "</cell>";
+            } else {
+                $xml .= "<cell>" . cleanSC(0) . "</cell>";
+                $xml .= "<cell>" . cleanSC(0) . "</cell>";
+            }
             $xml .= "</row>";
             $no++;
         }
@@ -1727,14 +1756,14 @@ class OvertimeController extends Erp_Controller
                 $breakHour = $ovt[$div->name]['break_hour'];
                 $realHour = $ovt[$div->name]['real_hour'];
                 $overtimeHour = $ovt[$div->name]['overtime_hour'];
-                $overtimeHalue = toNumber($ovt[$div->name]['overtime_value']);
+                $overtimeValue = toNumber($ovt[$div->name]['overtime_value']);
                 $meal = toNumber($ovt[$div->name]['meal']);
             } else {
                 $effectiveHour = 0;
                 $breakHour = 0;
                 $realHour = 0;
                 $overtimeHour = 0;
-                $overtimeHalue = 0;
+                $overtimeValue = 0;
                 $meal = 0;
             }
 
@@ -1756,8 +1785,13 @@ class OvertimeController extends Erp_Controller
             $xml .= "<cell>" . cleanSC($breakHour) . "</cell>";
             $xml .= "<cell>" . cleanSC($realHour) . "</cell>";
             $xml .= "<cell>" . cleanSC($overtimeHour) . "</cell>";
-            $xml .= "<cell>" . cleanSC($overtimeHalue) . "</cell>";
-            $xml .= "<cell>" . cleanSC($meal) . "</cell>";
+            if(empRole() === 'admin' || empRank() <= 6 || (pltRankId() !== '-' && pltRankId() <= 6)) {
+                $xml .= "<cell>" . cleanSC($overtimeValue) . "</cell>";
+                $xml .= "<cell>" . cleanSC($meal) . "</cell>";
+            } else {
+                $xml .= "<cell>" . cleanSC(0) . "</cell>";
+                $xml .= "<cell>" . cleanSC(0) . "</cell>";
+            }
             $xml .= "</row>";
             $no++;
         }
@@ -1787,8 +1821,13 @@ class OvertimeController extends Erp_Controller
             $xml .= "<cell $color>" . cleanSC($overtime->break_hour) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->real_hour) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->overtime_hour) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC(toNumber($overtime->overtime_value)) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC(toNumber($overtime->meal)) . "</cell>";
+            if(empRole() === 'admin' || empRank() <= 6 || (pltRankId() !== '-' && pltRankId() <= 6)) {
+                $xml .= "<cell $color>" . cleanSC(toNumber($overtime->overtime_value)) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC(toNumber($overtime->meal)) . "</cell>";
+            } else {
+                $xml .= "<cell $color>" . cleanSC(toNumber(0)) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC(toNumber(0)) . "</cell>";
+            }
             $xml .= "</row>";
             $no++;
         }
@@ -2666,8 +2705,13 @@ class OvertimeController extends Erp_Controller
                 $xml .= "<cell $color>" . cleanSC($overtime->break_hour) . "</cell>";
                 $xml .= "<cell $color>" . cleanSC($overtime->real_hour) . "</cell>";
                 $xml .= "<cell $color>" . cleanSC($overtime->overtime_hour) . "</cell>";
-                $xml .= "<cell $color>" . cleanSC(toNumber($overtime->premi_overtime)) . "</cell>";
-                $xml .= "<cell $color>" . cleanSC(toNumber($overtime->overtime_value)) . "</cell>";
+                if(empRole() === 'admin' || empRank() <= 6 || (pltRankId() !== '-' && pltRankId() <= 6)) {
+                    $xml .= "<cell $color>" . cleanSC(toNumber($overtime->premi_overtime)) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC(toNumber($overtime->overtime_value)) . "</cell>";
+                } else {
+                    $xml .= "<cell $color>" . cleanSC(toNumber(0)) . "</cell>";
+                    $xml .= "<cell $color>" . cleanSC(toNumber(0)) . "</cell>";
+                }
                 $xml .= "<cell $color>" . cleanSC($meal) . "</cell>";
                 $xml .= "<cell $color>" . cleanSC($overtime->notes) . "</cell>";
                 $xml .= "<cell $color>" . cleanSC($overtime->status) . "</cell>";
@@ -2746,8 +2790,13 @@ class OvertimeController extends Erp_Controller
             $xml .= "<cell $color>" . cleanSC($overtime->break_hour) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->real_hour) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->overtime_hour) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC(toNumber($overtime->premi_overtime)) . "</cell>";
-            $xml .= "<cell $color>" . cleanSC(toNumber($overtime->overtime_value)) . "</cell>";
+            if(empRole() === 'admin' || empRank() <= 6 || (pltRankId() !== '-' && pltRankId() <= 6)) {
+                $xml .= "<cell $color>" . cleanSC(toNumber($overtime->premi_overtime)) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC(toNumber($overtime->overtime_value)) . "</cell>";
+            } else {
+                $xml .= "<cell $color>" . cleanSC(toNumber(0)) . "</cell>";
+                $xml .= "<cell $color>" . cleanSC(toNumber(0)) . "</cell>";
+            }
             $xml .= "<cell $color>" . cleanSC($meal) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->notes) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($overtime->status) . "</cell>";
@@ -3140,8 +3189,6 @@ class OvertimeController extends Erp_Controller
         
         $time1 = mktime(0, 0, 0, $date1[1], $date1[2], $date1[0]);
         $time2 = mktime(0, 0, 0, $date2[1], $date2[2], $date2[0]);
-        
-      
 
         $header = "";
         $attheader = "";
@@ -3170,7 +3217,15 @@ class OvertimeController extends Erp_Controller
             foreach ($divisions as $div) {
                 $min = $this->Overtime->getMinStartHour($date, $div->id);
                 $max = $this->Overtime->getMinEndHour($date, $div->id);
-                $dt[] = "$min - $max";
+                if($min && $max) {
+                    $dt[] = "$min - $max";
+                } else {
+                    if(!$min && $max) {
+                        $dt[] = "(-1 Hari) - $max";
+                    } else {
+                        $dt[] = "-";
+                    }
+                }
             }
 
             $data['rows'][] = [

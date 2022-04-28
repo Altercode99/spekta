@@ -9,9 +9,88 @@
     <br>
     <br>
     <br>
-    <?php if($i > 1) { ?>
-        <br>
+
+    <?php if($i > 10) { ?>
+        <br><br>
+    <?php } else if($i > 15) { ?>
+        <br><br><br>
+    <?php } else if($i > 20) { ?>
+        <br><br><br><br>
+    <?php } else if($i > 25) { ?>
+        <br><br><br><br><br>
+    <?php } else if($i > 30) { ?>
+        <br><br><br><br><br><br>
+    <?php } else if($i > 35) { ?>
+        <br><br><br><br><br><br><br>
+    <?php } else if($i > 40) { ?>
+        <br><br><br><br><br><br><br><br>
+    <?php } else if($i > 45) { ?>
+        <br><br><br><br><br><br><br><br><br>
+    <?php } else if($i > 50) { ?>
+        <br><br><br><br><br><br><br><br><br><br>
+    <?php } else if($i > 55) { ?>
+        <br><br><br><br><br><br><br><br><br><br><br>
+    <?php } else if($i > 60) { ?>
+        <br><br><br><br><br><br><br><br><br><br><br><br>
+    <?php } else if($i > 65) { ?>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <?php } else if($i > 70) { ?>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <?php } else if($i > 75) { ?>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <?php } else if($i > 80) { ?>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <?php } else if($i > 85) { ?>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <?php } else if($i > 90) { ?>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <?php } else if($i > 95) { ?>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <?php } else if($i > 100) { ?>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <?php } else if($i > 105) { ?>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <?php } else if($i > 110) { ?>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <?php } else if($i > 115) { ?>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <?php } else if($i > 120) { ?>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <?php } else if($i > 125) { ?>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <?php } else if($i > 130) { ?>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <?php } else if($i > 135) { ?>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <?php } else if($i > 140) { ?>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <?php } else if($i > 145) { ?>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <?php } else if($i > 150) { ?>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <?php } else if($i > 155) { ?>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <?php } else if($i > 1) { ?>
+        <br><br>
     <?php } ?>
+
+
+    <?php 
+        if($i == 1) { 
+            if($package_desc != $package_desc_ori) {
+                $marginTop = '10px';
+            } else {
+                $marginTop = '95px';;
+            }
+            
+        } else {
+            if($package_desc != $package_desc_ori) {
+                $marginTop = '20px';
+            } else {
+                $marginTop = '70px';
+            }
+        }
+    ?>
     <div class="date_container">
         <p class="font"><?= $letter_date ?></p>
         <p class="font-bold"><?= ($i - 1) + $start_from ?></p>
@@ -53,7 +132,7 @@
                 <div class="title font-middle">** ECERAN+LOS **</div>
             <?php } ?>
             <br />
-            <table class="spack_table">
+            <table class="spack_table" style="margin-top:-20px;">
                 <tr>
                     <td class="font">Dikemas Group</td>
                     <td class="font">:</td>
@@ -68,23 +147,22 @@
         </div>
     </div>
 
-    <div class="spack_footer">
+    <div class="spack_footer" style="margin-top: <?= $marginTop ?>;">
         <?php if($package_desc != $package_desc_ori) { ?>
             <div class="font">ECERAN</div>
         <?php } ?>
         <div class="font-bold"><?= ($i - 1) + $start_from ?></div>
         <div class="font">Tgl: <?= $footer_date ?></div>
         <div class="font"><?= $no_batch ?></div>
-         <div class="font">MD: <?= $mfg_date ?></div>
+        <div class="font">MD: <?= $mfg_date ?></div>
         <div class="font">ED: <?= $exp_date ?></div>
-        <br />
-        <div class="font"><?= $product_name ?></div>
+        <div class="font" style="margin-top:25px"><?= $product_name ?></div>
         <div class="font"><?= $makloon != '' ? '** '.$makloon. ' **' : '** '.$product_type.' **' ?></div>
     </div>
-
+<!-- 
     <div class="cpr">
       <p style="font-size:10px">-Hardware & Network-</p>
-    </div>
+    </div> -->
 </div>
 <?php } ?>
 
@@ -93,6 +171,12 @@
 </script>
 
 <style>
+    @media print {
+        .spack_footer {
+            page-break-after: always;
+        }
+    }
+
     .spack_container {
         position: relative;
         width: 98%;
@@ -142,16 +226,12 @@
     .spack_footer {
         text-align: right;
         width: 100%;
-        position: absolute;
-        bottom: 5;
-        right: 0;
+        position: relative;
     }
 
     .cpr {
         text-align: left;
         width: 100%;
-        position: absolute;
-        bottom: 20;
-        left: 0;
+        position: relative;
     }
 </style>

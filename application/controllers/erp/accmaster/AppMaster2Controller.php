@@ -351,7 +351,7 @@ class AppMaster2Controller extends Erp_Controller
         $datas = $post->datas;
         foreach ($datas as $id => $data) {
             $isHasSub = $this->Main->getOne('video_subcategories', ['cat_id' => $data->id]);
-            if(!$isHasSub) {
+            if (!$isHasSub) {
                 $mSuccess .= "- $data->field berhasil dihapus <br>";
                 $this->Main->delete('video_categories', ['id' => $data->id]);
             } else {
@@ -408,5 +408,81 @@ class AppMaster2Controller extends Erp_Controller
         xmlResponse('updated', $post['name']);
     }
 
+/* ========================= VIDEO CATEGORI FUNCTIONS  =========================*/
+    public function getPuasaGrid()
+    {
+        $puasas = $this->AppMaster->getPuasaGrid(getParam());
+        $xml = "";
+        $no = 1;
+        foreach ($puasas as $puasa) {
+            $date = toIndoDate($puasa->start_date)." - ".toIndoDate($puasa->end_date); 
+            $xml .= "<row id='$puasa->id'>";
+            $xml .= "<cell>" . cleanSC($no) . "</cell>";
+            $xml .= "<cell>" . cleanSC($puasa->year) . "</cell>";
+            $xml .= "<cell>" . cleanSC($date) . "</cell>";
+            $xml .= "<cell>" . cleanSC($puasa->emp1) . "</cell>";
+            $xml .= "<cell>" . cleanSC($puasa->emp2) . "</cell>";
+            $xml .= "<cell>" . cleanSC(toIndoDateTime($puasa->created_at)) . "</cell>";
+            $xml .= "</row>";
+            $no++;
+        }
+
+        gridXmlHeader($xml);
+    }
+
+    public function puasaForm()
+    {
+        $params = getParam();
+        if (isset($params['id'])) {
+            $puasa = $this->Hr->getDataById('month_of_puasa', $params['id'], 'id,year,start_date,end_date');
+            fetchFormData($puasa);
+        } else {
+            $post = prettyText(getPost(), ['year']);
+            if (!isset($post['id'])) {
+                $this->createPuasa($post);
+            } else {
+                $this->updatePuasa($post);
+            }
+        }
+    }
+
+    public function createPuasa($post)
+    {
+        $puasa = $this->Hr->getOne('month_of_puasa', ['year' => $post['year']]);
+        isExist(["Bulan puasa $post[year]" => $puasa]);
+
+        $post['location'] = empLoc();
+        $post['created_by'] = empId();
+        $post['updated_by'] = empId();
+        $post['updated_at'] = date('Y-m-d H:i:s');
+        $insertId = $this->Hr->create('month_of_puasa', $post);
+        xmlResponse('inserted', $post['year']);
+    }
+
+    public function updatePuasa($post)
+    {
+        $puasa = $this->Hr->getDataById('month_of_puasa', $post['id']);
+        isDelete(["Bulan puasa $post[year]" => $puasa]);
+        
+        $post['updated_by'] = empId();
+        $post['updated_at'] = date('Y-m-d H:i:s');
+
+        $this->Hr->updateById('month_of_puasa', $post, $post['id']);
+        xmlResponse('updated', $post['year']);
+    }
+
+    public function puasaDelete()
+    {
+        $post = fileGetContent();
+        $mError = '';
+        $mSuccess = '';
+        $datas = $post->datas;
+        foreach ($datas as $id => $data) {
+            $mSuccess .= "- $data->field berhasil dihapus <br>";
+            $this->Hr->delete('month_of_puasa', ['id' => $data->id]);
+        }
+
+        response(['status' => 'success', 'mError' => $mError, 'mSuccess' => $mSuccess]);
+    }
 
 }

@@ -21,7 +21,8 @@ class HrModel extends CI_Model
     {
         $where = advanceSearch($get);
         $location = $this->auth->isLogin() ? "AND a.location = '$this->empLoc'" : null;
-        $sql = "SELECT a.*,b.name AS division_name,c.name AS dept_name,d.name AS rank_name,e.name AS sub_name 
+        $sql = "SELECT a.*,b.name AS division_name,c.name AS dept_name,d.name AS rank_name,e.name AS sub_name,
+                    (SELECT employee_name FROM employees WHERE nip = a.direct_spv) AS direct_spv_name
                     FROM employees a, divisions b, departments c, ranks d, sub_departments e 
                     WHERE a.division_id = b.id
                     AND a.department_id = c.id

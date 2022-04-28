@@ -139,6 +139,55 @@ class OvertimeModel extends CI_Model
         return $this->db->query($sql);
     }
 
+    public function getOvertimeDetailRealHour($get)
+    {
+        $where = advanceSearch($get);
+        $location = $this->auth->isLogin() ? "AND a.location = '$this->empLoc'" : null;
+        $sql = "SELECT a.*,b.name AS department,c.name AS sub_department,d.name AS division,e.employee_name,
+                       (SELECT employee_name FROM employees WHERE id = a.created_by) AS emp1,
+                       (SELECT employee_name FROM employees WHERE id = a.updated_by) AS emp2,
+                       (SELECT employee_name FROM employees WHERE nip = a.status_by) AS status_updater,
+                       (SELECT employee_name FROM employees WHERE nip = a.apv_spv_nip) AS supervisor,
+                       (SELECT name FROM $this->kf_mtn.production_machines WHERE id = a.machine_1) AS machine_1,
+                       (SELECT name FROM $this->kf_mtn.production_machines WHERE id = a.machine_2) AS machine_2,
+                       (SELECT sum(real_hour) FROM $this->kf_hr.employee_overtimes_detail WHERE emp_id = a.emp_id AND MONTH(overtime_date) = MONTH(a.overtime_date) GROUP BY emp_id) AS total_real_hour
+                       FROM $this->kf_hr.employee_overtimes_detail a, $this->kf_hr.departments b, $this->kf_hr.sub_departments c, 
+                            $this->kf_hr.divisions d, $this->kf_hr.employees e
+                       WHERE a.department_id = b.id
+                       AND a.sub_department_id = c.id
+                       AND a.division_id = d.id
+                       AND a.emp_id = e.id
+                       $location
+                       $where";
+                    
+        if (isset($get['search']) && $get['search'] !== "") {
+            $sql .= "AND (
+                        a.task_id LIKE '%$get[search]%' OR 
+                        (SELECT employee_name FROM employees WHERE id = a.created_by) LIKE '%$get[search]%' OR
+                        (SELECT employee_name FROM employees WHERE id = a.updated_by) LIKE '%$get[search]%' OR
+                        b.name LIKE '%$get[search]%' OR
+                        c.name LIKE '%$get[search]%' OR
+                        d.name LIKE '%$get[search]%' OR
+                        e.name LIKE '%$get[search]%' OR
+                        f.employee_name LIKE '%$get[search]%'
+                    )";
+        } 
+        
+        if(isset($get['order_by'])) {
+            if(!is_array($get['order_by'])) {
+                $exp = explode(':', $get['order_by']);
+                $get['order_by'] = [$exp[0] => $exp[1]];
+            }
+
+            foreach ($get['order_by'] as $key => $value) {
+                $sql .= " ORDER BY a.$key $value";
+            }
+        } else {
+            $sql .= " ORDER BY a.overtime_date ASC";
+        }
+        return $this->db->query($sql);
+    }
+
     public function getReportOvertime($get)
     {
         $where = advanceSearch($get);
@@ -543,4 +592,37 @@ class OvertimeModel extends CI_Model
             return '';
         }
     }
+
+    public function getEmployee($get)
+    {
+        $where = advanceSearch($get);
+        $location = $this->auth->isLogin() ? "AND a.location = '$this->empLoc'" : null;
+        $sql = "SELECT a.*,b.name AS division_name,c.name AS dept_name,d.name AS rank_name,e.name AS sub_name,
+                    (SELECT employee_name FROM $this->kf_hr.employees WHERE nip = a.direct_spv) AS direct_spv_name,
+                    (SELECT sum(real_hour) FROM $this->kf_hr.employee_overtimes_detail WHERE emp_id = a.id AND MONTH(overtime_date) = MONTH(NOW()) GROUP BY emp_id) AS real_hour
+                    FROM $this->kf_hr.employees a, $this->kf_hr.divisions b, $this->kf_hr.departments c, $this->kf_hr.ranks d, $this->kf_hr.sub_departments e 
+                    WHERE a.division_id = b.id
+                    AND a.department_id = c.id
+                    AND a.rank_id = d.id
+                    AND a.sub_department_id = e.id
+                    AND a.nip != '9999'
+                    $where
+                    $location";
+                    
+        if (isset($get['search']) && $get['search'] !== "") {
+            $sql .= "AND (
+                        a.employee_name LIKE '%$get[search]%' OR 
+                        a.NIP LIKE '%$get[search]%' OR
+                        a.birth_place LIKE '%$get[search]%' OR
+                        a.birth_date LIKE '%$get[search]%' OR
+                        a.employee_status LIKE '%$get[search]%' OR
+                        b.name LIKE '%$get[search]%' OR
+                        c.name LIKE '%$get[search]%' OR
+                        d.name LIKE '%$get[search]%'
+                    )";
+        } 
+        $sql .= " ORDER BY a.employee_name ASC";
+        return $this->db->query($sql);
+    }
+
 }

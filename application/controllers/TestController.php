@@ -20,6 +20,53 @@ class TestController extends CI_Controller
 
     }
 
+    // public function updateDirecSpv()
+    // {
+    //     $emps = $this->Hr->getWhere('employees', ['direct_spv !=' => ''])->result();
+    //     foreach ($emps as $emp) {
+    //         $spvNip = $this->Hr->getOne('employees', ['sap_id' => $emp->direct_spv]);
+    //         if($spvNip) {
+    //             $data = [
+    //                 'direct_spv' => $spvNip->nip
+    //             ];
+    //             $this->Hr->updateById('employees', $data, $emp->id);
+    //         }
+    //     }
+    //     echo "Oke";
+    // }
+
+    // public function testPage()
+    // {
+    //     if ($xlsx = SimpleXLSX::parse('./assets/file_to_import/expdate.xlsx')) {
+    //         $header_values = $rows = [];
+    //         foreach ($xlsx->rows() as $k => $r) {
+    //             if ($k === 0) {
+    //                 $header_values = $r;
+    //                 continue;
+    //             }
+    //             $rows[] = array_combine($header_values, $r);
+    //         }
+
+    //         $data = [];
+    //         foreach ($rows as $key => $value) {
+    //             $exist = $this->Hr->getOne('employees', ['nip' => $value['nip']]);
+    //             if($exist) {
+    //                 $data[] = [
+    //                     'nip' => $value['nip'],
+    //                     'sk_number' => '-',
+    //                     'sk_date' => $value['sk_start_date'],
+    //                     'sk_start_date' => $value['sk_start_date'],
+    //                     'sk_end_date' => $value['sk_end_date'],
+    //                 ];
+    //             }
+    //         }
+    //         $this->Hr->updateMultiple('employees', $data, 'nip');
+    //         echo "Oke";
+    //     } else {
+    //         echo SimpleXLSX::parseError();
+    //     }
+    // }
+
     // public function testPage()
     // {
     //     if ($xlsx = SimpleXLSX::parse('./assets/file_to_import/mesin_3.xlsx')) {

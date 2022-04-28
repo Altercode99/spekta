@@ -68,6 +68,20 @@ function mainController(controller, method, params = null) {
   }
 }
 
+function absenController(controller, method, params = null) {
+  if (params) {
+    let query;
+    for (let param in params) {
+      query = !query
+        ? `&${param}=${params[param]}`
+        : query + `&${param}=${params[param]}`;
+    }
+    return `index.php?d=absen&c=${controller}&m=${method}${query}`;
+  } else {
+    return `index.php?d=absen&c=${controller}&m=${method}`;
+  }
+}
+
 function fetchFormData(
   url,
   formdata,
@@ -341,6 +355,10 @@ function Pc(method, params) {
   return mainController("pc", method, params);
 }
 
+function Absen(method, params) {
+  return absenController("absen", method, params);
+}
+
 function AppMaster(method, params) {
   return erpController("accmaster", "AppMaster1Controller", method, params);
 }
@@ -576,6 +594,21 @@ function checkTime(startCombo, endCombo, button, form) {
   }
 }
 
+function checkTimeShift(startCombo, endCombo, button, form) {
+  let newStart = parseFloat(startCombo.getSelectedValue().split(":").join("."));
+  let newEnd = parseFloat(endCombo.getSelectedValue().split(":").join("."));
+
+  setEnable(button, form);
+
+  if (newEnd >= newStart) {
+    if (newEnd - newStart < 1) {
+      eAlert("Waktu lembur minimal adalah 1 jam! <br/><b>TOMBOL DISABLED</>");
+      setDisable(button, form);
+      return false;
+    }
+  }
+}
+
 function timeDiffCalc(dateFuture, dateNow) {
   let diffInMilliSeconds = Math.abs(dateFuture - dateNow) / 1000;
 
@@ -783,6 +816,26 @@ function genSelectMonth(yearName, monthName) {
   optionsYear = optionsYear + "</select></span>";
 
   return options + "" + optionsYear;
+}
+
+function genSelectYear(yearName) {
+  let date = new Date();
+  let year = date.getFullYear();
+
+  let optionsYear =
+    "<span style='width:100%;margin-left: 10px'> Tahun: <select id='" +
+    yearName +
+    "' style='height:22px;margin-top:3px'>";
+  for (let i = 2021; i <= date.getFullYear(); i++) {
+    if (year === i) {
+      optionsYear = optionsYear + `<option selected value='${i}'>${i}</option>`;
+    } else {
+      optionsYear = optionsYear + `<option value='${i}'>${i}</option>`;
+    }
+  }
+  optionsYear = optionsYear + "</select></span>";
+
+  return optionsYear;
 }
 
 function genWorkTime(times, startIndex, endIndex, isEndFull = false) {

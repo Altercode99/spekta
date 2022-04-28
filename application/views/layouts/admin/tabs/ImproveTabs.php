@@ -6,12 +6,30 @@ if ((strpos(strtolower($_SERVER['SCRIPT_NAME']), strtolower(basename(__FILE__)))
 
 $script = <<< "JS"
 
-    function detCatTab() {
-        if (!mainTab.tabs("master_detective_categories")){
-            mainTab.addTab("master_detective_categories", tabsStyle("detective.png", "Kategori Improvement"), null, null, true, true);
-            showDetCat();
+    function improveCatTab() {
+        if (!mainTab.tabs("master_improve_categories")){
+            mainTab.addTab("master_improve_categories", tabsStyle("detective.png", "Kategori Improvement"), null, null, true, true);
+            showImproveCat();
         } else {
-            mainTab.tabs("master_detective_categories").setActive();
+            mainTab.tabs("master_improve_categories").setActive();
+        }
+    }
+
+    function improveLevelTab() {
+        if (!mainTab.tabs("master_improve_levels")){
+            mainTab.addTab("master_improve_levels", tabsStyle("detective.png", "Tingkatan Improvement"), null, null, true, true);
+            showImproveLevel();
+        } else {
+            mainTab.tabs("master_improve_levels").setActive();
+        }
+    }
+
+    function improveFormDetTab() {
+        if (!mainTab.tabs("improve_form_detective")){
+            mainTab.addTab("improve_form_detective", tabsStyle("detective.png", "Form Detektif"), null, null, true, true);
+            showFormDet();
+        } else {
+            mainTab.tabs("improve_form_detective").setActive();
         }
     }
     
