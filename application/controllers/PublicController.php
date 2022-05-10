@@ -205,7 +205,7 @@ class PublicController extends Erp_Controller
                 $isHeadPLT = $this->Hr->getOne('employee_ranks', ['emp_id' => $empId, 'rank_id' => 1, 'status' => 'ACTIVE'], 'rank_id');
                 if ($emp->rank_id != 1 && !$isHeadPLT) {
                     $this->load->view('html/invalid_response', ['message' => 'Jabatan anda bukan <b>Plant Manager</b>']);
-                } else if ($emp->rank_id == 1 || $isAsmanPLT) {
+                } else if ($emp->rank_id == 1 || $isHeadPLT) {
                     $this->approveAction($overtime, $emp, $taskId, $appvType, $status, $nip, $empId);
                 } else {
                     $this->load->view('html/invalid_response', ['message' => 'Oops..! <b>Terjadi Kesalahan</b>']);

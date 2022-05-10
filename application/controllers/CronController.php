@@ -15,7 +15,7 @@ class CronController extends Erp_Controller
     {
         $status = $this->Main->getDataById('email_send', 1)->status;
         if ($status == 'enable') {
-            $emails = $this->Main->getWhere('email', ['status' => 0, 'DATE(created_at)' => date('Y-m-d')])->result();
+            $emails = $this->Main->getWhere('email', ['status' => 0, 'DATE(created_at)' => date('Y-m-d')], '*', 5)->result();
             foreach ($emails as $email) {
                 $send = $this->sendmail->sendEmail($email->subject, $email->message, $email->email_to, $email->email_cc, $email->subject_name);
                 if ($send) {
@@ -297,7 +297,103 @@ class CronController extends Erp_Controller
     //@URL: http://localhost/spekta/index.php?c=CronController&m=alertEmpExp
     public function alertEmpExp()
     {
+        $current = date('Y-m');
+        $date = date('Y-m', strtotime("+1 months", strtotime($current)));
+        $emps = $this->HrModel->getEmpNearExpired($date, 'KF-JKT');
+
+        $location = $this->Main->getOne('locations', ['code' => 'KF-JKT'])->name;
+
+        // SDM Notification
+        $asmanSDM = $this->Hr->getOne('employees', ['sub_department_id' => 11, 'email !=' =>''], '*', ['rank_id' => ['3', '4']]);
+        if(!$asmanSDM) {
+            $isHaveAsmanPLT = $this->Hr->getOne('employee_ranks', ['sub_department_id' => 11, 'status' => 'ACTIVE'], '*', ['rank_id' => ['3', '4']]);
+            $asmanSDM = $this->Hr->getOne('employees', ['id' => $isHaveAsmanPLT->emp_id, 'email !=' =>'']);
+        }
+
+        $this->Main->create('email', [
+            'alert_name' => 'NEAR_EXPIRED_EMP_SDM',
+            'email_to' => $asmanSDM->email,
+            'subject' => "Alert Data Karyawan Habis Kontrak " . toIndoMonth($date),
+            'subject_name' => "Alert Data Karyawan Habis Kontrak " . toIndoMonth($date),
+            'message' => $this->load->view('html/hr/emp_near_expired', [
+                'emps' => $emps, 
+                'location' => $location, 
+                'date' => $date,
+                'sdm' => $asmanSDM
+            ], true),
+        ]);
+
+        $emailSDM = $this->Hr->getWhere('employees', ['division_id' => 38], 'employee_name, email')->result();
+        foreach ($emailSDM as $sdm) {
+            $this->Main->create('email', [
+                'alert_name' => 'NEAR_EXPIRED_EMP_SDM',
+                'email_to' => $sdm->email,
+                'subject' => "Alert Data Karyawan Habis Kontrak " . toIndoMonth($date),
+                'subject_name' => "Alert Data Karyawan Habis Kontrak " . toIndoMonth($date),
+                'message' => $this->load->view('html/hr/emp_near_expired', [
+                    'emps' => $emps, 
+                    'location' => $location, 
+                    'date' => $date,
+                    'sdm' => $asmanSDM
+                ], true),
+            ]);
+        }
+        // END SDM Notification
+
+        $depts = [];
+        $divs = [];
+        foreach ($emps as $emp) {
+            $depts[$emp->sub_department_id] = $emp->sub_department_id;
+            $divs[$emp->division_id] = $emp->division_id;
+        }
+        $asmans = $this->Hr->getWhere('employees', ['email !=' =>''], 'employee_name, sub_department_id, email', null,null, ['rank_id' => ['3', '4'], 'sub_department_id' => $depts])->result();
+        $spvs = $this->Hr->getWhere('employees', ['email !=' =>''], 'employee_name, division_id, email', null,null, ['rank_id' => ['5', '6'], 'division_id' => $divs])->result();
         
+        foreach ($asmans as $asman) {
+            $this->Main->create('email', [
+                'alert_name' => 'NEAR_EXPIRED_EMP_ASMAN',
+                'email_to' => $asman->email,
+                'subject' => "Alert Data Karyawan Habis Kontrak " . toIndoMonth($date),
+                'subject_name' => "Alert Data Karyawan Habis Kontrak " . toIndoMonth($date),
+                'message' => $this->load->view('html/hr/emp_near_expired_asman', [
+                    'emps' => $emps, 
+                    'location' => $location, 
+                    'date' => $date,
+                    'employee' => $asman
+                ], true),
+            ]);
+        }
+
+        foreach ($spvs as $spv) {
+            $this->Main->create('email', [
+                'alert_name' => 'NEAR_EXPIRED_EMP_SPV',
+                'email_to' => $spv->email,
+                'subject' => "Alert Data Karyawan Habis Kontrak " . toIndoMonth($date),
+                'subject_name' => "Alert Data Karyawan Habis Kontrak " . toIndoMonth($date),
+                'message' => $this->load->view('html/hr/emp_near_expired_spv', [
+                    'emps' => $emps, 
+                    'location' => $location, 
+                    'date' => $date,
+                    'employee' => $spv
+                ], true),
+            ]);
+        }
+
+        foreach ($emps as $emp) {
+            if($emp->email) {
+                $this->Main->create('email', [
+                    'alert_name' => 'NEAR_EXPIRED_EMP_PERSON',
+                    'email_to' => $emp->email,
+                    'subject' => "Alert Data Karyawan Habis Kontrak " . toIndoMonth($date),
+                    'subject_name' => "Alert Data Karyawan Habis Kontrak " . toIndoMonth($date),
+                    'message' => $this->load->view('html/hr/emp_expired', [
+                        'location' => $location, 
+                        'date' => $date,
+                        'employee' => $emp
+                    ], true),
+                ]);
+            }
+        }
     }
 
     //@URL: http://localhost/spekta/index.php?c=CronController&m=autoGenTableAbsen

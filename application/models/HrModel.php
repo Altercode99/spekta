@@ -296,4 +296,24 @@ class HrModel extends CI_Model
                     ORDER BY b.employee_name ASC";
         return $this->db->query($sql)->row();
     }
+
+    public function getEmpNearExpired($date, $location)
+    {
+        $date = explode('-', $date);
+        $sql = "SELECT a.*,b.employee_name,b.nip,c.name AS department,d.name AS sub_department,e.name AS division,f.name AS rank_name
+                    FROM employees a, employees b, departments c, sub_departments d, divisions e, ranks f
+                    WHERE a.id = b.id
+                    AND b.department_id = c.id
+                    AND b.sub_department_id = d.id
+                    AND b.division_id = e.id
+                    AND b.rank_id = f.id
+                    AND YEAR(a.sk_end_date) = '$date[0]'
+                    AND MONTH(a.sk_end_date) = '$date[1]'
+                    AND a.sk_end_date != '0000-00-00'
+                    AND a.employee_status != 'Permanen'
+                    AND a.status = 'ACTIVE'
+                    AND a.location = '$location'
+                    ORDER BY b.employee_name ASC";
+        return $this->db->query($sql)->result();
+    }
 }

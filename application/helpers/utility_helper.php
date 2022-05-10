@@ -70,6 +70,13 @@ function mToMonth($m)
     return $month[$m];
 }
 
+function toIndoMonth($date)
+{
+    $date = explode("-", $date);
+    $month = mToMonth($date[1]);
+    return $month . " " . $date[0];
+}
+
 function toIndoDate($date)
 {
     if ($date == '0000-00-00') {
@@ -1019,14 +1026,21 @@ function totalHour($empId, $start, $end, $startTime, $endTime)
     $totalMeal = 0;
 
     $currentDate = new DateTime($date);
-    $startRamadhan = new DateTime(date('Y-m-d', strtotime('2022-04-02')));
-    $endRamadhan = new DateTime(date('Y-m-d', strtotime('2022-05-01')));
-    
-    if($currentDate >= $startRamadhan && $currentDate <= $endRamadhan) {
-        $isRamadhan = true;
+    $expDate = explode('-', $date);
+    $dateRamadhan = $ci->Hr->getOne('month_of_puasa', ['year' => $expDate[0]]);
+    if($dateRamadhan) {
+        $startRamadhan = new DateTime(date('Y-m-d', strtotime($dateRamadhan->start_date)));
+        $endRamadhan = new DateTime(date('Y-m-d', strtotime($dateRamadhan->end_date)));
+        
+        if($currentDate >= $startRamadhan && $currentDate <= $endRamadhan) {
+            $isRamadhan = true;
+        } else {
+            $isRamadhan = false;
+        }
     } else {
         $isRamadhan = false;
     }
+    
 
     $addRamadhan = 0;
     for ($i = intval($startHour) + 1; $i <= $endFixing; $i++) {
