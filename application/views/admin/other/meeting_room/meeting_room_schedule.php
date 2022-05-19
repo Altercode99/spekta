@@ -31,6 +31,7 @@ $script = <<< "JS"
         scheduler1.locale.labels.section_name = "Judul Kegiatan";
         scheduler1.locale.labels.section_meeting_type = "Jenis Kegiatan";
         scheduler1.locale.labels.section_description = "Deskripsi Kegiatan";
+        scheduler1.locale.labels.section_type = "Jenis Meeting";
         scheduler1.locale.labels.section_room = "Ruang Meeting";
         scheduler1.locale.labels.section_auto = "Waktu Reservasi";
         scheduler1.locale.labels.section_repeat = "Repeat Meeting";
@@ -44,9 +45,13 @@ $script = <<< "JS"
                 {key: 'internal', label: 'Meeting Internal'},
                 {key: 'external', label: 'Meeting Eksternal'}
             ]},
-            {name:"description", height:75, map_to:"description", type:"textarea"},
+            {name:"description", height:50, map_to:"description", type:"textarea"},
+            {name:"type", height:40, map_to:"type", type:"select" , options: [
+                {key: 0, label: 'Offline'},
+                {key: 1, label: 'Online'}
+            ]},
+            {name:"time", height:70, type:"time", map_to:"auto"},
             {name:"room", height:40, map_to:"room", type:"select", options: rooms.data},
-            {name:"time", height:72, type:"time", map_to:"auto"},
             {name:"meal", height:40, map_to:"meal", type:"select" , options: [
                 {key: 0, label: 'Tanpa Snack'},
                 {key: 1, label: 'Dengan Snack'}
@@ -82,33 +87,60 @@ $script = <<< "JS"
             section.control.disabled = true;
             section1.control.disabled = true;
 
+            typeLightbox = scheduler1.formSection("type");
+            onTypeChange(typeLightbox);
+
             timeLightbox = scheduler1.formSection("time");
             onTimeChange(timeLightbox);
-            timeLightbox.control[0].onchange = function(e) {
-                onTimeChange(timeLightbox);
+
+            typeLightbox.control.onchange = function(e) {
+                onTypeChange(typeLightbox);
             }
-            timeLightbox.control[1].onchange = function(e) {
-                onTimeChange(timeLightbox);
-            }
-            timeLightbox.control[2].onchange = function(e) {
-                onTimeChange(timeLightbox);
-            }
-            timeLightbox.control[3].onchange = function(e) {
-                onTimeChange(timeLightbox);
-            }
-            timeLightbox.control[4].onchange = function(e) {
-                onTimeChange(timeLightbox);
-            }
-            timeLightbox.control[5].onchange = function(e) {
-                onTimeChange(timeLightbox);
-            }
-            timeLightbox.control[6].onchange = function(e) {
-                onTimeChange(timeLightbox);
-            }
-            timeLightbox.control[7].onchange = function(e) {
-                onTimeChange(timeLightbox);
+
+            if(typeLightbox.getValue() === "Offline") {
+                timeLightbox.control[0].onchange = function(e) {
+                    onTimeChange(timeLightbox);
+                }
+                timeLightbox.control[1].onchange = function(e) {
+                    onTimeChange(timeLightbox);
+                }
+                timeLightbox.control[2].onchange = function(e) {
+                    onTimeChange(timeLightbox);
+                }
+                timeLightbox.control[3].onchange = function(e) {
+                    onTimeChange(timeLightbox);
+                }
+                timeLightbox.control[4].onchange = function(e) {
+                    onTimeChange(timeLightbox);
+                }
+                timeLightbox.control[5].onchange = function(e) {
+                    onTimeChange(timeLightbox);
+                }
+                timeLightbox.control[6].onchange = function(e) {
+                    onTimeChange(timeLightbox);
+                }
+                timeLightbox.control[7].onchange = function(e) {
+                    onTimeChange(timeLightbox);
+                }
             }
         });
+
+        function onTypeChange(type) { 
+            let typeMeeting  = type.getValue();
+            if(typeMeeting == 1) {
+                scheduler1.formSection('meal').setValue("0");
+                scheduler1.formSection('meal').control.disabled = true;
+                scheduler1.formSection('room').setValue("0");
+                scheduler1.formSection('room').control.disabled = true;
+                scheduler1.formSection('repeat').setValue("1");
+                scheduler1.formSection('repeat').control.disabled = true;
+            } else {
+                scheduler1.formSection('meal').control.disabled = false;
+                scheduler1.formSection('room').setValue("1");
+                scheduler1.formSection('room').control.disabled = false;
+                scheduler1.formSection('repeat').control.disabled = false;
+            }
+        }
 
         function onTimeChange(time) { 
             let startDate = time.getValue().start_date;

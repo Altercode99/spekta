@@ -43,20 +43,35 @@ class MRoomLib
                     $urlAccept = LIVE_URL . "index.php?c=PublicController&m=responseMeeting&token=$tokenAccept";
                     $urlReject = LIVE_URL . "index.php?c=PublicController&m=responseMeeting&token=$tokenReject";
                     $type = $meeting->meeting_type == 'internal' ? 'Meeting Internal' : 'Meeting External';
-                    $message = $this->load->view('html/meeting_rooms/email/invitation_participant', [
-                        'linkA' => $urlAccept,
-                        'linkR' => $urlReject,
-                        'meeting' => $meeting,
-                        'emp' => $participant,
-                        'location' => $locName,
-                        'type' => $type,
-                    ], true);
-        
+                    if($meeting->type == 1) {
+                        $message = $this->load->view('html/meeting_rooms/email/invitation_participant_online', [
+                            'linkA' => $urlAccept,
+                            'linkR' => $urlReject,
+                            'meeting' => $meeting,
+                            'emp' => $participant,
+                            'location' => $locName,
+                            'type' => $type,
+                        ], true);
+                        $subject = "Undangan Meeting Online Dari $meeting->employee_name ($meeting->sub_department) Di Ruang $meeting->room_name @" . toIndoDateTime2($meeting->start_date);
+                        $subject_name = "Spekta Alert: Undangan Meeting Online Dari $meeting->employee_name ($meeting->sub_department) Di Ruang $meeting->room_name @" . toIndoDateTime2($meeting->start_date);
+                    } else {
+                        $message = $this->load->view('html/meeting_rooms/email/invitation_participant', [
+                            'linkA' => $urlAccept,
+                            'linkR' => $urlReject,
+                            'meeting' => $meeting,
+                            'emp' => $participant,
+                            'location' => $locName,
+                            'type' => $type,
+                        ], true);
+                        $subject = "Undangan Meeting Dari $meeting->employee_name ($meeting->sub_department) Di Ruang $meeting->room_name @" . toIndoDateTime2($meeting->start_date);
+                        $subject_name = "Spekta Alert: Undangan Meeting Dari $meeting->employee_name ($meeting->sub_department) Di Ruang $meeting->room_name @" . toIndoDateTime2($meeting->start_date);
+                    }
+                   
                     $data[] = [
                         'alert_name' => 'MEETING_INVITATION',
                         'email_to' => $value,
-                        'subject' => "Undangan Meeting Dari $meeting->employee_name ($meeting->sub_department) Di Ruang $meeting->room_name @" . toIndoDateTime2($meeting->start_date),
-                        'subject_name' => "Spekta Alert: Undangan Meeting Dari $meeting->employee_name ($meeting->sub_department) Di Ruang $meeting->room_name @" . toIndoDateTime2($meeting->start_date),
+                        'subject' => $subject,
+                        'subject_name' => $subject_name,
                         'message' => $message,
                         'created_at' => date('Y-m-d H:i:s')
                     ];

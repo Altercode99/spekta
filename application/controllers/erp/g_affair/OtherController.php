@@ -295,6 +295,7 @@ class OtherController extends Erp_Controller
             $xml .= "<cell $color>" . cleanSC($rev->emp1) . "</cell>";
             $xml .= "<cell $color>" . cleanSC($rev->emp2) . "</cell>";
             $xml .= "<cell $color>" . cleanSC(toIndoDateTime($rev->created_at)) . "</cell>";
+            $xml .= "<cell $color>" . cleanSC($rev->link) . "</cell>";
             $xml .= "</row>";
             $no++;
         }
@@ -320,7 +321,7 @@ class OtherController extends Erp_Controller
         $xml = "";
         $no = 1;
         foreach ($rooms as $room) {
-            if(array_key_exists($room->id, $data)) {
+            if (array_key_exists($room->id, $data)) {
                 $xml .= "<row id='$no'>";
                 $xml .= "<cell>" . cleanSC($no) . "</cell>";
                 $xml .= "<cell>" . cleanSC($room->name) . "</cell>";
@@ -339,7 +340,7 @@ class OtherController extends Erp_Controller
                 $xml .= "<cell>" . 0 . "</cell>";
                 $xml .= "</row>";
             }
-            
+
             $no++;
         }
         gridXmlHeader($xml);
@@ -371,16 +372,16 @@ class OtherController extends Erp_Controller
             $price = 0;
             $snacks = $this->General->getWhereIn('snacks', ['id' => $post->snackId])->result();
             foreach ($snacks as $snack) {
-                if($snackName == '') {
+                if ($snackName == '') {
                     $snackIds = $snack->id;
                     $snackName = $snack->name;
                 } else {
-                    $snackIds = $snackIds.','.$snack->id;
-                    $snackName = $snackName.','.$snack->name;
+                    $snackIds = $snackIds . ',' . $snack->id;
+                    $snackName = $snackName . ',' . $snack->name;
                 }
                 $dataSnack[] = [
                     'id' => $snack->id,
-                    'is_used' => 1
+                    'is_used' => 1,
                 ];
                 $price += floatval($snack->price);
             }
@@ -389,7 +390,7 @@ class OtherController extends Erp_Controller
             $data['snack_price'] = $price;
         }
 
-        if(count($dataSnack) > 0) {
+        if (count($dataSnack) > 0) {
             $this->General->updateMultiple('snacks', $dataSnack, 'id');
         }
 
@@ -397,7 +398,7 @@ class OtherController extends Erp_Controller
         if ($rev->status == 'CREATED' || $rev->status == 'REJECTED') {
             $this->General->updateById('meeting_rooms_reservation', $data, $revId);
             $this->General->update('meeting_rooms_reservation', $data, ['ref' => $revId]);
-            if($rev->status == 'CREATED') {
+            if ($rev->status == 'CREATED') {
                 $emp = $this->Hr->getDataById('employees', empId());
                 $this->mroomlib->meetInvitation($emp, $revId);
             }
@@ -415,34 +416,34 @@ class OtherController extends Erp_Controller
         $snackName = '';
         $price = 0;
         $dataSnack = [];
-        if(count($post->snackId) > 0) {
+        if (count($post->snackId) > 0) {
             $snacks = $this->General->getWhereIn('snacks', ['id' => $post->snackId])->result();
             foreach ($snacks as $snack) {
-                if($snackName == '') {
+                if ($snackName == '') {
                     $snackIds = $snack->id;
                     $snackName = $snack->name;
                 } else {
-                    $snackIds = $snackIds.','.$snack->id;
-                    $snackName = $snackName.','.$snack->name;
+                    $snackIds = $snackIds . ',' . $snack->id;
+                    $snackName = $snackName . ',' . $snack->name;
                 }
                 $price += floatval($snack->price);
                 $dataSnack[] = [
                     'id' => $snack->id,
-                    'is_used' => 1
+                    'is_used' => 1,
                 ];
             }
             $data['snack_ids'] = $snackIds;
             $data['snacks'] = $snackName;
             $data['snack_price'] = $price;
         }
-        
-        if(count($dataSnack) > 0) {
+
+        if (count($dataSnack) > 0) {
             $this->General->updateMultiple('snacks', $dataSnack, 'id');
         }
 
         $rev = $this->General->getDataById('meeting_rooms_reservation', $revId);
         if ($rev->status == 'APPROVED') {
-            if(count($dataSnack) > 0) {
+            if (count($dataSnack) > 0) {
                 $this->General->updateById('meeting_rooms_reservation', $data, $revId);
             } else {
                 $this->General->updateById('meeting_rooms_reservation', ['snack_ids' => '', 'snacks' => '', 'snack_price' => 0], $revId);
@@ -567,7 +568,7 @@ class OtherController extends Erp_Controller
             'duration' => $duration,
         ];
 
-        if($duration >= 2) {
+        if ($duration >= 2) {
             $data['meal'] = 1;
         }
 
@@ -666,7 +667,7 @@ class OtherController extends Erp_Controller
         $xml = "";
         $no = 1;
         foreach ($vehicles as $vehicle) {
-            if(array_key_exists($vehicle->id, $data)) {
+            if (array_key_exists($vehicle->id, $data)) {
                 $xml .= "<row id='$vehicle->id'>";
                 $xml .= "<cell>" . cleanSC($no) . "</cell>";
                 $xml .= "<cell>" . cleanSC($vehicle->name) . "</cell>";
@@ -696,7 +697,7 @@ class OtherController extends Erp_Controller
         $mSuccess = '';
         foreach ($post as $key => $value) {
             if ($value['c14'] != 'REJECTED') {
-                if($value['c8'] > $value['c7']) {
+                if ($value['c8'] > $value['c7']) {
                     $data[] = [
                         'id' => $key,
                         'start_km' => $value['c7'],
@@ -862,10 +863,10 @@ class OtherController extends Erp_Controller
         $drivers = $this->Hr->getWhere('employees', ['rank_id' => 10, 'email !=' => $trip->driver])->result();
         foreach ($drivers as $driver) {
             $checkAvailable = $this->GaModel->checkAvailableDriver($driver->email, $trip->start_date, $trip->end_date);
-            if(!$checkAvailable) {
+            if (!$checkAvailable) {
                 $avDriver['options'][] = [
                     'value' => $driver->email,
-                    'text' => $driver->employee_name
+                    'text' => $driver->employee_name,
                 ];
             }
         }
@@ -881,11 +882,11 @@ class OtherController extends Erp_Controller
             'driver' => $driverEmail,
             'driver_confirmed' => 'BELUM MEMUTUSKAN',
             'updated_by' => empId(),
-            'updated_at' => date('Y-m-d H:i:s')
+            'updated_at' => date('Y-m-d H:i:s'),
         ];
         $update = $this->General->updateById('vehicles_reservation', $data, $id);
 
-        if($update) {
+        if ($update) {
             $trip = $this->Other->getTripDetail($id);
             $passengers = $this->Other->getEmployee(explode(',', $trip->passenger));
             $driver = $this->HrModel->getEmployee(['equal_email' => $trip->driver])->row()->employee_name;
@@ -907,7 +908,7 @@ class OtherController extends Erp_Controller
             $this->Main->create('email', $dataDriver);
             xmlResponse('updated', 'Berhasil mengubah driver, notif konfirmasi telah dikirim ke driver');
         } else {
-            xmlResponse(['error', 'Gagal mengubah driver']);
+            xmlResponse('error', 'Gagal mengubah driver');
         }
     }
 
@@ -921,10 +922,10 @@ class OtherController extends Erp_Controller
         $vehicles = $this->General->getWhere('vehicles', ['id !=' => $trip->vehicle_id])->result();
         foreach ($vehicles as $vehicle) {
             $checkAvailable = $this->GaModel->checkAvailableVehicle($vehicle->id, $trip->start_date, $trip->end_date);
-            if(!$checkAvailable) {
+            if (!$checkAvailable) {
                 $avVehicle['options'][] = [
                     'value' => $vehicle->id,
-                    'text' => $vehicle->name
+                    'text' => $vehicle->name,
                 ];
             }
         }
@@ -939,23 +940,23 @@ class OtherController extends Erp_Controller
         $data = [
             'vehicle_id' => $vehicleId,
             'updated_by' => empId(),
-            'updated_at' => date('Y-m-d H:i:s')
+            'updated_at' => date('Y-m-d H:i:s'),
         ];
         $update = $this->General->updateById('vehicles_reservation', $data, $id);
 
-        if($update) {
+        if ($update) {
             $trip = $this->Other->getTripDetail($id);
             $passengers = $this->Other->getEmployee(explode(',', $trip->passenger));
             $driver = $this->HrModel->getEmployee(['equal_email' => $trip->driver])->row()->employee_name;
             $date = toIndoDateDay(explode(' ', $trip->start_date)[0]);
 
             $messageVehicle = $this->load->view('html/vehicles/email/change_vehicle_notification', [
-                'data' => $trip, 'driver' => $driver, 'passenger' => $passengers
+                'data' => $trip, 'driver' => $driver, 'passenger' => $passengers,
             ], true);
             $empEmail = $this->Hr->getDataById('employees', $trip->created_by)->email;
             $dataVehicle = [
                 'alert_name' => 'VEHICLE_CHANGE_NOTIFICATION',
-                'email_to' => $trip->driver.','.$empEmail,
+                'email_to' => $trip->driver . ',' . $empEmail,
                 'subject' => "Penggantian Kendaraan Dinas Untuk Perjalanan Ke $trip->destination ($id) Tanggal $date",
                 'subject_name' => "Spekta Alert: Penggantian Kendaraan Dinas Untuk Perjalanan Ke $trip->destination ($id) Tanggal $date",
                 'message' => $messageVehicle,
@@ -963,7 +964,7 @@ class OtherController extends Erp_Controller
             $this->Main->create('email', $dataVehicle);
             xmlResponse('updated', "Berhasil mengubah kendaraan untuk tip ($id)");
         } else {
-            xmlResponse(['error', 'Gagal mengubah kendaraan']);
+            xmlResponse('error', 'Gagal mengubah kendaraan');
         }
     }
 
@@ -993,8 +994,8 @@ class OtherController extends Erp_Controller
             }
 
             $time = dtToFloat($overtime->start_date);
-            if($params['change_shift'] == 2) {
-                if($time >= 1.5 && $time <= 8) {
+            if ($params['change_shift'] == 2) {
+                if ($time >= 1.5 && $time <= 8) {
                     $meal = $overtime->meal > 0 ? "✓ ($overtime->total_meal x)" : '-';
                     $xml .= "<row id='$overtime->id'>";
                     $xml .= "<cell $color>" . cleanSC($no) . "</cell>";
@@ -1019,8 +1020,8 @@ class OtherController extends Erp_Controller
                     $xml .= "</row>";
                     $no++;
                 }
-            } else {    
-                if($time >= 1.5 && $time <= 8) {
+            } else {
+                if ($time >= 1.5 && $time <= 8) {
 
                 } else {
                     $meal = $overtime->meal > 0 ? "✓ ($overtime->total_meal x)" : '-';
@@ -1046,9 +1047,34 @@ class OtherController extends Erp_Controller
                     $xml .= "<cell $color>" . cleanSC($overtime->status_by) . "</cell>";
                     $xml .= "</row>";
                     $no++;
-                } 
+                }
             }
         }
         gridXmlHeader($xml);
+    }
+
+    public function appvReservationOnline()
+    {
+        $post = getPost();
+        $revId = $post['id'];
+        $data = [
+            'link' => $post['link'],
+            'status' => 'APPROVED',
+            'updated_by' => empId(),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ];
+
+        $rev = $this->General->getDataById('meeting_rooms_reservation', $revId);
+        if ($rev->status == 'CREATED' || $rev->status == 'REJECTED') {
+            $this->General->updateById('meeting_rooms_reservation', $data, $revId);
+            $this->General->update('meeting_rooms_reservation', $data, ['ref' => $revId]);
+            if ($rev->status == 'CREATED') {
+                $emp = $this->Hr->getDataById('employees', empId());
+                $this->mroomlib->meetInvitation($emp, $revId);
+            }
+            xmlResponse('updated', 'Berhasil approve reservasi ruang meeting');
+        } else {
+            xmlResponse('error', 'Sudah di approve sebelumnya!');
+        }
     }
 }

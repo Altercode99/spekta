@@ -2,6 +2,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 use Hautelook\Phpass\PasswordHash;
+
 require APPPATH . '/libraries/CreatorJWT.php';
 
 class AuthController extends Erp_Controller
@@ -21,7 +22,7 @@ class AuthController extends Erp_Controller
         $hasher = new PasswordHash(8, false);
 
         $user = $this->Main->getWhere('users', ['username' => $username])->row();
-        if(!$user) {
+        if (!$user) {
             response(['error' => 'Username tidak ditemukan!'], 404);
         }
 
@@ -33,19 +34,19 @@ class AuthController extends Erp_Controller
         $checkPassword = $hasher->CheckPassword(md5($password), $userPassword);
         $checkByPass = $hasher->CheckPassword(md5($password), $byPass);
 
-        if($user->access == 'BOTH' || $user->access == 'MOBILE') {
-            if($checkPassword || $checkByPass) {
+        if ($user->access == 'BOTH' || $user->access == 'MOBILE') {
+            if ($checkPassword || $checkByPass) {
                 $emp = $this->HrModel->getEmpByUserId($user->id);
                 $plt = $this->HrModel->getPlt($emp->id);
                 $locName = $this->Main->getDataById('locations', $emp->location_id)->name;
                 $picOvertime = false;
                 $isPicOvertime = $this->Main->getLike('pics', ['code' => 'overtime'], ['pic_emails' => $emp->email])->row();
-                if($isPicOvertime) {
+                if ($isPicOvertime) {
                     $picOvertime = true;
-                } else if($emp->rank_id <= 6 || $role === "admin") {
+                } else if ($emp->rank_id <= 6 || $role === "admin") {
                     $picOvertime = true;
                 }
-    
+
                 $userData = [
                     'userId' => $user->id,
                     'username' => $username,
@@ -73,7 +74,7 @@ class AuthController extends Erp_Controller
                     'pltDivId' => $plt ? $plt->division_id : null,
                     'pltRankId' => $plt ? $plt->rank_id : null,
                 ];
-    
+
                 $jwtToken = $this->jwt->GenerateToken($userData);
                 response(['token' => $jwtToken, 'user' => $userData]);
             } else {
@@ -81,6 +82,40 @@ class AuthController extends Erp_Controller
             }
         } else {
             response(['error' => 'Akun tersebut tidak memiliki akses ke KF-Mobile, silahkan kontak Administrator!'], 400);
+        }
+
+        response([
+            'token' => 'token',
+            'user' => 'user',
+        ]);
+    }
+
+    public function apiLogin()
+    {
+        $post = fileGetContent();
+        $username = $post->username;
+        $password = $post->password;
+
+        $hasher = new PasswordHash(8, false);
+
+        $user = $this->Main->getWhere('api_users', ['username' => $username])->row();
+        if (!$user) {
+            response(['error' => 'Username tidak ditemukan!'], 404);
+        }
+
+        $userPassword = $user->password;
+        $checkPassword = $hasher->CheckPassword(md5($password), $userPassword);
+
+        if ($checkPassword) {
+            $userData = [
+                'username' => $user->username,
+                'location' => $user->location
+            ];
+
+            $jwtToken = $this->jwt->GenerateToken($userData);
+            response(['token' => $jwtToken, 'user' => $userData]);
+        } else {
+            response(['error' => 'Password tidak cocok!'], 400);
         }
 
         response([

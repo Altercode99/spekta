@@ -38,41 +38,121 @@ $script = <<< "JS"
                         return eAlert("Pilih reservasi yang akan di approve");
                     }
 
-                    if(revMRoomGrid.cells(revMRoomGrid.getSelectedRowId(), 9).getValue() != '-') {
-                        var appvWin = createWindow("ga_appv_mroom", "Pilih Snack Meeting", 800, 400);
-                        myWins.window("ga_appv_mroom").skipMyCloseEvent = true;
+                    if(revMRoomGrid.cells(revMRoomGrid.getSelectedRowId(), 5).getValue() === "Online") {
+                        var appvWinOnline = createWindow("ga_appv_mroom_online", "Masukan Link Meeting", 600, 300);
+                        myWins.window("ga_appv_mroom_online").skipMyCloseEvent = true;
 
-                        var appvWinToolbar = appvWin.attachToolbar({
+                        var appvWinOnlineToolbar = appvWinOnline.attachToolbar({
                             icon_path: "./public/codebase/icons/",
                             items: [
                                 {id: "approve", text: "Approve", type: "button", img: "ok.png"},
                                 {id: "cancel", text: "Cancel", type: "button", img: "messagebox_critical.png"},
-                                {id: "snack", text: "Ubah Snack", type: "button", img: "refresh.png"},
                             ]
                         });
 
                         let status = revMRoomGrid.cells(revMRoomGrid.getSelectedRowId(), 17).getValue();
                         if(status == "CREATED" || status == "REJECTED") {
-                            appvWinToolbar.enableItem("approve");
-                            appvWinToolbar.disableItem("snack");
+                            appvWinOnlineToolbar.enableItem("approve");
                         } else {
-                            appvWinToolbar.disableItem("approve");
-                            appvWinToolbar.enableItem("snack");
+                            appvWinOnlineToolbar.disableItem("approve");
                         }
 
-                        reqJson(GAOther("getSnacks"), "POST", {id: revMRoomGrid.getSelectedRowId()}, (err, res) => {
-                            currSnack = [];
-                            if(res.status === "success") {
-                                currSnack = res.snack_ids;
-                                appvWin.attachHTMLString(res.template);
-                            }
-                        });
+                        var onlineForm = appvWinOnline.attachForm([
+                            {type: "block", offsetTop: 30, offsetLeft: 30, list: [
+                                {type: "hidden", name: "id", labelWidth: 130, inputWidth:350, required: true, value: revMRoomGrid.getSelectedRowId()},
+                                {type: "input", name: "link", label: "Link Meeting", labelWidth: 130, inputWidth:350, required: true, rows: 5},
+                                {type: "block", offsetTop: 30, list: [
+                                    {type: "button", name: "update", className: "button_update", offsetLeft: 15, value: "Simpan"},
+                                    {type: "newcolumn"},
+                                    {type: "button", name: "cancel", className: "button_no", offsetLeft: 30, value: "Cancel"}
+                                ]}
+                            ]}
+                        ]);
 
-                        appvWinToolbar.attachEvent("onClick", function(id) {
-                            switch (id) {
-                                case "approve":
-                                    if(currSnack.length > 0) {
-                                        reqJson(GAOther("appvReservation"), "POST", {id: revMRoomGrid.getSelectedRowId(), snackId: currSnack}, (err, res) => {
+                        onlineForm.attachEvent("onButtonClick", function(name) {
+                            switch (name) {
+                                case "update":
+                                    if(!onlineForm.validate()) {
+                                        return eAlert("Input error!");
+                                    }
+
+                                    setDisable(["update", "cancel"], onlineForm, appvWinOnline);
+                                    let onlineFormDP = new dataProcessor(GAOther("appvReservationOnline"));
+                                    onlineFormDP.init(onlineForm);
+                                    onlineForm.save();
+
+                                    onlineFormDP.attachEvent("onAfterUpdate", function (id, action, tid, tag) {
+                                        let message = tag.getAttribute("message");
+                                        switch (action) {
+                                            case "updated":
+                                                sAlert(message);
+                                                rRevGrid();
+                                                clearAllForm(onlineForm);
+                                                setEnable(["update", "cancel"], onlineForm, appvWinOnline);
+                                                closeWindow("ga_appv_mroom_online");
+                                                break;
+                                            case "error":
+                                                eAlert(message);
+                                                setEnable(["update", "cancel"], onlineForm, appvWinOnline);
+                                                break;
+                                        }
+                                    });
+                                    break;
+                                case "cancel":
+                                    closeWindow("ga_appv_mroom_online");
+                                    break;
+                            }
+                        })
+                    } else {
+                        if(revMRoomGrid.cells(revMRoomGrid.getSelectedRowId(), 9).getValue() != '-') {
+                            var appvWin = createWindow("ga_appv_mroom", "Pilih Snack Meeting", 800, 400);
+                            myWins.window("ga_appv_mroom").skipMyCloseEvent = true;
+
+                            var appvWinToolbar = appvWin.attachToolbar({
+                                icon_path: "./public/codebase/icons/",
+                                items: [
+                                    {id: "approve", text: "Approve", type: "button", img: "ok.png"},
+                                    {id: "cancel", text: "Cancel", type: "button", img: "messagebox_critical.png"},
+                                    {id: "snack", text: "Ubah Snack", type: "button", img: "refresh.png"},
+                                ]
+                            });
+
+                            let status = revMRoomGrid.cells(revMRoomGrid.getSelectedRowId(), 17).getValue();
+                            if(status == "CREATED" || status == "REJECTED") {
+                                appvWinToolbar.enableItem("approve");
+                                appvWinToolbar.disableItem("snack");
+                            } else {
+                                appvWinToolbar.disableItem("approve");
+                                appvWinToolbar.enableItem("snack");
+                            }
+
+                            reqJson(GAOther("getSnacks"), "POST", {id: revMRoomGrid.getSelectedRowId()}, (err, res) => {
+                                currSnack = [];
+                                if(res.status === "success") {
+                                    currSnack = res.snack_ids;
+                                    appvWin.attachHTMLString(res.template);
+                                }
+                            });
+
+                            appvWinToolbar.attachEvent("onClick", function(id) {
+                                switch (id) {
+                                    case "approve":
+                                        if(currSnack.length > 0) {
+                                            reqJson(GAOther("appvReservation"), "POST", {id: revMRoomGrid.getSelectedRowId(), snackId: currSnack}, (err, res) => {
+                                                if(res.status === "success") {
+                                                    rRevGrid();
+                                                    sAlert(res.message);
+                                                    closeWindow("ga_appv_mroom");
+                                                } else {
+                                                    eaAlert("Error", res.message);
+                                                }
+                                            });
+                                        } else {
+                                            eaAlert("Pilih Snack", "Silahkan pilih snack yang akan diberikan ke peserta meeting!");
+                                        }
+                                        break;
+                                    case "snack":
+                                        reqJson(GAOther("changeRevSnack"), "POST", {id: revMRoomGrid.getSelectedRowId(), snackId: currSnack}, (err, res) => {
                                             if(res.status === "success") {
                                                 rRevGrid();
                                                 sAlert(res.message);
@@ -81,45 +161,32 @@ $script = <<< "JS"
                                                 eaAlert("Error", res.message);
                                             }
                                         });
-                                    } else {
-                                        eaAlert("Pilih Snack", "Silahkan pilih snack yang akan diberikan ke peserta meeting!");
-                                    }
-                                    break;
-                                case "snack":
-                                    reqJson(GAOther("changeRevSnack"), "POST", {id: revMRoomGrid.getSelectedRowId(), snackId: currSnack}, (err, res) => {
-                                        if(res.status === "success") {
-                                            rRevGrid();
-                                            sAlert(res.message);
-                                            closeWindow("ga_appv_mroom");
-                                        } else {
-                                            eaAlert("Error", res.message);
-                                        }
-                                    });
-                                    break;
-                                case "cancel":
-                                    closeWindow("ga_appv_mroom");
-                                    break;
-                            }
-                        });
-                    } else {
-                        dhtmlx.modalbox({
-                            type: "alert-warning",
-                            title: "Konfirmasi",
-                            text: "Approve jadwal meeting "+ revMRoomGrid.cells(revMRoomGrid.getSelectedRowId(), 1).getValue() +"?",
-                            buttons: ["Ya", "Tidak"],
-                            callback: function (index) {
-                                if (index == 0) {
-                                    reqJson(GAOther("appvReservation"), "POST", {id: revMRoomGrid.getSelectedRowId()}, (err, res) => {
-                                        if(res.status === "success") {
-                                            rRevGrid();
-                                            sAlert(res.message);
-                                        } else {
-                                            eAlert(res.message);
-                                        }
-                                    });
+                                        break;
+                                    case "cancel":
+                                        closeWindow("ga_appv_mroom");
+                                        break;
                                 }
-                            }
-                        });
+                            });
+                        } else {
+                            dhtmlx.modalbox({
+                                type: "alert-warning",
+                                title: "Konfirmasi",
+                                text: "Approve jadwal meeting "+ revMRoomGrid.cells(revMRoomGrid.getSelectedRowId(), 1).getValue() +"?",
+                                buttons: ["Ya", "Tidak"],
+                                callback: function (index) {
+                                    if (index == 0) {
+                                        reqJson(GAOther("appvReservation"), "POST", {id: revMRoomGrid.getSelectedRowId()}, (err, res) => {
+                                            if(res.status === "success") {
+                                                rRevGrid();
+                                                sAlert(res.message);
+                                            } else {
+                                                eAlert(res.message);
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                        }
                     }
                     break;
                 case "reject":
@@ -222,6 +289,7 @@ $script = <<< "JS"
                 {id: "update", text: "Update Data kehadiran", type: "button", img: "update.png"},
                 {id: "change_hour", text: "Ubah Waktu Reservasi", type: "button", img: "clock.png"},
                 {id: "closed", text: "Tutup Meeting", type: "button", img: "ok.png"},
+                {id: "link", text: "Link Meeting", type: "button", img: "zoom.png"},
             ]
         });
 
@@ -345,7 +413,11 @@ $script = <<< "JS"
                             }
                         },
                     });
-                    
+                    break;
+                case "link":
+                    var linkWin = createWindow("link_zoom_win", "Link Meeting Online", 800, 400);
+                    myWins.window("link_zoom_win").skipMyCloseEvent = true;
+                    linkWin.attachHTMLString("<div style='width:100%;height:100%;display:flex;justify-content:center;align-items:left'><textarea readonly style='width:100%;resize: none;' rows='5'>"+ revMRoomGrid.cells(revMRoomGrid.getSelectedRowId(), 22).getValue() +"</textarea></div>");
                     break;
             }
         })
@@ -358,13 +430,13 @@ $script = <<< "JS"
         }
 
         var revMRoomGrid = revMRoomLayout.cells("a").attachGrid();
-        revMRoomGrid.setHeader("No,No. Tiket,No. Ref,Topik Meeting,Jenis Meeting,Ruang Meeting,Waktu Mulai,Waktu Selesai,Druasi,Snack,Total Peserta,Konfirmasi Hadir,Konfirmasi Tidak Hadir,Belum Konfirmasi,Snack,Harga Snack,Total,Status,Alasan Penolakan,Created By,Updated By,DiBuat");
-        revMRoomGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#text_filter,#text_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#select_filter,#select_filter,#text_filter,#text_filter")
-        revMRoomGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
-        revMRoomGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,edtxt,rotxt,rotxt,rotxt,ron,ron,rotxt,rotxt,rotxt,rotxt,rotxt");
-        revMRoomGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
-        revMRoomGrid.setInitWidthsP("5,15,15,25,15,15,15,15,10,10,10,10,10,10,10,10,10,10,25,15,15,22");
-        revMRoomGrid.attachFooter(",Total Biaya Snack,,,,,,,,,,,,,,,<div id='ga_total_snack'>0</div>,,,,,,")
+        revMRoomGrid.setHeader("No,No. Tiket,No. Ref,Topik Meeting,Jenis Meeting,Ruang Meeting,Waktu Mulai,Waktu Selesai,Druasi,Snack,Total Peserta,Konfirmasi Hadir,Konfirmasi Tidak Hadir,Belum Konfirmasi,Snack,Harga Snack,Total,Status,Alasan Penolakan,Created By,Updated By,DiBuat,");
+        revMRoomGrid.attachHeader("#rspan,#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#text_filter,#text_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#select_filter,#select_filter,#text_filter,#text_filter,#text_filter")
+        revMRoomGrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str");
+        revMRoomGrid.setColTypes("rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt,edtxt,rotxt,rotxt,rotxt,ron,ron,rotxt,rotxt,rotxt,rotxt,rotxt,rotxt");
+        revMRoomGrid.setColAlign("center,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left,left");
+        revMRoomGrid.setInitWidthsP("5,15,15,25,15,15,15,15,10,10,10,10,10,10,10,10,10,10,25,15,15,22,0");
+        revMRoomGrid.attachFooter(",Total Biaya Snack,,,,,,,,,,,,,,,<div id='ga_total_snack'>0</div>,,,,,,,")
         revMRoomGrid.enableSmartRendering(true);
         revMRoomGrid.setEditable(true);
         revMRoomGrid.attachEvent("onXLE", function() {
@@ -374,6 +446,12 @@ $script = <<< "JS"
         revMRoomGrid.setNumberFormat("0,000",16,".",",");
         isGridNumeric(revMRoomGrid, [10,11,12,13,15,16]);
         revMRoomGrid.attachEvent("onRowSelect", function(rId, cidn) {
+            if(revMRoomGrid.cells(rId, 5).getValue() == 'Online') {
+                revMRoomGridToolbar.enableItem("link");
+            } else {
+                revMRoomGridToolbar.disableItem("link");
+            }
+
             if(revMRoomGrid.cells(rId, 17).getValue() == 'APPROVED') {
                 revMRoomToolbar.disableItem("approve");
                 revMRoomToolbar.enableItem("reject");

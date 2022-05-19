@@ -101,6 +101,15 @@ $script = <<< "JS"
         }
     }
 
+    function shiftManagementTab() {
+        if (!mainTab.tabs("other_manajemen_shift")){
+            mainTab.addTab("other_manajemen_shift", tabsStyle("clock.png", "Manajemen Shift", "background-size: 16px 16px"), null, null, true, true);
+            showShiftManagement();
+        } else {
+            mainTab.tabs("other_manajemen_shift").setActive();
+        }
+    }
+
 JS;
 
 echo $script;

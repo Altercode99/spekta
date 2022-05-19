@@ -76,7 +76,7 @@ class CronController extends Erp_Controller
     public function autoAppvAsman()
     {
         $date = date('Y-m-d H:i:s');
-        $overtimes = $this->Overtime->getAppvAsman(backDayToDate($date, 2));
+        $overtimes = $this->Overtime->getAppvAsman(backDayToDate($date, 1));
         foreach ($overtimes as $overtime) {
             $asman = $this->Hr->getOne('employees', ['sub_department_id' => $overtime->sub_department_id], '*', ['rank_id' => ['3', '4']]);
             if ($asman) {
@@ -133,7 +133,7 @@ class CronController extends Erp_Controller
     public function autoAppvPPIC()
     {
         $date = date('Y-m-d H:i:s');
-        $overtimes = $this->Overtime->getAppvPPIC(backDayToDate($date, 2));
+        $overtimes = $this->Overtime->getAppvPPIC(backDayToDate($date, 1));
         foreach ($overtimes as $overtime) {
             $asman = $this->Hr->getOne('employees', ['sub_department_id' => 9], '*', ['rank_id' => ['3', '4']]);
             if ($asman) {
@@ -175,7 +175,7 @@ class CronController extends Erp_Controller
     public function autoAppvManager()
     {
         $date = date('Y-m-d H:i:s');
-        $overtimes = $this->Overtime->getAppvManager(backDayToDate($date, 2));
+        $overtimes = $this->Overtime->getAppvManager(backDayToDate($date, 1));
         foreach ($overtimes as $overtime) {
             $mgr = $this->Hr->getOne('employees', ['department_id' => $overtime->department_id, 'rank_id' => 2]);
             if ($mgr) {
@@ -206,7 +206,7 @@ class CronController extends Erp_Controller
     public function autoAppvHead()
     {
         $date = date('Y-m-d H:i:s');
-        $overtimes = $this->Overtime->getAppvHead(backDayToDate($date, 2));
+        $overtimes = $this->Overtime->getAppvHead(backDayToDate($date, 1));
         foreach ($overtimes as $overtime) {
             $head = $this->Hr->getOne('employees', ['rank_id' => 1]);
             if ($head) {
@@ -402,7 +402,6 @@ class CronController extends Erp_Controller
         $date = explode('-', date('Y-m-d'));
         $year = $date[0];
         $month = $date[1];
-        $day = $date[2];
 
         if($month == 12) {
             $year += 1;

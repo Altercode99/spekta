@@ -148,6 +148,7 @@ class RoomRevController extends Erp_Controller
                 'id' => $room->id,
                 'text' => $room->room_name,
                 'name' => $room->name,
+                'type' => $room->type,
                 'meeting_type' => $room->meeting_type,
                 'description' => $room->description,
                 'room' => $room->room_id,
@@ -233,8 +234,6 @@ class RoomRevController extends Erp_Controller
             xmlResponse('error', $message);
         }
 
-
-
         if ($action === 'inserted') {
 
             $expGuest = explode(',', $data->guest);
@@ -243,29 +242,32 @@ class RoomRevController extends Erp_Controller
 
             $guestData = [];
             foreach ($expGuest as $key => $value) {
-                $gd = explode(':', $value);
-                $guestData['email'][] = $gd[0];
-                $guestData['participant'][$gd[0]] = $gd[1];
-                $totalParticipant += $gd[1];
+                if($value) {
+                    $gd = explode(':', $value);
+                    $guestData['email'][] = $gd[0];
+                    $guestData['participant'][$gd[0]] = $gd[1];
+                    $totalParticipant += $gd[1];
+                }
             }
 
             $event = [
                 'id' => $id,
                 'location' => empLoc(),
                 'name' => ucwords(strtolower($data->name)),
+                'type' => $data->type,
                 'meeting_type' => $data->meeting_type,
                 'description' => ucwords(strtolower($data->description)),
-                'room_id' => $data->room,
+                'room_id' => $data->type == 1 ? 0 : $data->room,
                 'start_date' => date('Y-m-d H:i:s', strtotime($data->start_date)),
                 'end_date' => date('Y-m-d H:i:s', strtotime($data->end_date)),
                 'duration' => countHour($startDate, $endDate, 'h'),
                 'participants' => $data->participant,
                 'guests' => $data->guest,
-                'meal' => $data->meal,
+                'meal' => $data->type == 1 ? 0 : $data->meal,
                 'total_participant' => $totalParticipant,
                 'participant_confirmed' => 0,
                 'participant_rejected' => 0,
-                'repeat_meet' => $data->repeat,
+                'repeat_meet' => $data->type == 1 ? 1 : $data->repeat,
                 'created_by' => empId(),
                 'updated_by' => empId(),
                 'created_at' => date('Y-m-d H:i:s'),
@@ -355,6 +357,7 @@ class RoomRevController extends Erp_Controller
                             'ref' => $id,
                             'location' => empLoc(),
                             'name' => ucwords(strtolower($data->name)),
+                            'type' => $data->type,
                             'meeting_type' => $data->meeting_type,
                             'description' => ucwords(strtolower($data->description)),
                             'room_id' => $data->room,
@@ -411,6 +414,7 @@ class RoomRevController extends Erp_Controller
             $event = [
                 'id' => $id,
                 'name' => ucwords(strtolower($data->name)),
+                'type' => $data->type,
                 'meeting_type' => $data->meeting_type,
                 'description' => ucwords(strtolower($data->description)),
                 'room_id' => $data->room,
@@ -439,10 +443,12 @@ class RoomRevController extends Erp_Controller
                     $newMail = [];
                     $guestMailData = [];
                     foreach ($guestMail as $key => $value) {
-                        $gd = explode(':', $value);
-                        if(count($gd) == 3) {
-                             $guestMailData['email'][] = $gd[0];
-                             $guestMailData['total_participant'][$gd[0]] = $gd[1];
+                        if($value) {
+                            $gd = explode(':', $value);
+                            if(count($gd) == 3) {
+                                 $guestMailData['email'][] = $gd[0];
+                                 $guestMailData['total_participant'][$gd[0]] = $gd[1];
+                            }
                         }
                     }
                     $newGuest = count($guestMailData) > 0 ? $this->General->getWhereIn('guest_books', ['email' => $guestMailData['email']])->result_array() : [];

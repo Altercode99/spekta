@@ -13,9 +13,10 @@ $script = <<< "JS"
         accordionItems.push("a", "b");
 
         if(isHaveAcc("other_lembur")) {
-            myTree.addItem("b", "Lembur", true);
+            myTree.addItem("b", "Lembur & Keharidan", true);
             var overtimeItems = [];
             var subOvertimeItems = [];
+            var subAttendanceItems = [];
 
             //@LEMBURAN
             if(isHaveTrees("other_input_lembur_support")) {
@@ -31,7 +32,7 @@ $script = <<< "JS"
             }
 
             if(isHaveTrees("other_report_req_lembur")) {
-                subOvertimeItems.push({id: "other_report_req_lembur", text: "Rekap Jam Lembur", icons: {file: "menu_icon"}});
+                subOvertimeItems.push({id: "other_report_req_lembur", text: "Daftar Pengajuan Lembur", icons: {file: "menu_icon"}});
             }
 
             if(isHaveTrees("other_report_form_lembur")) {
@@ -46,9 +47,18 @@ $script = <<< "JS"
                 subOvertimeItems.push({id: "other_pengajuan_revisi_lembur", text: "Pengajuan Revisi Lembur", icons: {file: "menu_icon"}});
             }
 
+            //@KEHADIRAN
+            if(isHaveTrees("other_manajemen_shift")) {
+                subAttendanceItems.push({id: "other_manajemen_shift", text: "Manajemen Shift", icons: {file: "menu_icon"}});
+            }
+
             //@TREES
             if(isHaveTrees('other_lembur')) {
                 overtimeItems.push({id: "other_lembur", text: "Lembur", open: 1, icons: {folder_opened: "arrow_down", folder_closed: "arrow_right"}, items: subOvertimeItems})
+            }
+
+            if(isHaveTrees('other_attendance')) {
+                overtimeItems.push({id: "other_attendance", text: "Kehadiran", open: 1, icons: {folder_opened: "arrow_down", folder_closed: "arrow_right"}, items: subAttendanceItems})
             }
 
             var overtimeTree = myTree.cells("b").attachTreeView({
@@ -70,6 +80,8 @@ $script = <<< "JS"
                     reportReqOvtTNPTab();
                 } else if(id == "other_report_form_lembur") {
                     reportFormOvertimeTab();
+                } else if(id == "other_manajemen_shift") {
+                    shiftManagementTab();
                 }
             });
         }

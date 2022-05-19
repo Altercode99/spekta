@@ -36,7 +36,7 @@ class QhseModel extends CI_Model
                             (SELECT employee_name FROM $this->kf_hr.employees WHERE id = a.updated_by) AS emp2")
                             ->from('files a')
                             ->where_in($column, $ids)
-                            ->order_by('a.name', 'ASC')
+                            ->order_by('a.no_doc', 'ASC')
                             ->get()
                             ->result();
         }
