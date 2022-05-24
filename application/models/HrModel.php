@@ -316,4 +316,11 @@ class HrModel extends CI_Model
                     ORDER BY b.employee_name ASC";
         return $this->db->query($sql)->result();
     }
+
+    public function updateEmpAge()
+    {
+        return $this->db->query("UPDATE employees 
+                                    SET age = DATE_FORMAT(FROM_DAYS(DATEDIFF(now(),birth_date)), '%Y')+0 
+                                    WHERE birth_date = NOW()");
+    }
 }

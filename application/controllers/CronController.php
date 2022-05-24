@@ -72,7 +72,7 @@ class CronController extends Erp_Controller
         }
     }
 
-    //@URL: http://localhost/spekta/index.php?c=CronController&m=autoAppvAsman
+    // @URL: http://localhost/spekta/index.php?c=CronController&m=autoAppvAsman
     public function autoAppvAsman()
     {
         $date = date('Y-m-d H:i:s');
@@ -80,15 +80,11 @@ class CronController extends Erp_Controller
         foreach ($overtimes as $overtime) {
             $asman = $this->Hr->getOne('employees', ['sub_department_id' => $overtime->sub_department_id], '*', ['rank_id' => ['3', '4']]);
             if ($asman) {
-                $empId = $asman->id;
                 $empNip = $asman->nip;
-                $email = $asman->email;
             } else {
                 $asman = $this->Hr->getOne('employee_ranks', ['sub_department_id' => $overtime->sub_department_id, 'status' => 'ACTIVE'], '*', ['rank_id' => ['3', '4']]);
                 $emp = $this->Hr->getDataById('employees', $asman->emp_id);
-                $empId = $emp->id;
                 $empNip = $emp->nip;
-                $email = $emp->email;
             }
 
             $data = [
@@ -129,23 +125,57 @@ class CronController extends Erp_Controller
         }
     }
 
+    //@URL: http://localhost/spekta/index.php?c=CronController&m=autoRejectAsman
+    public function autoRejectAsman()
+    {
+        $date = date('Y-m-d');
+        $overtimes = $this->Overtime->getRejectAsman($date);
+        foreach ($overtimes as $overtime) {
+            $asman = $this->Hr->getOne('employees', ['sub_department_id' => $overtime->sub_department_id], '*', ['rank_id' => ['3', '4']]);
+            if ($asman) {
+                $empId = $asman->id;
+                $empNip = $asman->nip;
+            } else {
+                $asman = $this->Hr->getOne('employee_ranks', ['sub_department_id' => $overtime->sub_department_id, 'status' => 'ACTIVE'], '*', ['rank_id' => ['3', '4']]);
+                $emp = $this->Hr->getDataById('employees', $asman->emp_id);
+                $empNip = $emp->nip;
+                $empId = $emp->id;
+            }
+
+            $data = [
+                'status' => 'REJECTED',
+                'apv_asman' => 'REJECTED',
+                'apv_asman_nip' => $empNip,
+                'apv_asman_date' => date('Y-m-d H:i:s'),
+            ];
+
+            $update = $this->Hr->update('employee_overtimes', $data, ['task_id' => $overtime->task_id]);
+            if ($update) {
+                $dataDetail = [
+                    'status' => 'REJECTED',
+                    'status_by' => $empNip,
+                    'updated_by' => $empId,
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ];
+                $this->Hr->update('employee_overtimes_detail', $dataDetail, ['task_id' => $overtime->task_id, 'status !=' => 'CANCELED']);
+                $this->ovtlib->sendEmailReject('ASMAN', 'asman', $overtime, $overtime->task_id);
+            }
+        }
+    }
+
     //@URL: http://localhost/spekta/index.php?c=CronController&m=autoAppvPPIC
     public function autoAppvPPIC()
     {
         $date = date('Y-m-d H:i:s');
-        $overtimes = $this->Overtime->getAppvPPIC(backDayToDate($date, 1));
+        $overtimes = $this->Overtime->getAppvPPIC(backHourToDate($date, 12));
         foreach ($overtimes as $overtime) {
             $asman = $this->Hr->getOne('employees', ['sub_department_id' => 9], '*', ['rank_id' => ['3', '4']]);
             if ($asman) {
-                $empId = $asman->id;
                 $empNip = $asman->nip;
-                $email = $asman->email;
             } else {
                 $asman = $this->Hr->getOne('employee_ranks', ['sub_department_id' => 9, 'status' => 'ACTIVE'], '*', ['rank_id' => ['3', '4']]);
                 $emp = $this->Hr->getDataById('employees', $asman->emp_id);
-                $empId = $emp->id;
                 $empNip = $emp->nip;
-                $email = $emp->email;
             }
 
             $data = [
@@ -175,19 +205,15 @@ class CronController extends Erp_Controller
     public function autoAppvManager()
     {
         $date = date('Y-m-d H:i:s');
-        $overtimes = $this->Overtime->getAppvManager(backDayToDate($date, 1));
+        $overtimes = $this->Overtime->getAppvManager(backHourToDate($date, 12));
         foreach ($overtimes as $overtime) {
             $mgr = $this->Hr->getOne('employees', ['department_id' => $overtime->department_id, 'rank_id' => 2]);
             if ($mgr) {
-                $empId = $mgr->id;
                 $empNip = $mgr->nip;
-                $email = $mgr->email;
             } else {
                 $mgr = $this->Hr->getOne('employee_ranks', ['department_id' => $overtime->department_id, 'status' => 'ACTIVE', 'rank_id' => 2]);
                 $emp = $this->Hr->getDataById('employees', $mgr->emp_id);
-                $empId = $emp->id;
                 $empNip = $emp->nip;
-                $email = $emp->email;
             }
 
             $data = [
@@ -206,19 +232,17 @@ class CronController extends Erp_Controller
     public function autoAppvHead()
     {
         $date = date('Y-m-d H:i:s');
-        $overtimes = $this->Overtime->getAppvHead(backDayToDate($date, 1));
+        $overtimes = $this->Overtime->getAppvHead(backHourToDate($date, 12));
         foreach ($overtimes as $overtime) {
             $head = $this->Hr->getOne('employees', ['rank_id' => 1]);
             if ($head) {
                 $empId = $head->id;
                 $empNip = $head->nip;
-                $email = $head->email;
             } else {
                 $head = $this->Hr->getOne('employee_ranks', ['status' => 'ACTIVE', 'rank_id' => 1]);
                 $emp = $this->Hr->getDataById('employees', $head->emp_id);
                 $empId = $emp->id;
                 $empNip = $emp->nip;
-                $email = $emp->email;
             }
 
             $data = [
@@ -410,5 +434,11 @@ class CronController extends Erp_Controller
 
         $tableName = 'absen_'.$year.''.$month;
         $this->db->query("CREATE TABLE IF NOT EXISTS kf_hr.$tableName LIKE kf_hr.absen_202202");
+    }
+
+    //@URL: http://localhost/spekta/index.php?c=CronController&m=autoUpdateEmpAge
+    public function autoUpdateEmpAge()
+    {
+        $this->HrModel->updateEmpAge();
     }
 }

@@ -1157,6 +1157,20 @@ function totalHour($empId, $start, $end, $startTime, $endTime)
     ];
 }
 
+function addHourToDate($date, $hour)
+{
+    $date = new DateTime($date);
+    $date->modify("+$hour hours");
+    return $date->format('Y-m-d H:i:s');
+}
+
+function backHourToDate($date, $hour)
+{
+    $date = new DateTime($date);
+    $date->modify("-$hour hours");
+    return $date->format('Y-m-d H:i:s');
+}
+
 function addDayToDate($date, $day)
 {
     $date = new DateTime($date);

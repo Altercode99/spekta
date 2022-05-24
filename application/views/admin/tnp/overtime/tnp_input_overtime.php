@@ -81,6 +81,7 @@ $script = <<< "JS"
                 {type: "button", name: "clear", className: "button_clear", offsetLeft: 30, value: "Clear"}
             ]},
         ]);
+        isFormNumeric(initialForm, ['personil']);
 
         let currentDate = new Date();
         let date = currentDate.toISOString().split('T')[0];
@@ -682,9 +683,9 @@ $script = <<< "JS"
                         });
                         addPersonilGrid.init();
                         let params;
-                        if(userLogged.subId == 5) {
-                            params = {equal_sub_department_id: userLogged.subId};
-                        }
+                        // if(userLogged.subId == 5) {
+                        //     params = {equal_sub_department_id: userLogged.subId};
+                        // }
                         addPersonilGrid.clearAndLoad(Overtime("getEmployees", params), disabledBookedPersonil);
                         
                         function disabledBookedPersonil() {

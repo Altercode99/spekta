@@ -42,14 +42,27 @@ $script = <<< "JS"
     }
 
     function inputOvertimeTab() {
-        if (!mainTab.tabs("other_input_overtime")){
+        if (!mainTab.tabs("other_input_lembur")){
             if(!userLogged.picOvertime) {
                 return eaAlert("Kesalahan Hak Akses", "Anda tidak memiliki hak akses sebagai Admin lemburan!");
             }
-            mainTab.addTab("other_input_overtime", tabsStyle("clock.png", "Input Lembur", "background-size: 16px 16px"), null, null, true, true);
+            mainTab.addTab("other_input_lembur", tabsStyle("clock.png", "Input Lembur", "background-size: 16px 16px"), null, null, true, true);
             showInputOvertime();
         } else {
-            mainTab.tabs("other_input_overtime").setActive();
+            mainTab.tabs("other_input_lembur").setActive();
+        }
+    }
+
+    function inputOvertimeAsmanTab() {
+        if (!mainTab.tabs("other_input_lembur")){
+            if(userLogged.pltRankId <= 4 || userLogged.rankId <= 4) {
+                mainTab.addTab("other_input_lembur", tabsStyle("clock.png", "Input Lembur", "background-size: 16px 16px"), null, null, true, true);
+                showInputOvertime();
+            } else {
+                return eaAlert("Kesalahan Hak Akses", "Anda tidak memiliki hak akses sebagai Admin lemburan!");
+            }
+        } else {
+            mainTab.tabs("other_input_lembur").setActive();
         }
     }
 

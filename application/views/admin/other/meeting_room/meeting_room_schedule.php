@@ -136,7 +136,6 @@ $script = <<< "JS"
                 scheduler1.formSection('repeat').control.disabled = true;
             } else {
                 scheduler1.formSection('meal').control.disabled = false;
-                scheduler1.formSection('room').setValue("1");
                 scheduler1.formSection('room').control.disabled = false;
                 scheduler1.formSection('repeat').control.disabled = false;
             }
@@ -221,7 +220,7 @@ $script = <<< "JS"
                 participantGrid.attachEvent("onCheckbox", function(rId, cIdn, state) {
                     if(state) {
                         if((persons.length + guests.length) >= max) {
-                            eAlert("Melebihi kapasitas penumpang!");
+                            eAlert("Melebihi kapasitas peserta!");
                             participantGrid.cells(rId, 1).setValue(0);
                         } else {
                             persons.push(rId);

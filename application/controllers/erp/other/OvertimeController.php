@@ -31,7 +31,7 @@ class OvertimeController extends Erp_Controller
                 $divList['options'][] = [
                     'value' => 0,
                     'text' => '-',
-                    'selected' => isset($params['select']) && $params['select'] == $div->id ? 1 : 0,
+                    'selected' => isset($params['select']) ? 1 : 0,
                 ]; 
                 foreach ($divs as $div) {
                     $divList['options'][] = [
@@ -159,7 +159,15 @@ class OvertimeController extends Erp_Controller
 
     public function createInitialOvertime()
     {
-        $params = getParam();
+        $currDate = new DateTime(date('Y-m-d H:i:s'));
+        $limitDate = new DateTime(date('Y-m-d 21:00:00'));
+
+        if($currDate > $limitDate) {
+            if(!empRank() <= 4 && !pltRankId() <= 4) {
+                return xmlResponse('error', 'Gagal membuat lemburan, lembuaran hanya bisa dibuat dibawah jam 14:00:00');
+            }
+        }
+
         $post = prettyText(getPost(), ['notes']);
         $date = $post['overtime_date'];
         $expDate = explode('-', $date);

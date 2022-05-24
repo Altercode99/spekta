@@ -508,6 +508,20 @@ class OvertimeModel extends CI_Model
         return $this->db->query($sql)->result();
     }
 
+    public function getRejectAsman($date)
+    {
+        $sql = "SELECT a.*,b.name AS department,c.name AS sub_department,d.name AS division
+                    FROM employee_overtimes a, departments b, sub_departments c, divisions d 
+                    WHERE a.department_id = b.id
+                    AND a.sub_department_id = c.id
+                    AND a.division_id = d.id
+                    AND a.apv_asman_nip = '' 
+                    AND a.apv_asman = 'CREATED' 
+                    AND a.status = 'PROCESS'
+                    AND a.created_at BETWEEN '$date 00:00:00' AND '$date 14:00:00'";
+        return $this->db->query($sql)->result();
+    }
+
     public function getAppvPPIC($date)
     {
         $sql = "SELECT a.*,b.name AS department,c.name AS sub_department,d.name AS division

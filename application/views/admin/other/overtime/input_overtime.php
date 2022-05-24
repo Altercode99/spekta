@@ -26,7 +26,7 @@ $script = <<< "JS"
             },
         }
         
-        var inputTabs = mainTab.cells("other_input_overtime").attachTabbar({
+        var inputTabs = mainTab.cells("other_input_lembur").attachTabbar({
             tabs: [
                 {id: "a", text: "Form Lembur", active: true},
                 {id: "b", text: "Proses Personil"},
@@ -75,6 +75,7 @@ $script = <<< "JS"
                 {type: "button", name: "clear", className: "button_clear", offsetLeft: 30, value: "Clear"}
             ]},
         ]);
+        isFormNumeric(initialForm, ['personil']);
         
         let currentDate = new Date();
         let date = currentDate.toISOString().split('T')[0];

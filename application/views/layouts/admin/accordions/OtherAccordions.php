@@ -19,12 +19,16 @@ $script = <<< "JS"
             var subAttendanceItems = [];
 
             //@LEMBURAN
+            if(isHaveTrees("other_input_lembur")) {
+                subOvertimeItems.push({id: "other_input_lembur", text: "Input Lembur (A)", icons: {file: "menu_icon"}});
+            }
+
             if(isHaveTrees("other_input_lembur_support")) {
                 subOvertimeItems.push({id: "other_input_lembur_support", text: "Input Lembur (B)", icons: {file: "menu_icon"}});
             }
 
-            if(isHaveTrees("other_input_lembur")) {
-                subOvertimeItems.push({id: "other_input_lembur", text: "Input Lembur (A)", icons: {file: "menu_icon"}});
+            if(isHaveTrees("other_input_lembur_asman")) {
+                subOvertimeItems.push({id: "other_input_lembur_asman", text: "Input Lembur (C)", icons: {file: "menu_icon"}});
             }
 
             if(isHaveTrees("other_approval_lembur")) {
@@ -70,6 +74,8 @@ $script = <<< "JS"
                     inputOvertimeTab();
                 } else if(id == "other_input_lembur_support") {
                     inputOvertimeTNPTab();
+                } else if(id == "other_input_lembur_asman") {
+                    inputOvertimeAsmanTab();
                 } else if(id == "other_approval_lembur") {
                     appvOvertimeTab();
                 } else if(id == "other_report_lembur") {

@@ -446,7 +446,7 @@ class PublicController extends Erp_Controller
             $email = $token[1];
             $status = $token[2];
             $currStatus = $this->General->getOne('meeting_participants', ['email' => $email, 'meeting_id' => $meetId]);
-            if($currStatus->status == 'BELUM MEMUTUSKAN') {
+            if(isset($currStatus->status) && $currStatus->status == 'BELUM MEMUTUSKAN') {
                 if($status == 'accept') {
                     $this->General->update('meeting_participants', ['status' => 'HADIR'], ['email' => $email,  'meeting_id' => $meetId]);
                     $this->General->addValueBy('meeting_rooms_reservation', ['participant_confirmed' => $currStatus->total_participant], ['id' => $meetId]);
@@ -456,8 +456,10 @@ class PublicController extends Erp_Controller
                     $this->General->addValueBy('meeting_rooms_reservation', ['participant_rejected' => $currStatus->total_participant], ['id' => $meetId]);
                     $this->load->view('html/valid_response', ['message' => "Konfirmasi diterima, anda memutuskan TIDAK HADIR di meeting tersebut"]);
                 }
-            } else {
+            } else if(isset($currStatus->status)){
                 $this->load->view('html/invalid_response', ['message' => "Anda telah mengambil keputusan $currStatus->status untuk undangan ini!"]);
+            } else {
+                $this->load->view('html/invalid_response', ['message' => 'Token tidak valid!']);
             }
         } else {
             $this->load->view('html/invalid_response', ['message' => 'Token tidak valid!']);

@@ -328,9 +328,9 @@ class AppController extends Erp_Controller
     public function checkVersion()
     {
         $data = [
-            'version' => 'v.1.0.1',
-            'message' => "<b>v.1.0.1</b> <br />
-                          Oops.. ada update nih, <b>Clear History</b> dulu yuk!.. Supaya Aplikasi S.P.E.K.T.A kamu berfungsi maksimal :)<br /> <br />
+            'version' => 'v.1.0.2',
+            'message' => "<b>v.1.0.2</b> <br />
+                          Oops.. ada update nih, <b>Clear History/Cache</b> dulu yuk!.. Update Reservasi Meeting Online (Zoom). Tutorial: <a target='_blank' href='https://drive.google.com/file/d/1R6dF5ETx1KFa_PcGyai2QKhphqj04HwG/view'>Clear History Google Chrome</a><br /> <br />
                           <a target='_blank' href='https://support.google.com/chrome/answer/95589?hl=id&co=GENIE.Platform%3DDesktop'>Clear History Google Chrome</a> <br />
                           <a target='_blank' href='https://support.mozilla.org/id/kb/Membersihkan%20Riwayat%20Terakhir'>Clear History Mozila Firefox</a>"
         ];
